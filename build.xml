@@ -1,0 +1,17 @@
+<project name="betfair.build" default="jar">
+
+    <property name="build.dir" location="build"/>
+
+    <target name="clean">
+        <delete dir="${build.dir}" failonerror="true"/>
+    </target>
+
+    <import file="meeno.xml"/>
+
+    <target name="jar" depends="clean, all">
+        <jar destfile="out/app.jar">
+            <fileset dir="${meeno.output.dir}"/>
+        </jar>
+    </target>
+
+</project>
