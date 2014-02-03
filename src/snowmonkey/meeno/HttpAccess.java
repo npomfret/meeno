@@ -90,7 +90,18 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listMarketTypes"), marketFilter);
     }
 
-    public void listEvents(MarketFilter marketFilter, Processor processor) throws IOException {
+    public void listTimeRanges(Processor processor, TimeGranularity timeGranularity) throws IOException {
+        listTimeRanges(processor, timeGranularity, noFilter());
+    }
+
+    public void listTimeRanges(Processor processor, TimeGranularity timeGranularity, MarketFilter marketFilter) throws IOException {
+        Payload payload = new Payload();
+        payload.add(marketFilter);
+        payload.add(timeGranularity);
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listTimeRanges"), payload);
+    }
+
+    public void listEvents(Processor processor, MarketFilter marketFilter) throws IOException {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listEvents"), marketFilter);
     }
 
@@ -106,7 +117,35 @@ public class HttpAccess {
         sendPostRequest(processor, uri, noFilter());
     }
 
+    class Payload {
+        private final LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+
+        public String toJson() {
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(DateTime.class, new JodaDateTimeTypeConverter())
+                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                    .create();
+            map.put("locale", "en_US");
+
+            return gson.toJson(map);
+        }
+
+        public void add(MarketFilter marketFilter) {
+            map.put("filter", marketFilter);
+        }
+
+        public void add(TimeGranularity timeGranularity) {
+            map.put("granularity", timeGranularity);
+        }
+    }
+
     private void sendPostRequest(Processor processor, URI uri, MarketFilter marketFilter) throws IOException {
+        Payload payload = new Payload();
+        payload.add(marketFilter);
+        sendPostRequest(processor, uri, payload);
+    }
+
+    private void sendPostRequest(Processor processor, URI uri, Payload payload) throws IOException {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpPost httpPost = httpPost(uri);
 
@@ -116,18 +155,10 @@ public class HttpAccess {
             httpPost.setHeader("X-Application", appKey.asString());
             httpPost.setHeader("X-Authentication", sessionToken.asString());
 
-            LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+            String json = payload.toJson();
 
-            marketFilter.addToResponse(map);
-
-            Gson gson = new GsonBuilder()
-                    .registerTypeAdapter(DateTime.class, new JodaDateTimeTypeConverter())
-                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                    .create();
-            map.put("locale", "en_US");
-
-            String json = gson.toJson(map);
             System.out.println(json);
+
             httpPost.setEntity(new StringEntity(json, UTF_8));
 
             processResponse(processor, httpClient, httpPost);

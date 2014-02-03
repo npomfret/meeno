@@ -3,6 +3,7 @@ package snowmonkey.meeno;
 import com.google.gson.*;
 import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
+import snowmonkey.meeno.types.Event;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import static snowmonkey.meeno.CountryLookup.UnitedKingdom;
 import static snowmonkey.meeno.HttpAccess.fileWriter;
 import static snowmonkey.meeno.MarketFilterBuilder.TimeRange.between;
+import static snowmonkey.meeno.TimeGranularity.MINUTES;
 
 public class GenerateTestData {
     public static final File TEST_DATA_DIR = new File("test-data/generated");
@@ -43,20 +45,31 @@ public class GenerateTestData {
                         .build());
 
         httpAccess.listEvents(
+                fileWriter(listEventsFile()),
                 new MarketFilterBuilder()
                         .withEventTypeIds("1")
                         .withMarketCountries(UnitedKingdom)
                         .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(1)))
-                        .build(),
-                fileWriter(listEventsFile()));
+                        .build());
 
         httpAccess.listEventTypes(fileWriter(listEventTypesFile()));
 
         httpAccess.listMarketTypes(fileWriter(listMarketTypesFile()));
 
+        httpAccess.listTimeRanges(fileWriter(listTimeRangesFile()), MINUTES, new MarketFilterBuilder()
+                .withEventTypeIds("1")
+                .withEventIds(someEvent().id)
+                .withMarketCountries(UnitedKingdom)
+                .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(1)))
+                .build());
+
         httpAccess.getAccountDetails(fileWriter(getAccountDetailsFile()));
 
         httpAccess.getAccountFunds(fileWriter(getAccountFundsFile()));
+    }
+
+    private static Event someEvent() throws IOException {
+        return Events.parse(listEventsJson()).iterator().next();
     }
 
     private static File listCurrentOrdersFile() {
@@ -119,6 +132,18 @@ public class GenerateTestData {
 
     public static String listMarketTypesJson() throws IOException {
         return FileUtils.readFileToString(listMarketTypesFile());
+    }
+
+    private static File listTimeRangesFile() {
+        return new File(TEST_DATA_DIR, "listTimeRanges.json");
+    }
+
+    public static String getTimeRangeJson() throws IOException {
+        return jsonForFirstElementInArray(listTimeRangesJson());
+    }
+
+    public static String listTimeRangesJson() throws IOException {
+        return FileUtils.readFileToString(listTimeRangesFile());
     }
 
     private static File getAccountFundsFile() {

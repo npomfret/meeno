@@ -3,7 +3,6 @@ package snowmonkey.meeno;
 import com.google.common.base.Function;
 import org.joda.time.DateTime;
 
-import java.util.Map;
 import java.util.Set;
 
 import static com.google.common.collect.Iterables.transform;
@@ -11,7 +10,7 @@ import static com.google.common.collect.Sets.newHashSet;
 import static java.util.Arrays.asList;
 
 @SuppressWarnings("ALL")//fields are accessed via reflection
-public class MarketFilterBuilder {
+public class MarketFilterBuilder implements MarketFilter {
 
     private String textQuery;
     private Set<String> exchangeIds;
@@ -34,12 +33,7 @@ public class MarketFilterBuilder {
     }
 
     public MarketFilter build() {
-        return new MarketFilter() {
-            @Override
-            public void addToResponse(Map<String, Object> map) {
-                map.put("filter", MarketFilterBuilder.this);
-            }
-        };
+        return this;
     }
 
     public MarketFilterBuilder withTextQuery(String textQuery) {
@@ -73,6 +67,10 @@ public class MarketFilterBuilder {
     public MarketFilterBuilder withInPlayOnly(Boolean inPlayOnly) {
         this.inPlayOnly = inPlayOnly;
         return this;
+    }
+
+    public MarketFilterBuilder withEventIds(String... eventIds) {
+        return withEventIds(newHashSet(asList(eventIds)));
     }
 
     public MarketFilterBuilder withEventIds(Set<String> eventIds) {

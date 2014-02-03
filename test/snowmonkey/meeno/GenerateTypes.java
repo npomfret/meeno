@@ -20,6 +20,7 @@ public class GenerateTypes {
         create(getEventJson(), "Event");
         create(getEventTypeJson(), "EventType");
         create(getMarketTypeJson(), "MarketType");
+        create(getTimeRangeJson(), "TimeRange");
         create(getAccountDetailsJson(), "AccountDetails");
         create(getAccountFundsJson(), "AccountFunds");
     }
