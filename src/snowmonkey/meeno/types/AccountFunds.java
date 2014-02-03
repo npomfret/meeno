@@ -5,9 +5,9 @@ public class AccountFunds {
     public final double availableToBetBalance;
     public final double exposure;
     public final double retainedCommission;
-    public final String exposureLimit;
+    public final double exposureLimit;
 
-    public AccountFunds(double availableToBetBalance, double exposure, double retainedCommission, String exposureLimit) {
+    public AccountFunds(double availableToBetBalance, double exposure, double retainedCommission, double exposureLimit) {
         this.availableToBetBalance = availableToBetBalance;
         this.exposure = exposure;
         this.retainedCommission = retainedCommission;

@@ -1,11 +1,13 @@
 package snowmonkey.meeno;
 
-import com.google.gson.stream.JsonReader;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -18,38 +20,40 @@ public class GenerateTypes {
         create(getAccountFundsJson(), "AccountFunds");
     }
 
-    private static void create(String accountDetailsJson, String accountDetails) throws IOException {
-        ClassBuilder classBuilder = new ClassBuilder("snowmonkey.meeno.types", accountDetails);
+    private static void create(String json, String className) throws IOException {
+        System.out.println(className);
 
-        try (JsonReader jsonReader = new JsonReader(new StringReader(accountDetailsJson))) {
-            jsonReader.beginObject();
-            generateType(classBuilder, jsonReader);
-            jsonReader.endObject();
-        }
+        ClassBuilder classBuilder = new ClassBuilder("snowmonkey.meeno.types", className);
+
+        JsonObject root = new JsonParser().parse(json).getAsJsonObject();
+
+        generateType(classBuilder, root);
 
         classBuilder.writeTo(new File("src"));
     }
 
-    private static void generateType(ClassBuilder classBuilder, JsonReader jsonReader) throws IOException {
-        while (jsonReader.hasNext()) {
-            String name = jsonReader.nextName();
-            try {
-                addField(classBuilder, jsonReader, name);
-            } catch (IllegalStateException e) {
-                //flattens the json tree into single class
-                jsonReader.beginObject();
-                generateType(classBuilder, jsonReader);
-                jsonReader.endObject();
+    private static void generateType(ClassBuilder classBuilder, JsonObject root) throws IOException {
+        for (Map.Entry<String, JsonElement> entry : root.entrySet()) {
+            String name = entry.getKey();
+
+            JsonElement value = entry.getValue();
+            if (value.isJsonObject()) {
+                generateType(classBuilder, value.getAsJsonObject());
+            } else {
+                addField(classBuilder, value, name);
             }
         }
     }
 
-    private static void addField(ClassBuilder classBuilder, JsonReader jsonReader, String name) throws IOException {
-        String value = jsonReader.nextString();
+    private static void addField(ClassBuilder classBuilder, JsonElement element, String name) throws IOException {
+        JsonPrimitive jsonPrimitive = element.getAsJsonPrimitive();
+
         ClassBuilder.Type type;
-        if (value.matches("\\d+\\.\\d+")) {
+        if (jsonPrimitive.isBoolean()) {
+            type = ClassBuilder.Type.BOOL;
+        } else if (jsonPrimitive.isNumber() && element.getAsString().contains(".")) {
             type = ClassBuilder.Type.DBL;
-        } else if (value.matches("\\d+")) {
+        } else if (jsonPrimitive.isNumber()) {
             type = ClassBuilder.Type.INT;
         } else {
             type = ClassBuilder.Type.STR;
@@ -59,7 +63,7 @@ public class GenerateTypes {
 
     private static final class ClassBuilder {
         enum Type {
-            DBL("double"), INT("int"), STR("String");
+            DBL("double"), INT("int"), STR("String"), BOOL("boolean");
 
             private final String value;
 
@@ -88,11 +92,12 @@ public class GenerateTypes {
             builder.append("\n");
 
             builder.append("public ").append(classname).append("(");
+            int count = 0;
             for (Field field : fields.values()) {
-                builder.append(field.type.value).append(" ").append(field.name);
-                if (field != fields.get(fields.size() - 1)) {
+                if (count > 0)
                     builder.append(", ");
-                }
+                count++;
+                builder.append(field.type.value).append(" ").append(field.name);
             }
             builder.append(")\n{");
             for (Field field : fields.values()) {
