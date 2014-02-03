@@ -25,10 +25,25 @@ public class GenerateTestData {
 
         SessionToken sessionToken = SessionToken.parseJson(loginJson());
 
-        System.out.println(sessionToken);
-
         HttpAccess httpAccess = new HttpAccess(sessionToken, config.delayedAppKey(), Exchange.UK);
-        httpAccess.getAccountDetails(fileWriter(new File(TEST_DATA_DIR, "getAccountDetails.json")));
+        httpAccess.getAccountDetails(fileWriter(getAccountDetailsFile()));
+        httpAccess.getAccountFunds(fileWriter(getAccountFundsFile()));
+    }
+
+    private static File getAccountFundsFile() {
+        return new File(TEST_DATA_DIR, "getAccountFunds.json");
+    }
+
+    private static File getAccountDetailsFile() {
+        return new File(TEST_DATA_DIR, "getAccountDetails.json");
+    }
+
+    public static String getAccountDetailsJson() throws IOException {
+        return FileUtils.readFileToString(getAccountDetailsFile());
+    }
+
+    public static String getAccountFundsJson() throws IOException {
+        return FileUtils.readFileToString(getAccountFundsFile());
     }
 
     public static String loginJson() throws IOException {

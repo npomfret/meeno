@@ -87,6 +87,10 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.accountUris.jsonRestUri("getAccountDetails"));
     }
 
+    public void getAccountFunds(Processor processor) throws IOException {
+        sendPostRequest(processor, exchange.accountUris.jsonRestUri("getAccountFunds"));
+    }
+
     private void sendPostRequest(Processor processor, URI uri) throws IOException {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpPost httpPost = httpPost(uri);
