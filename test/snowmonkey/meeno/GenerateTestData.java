@@ -1,5 +1,6 @@
 package snowmonkey.meeno;
 
+import com.google.gson.*;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -26,8 +27,13 @@ public class GenerateTestData {
         SessionToken sessionToken = SessionToken.parseJson(loginJson());
 
         HttpAccess httpAccess = new HttpAccess(sessionToken, config.delayedAppKey(), Exchange.UK);
+        httpAccess.listEventTypes(fileWriter(listEventTypesFile()));
         httpAccess.getAccountDetails(fileWriter(getAccountDetailsFile()));
         httpAccess.getAccountFunds(fileWriter(getAccountFundsFile()));
+    }
+
+    private static File listEventTypesFile() {
+        return new File(TEST_DATA_DIR, "listEventTypes.json");
     }
 
     private static File getAccountFundsFile() {
@@ -40,6 +46,15 @@ public class GenerateTestData {
 
     public static String getAccountDetailsJson() throws IOException {
         return FileUtils.readFileToString(getAccountDetailsFile());
+    }
+
+    public static String getEventTypeJson() throws IOException {
+        String json = FileUtils.readFileToString(listEventTypesFile());
+        JsonElement parse = new JsonParser().parse(json);
+        JsonArray jsonArray = parse.getAsJsonArray();
+        JsonElement jsonElement = jsonArray.get(0);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(jsonElement);
     }
 
     public static String getAccountFundsJson() throws IOException {

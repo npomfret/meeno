@@ -2,6 +2,7 @@ out
 .idea/workspace.xml
 credentials.properties
 private
+test-data/generated/*.json
 
 # Compiled source #
 ###################

@@ -6,14 +6,14 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-import static snowmonkey.meeno.GenerateTestData.getAccountDetailsJson;
-import static snowmonkey.meeno.GenerateTestData.getAccountFundsJson;
+import static snowmonkey.meeno.GenerateTestData.*;
 
 public class GenerateTypes {
     public static void main(String[] args) throws Exception {
+        create(getEventTypeJson(), "EventType");
         create(getAccountDetailsJson(), "AccountDetails");
         create(getAccountFundsJson(), "AccountFunds");
     }
@@ -23,24 +23,38 @@ public class GenerateTypes {
 
         try (JsonReader jsonReader = new JsonReader(new StringReader(accountDetailsJson))) {
             jsonReader.beginObject();
-            while (jsonReader.hasNext()) {
-                String name = jsonReader.nextName();
-                String value = jsonReader.nextString();
-                ClassBuilder.Type type;
-                if (value.matches("\\d+\\.\\d+")) {
-                    type = ClassBuilder.Type.DBL;
-                } else if (value.matches("\\d+")) {
-                    type = ClassBuilder.Type.INT;
-                } else {
-                    type = ClassBuilder.Type.STR;
-                }
-                classBuilder.addField(name, type);
-            }
+            generateType(classBuilder, jsonReader);
             jsonReader.endObject();
         }
 
-        System.out.println(classBuilder.text());
         classBuilder.writeTo(new File("src"));
+    }
+
+    private static void generateType(ClassBuilder classBuilder, JsonReader jsonReader) throws IOException {
+        while (jsonReader.hasNext()) {
+            String name = jsonReader.nextName();
+            try {
+                addField(classBuilder, jsonReader, name);
+            } catch (IllegalStateException e) {
+                //flattens the json tree into single class
+                jsonReader.beginObject();
+                generateType(classBuilder, jsonReader);
+                jsonReader.endObject();
+            }
+        }
+    }
+
+    private static void addField(ClassBuilder classBuilder, JsonReader jsonReader, String name) throws IOException {
+        String value = jsonReader.nextString();
+        ClassBuilder.Type type;
+        if (value.matches("\\d+\\.\\d+")) {
+            type = ClassBuilder.Type.DBL;
+        } else if (value.matches("\\d+")) {
+            type = ClassBuilder.Type.INT;
+        } else {
+            type = ClassBuilder.Type.STR;
+        }
+        classBuilder.addField(name, type);
     }
 
     private static final class ClassBuilder {
@@ -68,20 +82,20 @@ public class GenerateTypes {
             builder.append("\n");
             builder.append("public class ").append(classname).append(" {\n");
             builder.append("\n");
-            for (Field field : fields) {
+            for (Field field : fields.values()) {
                 field.appendTo(builder);
             }
             builder.append("\n");
 
             builder.append("public ").append(classname).append("(");
-            for (Field field : fields) {
+            for (Field field : fields.values()) {
                 builder.append(field.type.value).append(" ").append(field.name);
                 if (field != fields.get(fields.size() - 1)) {
                     builder.append(", ");
                 }
             }
             builder.append(")\n{");
-            for (Field field : fields) {
+            for (Field field : fields.values()) {
                 builder.append("this.").append(field.name).append(" = ").append(field.name).append(";\n");
             }
             builder.append("}\n");
@@ -105,10 +119,12 @@ public class GenerateTypes {
             }
         }
 
-        List<Field> fields = new ArrayList<>();
+        private final Map<String, Field> fields = new LinkedHashMap<>();
 
         public void addField(String name, Type type) {
-            fields.add(new Field(name, type));
+            if (fields.containsKey(name))
+                throw new Defect("There is alread a field called '" + name + "' in " + classname);
+            fields.put(name, new Field(name, type));
         }
 
         public void writeTo(File src) throws IOException {

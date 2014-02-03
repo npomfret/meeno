@@ -83,6 +83,10 @@ public class HttpAccess {
         return new SSLSocketFactory(ctx, new StrictHostnameVerifier());
     }
 
+    public void listEventTypes(Processor processor) throws IOException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listEventTypes"));
+    }
+
     public void getAccountDetails(Processor processor) throws IOException {
         sendPostRequest(processor, exchange.accountUris.jsonRestUri("getAccountDetails"));
     }
