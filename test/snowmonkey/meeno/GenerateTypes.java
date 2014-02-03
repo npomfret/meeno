@@ -19,6 +19,7 @@ public class GenerateTypes {
         create(getCompetitionJson(), "Competition");
         create(getEventJson(), "Event");
         create(getEventTypeJson(), "EventType");
+        create(getMarketTypeJson(), "MarketType");
         create(getAccountDetailsJson(), "AccountDetails");
         create(getAccountFundsJson(), "AccountFunds");
     }

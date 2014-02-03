@@ -75,7 +75,19 @@ public class HttpAccess {
     }
 
     public void listEventTypes(Processor processor) throws IOException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listEventTypes"));
+        listEventTypes(processor, noFilter());
+    }
+
+    public void listEventTypes(Processor processor, MarketFilter marketFilter) throws IOException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listEventTypes"), marketFilter);
+    }
+
+    public void listMarketTypes(Processor processor) throws IOException {
+        listMarketTypes(processor, noFilter());
+    }
+
+    public void listMarketTypes(Processor processor, MarketFilter marketFilter) throws IOException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listMarketTypes"), marketFilter);
     }
 
     public void listEvents(MarketFilter marketFilter, Processor processor) throws IOException {

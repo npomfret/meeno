@@ -52,6 +52,8 @@ public class GenerateTestData {
 
         httpAccess.listEventTypes(fileWriter(listEventTypesFile()));
 
+        httpAccess.listMarketTypes(fileWriter(listMarketTypesFile()));
+
         httpAccess.getAccountDetails(fileWriter(getAccountDetailsFile()));
 
         httpAccess.getAccountFunds(fileWriter(getAccountFundsFile()));
@@ -105,6 +107,18 @@ public class GenerateTestData {
 
     public static String listEventTypesJson() throws IOException {
         return FileUtils.readFileToString(listEventTypesFile());
+    }
+
+    private static File listMarketTypesFile() {
+        return new File(TEST_DATA_DIR, "listMarketTypes.json");
+    }
+
+    public static String getMarketTypeJson() throws IOException {
+        return jsonForFirstElementInArray(listMarketTypesJson());
+    }
+
+    public static String listMarketTypesJson() throws IOException {
+        return FileUtils.readFileToString(listMarketTypesFile());
     }
 
     private static File getAccountFundsFile() {
