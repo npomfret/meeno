@@ -1,5 +1,7 @@
 out
 .idea/workspace.xml
+credentials.properties
+private
 
 # Compiled source #
 ###################
