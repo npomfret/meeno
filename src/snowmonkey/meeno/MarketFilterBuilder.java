@@ -1,12 +1,14 @@
 package snowmonkey.meeno;
 
+import com.google.common.base.Function;
 import org.joda.time.DateTime;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
+import static com.google.common.collect.Iterables.transform;
 import static com.google.common.collect.Sets.newHashSet;
+import static java.util.Arrays.asList;
 
 @SuppressWarnings("ALL")//fields are accessed via reflection
 public class MarketFilterBuilder {
@@ -26,6 +28,10 @@ public class MarketFilterBuilder {
     private Set<String> marketTypeCodes;
     private TimeRange marketStartTime;
     private Set<OrderStatus> withOrders;
+
+    static MarketFilter noFilter() {
+        return new MarketFilterBuilder().build();
+    }
 
     public MarketFilter build() {
         return new MarketFilter() {
@@ -47,7 +53,7 @@ public class MarketFilterBuilder {
     }
 
     public MarketFilterBuilder withEventTypeIds(String... eventTypeIds) {
-        return withEventTypeIds(newHashSet(Arrays.asList(eventTypeIds)));
+        return withEventTypeIds(newHashSet(asList(eventTypeIds)));
     }
 
     public MarketFilterBuilder withEventTypeIds(Set<String> eventTypeIds) {
@@ -56,7 +62,7 @@ public class MarketFilterBuilder {
     }
 
     public MarketFilterBuilder withMarketIds(String... marketIds) {
-        return withMarketIds(newHashSet(Arrays.asList(marketIds)));
+        return withMarketIds(newHashSet(asList(marketIds)));
     }
 
     public MarketFilterBuilder withMarketIds(Set<String> marketIds) {
@@ -97,6 +103,19 @@ public class MarketFilterBuilder {
     public MarketFilterBuilder withMarketBettingTypes(Set<MarketBettingType> marketBettingTypes) {
         this.marketBettingTypes = marketBettingTypes;
         return this;
+    }
+
+    public MarketFilterBuilder withMarketCountries(CountryCode... marketCountries) {
+        return withMarketCountries(newHashSet(transform(asList(marketCountries), new Function<CountryCode, String>() {
+            @Override
+            public String apply(CountryCode countryCode) {
+                return countryCode.code;
+            }
+        })));
+    }
+
+    public MarketFilterBuilder withMarketCountries(String... marketCountries) {
+        return withMarketCountries(newHashSet(asList(marketCountries)));
     }
 
     public MarketFilterBuilder withMarketCountries(Set<String> marketCountries) {

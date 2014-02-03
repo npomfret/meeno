@@ -35,6 +35,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import static snowmonkey.meeno.MarketFilterBuilder.noFilter;
+
 public class HttpAccess {
 
     public static final String UTF_8 = "UTF-8";
@@ -52,6 +54,25 @@ public class HttpAccess {
         void process(StatusLine statusLine, InputStream in) throws IOException;
     }
 
+    public void listCountries(Processor processor) throws IOException {
+        listCountries(processor, noFilter());
+    }
+
+    public void listCountries(Processor processor, MarketFilter marketFilter) throws IOException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listCountries"), marketFilter);
+    }
+
+    public void listCurrentOrders(Processor processor) throws IOException {
+        listCurrentOrders(processor, noFilter());
+    }
+
+    public void listCurrentOrders(Processor processor, MarketFilter marketFilter) throws IOException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listCurrentOrders"), marketFilter);
+    }
+
+    public void listCompetitions(Processor processor, MarketFilter marketFilter) throws IOException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listCompetitions"), marketFilter);
+    }
 
     public void listEventTypes(Processor processor) throws IOException {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listEventTypes"));
@@ -70,7 +91,7 @@ public class HttpAccess {
     }
 
     private void sendPostRequest(Processor processor, URI uri) throws IOException {
-        sendPostRequest(processor, uri, new MarketFilterBuilder().build());
+        sendPostRequest(processor, uri, noFilter());
     }
 
     private void sendPostRequest(Processor processor, URI uri, MarketFilter marketFilter) throws IOException {

@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import java.io.File;
 import java.io.IOException;
 
+import static snowmonkey.meeno.CountryLookup.UnitedKingdom;
 import static snowmonkey.meeno.HttpAccess.fileWriter;
 import static snowmonkey.meeno.MarketFilterBuilder.TimeRange.between;
 
@@ -29,27 +30,89 @@ public class GenerateTestData {
         SessionToken sessionToken = SessionToken.parseJson(loginJson());
 
         HttpAccess httpAccess = new HttpAccess(sessionToken, config.delayedAppKey(), Exchange.UK);
+
+        httpAccess.listCountries(fileWriter(listCountriesFile()));
+
+        httpAccess.listCurrentOrders(fileWriter(listCurrentOrdersFile()));
+
+        httpAccess.listCompetitions(fileWriter(listCompetitionsFile()),
+                new MarketFilterBuilder()
+                        .withEventTypeIds("1")
+                        .withMarketCountries(UnitedKingdom)
+                        .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(1)))
+                        .build());
+
         httpAccess.listEvents(
                 new MarketFilterBuilder()
                         .withEventTypeIds("1")
+                        .withMarketCountries(UnitedKingdom)
                         .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(1)))
                         .build(),
                 fileWriter(listEventsFile()));
+
         httpAccess.listEventTypes(fileWriter(listEventTypesFile()));
+
         httpAccess.getAccountDetails(fileWriter(getAccountDetailsFile()));
+
         httpAccess.getAccountFunds(fileWriter(getAccountFundsFile()));
+    }
+
+    private static File listCurrentOrdersFile() {
+        return new File(TEST_DATA_DIR, "listCurrentOrders.json");
+    }
+
+    public static String getCurrentOrderJson() throws IOException {
+        JsonElement parse = new JsonParser().parse(listCurrentOrdersJson());
+        JsonElement currentOrders = parse.getAsJsonObject().get("currentOrders");
+        return array(currentOrders);
+    }
+
+    public static String listCurrentOrdersJson() throws IOException {
+        return FileUtils.readFileToString(listCurrentOrdersFile());
+    }
+
+    private static File listCompetitionsFile() {
+        return new File(TEST_DATA_DIR, "listCompetitions.json");
+    }
+
+    public static String getCompetitionJson() throws IOException {
+        return jsonForFirstElementInArray(listCompetitionsJson());
+    }
+
+    public static String listCompetitionsJson() throws IOException {
+        return FileUtils.readFileToString(listCompetitionsFile());
     }
 
     private static File listEventsFile() {
         return new File(TEST_DATA_DIR, "listEvents.json");
     }
 
+    public static String getEventJson() throws IOException {
+        return jsonForFirstElementInArray(listEventsJson());
+    }
+
+    public static String listEventsJson() throws IOException {
+        return FileUtils.readFileToString(listEventsFile());
+    }
+
     private static File listEventTypesFile() {
         return new File(TEST_DATA_DIR, "listEventTypes.json");
     }
 
+    public static String getEventTypeJson() throws IOException {
+        return jsonForFirstElementInArray(listEventTypesJson());
+    }
+
+    public static String listEventTypesJson() throws IOException {
+        return FileUtils.readFileToString(listEventTypesFile());
+    }
+
     private static File getAccountFundsFile() {
         return new File(TEST_DATA_DIR, "getAccountFunds.json");
+    }
+
+    public static String getAccountFundsJson() throws IOException {
+        return FileUtils.readFileToString(getAccountFundsFile());
     }
 
     private static File getAccountDetailsFile() {
@@ -60,39 +123,27 @@ public class GenerateTestData {
         return FileUtils.readFileToString(getAccountDetailsFile());
     }
 
-    public static String getEventTypeJson() throws IOException {
-        return jsonForFirstElementInArray(listEventTypesJson());
-    }
-
-    public static String getEventJson() throws IOException {
-        return jsonForFirstElementInArray(listEventsJson());
-    }
-
-    private static String jsonForFirstElementInArray(String json) {
-        JsonElement parse = new JsonParser().parse(json);
-        JsonArray jsonArray = parse.getAsJsonArray();
-        JsonElement jsonElement = jsonArray.get(0);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(jsonElement);
-    }
-
-    public static String listEventTypesJson() throws IOException {
-        return FileUtils.readFileToString(listEventTypesFile());
-    }
-
-    public static String listEventsJson() throws IOException {
-        return FileUtils.readFileToString(listEventsFile());
-    }
-
-    public static String getAccountFundsJson() throws IOException {
-        return FileUtils.readFileToString(getAccountFundsFile());
-    }
-
     public static String loginJson() throws IOException {
         return FileUtils.readFileToString(loginFile());
     }
 
     private static File loginFile() {
         return new File(TEST_DATA_DIR, "login.json");
+    }
+
+    private static File listCountriesFile() {
+        return new File(TEST_DATA_DIR, "listCountries.json");
+    }
+
+    private static String jsonForFirstElementInArray(String json) {
+        JsonElement parse = new JsonParser().parse(json);
+        return array(parse);
+    }
+
+    private static String array(JsonElement currentOrders) {
+        JsonArray jsonArray = currentOrders.getAsJsonArray();
+        JsonElement jsonElement = jsonArray.get(0);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(jsonElement);
     }
 }
