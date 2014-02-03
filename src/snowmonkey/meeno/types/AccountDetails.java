@@ -1,6 +1,8 @@
 package snowmonkey.meeno.types;
 
-public class AccountDetails {
+import snowmonkey.meeno.ImmutableType;
+
+public final class AccountDetails extends ImmutableType {
 
     public final String currencyCode;
     public final String firstName;
@@ -21,5 +23,4 @@ public class AccountDetails {
         this.discountRate = discountRate;
         this.pointsBalance = pointsBalance;
     }
-
 }

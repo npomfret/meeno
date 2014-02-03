@@ -49,12 +49,16 @@ public class GenerateTestData {
     }
 
     public static String getEventTypeJson() throws IOException {
-        String json = FileUtils.readFileToString(listEventTypesFile());
+        String json = listEventTypesJson();
         JsonElement parse = new JsonParser().parse(json);
         JsonArray jsonArray = parse.getAsJsonArray();
         JsonElement jsonElement = jsonArray.get(0);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(jsonElement);
+    }
+
+    public static String listEventTypesJson() throws IOException {
+        return FileUtils.readFileToString(listEventTypesFile());
     }
 
     public static String getAccountFundsJson() throws IOException {

@@ -1,6 +1,8 @@
 package snowmonkey.meeno.types;
 
-public class EventType {
+import snowmonkey.meeno.ImmutableType;
+
+public final class EventType extends ImmutableType {
 
     public final String id;
     public final String name;
@@ -11,5 +13,4 @@ public class EventType {
         this.name = name;
         this.marketCount = marketCount;
     }
-
 }

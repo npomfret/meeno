@@ -84,7 +84,9 @@ public class GenerateTypes {
             StringBuilder builder = new StringBuilder();
             builder.append("package ").append(packageName).append(";\n");
             builder.append("\n");
-            builder.append("public class ").append(classname).append(" {\n");
+            builder.append("import snowmonkey.meeno.ImmutableType;\n");
+            builder.append("\n");
+            builder.append("public final class ").append(classname).append(" extends ImmutableType {\n");
             builder.append("\n");
             for (Field field : fields.values()) {
                 field.appendTo(builder);
@@ -105,7 +107,6 @@ public class GenerateTypes {
             }
             builder.append("}\n");
 
-            builder.append("\n");
             builder.append("}");
             return builder.toString();
         }

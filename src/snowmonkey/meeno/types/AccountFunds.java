@@ -1,6 +1,8 @@
 package snowmonkey.meeno.types;
 
-public class AccountFunds {
+import snowmonkey.meeno.ImmutableType;
+
+public final class AccountFunds extends ImmutableType {
 
     public final double availableToBetBalance;
     public final double exposure;
@@ -13,5 +15,4 @@ public class AccountFunds {
         this.retainedCommission = retainedCommission;
         this.exposureLimit = exposureLimit;
     }
-
 }
