@@ -2,11 +2,13 @@ package snowmonkey.meeno;
 
 import com.google.gson.*;
 import org.apache.commons.io.FileUtils;
+import org.joda.time.DateTime;
 
 import java.io.File;
 import java.io.IOException;
 
 import static snowmonkey.meeno.HttpAccess.fileWriter;
+import static snowmonkey.meeno.MarketFilterBuilder.TimeRange.between;
 
 public class GenerateTestData {
     public static final File TEST_DATA_DIR = new File("test-data/generated");
@@ -14,7 +16,7 @@ public class GenerateTestData {
     public static void main(String[] args) throws Exception {
         MeenoConfig config = MeenoConfig.load();
 
-        FileUtils.cleanDirectory(TEST_DATA_DIR);
+//        FileUtils.cleanDirectory(TEST_DATA_DIR);
 
         HttpAccess.login(
                 config.certificateFile(),
@@ -27,9 +29,19 @@ public class GenerateTestData {
         SessionToken sessionToken = SessionToken.parseJson(loginJson());
 
         HttpAccess httpAccess = new HttpAccess(sessionToken, config.delayedAppKey(), Exchange.UK);
+        httpAccess.listEvents(
+                new MarketFilterBuilder()
+                        .withEventTypeIds("1")
+                        .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(1)))
+                        .build(),
+                fileWriter(listEventsFile()));
         httpAccess.listEventTypes(fileWriter(listEventTypesFile()));
         httpAccess.getAccountDetails(fileWriter(getAccountDetailsFile()));
         httpAccess.getAccountFunds(fileWriter(getAccountFundsFile()));
+    }
+
+    private static File listEventsFile() {
+        return new File(TEST_DATA_DIR, "listEvents.json");
     }
 
     private static File listEventTypesFile() {
@@ -49,7 +61,14 @@ public class GenerateTestData {
     }
 
     public static String getEventTypeJson() throws IOException {
-        String json = listEventTypesJson();
+        return jsonForFirstElementInArray(listEventTypesJson());
+    }
+
+    public static String getEventJson() throws IOException {
+        return jsonForFirstElementInArray(listEventsJson());
+    }
+
+    private static String jsonForFirstElementInArray(String json) {
         JsonElement parse = new JsonParser().parse(json);
         JsonArray jsonArray = parse.getAsJsonArray();
         JsonElement jsonElement = jsonArray.get(0);
@@ -59,6 +78,10 @@ public class GenerateTestData {
 
     public static String listEventTypesJson() throws IOException {
         return FileUtils.readFileToString(listEventTypesFile());
+    }
+
+    public static String listEventsJson() throws IOException {
+        return FileUtils.readFileToString(listEventsFile());
     }
 
     public static String getAccountFundsJson() throws IOException {

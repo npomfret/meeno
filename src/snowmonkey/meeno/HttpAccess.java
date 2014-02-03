@@ -22,6 +22,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.joda.time.DateTime;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
@@ -31,6 +32,7 @@ import java.net.URI;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class HttpAccess {
@@ -48,6 +50,73 @@ public class HttpAccess {
 
     interface Processor {
         void process(StatusLine statusLine, InputStream in) throws IOException;
+    }
+
+
+    public void listEventTypes(Processor processor) throws IOException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listEventTypes"));
+    }
+
+    public void listEvents(MarketFilter marketFilter, Processor processor) throws IOException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listEvents"), marketFilter);
+    }
+
+    public void getAccountDetails(Processor processor) throws IOException {
+        sendPostRequest(processor, exchange.accountUris.jsonRestUri("getAccountDetails"));
+    }
+
+    public void getAccountFunds(Processor processor) throws IOException {
+        sendPostRequest(processor, exchange.accountUris.jsonRestUri("getAccountFunds"));
+    }
+
+    private void sendPostRequest(Processor processor, URI uri) throws IOException {
+        sendPostRequest(processor, uri, new MarketFilterBuilder().build());
+    }
+
+    private void sendPostRequest(Processor processor, URI uri, MarketFilter marketFilter) throws IOException {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpPost httpPost = httpPost(uri);
+
+            httpPost.setHeader("Content-Type", "application/json");
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Accept-Charset", UTF_8);
+            httpPost.setHeader("X-Application", appKey.asString());
+            httpPost.setHeader("X-Authentication", sessionToken.asString());
+
+            LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+
+            marketFilter.addToResponse(map);
+
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(DateTime.class, new JodaDateTimeTypeConverter())
+                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                    .create();
+            map.put("locale", "en_US");
+
+            String json = gson.toJson(map);
+            System.out.println(json);
+            httpPost.setEntity(new StringEntity(json, UTF_8));
+
+            processResponse(processor, httpClient, httpPost);
+        }
+    }
+
+    private HttpPost httpPost(URI uri) {
+        HttpPost httpPost = new HttpPost(uri);
+
+        RequestConfig defaultRequestConfig = RequestConfig.custom()
+                .setExpectContinueEnabled(true)
+                .setStaleConnectionCheckEnabled(true)
+                .build();
+
+        RequestConfig requestConfig = RequestConfig.copy(defaultRequestConfig)
+                .setSocketTimeout(5000)
+                .setConnectTimeout(5000)
+                .setConnectionRequestTimeout(5000)
+                .build();
+
+        httpPost.setConfig(requestConfig);
+        return httpPost;
     }
 
     public static void login(File certFile, String certPassword, String betfairUsername, String betfairPassword, AppKey apiKey, HttpAccess.Processor processor) throws Exception {
@@ -81,53 +150,6 @@ public class HttpAccess {
         KeyManager[] keyManagers = kmf.getKeyManagers();
         ctx.init(keyManagers, null, new SecureRandom());
         return new SSLSocketFactory(ctx, new StrictHostnameVerifier());
-    }
-
-    public void listEventTypes(Processor processor) throws IOException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listEventTypes"));
-    }
-
-    public void getAccountDetails(Processor processor) throws IOException {
-        sendPostRequest(processor, exchange.accountUris.jsonRestUri("getAccountDetails"));
-    }
-
-    public void getAccountFunds(Processor processor) throws IOException {
-        sendPostRequest(processor, exchange.accountUris.jsonRestUri("getAccountFunds"));
-    }
-
-    private void sendPostRequest(Processor processor, URI uri) throws IOException {
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpPost httpPost = httpPost(uri);
-
-            httpPost.setHeader("Content-Type", "application/json");
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Accept-Charset", UTF_8);
-            httpPost.setHeader("X-Application", appKey.asString());
-            httpPost.setHeader("X-Authentication", sessionToken.asString());
-
-            httpPost.setEntity(new StringEntity("{\"id\":1,\"locale\":\"en_US\",\"filter\":{}}", UTF_8));
-
-            processResponse(processor, httpClient, httpPost);
-        }
-    }
-
-    private HttpPost httpPost(URI uri) {
-        System.out.println("snowmonkey.meeno.HttpAccess.httpPost " + uri);
-        HttpPost httpPost = new HttpPost(uri);
-
-        RequestConfig defaultRequestConfig = RequestConfig.custom()
-                .setExpectContinueEnabled(true)
-                .setStaleConnectionCheckEnabled(true)
-                .build();
-
-        RequestConfig requestConfig = RequestConfig.copy(defaultRequestConfig)
-                .setSocketTimeout(5000)
-                .setConnectTimeout(5000)
-                .setConnectionRequestTimeout(5000)
-                .build();
-
-        httpPost.setConfig(requestConfig);
-        return httpPost;
     }
 
     private void processResponse(Processor processor, CloseableHttpClient httpClient, HttpPost httpPost) throws IOException {

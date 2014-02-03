@@ -15,6 +15,7 @@ import static snowmonkey.meeno.GenerateTestData.*;
 
 public class GenerateTypes {
     public static void main(String[] args) throws Exception {
+        create(getEventJson(), "Event");
         create(getEventTypeJson(), "EventType");
         create(getAccountDetailsJson(), "AccountDetails");
         create(getAccountFundsJson(), "AccountFunds");
