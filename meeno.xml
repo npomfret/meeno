@@ -81,7 +81,7 @@
     <dirname property="module.meeno.basedir" file="${ant.file}"/>
 
 
-    <property name="compiler.args.meeno" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+    <property name="compiler.args.meeno" value="-encoding UTF-8 -source 1.7 ${compiler.args}"/>
 
     <property name="meeno.output.dir" value="${module.meeno.basedir}/out/production/meeno"/>
     <property name="meeno.testoutput.dir" value="${module.meeno.basedir}/out/test/meeno"/>

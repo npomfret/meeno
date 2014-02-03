@@ -15,8 +15,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="runtime" level="project" />
     <orderEntry type="library" name="test-lib" level="project" />
+    <orderEntry type="library" name="runtime-lib" level="project" />
   </component>
 </module>
 

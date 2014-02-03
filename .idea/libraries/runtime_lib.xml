@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="runtime-lib">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib-src/commons-io-2.4-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib-src/httpcomponents-client-4.3.2.src.zip!/httpcomponents-client-4.3.2 2/fluent-hc/src/main/java" />
+      <root url="jar://$PROJECT_DIR$/lib-src/httpcomponents-client-4.3.2.src.zip!/httpcomponents-client-4.3.2 2/httpclient/src/main/java" />
+      <root url="jar://$PROJECT_DIR$/lib-src/httpcomponents-client-4.3.2.src.zip!/httpcomponents-client-4.3.2 2/httpclient-cache/src/main/java" />
+      <root url="jar://$PROJECT_DIR$/lib-src/httpcomponents-client-4.3.2.src.zip!/httpcomponents-client-4.3.2 2/httpclient-osgi/src/main/java" />
+      <root url="jar://$PROJECT_DIR$/lib-src/httpcomponents-client-4.3.2.src.zip!/httpcomponents-client-4.3.2 2/httpclient-win/src/main/java" />
+      <root url="jar://$PROJECT_DIR$/lib-src/httpcomponents-client-4.3.2.src.zip!/httpcomponents-client-4.3.2 2/httpmime/src/main/java" />
+      <root url="jar://$PROJECT_DIR$/lib-src/joda-time-2.3-sources.jar!/" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/lib" recursive="false" />
+  </library>
+</component>
