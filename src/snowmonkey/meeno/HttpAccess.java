@@ -90,10 +90,6 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listMarketTypes"), marketFilter);
     }
 
-    public void listTimeRanges(Processor processor, TimeGranularity timeGranularity) throws IOException {
-        listTimeRanges(processor, timeGranularity, noFilter());
-    }
-
     public void listTimeRanges(Processor processor, TimeGranularity timeGranularity, MarketFilter marketFilter) throws IOException {
         Payload payload = new Payload();
         payload.add(marketFilter);
