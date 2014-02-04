@@ -1,6 +1,7 @@
 package snowmonkey.meeno;
 
 import org.junit.Test;
+import snowmonkey.meeno.types.SessionToken;
 
 public class SessionTokenTest {
     @Test

@@ -1,9 +1,11 @@
-package snowmonkey.meeno;
+package snowmonkey.meeno.types;
 
-public abstract class ValueType<T> {
+import snowmonkey.meeno.Defect;
+
+public abstract class MicroValueType<T> {
     protected final T value;
 
-    protected ValueType(T value) {
+    protected MicroValueType(T value) {
         this.value = value;
 
         if (value == null)
@@ -20,9 +22,9 @@ public abstract class ValueType<T> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ValueType valueType = (ValueType) o;
+        MicroValueType microValueType = (MicroValueType) o;
 
-        if (!value.equals(valueType.value)) return false;
+        if (!value.equals(microValueType.value)) return false;
 
         return true;
     }

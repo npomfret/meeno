@@ -1,4 +1,4 @@
-package snowmonkey.meeno;
+package snowmonkey.meeno.types;
 
 public class CountryCode extends ImmutableType {
     public final String code;

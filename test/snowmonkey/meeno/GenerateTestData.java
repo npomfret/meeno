@@ -3,7 +3,9 @@ package snowmonkey.meeno;
 import com.google.gson.*;
 import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
-import snowmonkey.meeno.types.Event;
+import snowmonkey.meeno.types.Events;
+import snowmonkey.meeno.types.SessionToken;
+import snowmonkey.meeno.types.raw.Event;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +13,7 @@ import java.io.IOException;
 import static snowmonkey.meeno.CountryLookup.UnitedKingdom;
 import static snowmonkey.meeno.HttpAccess.fileWriter;
 import static snowmonkey.meeno.MarketFilterBuilder.TimeRange.between;
-import static snowmonkey.meeno.TimeGranularity.MINUTES;
+import static snowmonkey.meeno.types.TimeGranularity.MINUTES;
 
 public class GenerateTestData {
     public static final File TEST_DATA_DIR = new File("test-data/generated");

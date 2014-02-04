@@ -1,6 +1,8 @@
 package snowmonkey.meeno;
 
-public class AppKey extends ValueType<String> {
+import snowmonkey.meeno.types.MicroValueType;
+
+public class AppKey extends MicroValueType<String> {
     public AppKey(String value) {
         super(value);
     }

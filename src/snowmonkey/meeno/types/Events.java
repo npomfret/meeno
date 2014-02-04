@@ -1,9 +1,9 @@
-package snowmonkey.meeno;
+package snowmonkey.meeno.types;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import snowmonkey.meeno.types.Event;
+import snowmonkey.meeno.types.raw.Event;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;

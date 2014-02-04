@@ -23,6 +23,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.joda.time.DateTime;
+import snowmonkey.meeno.types.SessionToken;
+import snowmonkey.meeno.types.TimeGranularity;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
@@ -62,6 +64,7 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listCountries"), marketFilter);
     }
 
+    //  Set<String>betIds,Set<String>marketIds, OrderProjection orderProjection, TimeRange placedDateRange, OrderBy orderBy, SortDir sortDir,intfromRecord,intrecordCount
     public void listCurrentOrders(Processor processor) throws IOException {
         listCurrentOrders(processor, noFilter());
     }

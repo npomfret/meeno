@@ -2,6 +2,8 @@ package snowmonkey.meeno;
 
 import com.google.common.base.Function;
 import org.joda.time.DateTime;
+import snowmonkey.meeno.types.CountryCode;
+import snowmonkey.meeno.types.ImmutableType;
 
 import java.util.Set;
 

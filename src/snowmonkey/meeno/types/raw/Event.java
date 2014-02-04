@@ -1,6 +1,6 @@
-package snowmonkey.meeno.types;
+package snowmonkey.meeno.types.raw;
 
-import snowmonkey.meeno.ImmutableType;
+import snowmonkey.meeno.types.ImmutableType;
 
 public final class Event extends ImmutableType {
 

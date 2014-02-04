@@ -1,7 +1,8 @@
 package snowmonkey.meeno;
 
 import org.junit.Test;
-import snowmonkey.meeno.types.Event;
+import snowmonkey.meeno.types.Events;
+import snowmonkey.meeno.types.raw.Event;
 
 public class EventsTest {
     @Test

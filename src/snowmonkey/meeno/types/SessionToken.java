@@ -1,11 +1,12 @@
-package snowmonkey.meeno;
+package snowmonkey.meeno.types;
 
 import com.google.gson.stream.JsonReader;
+import snowmonkey.meeno.Defect;
 
 import java.io.IOException;
 import java.io.StringReader;
 
-public class SessionToken extends ValueType<String> {
+public class SessionToken extends MicroValueType<String> {
     public SessionToken(String token) {
         super(token);
     }

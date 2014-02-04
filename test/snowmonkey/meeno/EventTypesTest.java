@@ -1,7 +1,8 @@
 package snowmonkey.meeno;
 
 import org.junit.Test;
-import snowmonkey.meeno.types.EventType;
+import snowmonkey.meeno.types.EventTypes;
+import snowmonkey.meeno.types.raw.EventType;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;

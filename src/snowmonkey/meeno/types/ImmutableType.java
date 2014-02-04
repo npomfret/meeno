@@ -1,4 +1,4 @@
-package snowmonkey.meeno;
+package snowmonkey.meeno.types;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

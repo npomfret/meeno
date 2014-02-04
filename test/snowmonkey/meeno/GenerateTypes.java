@@ -28,7 +28,7 @@ public class GenerateTypes {
     private static void create(String json, String className) throws IOException {
         System.out.println(className);
 
-        ClassBuilder classBuilder = new ClassBuilder("snowmonkey.meeno.types", className);
+        ClassBuilder classBuilder = new ClassBuilder("snowmonkey.meeno.types.raw", className);
 
         JsonObject root = new JsonParser().parse(json).getAsJsonObject();
 

@@ -1,5 +1,7 @@
 package snowmonkey.meeno;
 
+import snowmonkey.meeno.types.CountryCode;
+
 public class CountryLookup {
     public static final CountryCode Andorra = new CountryCode("AD", "Andorra");
     public static final CountryCode UnitedArabEmirates = new CountryCode("AE", "United Arab Emirates");
