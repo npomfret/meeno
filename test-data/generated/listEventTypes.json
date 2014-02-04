@@ -1,0 +1,219 @@
+[
+    {
+        "eventType": {
+            "id": "468328",
+            "name": "Handball"
+        },
+        "marketCount": 56
+    },
+    {
+        "eventType": {
+            "id": "1",
+            "name": "Soccer"
+        },
+        "marketCount": 19308
+    },
+    {
+        "eventType": {
+            "id": "2",
+            "name": "Tennis"
+        },
+        "marketCount": 500
+    },
+    {
+        "eventType": {
+            "id": "3",
+            "name": "Golf"
+        },
+        "marketCount": 49
+    },
+    {
+        "eventType": {
+            "id": "4",
+            "name": "Cricket"
+        },
+        "marketCount": 288
+    },
+    {
+        "eventType": {
+            "id": "5",
+            "name": "Rugby Union"
+        },
+        "marketCount": 81
+    },
+    {
+        "eventType": {
+            "id": "6",
+            "name": "Boxing"
+        },
+        "marketCount": 6
+    },
+    {
+        "eventType": {
+            "id": "7",
+            "name": "Horse Racing"
+        },
+        "marketCount": 159
+    },
+    {
+        "eventType": {
+            "id": "8",
+            "name": "Motor Sport"
+        },
+        "marketCount": 4
+    },
+    {
+        "eventType": {
+            "id": "7524",
+            "name": "Ice Hockey"
+        },
+        "marketCount": 901
+    },
+    {
+        "eventType": {
+            "id": "10",
+            "name": "Special Bets"
+        },
+        "marketCount": 65
+    },
+    {
+        "eventType": {
+            "id": "451485",
+            "name": "Winter Sports"
+        },
+        "marketCount": 7
+    },
+    {
+        "eventType": {
+            "id": "11",
+            "name": "Cycling"
+        },
+        "marketCount": 3
+    },
+    {
+        "eventType": {
+            "id": "7522",
+            "name": "Basketball"
+        },
+        "marketCount": 402
+    },
+    {
+        "eventType": {
+            "id": "1477",
+            "name": "Rugby League"
+        },
+        "marketCount": 34
+    },
+    {
+        "eventType": {
+            "id": "606611",
+            "name": "Netball"
+        },
+        "marketCount": 2
+    },
+    {
+        "eventType": {
+            "id": "4339",
+            "name": "Greyhound Racing"
+        },
+        "marketCount": 88
+    },
+    {
+        "eventType": {
+            "id": "6231",
+            "name": "Financial Bets"
+        },
+        "marketCount": 40
+    },
+    {
+        "eventType": {
+            "id": "2378961",
+            "name": "Politics"
+        },
+        "marketCount": 28
+    },
+    {
+        "eventType": {
+            "id": "998917",
+            "name": "Volleyball"
+        },
+        "marketCount": 50
+    },
+    {
+        "eventType": {
+            "id": "998919",
+            "name": "Bandy"
+        },
+        "marketCount": 14
+    },
+    {
+        "eventType": {
+            "id": "998918",
+            "name": "Bowls"
+        },
+        "marketCount": 39
+    },
+    {
+        "eventType": {
+            "id": "998920",
+            "name": "Floorball"
+        },
+        "marketCount": 13
+    },
+    {
+        "eventType": {
+            "id": "26420387",
+            "name": "Mixed Martial Arts"
+        },
+        "marketCount": 31
+    },
+    {
+        "eventType": {
+            "id": "3503",
+            "name": "Darts"
+        },
+        "marketCount": 53
+    },
+    {
+        "eventType": {
+            "id": "72382",
+            "name": "Pool"
+        },
+        "marketCount": 1
+    },
+    {
+        "eventType": {
+            "id": "2152880",
+            "name": "Gaelic Games"
+        },
+        "marketCount": 13
+    },
+    {
+        "eventType": {
+            "id": "6422",
+            "name": "Snooker"
+        },
+        "marketCount": 49
+    },
+    {
+        "eventType": {
+            "id": "27105927",
+            "name": "Winter Olympics 2014"
+        },
+        "marketCount": 308
+    },
+    {
+        "eventType": {
+            "id": "6423",
+            "name": "American Football"
+        },
+        "marketCount": 1
+    },
+    {
+        "eventType": {
+            "id": "7511",
+            "name": "Baseball"
+        },
+        "marketCount": 3
+    }
+]

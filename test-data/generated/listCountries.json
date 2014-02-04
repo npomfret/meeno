@@ -1,0 +1,282 @@
+[
+    {
+        "countryCode": "GB",
+        "marketCount": 4904
+    },
+    {
+        "countryCode": "ES",
+        "marketCount": 1230
+    },
+    {
+        "countryCode": "UA",
+        "marketCount": 12
+    },
+    {
+        "countryCode": "SI",
+        "marketCount": 5
+    },
+    {
+        "countryCode": "IE",
+        "marketCount": 36
+    },
+    {
+        "countryCode": "JP",
+        "marketCount": 2
+    },
+    {
+        "countryCode": "KR",
+        "marketCount": 13
+    },
+    {
+        "countryCode": "SK",
+        "marketCount": 17
+    },
+    {
+        "countryCode": "CH",
+        "marketCount": 246
+    },
+    {
+        "countryCode": "RU",
+        "marketCount": 462
+    },
+    {
+        "countryCode": "PL",
+        "marketCount": 57
+    },
+    {
+        "countryCode": "CZ",
+        "marketCount": 52
+    },
+    {
+        "countryCode": "DK",
+        "marketCount": 37
+    },
+    {
+        "countryCode": "DE",
+        "marketCount": 1447
+    },
+    {
+        "countryCode": "RO",
+        "marketCount": 4
+    },
+    {
+        "countryCode": "BG",
+        "marketCount": 2
+    },
+    {
+        "countryCode": "AT",
+        "marketCount": 204
+    },
+    {
+        "countryCode": "HU",
+        "marketCount": 2
+    },
+    {
+        "countryCode": "BE",
+        "marketCount": 542
+    },
+    {
+        "countryCode": "NL",
+        "marketCount": 1162
+    },
+    {
+        "countryCode": "FR",
+        "marketCount": 1180
+    },
+    {
+        "countryCode": "IT",
+        "marketCount": 1154
+    },
+    {
+        "countryCode": "PH",
+        "marketCount": 2
+    },
+    {
+        "countryCode": "TR",
+        "marketCount": 609
+    },
+    {
+        "countryCode": "CS",
+        "marketCount": 2
+    },
+    {
+        "countryCode": "GR",
+        "marketCount": 495
+    },
+    {
+        "countryCode": "PT",
+        "marketCount": 888
+    },
+    {
+        "countryCode": "HR",
+        "marketCount": 277
+    },
+    {
+        "countryCode": "IL",
+        "marketCount": 102
+    },
+    {
+        "countryCode": "US",
+        "marketCount": 708
+    },
+    {
+        "countryCode": "SE",
+        "marketCount": 136
+    },
+    {
+        "countryCode": "FI",
+        "marketCount": 278
+    },
+    {
+        "countryCode": "AR",
+        "marketCount": 210
+    },
+    {
+        "countryCode": "ZA",
+        "marketCount": 243
+    },
+    {
+        "countryCode": "BD",
+        "marketCount": 63
+    },
+    {
+        "countryCode": "AG",
+        "marketCount": 29
+    },
+    {
+        "countryCode": "IS",
+        "marketCount": 22
+    },
+    {
+        "countryCode": "CL",
+        "marketCount": 456
+    },
+    {
+        "countryCode": "TT",
+        "marketCount": 24
+    },
+    {
+        "countryCode": "CO",
+        "marketCount": 383
+    },
+    {
+        "countryCode": "IN",
+        "marketCount": 142
+    },
+    {
+        "countryCode": "LV",
+        "marketCount": 41
+    },
+    {
+        "countryCode": "SG",
+        "marketCount": 27
+    },
+    {
+        "countryCode": "IR",
+        "marketCount": 20
+    },
+    {
+        "countryCode": "QA",
+        "marketCount": 136
+    },
+    {
+        "countryCode": "EG",
+        "marketCount": 166
+    },
+    {
+        "countryCode": "LT",
+        "marketCount": 7
+    },
+    {
+        "countryCode": "NO",
+        "marketCount": 70
+    },
+    {
+        "countryCode": "UY",
+        "marketCount": 81
+    },
+    {
+        "countryCode": "MX",
+        "marketCount": 389
+    },
+    {
+        "countryCode": "BR",
+        "marketCount": 1230
+    },
+    {
+        "countryCode": "PA",
+        "marketCount": 100
+    },
+    {
+        "countryCode": "ID",
+        "marketCount": 20
+    },
+    {
+        "countryCode": "BH",
+        "marketCount": 40
+    },
+    {
+        "countryCode": "AW",
+        "marketCount": 20
+    },
+    {
+        "countryCode": "CR",
+        "marketCount": 20
+    },
+    {
+        "countryCode": "LK",
+        "marketCount": 5
+    },
+    {
+        "countryCode": "PK",
+        "marketCount": 45
+    },
+    {
+        "countryCode": "SA",
+        "marketCount": 80
+    },
+    {
+        "countryCode": "AE",
+        "marketCount": 119
+    },
+    {
+        "countryCode": "PY",
+        "marketCount": 40
+    },
+    {
+        "countryCode": "MY",
+        "marketCount": 12
+    },
+    {
+        "countryCode": "UZ",
+        "marketCount": 28
+    },
+    {
+        "countryCode": "TH",
+        "marketCount": 56
+    },
+    {
+        "countryCode": "EC",
+        "marketCount": 48
+    },
+    {
+        "countryCode": "HK",
+        "marketCount": 60
+    },
+    {
+        "countryCode": "AZ",
+        "marketCount": 1
+    },
+    {
+        "countryCode": "EE",
+        "marketCount": 1
+    },
+    {
+        "countryCode": "JM",
+        "marketCount": 19
+    },
+    {
+        "countryCode": "AU",
+        "marketCount": 3
+    }
+]
