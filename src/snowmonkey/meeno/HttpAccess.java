@@ -20,6 +20,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import snowmonkey.meeno.types.CustomerRef;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.SessionToken;
@@ -49,6 +51,7 @@ public class HttpAccess {
 
     public static final String UTF_8 = "UTF-8";
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.forPattern(DATE_FORMAT);
 
     interface Processor {
         void process(StatusLine statusLine, InputStream in) throws IOException;
@@ -276,5 +279,4 @@ public class HttpAccess {
             }
         }
     }
-
 }

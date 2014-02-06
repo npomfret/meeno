@@ -1,29 +1,35 @@
 package snowmonkey.meeno.types.raw;
 
 
+import org.jetbrains.annotations.Nullable;
+import org.joda.time.DateTime;
 import snowmonkey.meeno.types.ImmutbleType;
-
-import java.util.Date;
 
 public final class MarketDescription extends ImmutbleType {
 
     public final Boolean persistenceEnabled;
     public final Boolean bspMarket;
-    public final Date marketTime;
-    public final Date suspendTime;
-    public final Date settleTime;
-    public final String bettingType;
+    public final DateTime marketTime;
+    public final DateTime suspendTime;
+    @Nullable
+    public final DateTime settleTime;
+    public final MarketBettingType bettingType;
     public final Boolean turnInPlayEnabled;
     public final String marketType;
+    @Nullable
     public final String regulator;
     public final Double marketBaseRate;
     public final Boolean discountAllowed;
+    @Nullable
     public final String wallet;
+    @Nullable
     public final String rules;
+    @Nullable
     public final Boolean rulesHasDate;
+    @Nullable
     public final String clarifications;
 
-    public MarketDescription(Boolean persistenceEnabled, Boolean bspMarket, Date marketTime, Date suspendTime, Date settleTime, String bettingType, Boolean turnInPlayEnabled, String marketType, String regulator, Double marketBaseRate, Boolean discountAllowed, String wallet, String rules, Boolean rulesHasDate, String clarifications) {
+    public MarketDescription(Boolean persistenceEnabled, Boolean bspMarket, DateTime marketTime, DateTime suspendTime, DateTime settleTime, MarketBettingType bettingType, Boolean turnInPlayEnabled, String marketType, String regulator, Double marketBaseRate, Boolean discountAllowed, String wallet, String rules, Boolean rulesHasDate, String clarifications) {
         this.persistenceEnabled = persistenceEnabled;
         this.bspMarket = bspMarket;
         this.marketTime = marketTime;

@@ -1,8 +1,6 @@
 package snowmonkey.meeno.types;
 
 import com.google.gson.*;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import snowmonkey.meeno.Defect;
 import snowmonkey.meeno.HttpAccess;
 import snowmonkey.meeno.types.raw.Event;
@@ -18,7 +16,6 @@ public class Events implements Iterable<Event> {
         Events events = new Events();
 
         JsonElement parsed = new JsonParser().parse(json);
-        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(HttpAccess.DATE_FORMAT);
 
         for (JsonElement jsonElement : parsed.getAsJsonArray()) {
             try {
@@ -31,7 +28,8 @@ public class Events implements Iterable<Event> {
                         eventObj.getAsJsonPrimitive("name").getAsString(),
                         eventObj.getAsJsonPrimitive("countryCode").getAsString(),
                         eventObj.getAsJsonPrimitive("timezone").getAsString(),
-                        dateTimeFormatter.parseDateTime(eventObj.getAsJsonPrimitive("openDate").getAsString())
+                        eventObj.has("venue") ? eventObj.getAsJsonPrimitive("venue").getAsString() : null,
+                        HttpAccess.DATE_TIME_FORMATTER.parseDateTime(eventObj.getAsJsonPrimitive("openDate").getAsString())
                 );
 
                 events.add(event);

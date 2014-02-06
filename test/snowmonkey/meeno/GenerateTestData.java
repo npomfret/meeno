@@ -105,10 +105,14 @@ public class GenerateTestData {
         };
     }
 
-    private static class MarketCatalogue {
+    public static class MarketCatalogue {
 
         public static File listMarketCatalogueFile() {
             return new File(TEST_DATA_DIR, "listMarketCatalogue.json");
+        }
+
+        public static String listMarketCatalogueJson() throws IOException {
+            return FileUtils.readFileToString(listMarketCatalogueFile());
         }
     }
 
