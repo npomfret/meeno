@@ -17,10 +17,10 @@ public class Events implements Iterable<Event> {
     public static Events parse(String json) {
         Events events = new Events();
 
-        JsonElement parse = new JsonParser().parse(json);
+        JsonElement parsed = new JsonParser().parse(json);
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(HttpAccess.DATE_FORMAT);
 
-        for (JsonElement jsonElement : parse.getAsJsonArray()) {
+        for (JsonElement jsonElement : parsed.getAsJsonArray()) {
             try {
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
                 JsonObject eventObj = jsonObject.get("event").getAsJsonObject();
@@ -36,13 +36,16 @@ public class Events implements Iterable<Event> {
 
                 events.add(event);
             } catch (RuntimeException e) {
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                String s = gson.toJson(jsonElement);
-                throw new Defect("Cannot parse:\n" + s, e);
+                throw new Defect("Cannot parse:\n" + printElement(jsonElement), e);
             }
         }
 
         return events;
+    }
+
+    public static String printElement(JsonElement jsonElement) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(jsonElement);
     }
 
     @Override

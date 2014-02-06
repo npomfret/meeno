@@ -1,10 +1,9 @@
 package snowmonkey.meeno.types;
 
-import com.google.gson.stream.JsonReader;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import snowmonkey.meeno.Defect;
-
-import java.io.IOException;
-import java.io.StringReader;
 
 public class SessionToken extends MicroValueType<String> {
     public SessionToken(String token) {
@@ -12,17 +11,12 @@ public class SessionToken extends MicroValueType<String> {
     }
 
     public static SessionToken parseJson(String json) {
-        try (JsonReader reader = new JsonReader(new StringReader(json))) {
-            reader.beginObject();
-            while (reader.hasNext()) {
-                String name = reader.nextName();
-                if (name.equals("sessionToken")) {
-                    return new SessionToken(reader.nextString());
-                }
-            }
-            throw new Defect("Could not find session token in " + json);
-        } catch (IOException e) {
-            throw new Defect("Should not happen", e);
+        JsonObject parsed = new JsonParser().parse(json).getAsJsonObject();
+        if (parsed.has("sessionToken")) {
+            return new SessionToken(parsed.getAsJsonPrimitive("sessionToken").getAsString());
+        } else {
+            JsonPrimitive status = parsed.getAsJsonPrimitive("loginStatus");
+            throw new Defect("Login failed: " + status.getAsString());
         }
     }
 
