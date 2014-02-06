@@ -10,7 +10,7 @@ import static org.junit.Assert.assertThat;
 public class EventTypesTest {
     @Test
     public void canParse() throws Exception {
-        EventTypes eventTypes = EventTypes.parse(GenerateTestData.listEventTypesJson());
+        EventTypes eventTypes = EventTypes.parse(GenerateTestData.EventTypes.listEventTypesJson());
 
         EventType soccer = eventTypes.lookup("Soccer");
 

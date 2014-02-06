@@ -7,7 +7,7 @@ import snowmonkey.meeno.types.raw.Event;
 public class EventsTest {
     @Test
     public void test() throws Exception {
-        Events events = Events.parse(GenerateTestData.listEventsJson());
+        Events events = Events.parse(GenerateTestData.Events.listEventsJson());
 
         Event next = events.iterator().next();
         System.out.println("next = " + next);

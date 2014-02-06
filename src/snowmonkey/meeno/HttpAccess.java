@@ -2,9 +2,6 @@ package snowmonkey.meeno;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -23,19 +20,28 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.joda.time.DateTime;
+import snowmonkey.meeno.types.CustomerRef;
+import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.SessionToken;
 import snowmonkey.meeno.types.TimeGranularity;
+import snowmonkey.meeno.types.raw.MarketProjection;
+import snowmonkey.meeno.types.raw.MarketSort;
+import snowmonkey.meeno.types.raw.PlaceInstruction;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
 import static snowmonkey.meeno.MarketFilterBuilder.noFilter;
 
@@ -43,6 +49,10 @@ public class HttpAccess {
 
     public static final String UTF_8 = "UTF-8";
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
+    interface Processor {
+        void process(StatusLine statusLine, InputStream in) throws IOException;
+    }
 
     private final SessionToken sessionToken;
     private final AppKey appKey;
@@ -54,8 +64,21 @@ public class HttpAccess {
         this.exchange = exchange;
     }
 
-    interface Processor {
-        void process(StatusLine statusLine, InputStream in) throws IOException;
+    public void placeOrders(MarketId marketId, List<PlaceInstruction> instructions, CustomerRef customerRef, Processor processor) throws IOException {
+        Payload payload = new Payload();
+        payload.addMarketId(marketId);
+        payload.addPlaceInstructions(instructions);
+        payload.addCustomerRef(customerRef);
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("placeOrders"), payload);
+    }
+
+    public void listMarketCatalogue(Processor processor, Set<MarketProjection> marketProjection, MarketSort sort, int maxResults, MarketFilter marketFilter) throws IOException {
+        Payload payload = new Payload();
+        payload.add(marketFilter);
+        payload.addMarketProjection(marketProjection);
+        payload.addMarketSort(sort);
+        payload.addMaxResults(maxResults);
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listMarketCatalogue"), payload);
     }
 
     public void listCountries(Processor processor) throws IOException {
@@ -137,6 +160,30 @@ public class HttpAccess {
 
         public void add(TimeGranularity timeGranularity) {
             map.put("granularity", timeGranularity);
+        }
+
+        public void addMarketId(MarketId marketId) {
+            map.put("marketId", marketId.asString());
+        }
+
+        public void addPlaceInstructions(List<PlaceInstruction> instructions) {
+            map.put("instructions", instructions);
+        }
+
+        public void addCustomerRef(CustomerRef customerRef) {
+            map.put("customerRef", customerRef.asString());
+        }
+
+        public void addMarketProjection(Set<MarketProjection> marketProjection) {
+            map.put("marketProjection", marketProjection);
+        }
+
+        public void addMarketSort(MarketSort marketSort) {
+            map.put("sort", marketSort);
+        }
+
+        public void addMaxResults(int maxResults) {
+            map.put("maxResults", maxResults);
         }
     }
 
@@ -230,33 +277,4 @@ public class HttpAccess {
         }
     }
 
-    private void ss(HttpPost httpPost) {
-        RequestConfig defaultRequestConfig = RequestConfig.custom()
-                .setExpectContinueEnabled(true)
-                .setStaleConnectionCheckEnabled(true)
-                .build();
-
-        RequestConfig requestConfig = RequestConfig.copy(defaultRequestConfig)
-                .setSocketTimeout(5000)
-                .setConnectTimeout(5000)
-                .setConnectionRequestTimeout(5000)
-                .build();
-
-        httpPost.setConfig(requestConfig);
-    }
-
-    public static Processor fileWriter(final File file) {
-        return new Processor() {
-            @Override
-            public void process(StatusLine statusLine, InputStream in) throws IOException {
-                System.out.println("statusLine = " + statusLine);
-                try (Reader reader = new InputStreamReader(in, UTF_8)) {
-                    JsonElement parse = new JsonParser().parse(reader);
-                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                    String json = gson.toJson(parse);
-                    FileUtils.writeStringToFile(file, json);
-                }
-            }
-        };
-    }
 }

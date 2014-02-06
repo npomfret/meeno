@@ -1,0 +1,321 @@
+[
+    {
+        "marketId": "1.112645443",
+        "marketName": "Caracas +1",
+        "description": {
+            "persistenceEnabled": true,
+            "bspMarket": false,
+            "marketTime": "2014-02-07T01:00:00.000Z",
+            "suspendTime": "2014-02-07T01:00:00.000Z",
+            "bettingType": "ODDS",
+            "turnInPlayEnabled": true,
+            "marketType": "TEAM_B_1",
+            "marketBaseRate": 5.0,
+            "discountAllowed": true,
+            "wallet": "UK wallet",
+            "rules": "\u003cbr\u003e\u003cbr\u003e\u003cb\u003eMarket Information\u003c/b\u003e\u003cbr\u003e\u003cbr\u003eFor further information please see \u003ca href\u003dhttp://content.betfair.com/aboutus/content.asp?sWhichKey\u003dRules%20and%20Regulations#undefined.do style\u003dcolor:0163ad; text-decoration: underline; target\u003d_blank\u003eRules \u0026 Regs\u003c/a\u003e.\u003cbr\u003e\u003cbr\u003e Who will win this match with the stated handicap applied? \u003cb\u003e\u003cfont color\u003dred\u003e All bets apply to Full Time according to the match officials, plus any stoppage time.  Extra-time/penalty shoot-outs are not included.\u003c/b\u003e\u003c/font\u003e\u003cbr\u003e\u003cbr\u003e \u003cb\u003e\u003cfont color\u003dblue\u003eIf this market is re-opened for In-Play betting, \u003c/b\u003e\u003c/font\u003e unmatched bets will be cancelled at kick off and the market turned in play. The market will be suspended if it appears that a goal has been scored, a penalty will be given, or a red card will be shown. With the exception of bets for which the \"keep\" option has been selected, unmatched bets will be cancelled in the event of a confirmed goal or sending off. Please note that should our data feeds fail we may be unable to manage this game in-play. \u003cbr\u003e\u003cbr\u003eCustomers should be aware that:\u003cb\u003e\u003cbr\u003e\u003cbr\u003e\u003cli\u003eTransmissions described as “live” by some broadcasters may actually be delayed\u003c/li\u003e\u003cbr\u003e\u003cli\u003eThe extent of any such delay may vary, depending on the set-up through which they are receiving pictures or data.\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e If this market is scheduled to go in-play, but due to unforeseen circumstances we are unable to offer the market in-play, then this market will be re-opened for the half-time interval and suspended again an hour after the scheduled kick-off time.  Whilst it is our intention to re-open this market for the half-time interval, in certain circumstances this may not always be possible.\u003cbr\u003e",
+            "rulesHasDate": true
+        },
+        "runners": [
+            {
+                "selectionId": 7039291,
+                "runnerName": "Caracas +1",
+                "handicap": 0.0,
+                "sortPriority": 1
+            },
+            {
+                "selectionId": 6747604,
+                "runnerName": "Lanus -1",
+                "handicap": 0.0,
+                "sortPriority": 2
+            },
+            {
+                "selectionId": 151478,
+                "runnerName": "Draw",
+                "handicap": 0.0,
+                "sortPriority": 3
+            }
+        ],
+        "eventType": {
+            "id": "1",
+            "name": "Soccer"
+        },
+        "competition": {
+            "id": "62815",
+            "name": "Copa Libertadores"
+        },
+        "event": {
+            "id": "27140610",
+            "name": "Lanus v Caracas",
+            "countryCode": "AR",
+            "timezone": "GMT",
+            "openDate": "2014-02-07T01:00:00.000Z"
+        }
+    },
+    {
+        "marketId": "1.112645442",
+        "marketName": "Correct Score 2 Home",
+        "description": {
+            "persistenceEnabled": true,
+            "bspMarket": false,
+            "marketTime": "2014-02-07T01:00:00.000Z",
+            "suspendTime": "2014-02-07T01:00:00.000Z",
+            "bettingType": "ODDS",
+            "turnInPlayEnabled": true,
+            "marketType": "CORRECT_SCORE2",
+            "marketBaseRate": 5.0,
+            "discountAllowed": true,
+            "wallet": "UK wallet",
+            "rules": "\u003cbr\u003e\u003cbr\u003e\u003cb\u003eMarket Information\u003c/b\u003e\u003cbr\u003e\u003cbr\u003eFor further information please see \u003ca href\u003dhttp://content.betfair.com/aboutus/content.asp?sWhichKey\u003dRules%20and%20Regulations#undefined.do style\u003dcolor:0163ad; text-decoration: underline; target\u003d_blank\u003eRules \u0026 Regs\u003c/a\u003e.\u003cbr\u003e\u003cbr\u003e Predict the score of this match. \u003cb\u003e\u003cfont color\u003dred\u003e All bets apply to Full Time according to the match officials, plus any stoppage time.  Extra-time/penalty shoot-outs are not included.\u003c/b\u003e\u003c/font\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003e\u003cfont color\u003dblue\u003eIf this market is re-opened for In-Play betting, \u003c/b\u003e\u003c/font\u003e unmatched bets will be cancelled at kick off and the market turned in play. The market will be suspended if it appears that a goal has been scored, a penalty will be given, or a red card will be shown. With the exception of bets for which the \"keep\" option has been selected, unmatched bets will be cancelled in the event of a confirmed goal or sending off. Please note that should our data feeds fail we may be unable to manage this game in-play.\u003cbr\u003e\u003cbr\u003e\u003cb\u003e\u003cfont color\u003dred\u003e In the event this match finishes with any scoreline not individually listed, the market will be settled as \u0027Any Unquoted\u0027.\u003c/b\u003e\u003c/font\u003e\u003cbr\u003e\u003cbr\u003e Customers should be aware that:\u003cb\u003e\u003cbr\u003e\u003cbr\u003e\u003cli\u003eTransmissions described as “live” by some broadcasters may actually be delayed\u003c/li\u003e\u003cbr\u003e\u003cli\u003eThe extent of any such delay may vary, depending on the set-up through which they are receiving pictures or data.\u003c/b.\u003cbr\u003e\u003cbr\u003e If this market is scheduled to go in-play, but due to unforeseen circumstances we are unable to offer the market in-play, then this market will be re-opened for the half-time interval and suspended again an hour after the scheduled kick-off time.  Whilst it is our intention to re-open this market for the half-time interval, in certain circumstances this may not always be possible.\u003cbr\u003e",
+            "rulesHasDate": true
+        },
+        "runners": [
+            {
+                "selectionId": 526007,
+                "runnerName": "4 - 0",
+                "handicap": 0.0,
+                "sortPriority": 1
+            },
+            {
+                "selectionId": 526012,
+                "runnerName": "4 - 1",
+                "handicap": 0.0,
+                "sortPriority": 2
+            },
+            {
+                "selectionId": 2795147,
+                "runnerName": "4 - 2",
+                "handicap": 0.0,
+                "sortPriority": 3
+            },
+            {
+                "selectionId": 526008,
+                "runnerName": "5 - 0",
+                "handicap": 0.0,
+                "sortPriority": 4
+            },
+            {
+                "selectionId": 526013,
+                "runnerName": "5 - 1",
+                "handicap": 0.0,
+                "sortPriority": 5
+            },
+            {
+                "selectionId": 3647906,
+                "runnerName": "5 - 2",
+                "handicap": 0.0,
+                "sortPriority": 6
+            },
+            {
+                "selectionId": 526009,
+                "runnerName": "6 - 0",
+                "handicap": 0.0,
+                "sortPriority": 7
+            },
+            {
+                "selectionId": 526014,
+                "runnerName": "6 - 1",
+                "handicap": 0.0,
+                "sortPriority": 8
+            },
+            {
+                "selectionId": 3647907,
+                "runnerName": "6 - 2",
+                "handicap": 0.0,
+                "sortPriority": 9
+            },
+            {
+                "selectionId": 526010,
+                "runnerName": "7 - 0",
+                "handicap": 0.0,
+                "sortPriority": 10
+            },
+            {
+                "selectionId": 526015,
+                "runnerName": "7 - 1",
+                "handicap": 0.0,
+                "sortPriority": 11
+            },
+            {
+                "selectionId": 3647908,
+                "runnerName": "7 - 2",
+                "handicap": 0.0,
+                "sortPriority": 12
+            },
+            {
+                "selectionId": 4316861,
+                "runnerName": "Any unquoted",
+                "handicap": 0.0,
+                "sortPriority": 13
+            }
+        ],
+        "eventType": {
+            "id": "1",
+            "name": "Soccer"
+        },
+        "competition": {
+            "id": "62815",
+            "name": "Copa Libertadores"
+        },
+        "event": {
+            "id": "27140610",
+            "name": "Lanus v Caracas",
+            "countryCode": "AR",
+            "timezone": "GMT",
+            "openDate": "2014-02-07T01:00:00.000Z"
+        }
+    },
+    {
+        "marketId": "1.112645445",
+        "marketName": "Lanus +1",
+        "description": {
+            "persistenceEnabled": true,
+            "bspMarket": false,
+            "marketTime": "2014-02-07T01:00:00.000Z",
+            "suspendTime": "2014-02-07T01:00:00.000Z",
+            "bettingType": "ODDS",
+            "turnInPlayEnabled": true,
+            "marketType": "TEAM_A_1",
+            "marketBaseRate": 5.0,
+            "discountAllowed": false,
+            "wallet": "UK wallet",
+            "rules": "\u003cbr\u003e\u003cbr\u003e\u003cb\u003eMarket Information\u003c/b\u003e\u003cbr\u003e\u003cbr\u003eFor further information please see \u003ca href\u003dhttp://content.betfair.com/aboutus/content.asp?sWhichKey\u003dRules%20and%20Regulations#undefined.do style\u003dcolor:0163ad; text-decoration: underline; target\u003d_blank\u003eRules \u0026 Regs\u003c/a\u003e.\u003cbr\u003e\u003cbr\u003e Who will win this match with the stated handicap applied? \u003cb\u003e\u003cfont color\u003dred\u003e All bets apply to Full Time according to the match officials, plus any stoppage time.  Extra-time/penalty shoot-outs are not included.\u003c/b\u003e\u003c/font\u003e\u003cbr\u003e\u003cbr\u003e \u003cb\u003e\u003cfont color\u003dblue\u003eIf this market is re-opened for In-Play betting, \u003c/b\u003e\u003c/font\u003e unmatched bets will be cancelled at kick off and the market turned in play. The market will be suspended if it appears that a goal has been scored, a penalty will be given, or a red card will be shown. With the exception of bets for which the \"keep\" option has been selected, unmatched bets will be cancelled in the event of a confirmed goal or sending off. Please note that should our data feeds fail we may be unable to manage this game in-play. \u003cbr\u003e\u003cbr\u003eCustomers should be aware that:\u003cb\u003e\u003cbr\u003e\u003cbr\u003e\u003cli\u003eTransmissions described as “live” by some broadcasters may actually be delayed\u003c/li\u003e\u003cbr\u003e\u003cli\u003eThe extent of any such delay may vary, depending on the set-up through which they are receiving pictures or data.\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e If this market is scheduled to go in-play, but due to unforeseen circumstances we are unable to offer the market in-play, then this market will be re-opened for the half-time interval and suspended again an hour after the scheduled kick-off time.  Whilst it is our intention to re-open this market for the half-time interval, in certain circumstances this may not always be possible.\u003cbr\u003e",
+            "rulesHasDate": true
+        },
+        "runners": [
+            {
+                "selectionId": 6747601,
+                "runnerName": "Lanus +1",
+                "handicap": 0.0,
+                "sortPriority": 1
+            },
+            {
+                "selectionId": 7039289,
+                "runnerName": "Caracas -1",
+                "handicap": 0.0,
+                "sortPriority": 2
+            },
+            {
+                "selectionId": 151478,
+                "runnerName": "Draw",
+                "handicap": 0.0,
+                "sortPriority": 3
+            }
+        ],
+        "eventType": {
+            "id": "1",
+            "name": "Soccer"
+        },
+        "competition": {
+            "id": "62815",
+            "name": "Copa Libertadores"
+        },
+        "event": {
+            "id": "27140610",
+            "name": "Lanus v Caracas",
+            "countryCode": "AR",
+            "timezone": "GMT",
+            "openDate": "2014-02-07T01:00:00.000Z"
+        }
+    },
+    {
+        "marketId": "1.112645444",
+        "marketName": "Double Chance",
+        "description": {
+            "persistenceEnabled": true,
+            "bspMarket": false,
+            "marketTime": "2014-02-07T01:00:00.000Z",
+            "suspendTime": "2014-02-07T01:00:00.000Z",
+            "bettingType": "ODDS",
+            "turnInPlayEnabled": true,
+            "marketType": "DOUBLE_CHANCE",
+            "marketBaseRate": 5.0,
+            "discountAllowed": true,
+            "wallet": "UK wallet",
+            "rules": "\u003cbr\u003e\u003cbr\u003e\u003cb\u003eMarket Information\u003c/b\u003e\u003cbr\u003e\u003cbr\u003eFor further information please see \u003ca href\u003dhttp://content.betfair.com/aboutus/content.asp?sWhichKey\u003dRules%20and%20Regulations#undefined.do style\u003dcolor:0163ad; text-decoration: underline; target\u003d_blank\u003eRules \u0026 Regs\u003c/a\u003e.\u003cbr\u003e\u003cbr\u003e Predict the result of this match. \u003cb\u003e\u003cfont color\u003dred\u003e All bets apply to Full Time according to the match officials, plus any stoppage time.  Extra-time/penalty shoot-outs are not included.\u003c/b\u003e\u003c/font\u003e\u003cbr\u003e\u003cbr\u003e \u003cb\u003e\u003cfont color\u003dblue\u003eIf this market is re-opened for In-Play betting, \u003c/b\u003e\u003c/font\u003e  unmatched bets will be cancelled at kick off and the market turned in play. The market will be suspended if it appears that a goal has been scored, a penalty will be given, or a red card will be shown. With the exception of bets for which the \"keep\" option has been selected, unmatched bets will be cancelled in the event of a confirmed goal or sending off. Please note that should our data feeds fail we may be unable to manage this game in-play. \u003cbr\u003e\u003cbr\u003eCustomers should be aware that:\u003cb\u003e\u003cbr\u003e\u003cbr\u003e\u003cli\u003eTransmissions described as “live” by some broadcasters may actually be delayed\u003c/li\u003e\u003cbr\u003e\u003cli\u003eThe extent of any such delay may vary, depending on the set-up through which they are receiving pictures or data.\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e If this market is scheduled to go in-play, but due to unforeseen circumstances we are unable to offer the market in-play, then this market will be re-opened for the half-time interval and suspended again an hour after the scheduled kick-off time.  Whilst it is our intention to re-open this market for the half-time interval, in certain circumstances this may not always be possible.\u003cbr\u003e",
+            "rulesHasDate": true
+        },
+        "runners": [
+            {
+                "selectionId": 6384646,
+                "runnerName": "Home or Draw",
+                "handicap": 0.0,
+                "sortPriority": 1
+            },
+            {
+                "selectionId": 6384647,
+                "runnerName": "Draw or Away",
+                "handicap": 0.0,
+                "sortPriority": 2
+            },
+            {
+                "selectionId": 6384648,
+                "runnerName": "Home or Away",
+                "handicap": 0.0,
+                "sortPriority": 3
+            }
+        ],
+        "eventType": {
+            "id": "1",
+            "name": "Soccer"
+        },
+        "competition": {
+            "id": "62815",
+            "name": "Copa Libertadores"
+        },
+        "event": {
+            "id": "27140610",
+            "name": "Lanus v Caracas",
+            "countryCode": "AR",
+            "timezone": "GMT",
+            "openDate": "2014-02-07T01:00:00.000Z"
+        }
+    },
+    {
+        "marketId": "1.112645439",
+        "marketName": "Over/Under 7.5 Goals",
+        "description": {
+            "persistenceEnabled": true,
+            "bspMarket": false,
+            "marketTime": "2014-02-07T01:00:00.000Z",
+            "suspendTime": "2014-02-07T01:00:00.000Z",
+            "bettingType": "ODDS",
+            "turnInPlayEnabled": true,
+            "marketType": "OVER_UNDER_75",
+            "marketBaseRate": 5.0,
+            "discountAllowed": true,
+            "wallet": "UK wallet",
+            "rules": "\u003cbr\u003e\u003cbr\u003e\u003cb\u003eMarket Information\u003c/b\u003e\u003cbr\u003e\u003cbr\u003eFor further information please see \u003ca href\u003dhttp://content.betfair.com/aboutus/content.asp?sWhichKey\u003dRules%20and%20Regulations#undefined.do style\u003dcolor:0163ad; text-decoration: underline; target\u003d_blank\u003eRules \u0026 Regs\u003c/a\u003e.\u003cbr\u003e\u003cbr\u003e How many goals will be scored in this match. \u003cb\u003e\u003cfont color\u003dred\u003e All bets apply to Full Time according to the match officials, plus any stoppage time.  Extra-time/penalty shoot-outs are not included.\u003c/b\u003e\u003c/font\u003e\u003cbr\u003e\u003cbr\u003e \u003cb\u003e\u003cfont color\u003dblue\u003eIf this market is re-opened for In-Play betting, \u003c/b\u003e\u003c/font\u003e unmatched bets will be cancelled at kick off and the market turned in play. The market will be suspended if it appears that a goal has been scored, a penalty will be given, or a red card will be shown. With the exception of bets for which the \"keep\" option has been selected, unmatched bets will be cancelled in the event of a confirmed goal or sending off. Please note that should our data feeds fail we may be unable to manage this game in-play. \u003cbr\u003e\u003cbr\u003eCustomers should be aware that:\u003cb\u003e\u003cbr\u003e\u003cbr\u003e\u003cli\u003eTransmissions described as “live” by some broadcasters may actually be delayed\u003c/li\u003e\u003cbr\u003e\u003cli\u003eThe extent of any such delay may vary, depending on the set-up through which they are receiving pictures or data.\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e If this market is scheduled to go in-play, but due to unforeseen circumstances we are unable to offer the market in-play, then this market will be re-opened for the half-time interval and suspended again an hour after the scheduled kick-off time.  Whilst it is our intention to re-open this market for the half-time interval, in certain circumstances this may not always be possible.\u003cbr\u003e",
+            "rulesHasDate": true
+        },
+        "runners": [
+            {
+                "selectionId": 1485572,
+                "runnerName": "Under 7.5 Goals",
+                "handicap": 0.0,
+                "sortPriority": 1
+            },
+            {
+                "selectionId": 1485573,
+                "runnerName": "Over 7.5 Goals",
+                "handicap": 0.0,
+                "sortPriority": 2
+            }
+        ],
+        "eventType": {
+            "id": "1",
+            "name": "Soccer"
+        },
+        "competition": {
+            "id": "62815",
+            "name": "Copa Libertadores"
+        },
+        "event": {
+            "id": "27140610",
+            "name": "Lanus v Caracas",
+            "countryCode": "AR",
+            "timezone": "GMT",
+            "openDate": "2014-02-07T01:00:00.000Z"
+        }
+    }
+]
