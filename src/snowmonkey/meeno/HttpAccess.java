@@ -151,6 +151,7 @@ public class HttpAccess {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(DateTime.class, new JodaDateTimeTypeConverter())
                     .setDateFormat(DATE_FORMAT)
+                    .setPrettyPrinting()
                     .create();
             map.put("locale", "en_US");
 
@@ -174,7 +175,8 @@ public class HttpAccess {
         }
 
         public void addCustomerRef(CustomerRef customerRef) {
-            map.put("customerRef", customerRef.asString());
+            if (customerRef != CustomerRef.NONE)
+                map.put("customerRef", customerRef.asString());
         }
 
         public void addMarketProjection(Set<MarketProjection> marketProjection) {
@@ -208,6 +210,7 @@ public class HttpAccess {
 
             String json = payload.toJson();
 
+            System.out.println(uri);
             System.out.println(json);
 
             httpPost.setEntity(new StringEntity(json, UTF_8));

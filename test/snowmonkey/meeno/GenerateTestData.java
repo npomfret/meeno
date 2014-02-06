@@ -2,6 +2,7 @@ package snowmonkey.meeno;
 
 import com.google.gson.*;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.StatusLine;
 import org.joda.time.DateTime;
 import snowmonkey.meeno.types.CustomerRef;
@@ -10,9 +11,11 @@ import snowmonkey.meeno.types.SessionToken;
 import snowmonkey.meeno.types.raw.*;
 
 import java.io.*;
+import java.util.Iterator;
 import java.util.UUID;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static org.apache.commons.io.FileUtils.readFileToString;
 import static snowmonkey.meeno.CountryLookup.Argentina;
 import static snowmonkey.meeno.CountryLookup.UnitedKingdom;
 import static snowmonkey.meeno.MarketFilterBuilder.TimeRange.between;
@@ -104,8 +107,7 @@ public class GenerateTestData {
 
     private void placeOrders() throws IOException {
         snowmonkey.meeno.types.raw.MarketCatalogue marketCatalogue = aMarket();
-        System.out.println(marketCatalogue);
-        LimitOrder limitOrder = new LimitOrder(2.0D, 1000d, PersistenceType.LAPSE);
+        LimitOrder limitOrder = new LimitOrder(2.00D, 1000d, PersistenceType.LAPSE);
         PlaceInstruction placeLimitOrder = PlaceInstruction.createPlaceLimitOrder(marketCatalogue.runners.get(0).selectionId, Side.BACK, limitOrder);
         httpAccess.placeOrders(marketCatalogue.marketId, newArrayList(placeLimitOrder), CustomerRef.NONE, fileWriter(PlaceOrders.placeOrdersFile()));
     }
@@ -134,18 +136,20 @@ public class GenerateTestData {
                 config.certificatePassword(),
                 config.username(),
                 config.password(),
-                config.delayedAppKey(),
-                fileWriter(loginFile));
+                config.appKey(),
+                fileWriter(loginFile)
+        );
 
-        SessionToken sessionToken = SessionToken.parseJson(FileUtils.readFileToString(loginFile));
+        SessionToken sessionToken = SessionToken.parseJson(readFileToString(loginFile));
 
         httpAccess = new HttpAccess(sessionToken, config.delayedAppKey(), Exchange.UK);
-
     }
 
     private static snowmonkey.meeno.types.raw.MarketCatalogue aMarket() throws IOException {
         Markets markets = Markets.parse(GenerateTestData.MarketCatalogue.listMarketCatalogueJson());
-        return markets.iterator().next();
+        Iterator<snowmonkey.meeno.types.raw.MarketCatalogue> iterator = markets.iterator();
+        iterator.next();
+        return iterator.next();
     }
 
     private static Event someEvent() throws IOException {
@@ -156,6 +160,9 @@ public class GenerateTestData {
         return new HttpAccess.Processor() {
             @Override
             public void process(StatusLine statusLine, InputStream in) throws IOException {
+                if (statusLine.getStatusCode() != 200)
+                    throw new Defect("Bad status code: " + statusLine.getStatusCode() + "\n" + IOUtils.toString(in));
+
                 if (file.exists())
                     return;
 
@@ -176,7 +183,7 @@ public class GenerateTestData {
         }
 
         public static String listMarketCatalogueJson() throws IOException {
-            return FileUtils.readFileToString(listMarketCatalogueFile());
+            return readFileToString(listMarketCatalogueFile());
         }
     }
 
@@ -198,7 +205,7 @@ public class GenerateTestData {
         }
 
         public static String listCurrentOrdersJson() throws IOException {
-            return FileUtils.readFileToString(listCurrentOrdersFile());
+            return readFileToString(listCurrentOrdersFile());
         }
     }
 
@@ -213,7 +220,7 @@ public class GenerateTestData {
         }
 
         public static String listCompetitionsJson() throws IOException {
-            return FileUtils.readFileToString(listCompetitionsFile());
+            return readFileToString(listCompetitionsFile());
         }
     }
 
@@ -228,7 +235,7 @@ public class GenerateTestData {
         }
 
         public static String listEventsJson() throws IOException {
-            return FileUtils.readFileToString(listEventsFile());
+            return readFileToString(listEventsFile());
         }
     }
 
@@ -243,7 +250,7 @@ public class GenerateTestData {
         }
 
         public static String listEventTypesJson() throws IOException {
-            return FileUtils.readFileToString(listEventTypesFile());
+            return readFileToString(listEventTypesFile());
         }
     }
 
@@ -258,7 +265,7 @@ public class GenerateTestData {
         }
 
         public static String listMarketTypesJson() throws IOException {
-            return FileUtils.readFileToString(listMarketTypesFile());
+            return readFileToString(listMarketTypesFile());
         }
     }
 
@@ -272,7 +279,7 @@ public class GenerateTestData {
         }
 
         public static String listTimeRangesJson() throws IOException {
-            return FileUtils.readFileToString(listTimeRangesFile());
+            return readFileToString(listTimeRangesFile());
         }
     }
 
@@ -282,7 +289,7 @@ public class GenerateTestData {
         }
 
         public static String getAccountFundsJson() throws IOException {
-            return FileUtils.readFileToString(getAccountFundsFile());
+            return readFileToString(getAccountFundsFile());
         }
     }
 
@@ -293,14 +300,14 @@ public class GenerateTestData {
         }
 
         public static String getAccountDetailsJson() throws IOException {
-            return FileUtils.readFileToString(getAccountDetailsFile());
+            return readFileToString(getAccountDetailsFile());
         }
     }
 
     public static class Login {
 
         public static String loginJson() throws IOException {
-            return FileUtils.readFileToString(loginFile());
+            return readFileToString(loginFile());
         }
 
         private static File loginFile() {

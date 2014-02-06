@@ -37,8 +37,8 @@ public class MarketsTest {
         assertThat(marketCatalogue.marketId, equalTo(marketId));
         assertThat(marketCatalogue.marketName, equalTo("Caracas +1"));
         assertThat(marketCatalogue.runners.size(), equalTo(3));
-        assertThat(marketCatalogue.runners.get(0), equalTo(new RunnerCatalog(7039291L, "Caracas +1", 0.0d)));
-        assertThat(marketCatalogue.runners.get(1), equalTo(new RunnerCatalog(6747604L, "Lanus -1", 0.0d)));
-        assertThat(marketCatalogue.runners.get(2), equalTo(new RunnerCatalog(151478L, "Draw", 0.0d)));
+        assertThat(marketCatalogue.runners.get(0), equalTo(new RunnerCatalog(new SelectionId(7039291L), "Caracas +1", 0.0d)));
+        assertThat(marketCatalogue.runners.get(1), equalTo(new RunnerCatalog(new SelectionId(6747604L), "Lanus -1", 0.0d)));
+        assertThat(marketCatalogue.runners.get(2), equalTo(new RunnerCatalog(new SelectionId(151478L), "Draw", 0.0d)));
     }
 }

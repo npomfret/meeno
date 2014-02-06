@@ -50,7 +50,7 @@ public class Markets implements Iterable<MarketCatalogue> {
                 for (JsonElement runnerElement : jsonObject.get("runners").getAsJsonArray()) {
                     JsonObject obj = runnerElement.getAsJsonObject();
                     RunnerCatalog runnerCatalog = new RunnerCatalog(
-                            obj.getAsJsonPrimitive("selectionId").getAsLong(),
+                            new SelectionId(obj.getAsJsonPrimitive("selectionId").getAsLong()),
                             obj.getAsJsonPrimitive("runnerName").getAsString(),
                             obj.getAsJsonPrimitive("handicap").getAsDouble()
                     );

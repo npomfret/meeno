@@ -30,6 +30,10 @@ public class MeenoConfig {
         return new AppKey(properties.getProperty("app-key.delayed"));
     }
 
+    public AppKey appKey() {
+        return new AppKey(properties.getProperty("app-key"));
+    }
+
     public String username() {
         return properties.getProperty("username");
     }

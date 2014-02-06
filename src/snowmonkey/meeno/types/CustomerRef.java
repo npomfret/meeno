@@ -37,5 +37,4 @@ public class CustomerRef extends MicroValueType<String> {
     public String asString() {
         return value;
     }
-
 }
