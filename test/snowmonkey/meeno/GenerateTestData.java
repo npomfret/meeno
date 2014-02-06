@@ -10,6 +10,7 @@ import snowmonkey.meeno.types.raw.Event;
 import java.io.File;
 import java.io.IOException;
 
+import static snowmonkey.meeno.CountryLookup.Argentina;
 import static snowmonkey.meeno.CountryLookup.UnitedKingdom;
 import static snowmonkey.meeno.HttpAccess.fileWriter;
 import static snowmonkey.meeno.MarketFilterBuilder.TimeRange.between;
@@ -42,7 +43,7 @@ public class GenerateTestData {
         httpAccess.listCompetitions(fileWriter(listCompetitionsFile()),
                 new MarketFilterBuilder()
                         .withEventTypeIds("1")
-                        .withMarketCountries(UnitedKingdom)
+                        .withMarketCountries(Argentina)
                         .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(1)))
                         .build());
 
@@ -50,7 +51,7 @@ public class GenerateTestData {
                 fileWriter(listEventsFile()),
                 new MarketFilterBuilder()
                         .withEventTypeIds("1")
-                        .withMarketCountries(UnitedKingdom)
+                        .withMarketCountries(Argentina)
                         .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(1)))
                         .build());
 

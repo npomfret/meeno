@@ -1,8 +1,8 @@
 package snowmonkey.meeno.types.raw;
 
-import snowmonkey.meeno.types.ImmutableType;
+import snowmonkey.meeno.types.ImmutbleType;
 
-public final class CurrentOrder extends ImmutableType {
+public final class CurrentOrder extends ImmutbleType {
 
     public final String betId;
     public final String marketId;

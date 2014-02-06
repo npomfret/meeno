@@ -1,8 +1,10 @@
 package snowmonkey.meeno.types;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import snowmonkey.meeno.Defect;
+import snowmonkey.meeno.HttpAccess;
 import snowmonkey.meeno.types.raw.Event;
 
 import java.util.Iterator;
@@ -16,18 +18,28 @@ public class Events implements Iterable<Event> {
         Events events = new Events();
 
         JsonElement parse = new JsonParser().parse(json);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(HttpAccess.DATE_FORMAT);
+
         for (JsonElement jsonElement : parse.getAsJsonArray()) {
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
-            JsonObject eventObj = jsonObject.get("event").getAsJsonObject();
-            Event event = new Event(
-                    eventObj.getAsJsonPrimitive("id").getAsString(),
-                    eventObj.getAsJsonPrimitive("name").getAsString(),
-                    eventObj.getAsJsonPrimitive("countryCode").getAsString(),
-                    eventObj.getAsJsonPrimitive("timezone").getAsString(),
-                    eventObj.getAsJsonPrimitive("openDate").getAsString(),
-                    jsonObject.getAsJsonPrimitive("marketCount").getAsInt()
-            );
-            events.add(event);
+            try {
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+                JsonObject eventObj = jsonObject.get("event").getAsJsonObject();
+                int marketCount = jsonObject.getAsJsonPrimitive("marketCount").getAsInt();
+
+                Event event = new Event(
+                        eventObj.getAsJsonPrimitive("id").getAsString(),
+                        eventObj.getAsJsonPrimitive("name").getAsString(),
+                        eventObj.getAsJsonPrimitive("countryCode").getAsString(),
+                        eventObj.getAsJsonPrimitive("timezone").getAsString(),
+                        dateTimeFormatter.parseDateTime(eventObj.getAsJsonPrimitive("openDate").getAsString())
+                );
+
+                events.add(event);
+            } catch (RuntimeException e) {
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String s = gson.toJson(jsonElement);
+                throw new Defect("Cannot parse:\n" + s, e);
+            }
         }
 
         return events;

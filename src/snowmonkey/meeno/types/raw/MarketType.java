@@ -1,8 +1,8 @@
 package snowmonkey.meeno.types.raw;
 
-import snowmonkey.meeno.types.ImmutableType;
+import snowmonkey.meeno.types.ImmutbleType;
 
-public final class MarketType extends ImmutableType {
+public final class MarketType extends ImmutbleType {
 
     public final String marketType;
     public final int marketCount;

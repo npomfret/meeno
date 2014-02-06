@@ -1,66 +1,10 @@
 [
     {
         "competition": {
-            "id": "2129602",
-            "name": "Professional Development League"
+            "id": "62815",
+            "name": "Copa Libertadores"
         },
-        "marketCount": 16,
-        "competitionRegion": "GBR"
-    },
-    {
-        "competition": {
-            "id": "4081753",
-            "name": "Southern Football League Division One Central"
-        },
-        "marketCount": 4,
-        "competitionRegion": "GBR"
-    },
-    {
-        "competition": {
-            "id": "20351",
-            "name": "NIFL Premiership"
-        },
-        "marketCount": 2,
-        "competitionRegion": "GBR"
-    },
-    {
-        "competition": {
-            "id": "39",
-            "name": "Conference Premier"
-        },
-        "marketCount": 20,
-        "competitionRegion": "GBR"
-    },
-    {
-        "competition": {
-            "id": "43",
-            "name": "Conference South"
-        },
-        "marketCount": 40,
-        "competitionRegion": "GBR"
-    },
-    {
-        "competition": {
-            "id": "31",
-            "name": "Barclays Premier League"
-        },
-        "marketCount": 81,
-        "competitionRegion": "GBR"
-    },
-    {
-        "competition": {
-            "id": "1345672",
-            "name": "Central League Cup"
-        },
-        "marketCount": 40,
-        "competitionRegion": "GBR"
-    },
-    {
-        "competition": {
-            "id": "820582",
-            "name": "Isthmian Premier"
-        },
-        "marketCount": 20,
-        "competitionRegion": "GBR"
+        "marketCount": 41,
+        "competitionRegion": "International"
     }
 ]

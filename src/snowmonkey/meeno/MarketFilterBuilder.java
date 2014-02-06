@@ -3,7 +3,7 @@ package snowmonkey.meeno;
 import com.google.common.base.Function;
 import org.joda.time.DateTime;
 import snowmonkey.meeno.types.CountryCode;
-import snowmonkey.meeno.types.ImmutableType;
+import snowmonkey.meeno.types.ImmutbleType;
 
 import java.util.Set;
 
@@ -165,7 +165,7 @@ public class MarketFilterBuilder implements MarketFilter {
         }
     }
 
-    public static class TimeRange extends ImmutableType {
+    public static class TimeRange extends ImmutbleType {
         private final DateTime from;
         private final DateTime to;
 

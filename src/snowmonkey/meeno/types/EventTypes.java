@@ -20,10 +20,10 @@ public class EventTypes {
         for (JsonElement jsonElement : parse.getAsJsonArray()) {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
             JsonObject eventTypeObj = jsonObject.get("eventType").getAsJsonObject();
+            int marketCount = jsonObject.getAsJsonPrimitive("marketCount").getAsInt();
             EventType eventType = new EventType(
                     eventTypeObj.getAsJsonPrimitive("id").getAsString(),
-                    eventTypeObj.getAsJsonPrimitive("name").getAsString(),
-                    jsonObject.getAsJsonPrimitive("marketCount").getAsInt()
+                    eventTypeObj.getAsJsonPrimitive("name").getAsString()
             );
             eventTypes.add(eventType);
         }

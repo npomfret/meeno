@@ -1,18 +1,14 @@
 package snowmonkey.meeno.types.raw;
 
-import snowmonkey.meeno.types.ImmutableType;
+import snowmonkey.meeno.types.ImmutbleType;
 
-public final class Competition extends ImmutableType {
+public final class Competition extends ImmutbleType {
 
     public final String id;
     public final String name;
-    public final int marketCount;
-    public final String competitionRegion;
 
-    public Competition(String id, String name, int marketCount, String competitionRegion) {
+    public Competition(String id, String name) {
         this.id = id;
         this.name = name;
-        this.marketCount = marketCount;
-        this.competitionRegion = competitionRegion;
     }
 }

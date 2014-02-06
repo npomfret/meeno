@@ -42,6 +42,8 @@ import static snowmonkey.meeno.MarketFilterBuilder.noFilter;
 public class HttpAccess {
 
     public static final String UTF_8 = "UTF-8";
+    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
     private final SessionToken sessionToken;
     private final AppKey appKey;
     private final Exchange exchange;
@@ -122,7 +124,7 @@ public class HttpAccess {
         public String toJson() {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(DateTime.class, new JodaDateTimeTypeConverter())
-                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                    .setDateFormat(DATE_FORMAT)
                     .create();
             map.put("locale", "en_US");
 

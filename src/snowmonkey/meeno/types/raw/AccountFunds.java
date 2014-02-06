@@ -1,8 +1,8 @@
 package snowmonkey.meeno.types.raw;
 
-import snowmonkey.meeno.types.ImmutableType;
+import snowmonkey.meeno.types.ImmutbleType;
 
-public final class AccountFunds extends ImmutableType {
+public final class AccountFunds extends ImmutbleType {
 
     public final double availableToBetBalance;
     public final double exposure;
