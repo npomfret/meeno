@@ -8,14 +8,11 @@ import snowmonkey.meeno.Defect;
 import snowmonkey.meeno.HttpAccess;
 import snowmonkey.meeno.types.raw.*;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static snowmonkey.meeno.types.Events.printElement;
 
-public class Markets {
+public class Markets implements Iterable<MarketCatalogue> {
     private final Map<MarketId, MarketCatalogue> markets = new LinkedHashMap<>();
 
     public static Markets parse(String json) {
@@ -101,6 +98,11 @@ public class Markets {
 
     private static Boolean optionalBool(JsonObject description, String name) {
         return description.has(name) ? description.getAsJsonPrimitive(name).getAsBoolean() : null;
+    }
+
+    @Override
+    public Iterator<MarketCatalogue> iterator() {
+        return markets.values().iterator();
     }
 
     public MarketCatalogue get(MarketId marketId) {

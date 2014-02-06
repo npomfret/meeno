@@ -1,0 +1,12 @@
+{
+    "detail": {
+        "exceptionname": "APINGException",
+        "APINGException": {
+            "errorDetails": "INSUFFICIENT_PRIVILEGES",
+            "errorCode": "SERVICE_BUSY",
+            "requestUUID": "prdang001-02031220-000a42595e"
+        }
+    },
+    "faultcode": "Client",
+    "faultstring": "ANGX-0009"
+}

@@ -4,14 +4,15 @@ import com.google.gson.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.StatusLine;
 import org.joda.time.DateTime;
+import snowmonkey.meeno.types.CustomerRef;
+import snowmonkey.meeno.types.Markets;
 import snowmonkey.meeno.types.SessionToken;
-import snowmonkey.meeno.types.raw.Event;
-import snowmonkey.meeno.types.raw.MarketProjection;
-import snowmonkey.meeno.types.raw.MarketSort;
+import snowmonkey.meeno.types.raw.*;
 
 import java.io.*;
 import java.util.UUID;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static snowmonkey.meeno.CountryLookup.Argentina;
 import static snowmonkey.meeno.CountryLookup.UnitedKingdom;
 import static snowmonkey.meeno.MarketFilterBuilder.TimeRange.between;
@@ -19,26 +20,97 @@ import static snowmonkey.meeno.types.TimeGranularity.MINUTES;
 
 public class GenerateTestData {
     public static final File TEST_DATA_DIR = new File("test-data/generated");
+    private MeenoConfig config;
+    private HttpAccess httpAccess;
+    private File loginFile;
+
+    public GenerateTestData(MeenoConfig config) {
+        this.config = config;
+    }
 
     public static void main(String[] args) throws Exception {
+//        FileUtils.cleanDirectory(TEST_DATA_DIR);
         MeenoConfig config = MeenoConfig.load();
 
-//        FileUtils.cleanDirectory(TEST_DATA_DIR);
+        GenerateTestData generateTestData = new GenerateTestData(config);
+        generateTestData.login();
 
-        HttpAccess.login(
-                config.certificateFile(),
-                config.certificatePassword(),
-                config.username(),
-                config.password(),
-                config.delayedAppKey(),
-                fileWriter(Login.loginFile()));
+//        generateTestData.listCountries();
+//        generateTestData.listMarketCatalogue();
+        generateTestData.placeOrders();
+//        generateTestData.listCurrentOrders();
+//        generateTestData.listCompetitions();
+//        generateTestData.listEvents();
+//        generateTestData.listEventTypes();
+//        generateTestData.listMarketTypes();
+//        generateTestData.listTimeRanges();
+//        generateTestData.accountDetails();
+//        generateTestData.accountFunds();
 
-        SessionToken sessionToken = SessionToken.parseJson(Login.loginJson());
+        generateTestData.cleanup();
+    }
 
-        HttpAccess httpAccess = new HttpAccess(sessionToken, config.delayedAppKey(), Exchange.UK);
+    private void cleanup() {
+        loginFile.delete();
+    }
 
-        httpAccess.listCountries(fileWriter(Countries.listCountriesFile()));
+    private void accountFunds() throws IOException {
+        httpAccess.getAccountFunds(fileWriter(AccountFunds.getAccountFundsFile()));
+    }
 
+    private void accountDetails() throws IOException {
+        httpAccess.getAccountDetails(fileWriter(AccountDetails.getAccountDetailsFile()));
+    }
+
+    private void listTimeRanges() throws IOException {
+        httpAccess.listTimeRanges(fileWriter(TimeRanges.listTimeRangesFile()), MINUTES, new MarketFilterBuilder()
+                .withEventTypeIds("1")
+                .withEventIds(someEvent().id)
+                .withMarketCountries(UnitedKingdom)
+                .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(1)))
+                .build());
+    }
+
+    private void listMarketTypes() throws IOException {
+        httpAccess.listMarketTypes(fileWriter(MarketTypes.listMarketTypesFile()));
+    }
+
+    private void listEventTypes() throws IOException {
+        httpAccess.listEventTypes(fileWriter(EventTypes.listEventTypesFile()));
+    }
+
+    private void listEvents() throws IOException {
+        httpAccess.listEvents(
+                fileWriter(Events.listEventsFile()),
+                new MarketFilterBuilder()
+                        .withEventTypeIds("1")
+                        .withMarketCountries(Argentina)
+                        .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(1)))
+                        .build());
+    }
+
+    private void listCompetitions() throws IOException {
+        httpAccess.listCompetitions(fileWriter(Competitions.listCompetitionsFile()),
+                new MarketFilterBuilder()
+                        .withEventTypeIds("1")
+                        .withMarketCountries(Argentina)
+                        .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(1)))
+                        .build());
+    }
+
+    private void listCurrentOrders() throws IOException {
+        httpAccess.listCurrentOrders(fileWriter(listCurrentOrdersFile()));
+    }
+
+    private void placeOrders() throws IOException {
+        snowmonkey.meeno.types.raw.MarketCatalogue marketCatalogue = aMarket();
+        System.out.println(marketCatalogue);
+        LimitOrder limitOrder = new LimitOrder(2.0D, 1000d, PersistenceType.LAPSE);
+        PlaceInstruction placeLimitOrder = PlaceInstruction.createPlaceLimitOrder(marketCatalogue.runners.get(0).selectionId, Side.BACK, limitOrder);
+        httpAccess.placeOrders(marketCatalogue.marketId, newArrayList(placeLimitOrder), CustomerRef.NONE, fileWriter(PlaceOrders.placeOrdersFile()));
+    }
+
+    private void listMarketCatalogue() throws IOException {
         httpAccess.listMarketCatalogue(fileWriter(MarketCatalogue.listMarketCatalogueFile()),
                 MarketProjection.all(),
                 MarketSort.FIRST_TO_START,
@@ -48,40 +120,32 @@ public class GenerateTestData {
                         .withMarketCountries(Argentina)
                         .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(7)))
                         .build());
+    }
 
-//        httpAccess.placeOrders(new MarketId("-1"), new ArrayList<PlaceInstruction>(), CustomerRef.NONE, fileWriter(PlaceOrders.placeOrdersFile()));
+    private void listCountries() throws IOException {
+        httpAccess.listCountries(fileWriter(Countries.listCountriesFile()));
+    }
 
-        httpAccess.listCurrentOrders(fileWriter(listCurrentOrdersFile()));
+    private void login() throws Exception {
+        loginFile = Login.loginFile();
 
-        httpAccess.listCompetitions(fileWriter(Competitions.listCompetitionsFile()),
-                new MarketFilterBuilder()
-                        .withEventTypeIds("1")
-                        .withMarketCountries(Argentina)
-                        .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(1)))
-                        .build());
+        HttpAccess.login(
+                config.certificateFile(),
+                config.certificatePassword(),
+                config.username(),
+                config.password(),
+                config.delayedAppKey(),
+                fileWriter(loginFile));
 
-        httpAccess.listEvents(
-                fileWriter(Events.listEventsFile()),
-                new MarketFilterBuilder()
-                        .withEventTypeIds("1")
-                        .withMarketCountries(Argentina)
-                        .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(1)))
-                        .build());
+        SessionToken sessionToken = SessionToken.parseJson(FileUtils.readFileToString(loginFile));
 
-        httpAccess.listEventTypes(fileWriter(EventTypes.listEventTypesFile()));
+        httpAccess = new HttpAccess(sessionToken, config.delayedAppKey(), Exchange.UK);
 
-        httpAccess.listMarketTypes(fileWriter(MarketTypes.listMarketTypesFile()));
+    }
 
-        httpAccess.listTimeRanges(fileWriter(TimeRanges.listTimeRangesFile()), MINUTES, new MarketFilterBuilder()
-                .withEventTypeIds("1")
-                .withEventIds(someEvent().id)
-                .withMarketCountries(UnitedKingdom)
-                .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(1)))
-                .build());
-
-        httpAccess.getAccountDetails(fileWriter(AccountDetails.getAccountDetailsFile()));
-
-        httpAccess.getAccountFunds(fileWriter(AccountFunds.getAccountFundsFile()));
+    private static snowmonkey.meeno.types.raw.MarketCatalogue aMarket() throws IOException {
+        Markets markets = Markets.parse(GenerateTestData.MarketCatalogue.listMarketCatalogueJson());
+        return markets.iterator().next();
     }
 
     private static Event someEvent() throws IOException {
@@ -240,7 +304,7 @@ public class GenerateTestData {
         }
 
         private static File loginFile() {
-            return new File(new File("/temp"), UUID.randomUUID() + ".login.json");
+            return new File(new File("private"), UUID.randomUUID() + ".login.json");
         }
     }
 
