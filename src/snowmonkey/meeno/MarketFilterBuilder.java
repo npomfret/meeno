@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import org.joda.time.DateTime;
 import snowmonkey.meeno.types.CountryCode;
 import snowmonkey.meeno.types.ImmutbleType;
+import snowmonkey.meeno.types.raw.OrderStatus;
 
 import java.util.Set;
 
@@ -136,10 +137,6 @@ public class MarketFilterBuilder implements MarketFilter {
     public MarketFilterBuilder withWithOrders(Set<OrderStatus> withOrders) {
         this.withOrders = withOrders;
         return this;
-    }
-
-    public enum OrderStatus {
-        EXECUTION_COMPLETE, EXECUTABLE;
     }
 
     public enum MarketBettingType {

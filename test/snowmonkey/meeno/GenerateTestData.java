@@ -5,14 +5,12 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.StatusLine;
 import org.joda.time.DateTime;
-import snowmonkey.meeno.types.CustomerRef;
-import snowmonkey.meeno.types.MarketId;
-import snowmonkey.meeno.types.Markets;
-import snowmonkey.meeno.types.SessionToken;
+import snowmonkey.meeno.types.*;
 import snowmonkey.meeno.types.raw.*;
 
 import java.io.*;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -44,8 +42,9 @@ public class GenerateTestData {
 //        generateTestData.listCountries();
 //            generateTestData.listMarketCatalogue();
 //            generateTestData.listMarketBook();
-            generateTestData.placeOrders();
+//            generateTestData.placeOrders();
 //        generateTestData.listCurrentOrders();
+            generateTestData.cancelOrders();
 //        generateTestData.listCompetitions();
 //        generateTestData.listEvents();
 //        generateTestData.listEventTypes();
@@ -56,6 +55,15 @@ public class GenerateTestData {
         } finally {
             generateTestData.cleanup();
         }
+    }
+
+    private void cancelOrders() throws IOException {
+        snowmonkey.meeno.types.CurrentOrders currentOrders = snowmonkey.meeno.types.CurrentOrders.parse(CurrentOrders.getCurrentOrderJson());
+        CurrentOrder order = currentOrders.iterator().next();
+        MarketId marketId = order.marketId;
+        BetId betId = order.betId;
+        List<CancelInstruction> cancelInstructions = newArrayList(CancelInstruction.cancel(betId));
+        httpAccess.cancelOrders(marketId, cancelInstructions, fileWriter(ListMarketBook.listMarketBookFile()));
     }
 
     private void listMarketBook() throws IOException {
@@ -117,7 +125,7 @@ public class GenerateTestData {
     }
 
     private void listCurrentOrders() throws IOException {
-        httpAccess.listCurrentOrders(fileWriter(listCurrentOrdersFile()));
+        httpAccess.listCurrentOrders(fileWriter(CurrentOrders.listCurrentOrdersFile()));
     }
 
     private void placeOrders() throws IOException {
@@ -213,11 +221,11 @@ public class GenerateTestData {
         }
     }
 
-    private static File listCurrentOrdersFile() {
-        return new File(TEST_DATA_DIR, "listCurrentOrders.json");
-    }
+    public static class CurrentOrders {
+        private static File listCurrentOrdersFile() {
+            return new File(TEST_DATA_DIR, "listCurrentOrders.json");
+        }
 
-    private static class CurrentOrders {
         public static String getCurrentOrderJson() throws IOException {
             JsonElement parse = new JsonParser().parse(listCurrentOrdersJson());
             JsonElement currentOrders = parse.getAsJsonObject().get("currentOrders");

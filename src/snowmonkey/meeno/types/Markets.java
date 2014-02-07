@@ -3,7 +3,6 @@ package snowmonkey.meeno.types;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.joda.time.DateTime;
 import snowmonkey.meeno.Defect;
 import snowmonkey.meeno.HttpAccess;
 import snowmonkey.meeno.types.raw.*;
@@ -33,17 +32,17 @@ public class Markets implements Iterable<MarketCatalogue> {
                         description.getAsJsonPrimitive("bspMarket").getAsBoolean(),
                         HttpAccess.DATE_TIME_FORMATTER.parseDateTime(description.getAsJsonPrimitive("marketTime").getAsString()),
                         HttpAccess.DATE_TIME_FORMATTER.parseDateTime(description.getAsJsonPrimitive("suspendTime").getAsString()),
-                        optionalDateTime(description, "settleTime"),
+                        JsonHelp.optionalDateTime(description, "settleTime"),
                         MarketBettingType.valueOf(description.getAsJsonPrimitive("bettingType").getAsString()),
                         description.getAsJsonPrimitive("turnInPlayEnabled").getAsBoolean(),
                         description.getAsJsonPrimitive("marketType").getAsString(),
-                        optionalString(description, "regulator"),
+                        JsonHelp.optionalString(description, "regulator"),
                         description.getAsJsonPrimitive("marketBaseRate").getAsDouble(),
                         description.getAsJsonPrimitive("discountAllowed").getAsBoolean(),
-                        optionalString(description, "wallet"),
-                        optionalString(description, "rules"),
-                        optionalBool(description, "rulesHasDate"),
-                        optionalString(description, "clarifications")
+                        JsonHelp.optionalString(description, "wallet"),
+                        JsonHelp.optionalString(description, "rules"),
+                        JsonHelp.optionalBool(description, "rulesHasDate"),
+                        JsonHelp.optionalString(description, "clarifications")
                 );
 
                 List<RunnerCatalog> runners = new ArrayList<>();
@@ -75,8 +74,8 @@ public class Markets implements Iterable<MarketCatalogue> {
                         eventObj.getAsJsonPrimitive("name").getAsString(),
                         eventObj.getAsJsonPrimitive("countryCode").getAsString(),
                         eventObj.getAsJsonPrimitive("timezone").getAsString(),
-                        optionalString(eventObj, "venue"),
-                        optionalDateTime(eventObj, "openDate")
+                        JsonHelp.optionalString(eventObj, "venue"),
+                        JsonHelp.optionalDateTime(eventObj, "openDate")
                 );
 
                 MarketCatalogue marketCatalogue = new MarketCatalogue(marketId, marketName, marketDescription, runners, eventType, competition, event);
@@ -86,18 +85,6 @@ public class Markets implements Iterable<MarketCatalogue> {
             }
         }
         return markets;
-    }
-
-    private static DateTime optionalDateTime(JsonObject description, String name) {
-        return description.has(name) ? HttpAccess.DATE_TIME_FORMATTER.parseDateTime(description.getAsJsonPrimitive(name).getAsString()) : null;
-    }
-
-    private static String optionalString(JsonObject description, String name) {
-        return description.has(name) ? description.getAsJsonPrimitive(name).getAsString() : null;
-    }
-
-    private static Boolean optionalBool(JsonObject description, String name) {
-        return description.has(name) ? description.getAsJsonPrimitive(name).getAsBoolean() : null;
     }
 
     @Override

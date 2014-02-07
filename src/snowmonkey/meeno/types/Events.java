@@ -2,7 +2,6 @@ package snowmonkey.meeno.types;
 
 import com.google.gson.*;
 import snowmonkey.meeno.Defect;
-import snowmonkey.meeno.HttpAccess;
 import snowmonkey.meeno.types.raw.Event;
 
 import java.util.Iterator;
@@ -29,7 +28,7 @@ public class Events implements Iterable<Event> {
                         eventObj.getAsJsonPrimitive("countryCode").getAsString(),
                         eventObj.getAsJsonPrimitive("timezone").getAsString(),
                         eventObj.has("venue") ? eventObj.getAsJsonPrimitive("venue").getAsString() : null,
-                        HttpAccess.DATE_TIME_FORMATTER.parseDateTime(eventObj.getAsJsonPrimitive("openDate").getAsString())
+                        JsonHelp.dateTime(eventObj, "openDate")
                 );
 
                 events.add(event);

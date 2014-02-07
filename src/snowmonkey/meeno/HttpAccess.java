@@ -27,10 +27,7 @@ import snowmonkey.meeno.types.CustomerRef;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.SessionToken;
 import snowmonkey.meeno.types.TimeGranularity;
-import snowmonkey.meeno.types.raw.MarketProjection;
-import snowmonkey.meeno.types.raw.MarketSort;
-import snowmonkey.meeno.types.raw.PlaceInstruction;
-import snowmonkey.meeno.types.raw.PriceProjection;
+import snowmonkey.meeno.types.raw.*;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
@@ -69,6 +66,12 @@ public class HttpAccess {
         this.sessionToken = sessionToken;
         this.appKey = appKey;
         this.exchange = exchange;
+    }
+
+    public void cancelOrders(MarketId marketId, List<CancelInstruction> cancelInstructions, Processor processor) {
+        Payload payload = new Payload();
+        payload.addMarketId(marketId);
+        payload.addCancelInstructions(cancelInstructions);
     }
 
     public void placeOrders(MarketId marketId, List<PlaceInstruction> instructions, CustomerRef customerRef, Processor processor) throws IOException {
@@ -212,6 +215,10 @@ public class HttpAccess {
 
         public void addPriceProjection(PriceProjection priceProjection) {
             map.put("priceProjection", priceProjection);
+        }
+
+        public void addCancelInstructions(List<CancelInstruction> cancelInstructions) {
+            map.put("instructions", cancelInstructions);
         }
     }
 

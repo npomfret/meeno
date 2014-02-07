@@ -7,7 +7,7 @@
             "handicap": 0.0,
             "priceSize": {
                 "price": 1000.0,
-                "size": 2.0
+                "size": 21.0
             },
             "bspLiability": 0.0,
             "side": "BACK",
@@ -15,12 +15,12 @@
             "persistenceType": "LAPSE",
             "orderType": "LIMIT",
             "placedDate": "2014-02-03T18:11:21.000Z",
-            "averagePriceMatched": 0.0,
-            "sizeMatched": 0.0,
-            "sizeRemaining": 2.0,
-            "sizeLapsed": 0.0,
-            "sizeCancelled": 0.0,
-            "sizeVoided": 0.0,
+            "averagePriceMatched": 1.0,
+            "sizeMatched": 2.0,
+            "sizeRemaining": 3.0,
+            "sizeLapsed": 4.0,
+            "sizeCancelled": 5.0,
+            "sizeVoided": 6.0,
             "regulatorCode": "GIBRALTAR REGULATOR"
         }
     ],

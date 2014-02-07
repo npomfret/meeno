@@ -13,11 +13,11 @@ public class EventTypes {
     private final Map<String, EventType> eventTypesByName = new LinkedHashMap<>();
 
     public static EventTypes parse(String json) {
-        JsonElement parse = new JsonParser().parse(json);
+        JsonElement parsed = new JsonParser().parse(json);
 
         EventTypes eventTypes = new EventTypes();
 
-        for (JsonElement jsonElement : parse.getAsJsonArray()) {
+        for (JsonElement jsonElement : parsed.getAsJsonArray()) {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
             JsonObject eventTypeObj = jsonObject.get("eventType").getAsJsonObject();
             int marketCount = jsonObject.getAsJsonPrimitive("marketCount").getAsInt();
