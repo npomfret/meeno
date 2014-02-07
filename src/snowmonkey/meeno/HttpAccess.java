@@ -2,6 +2,7 @@ package snowmonkey.meeno;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -257,6 +258,18 @@ public class HttpAccess {
         httpPost.setConfig(requestConfig);
         return httpPost;
     }
+
+    public void logout() throws IOException {
+        URI uri = URI.create("https://identitysso.betfair.com/api/logout");
+        sendPostRequest(new Processor() {
+            @Override
+            public void process(StatusLine statusLine, InputStream in) throws IOException {
+                String response = IOUtils.toString(in);
+                System.out.println("response = " + response);
+            }
+        }, uri);
+    }
+
 
     public static void login(File certFile, String certPassword, String betfairUsername, String betfairPassword, AppKey apiKey, HttpAccess.Processor processor) throws Exception {
         try (DefaultHttpClient httpClient = new DefaultHttpClient()) {

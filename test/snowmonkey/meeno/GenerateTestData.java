@@ -40,10 +40,12 @@ public class GenerateTestData {
         GenerateTestData generateTestData = new GenerateTestData(config);
         generateTestData.login();
 
+
+        try {
 //        generateTestData.listCountries();
 //        generateTestData.listMarketCatalogue();
-        generateTestData.listMarketBook();
-//        generateTestData.placeOrders();
+//        generateTestData.listMarketBook();
+            generateTestData.placeOrders();
 //        generateTestData.listCurrentOrders();
 //        generateTestData.listCompetitions();
 //        generateTestData.listEvents();
@@ -52,8 +54,9 @@ public class GenerateTestData {
 //        generateTestData.listTimeRanges();
 //        generateTestData.accountDetails();
 //        generateTestData.accountFunds();
-
-        generateTestData.cleanup();
+        } finally {
+            generateTestData.cleanup();
+        }
     }
 
     private void listMarketBook() throws IOException {
@@ -62,8 +65,12 @@ public class GenerateTestData {
         httpAccess.listMarketBook(marketId, priceProjection, fileWriter(ListMarketBook.listMarketBookFile()));
     }
 
-    private void cleanup() {
-        loginFile.delete();
+    private void cleanup() throws IOException {
+        try {
+            httpAccess.logout();
+        } finally {
+            loginFile.delete();
+        }
     }
 
     private void accountFunds() throws IOException {
