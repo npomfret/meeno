@@ -2,7 +2,6 @@ package snowmonkey.meeno;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -68,10 +67,11 @@ public class HttpAccess {
         this.exchange = exchange;
     }
 
-    public void cancelOrders(MarketId marketId, List<CancelInstruction> cancelInstructions, Processor processor) {
+    public void cancelOrders(MarketId marketId, List<CancelInstruction> cancelInstructions, Processor processor) throws IOException {
         Payload payload = new Payload();
         payload.addMarketId(marketId);
         payload.addCancelInstructions(cancelInstructions);
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("cancelOrders"), payload);
     }
 
     public void placeOrders(MarketId marketId, List<PlaceInstruction> instructions, CustomerRef customerRef, Processor processor) throws IOException {
@@ -272,8 +272,8 @@ public class HttpAccess {
         sendPostRequest(new Processor() {
             @Override
             public void process(StatusLine statusLine, InputStream in) throws IOException {
-                String response = IOUtils.toString(in);
-                System.out.println("response = " + response);
+//                String response = IOUtils.toString(in);
+//                System.out.println("response = " + response);
             }
         }, uri);
     }

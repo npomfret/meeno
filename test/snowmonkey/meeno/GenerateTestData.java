@@ -43,7 +43,7 @@ public class GenerateTestData {
 //            generateTestData.listMarketCatalogue();
 //            generateTestData.listMarketBook();
 //            generateTestData.placeOrders();
-//        generateTestData.listCurrentOrders();
+            generateTestData.listCurrentOrders();
             generateTestData.cancelOrders();
 //        generateTestData.listCompetitions();
 //        generateTestData.listEvents();
@@ -58,12 +58,12 @@ public class GenerateTestData {
     }
 
     private void cancelOrders() throws IOException {
-        snowmonkey.meeno.types.CurrentOrders currentOrders = snowmonkey.meeno.types.CurrentOrders.parse(CurrentOrders.getCurrentOrderJson());
+        snowmonkey.meeno.types.CurrentOrders currentOrders = snowmonkey.meeno.types.CurrentOrders.parse(CurrentOrders.listCurrentOrdersJson());
         CurrentOrder order = currentOrders.iterator().next();
         MarketId marketId = order.marketId;
         BetId betId = order.betId;
         List<CancelInstruction> cancelInstructions = newArrayList(CancelInstruction.cancel(betId));
-        httpAccess.cancelOrders(marketId, cancelInstructions, fileWriter(ListMarketBook.listMarketBookFile()));
+        httpAccess.cancelOrders(marketId, cancelInstructions, fileWriter(CancelOrders.cancelOrdersFile()));
     }
 
     private void listMarketBook() throws IOException {
@@ -212,6 +212,12 @@ public class GenerateTestData {
 
         public static String listMarketCatalogueJson() throws IOException {
             return readFileToString(listMarketCatalogueFile());
+        }
+    }
+
+    private static class CancelOrders {
+        public static File cancelOrdersFile() {
+            return new File(TEST_DATA_DIR, "cancelOrders.json");
         }
     }
 
