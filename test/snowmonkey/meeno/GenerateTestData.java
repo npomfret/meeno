@@ -40,11 +40,10 @@ public class GenerateTestData {
         GenerateTestData generateTestData = new GenerateTestData(config);
         generateTestData.login();
 
-
         try {
 //        generateTestData.listCountries();
-//        generateTestData.listMarketCatalogue();
-//        generateTestData.listMarketBook();
+//            generateTestData.listMarketCatalogue();
+//            generateTestData.listMarketBook();
             generateTestData.placeOrders();
 //        generateTestData.listCurrentOrders();
 //        generateTestData.listCompetitions();
@@ -147,18 +146,20 @@ public class GenerateTestData {
     private void login() throws Exception {
         loginFile = Login.loginFile();
 
+        AppKey apiKey = config.appKey();
+
         HttpAccess.login(
                 config.certificateFile(),
                 config.certificatePassword(),
                 config.username(),
                 config.password(),
-                config.appKey(),
+                apiKey,
                 fileWriter(loginFile)
         );
 
         SessionToken sessionToken = SessionToken.parseJson(readFileToString(loginFile));
 
-        httpAccess = new HttpAccess(sessionToken, config.delayedAppKey(), Exchange.UK);
+        httpAccess = new HttpAccess(sessionToken, apiKey, Exchange.UK);
     }
 
     private static snowmonkey.meeno.types.raw.MarketCatalogue aMarket() throws IOException {
@@ -184,9 +185,12 @@ public class GenerateTestData {
 
                 try (Reader reader = new InputStreamReader(in, HttpAccess.UTF_8)) {
                     JsonElement parse = new JsonParser().parse(reader);
-                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                    Gson gson = new GsonBuilder()
+                            .disableHtmlEscaping()
+                            .setPrettyPrinting()
+                            .create();
                     String json = gson.toJson(parse);
-                    FileUtils.writeStringToFile(file, json);
+                    FileUtils.writeStringToFile(file, json, HttpAccess.UTF_8);
                 }
             }
         };

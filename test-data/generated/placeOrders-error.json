@@ -1,0 +1,22 @@
+{
+    "status": "FAILURE",
+    "errorCode": "INSUFFICIENT_FUNDS",
+    "marketId": "1.112643860",
+    "instructionReports": [
+        {
+            "status": "FAILURE",
+            "errorCode": "ERROR_IN_ORDER",
+            "instruction": {
+                "selectionId": 5851482,
+                "handicap": 0.0,
+                "limitOrder": {
+                    "size": 2.0,
+                    "price": 1000.0,
+                    "persistenceType": "LAPSE"
+                },
+                "orderType": "LIMIT",
+                "side": "BACK"
+            }
+        }
+    ]
+}

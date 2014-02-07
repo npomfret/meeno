@@ -55,6 +55,7 @@ public class HttpAccess {
     public static final String UTF_8 = "UTF-8";
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.forPattern(DATE_FORMAT);
+    public static final String X_APPLICATION = "X-Application";
 
     interface Processor {
         void process(StatusLine statusLine, InputStream in) throws IOException;
@@ -227,7 +228,7 @@ public class HttpAccess {
             httpPost.setHeader("Content-Type", "application/json");
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Accept-Charset", UTF_8);
-            httpPost.setHeader("X-Application", appKey.asString());
+            httpPost.setHeader(X_APPLICATION, appKey.asString());
             httpPost.setHeader("X-Authentication", sessionToken.asString());
 
             String json = payload.toJson();
@@ -283,7 +284,7 @@ public class HttpAccess {
 
             httpPost.setEntity(new UrlEncodedFormEntity(postFormData));
 
-            httpPost.setHeader("X-Application", apiKey.asString());
+            httpPost.setHeader(X_APPLICATION, apiKey.asString());
 
             HttpResponse response = httpClient.execute(httpPost);
             HttpEntity entity = response.getEntity();
