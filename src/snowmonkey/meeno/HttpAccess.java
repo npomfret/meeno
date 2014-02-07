@@ -29,6 +29,7 @@ import snowmonkey.meeno.types.TimeGranularity;
 import snowmonkey.meeno.types.raw.MarketProjection;
 import snowmonkey.meeno.types.raw.MarketSort;
 import snowmonkey.meeno.types.raw.PlaceInstruction;
+import snowmonkey.meeno.types.raw.PriceProjection;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
@@ -45,6 +46,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static snowmonkey.meeno.MarketFilterBuilder.noFilter;
 
 public class HttpAccess {
@@ -75,6 +77,17 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("placeOrders"), payload);
     }
 
+    public void listMarketBook(MarketId marketId, PriceProjection priceProjection, Processor processor) throws IOException {
+        listMarketBook(newArrayList(marketId), priceProjection, processor);
+    }
+
+    public void listMarketBook(List<MarketId> marketIds, PriceProjection priceProjection, Processor processor) throws IOException {
+        Payload payload = new Payload();
+        payload.addMarketIds(marketIds);
+        payload.addPriceProjection(priceProjection);
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listMarketBook"), payload);
+    }
+
     public void listMarketCatalogue(Processor processor, Set<MarketProjection> marketProjection, MarketSort sort, int maxResults, MarketFilter marketFilter) throws IOException {
         Payload payload = new Payload();
         payload.add(marketFilter);
@@ -92,7 +105,7 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listCountries"), marketFilter);
     }
 
-    //  Set<String>betIds,Set<String>marketIds, OrderProjection orderProjection, TimeRange placedDateRange, OrderBy orderBy, SortDir sortDir,intfromRecord,intrecordCount
+    //todo:  Set<String>betIds,Set<String>marketIds, OrderProjection orderProjection, TimeRange placedDateRange, OrderBy orderBy, SortDir sortDir,intfromRecord,intrecordCount
     public void listCurrentOrders(Processor processor) throws IOException {
         listCurrentOrders(processor, noFilter());
     }
@@ -189,6 +202,14 @@ public class HttpAccess {
 
         public void addMaxResults(int maxResults) {
             map.put("maxResults", maxResults);
+        }
+
+        public void addMarketIds(Iterable<MarketId> marketIds) {
+            map.put("marketIds", marketIds);
+        }
+
+        public void addPriceProjection(PriceProjection priceProjection) {
+            map.put("priceProjection", priceProjection);
         }
     }
 

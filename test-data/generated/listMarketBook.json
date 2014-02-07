@@ -1,0 +1,151 @@
+[
+    {
+        "marketId": "1.112645442",
+        "isMarketDataDelayed": true,
+        "status": "CLOSED",
+        "betDelay": 8,
+        "bspReconciled": false,
+        "complete": true,
+        "inplay": true,
+        "numberOfWinners": 1,
+        "numberOfRunners": 13,
+        "numberOfActiveRunners": 0,
+        "totalMatched": 0.0,
+        "totalAvailable": 0.0,
+        "crossMatching": false,
+        "runnersVoidable": false,
+        "version": 683180821,
+        "runners": [
+            {
+                "selectionId": 526007,
+                "handicap": 0.0,
+                "status": "LOSER",
+                "ex": {
+                    "availableToBack": [],
+                    "availableToLay": [],
+                    "tradedVolume": []
+                }
+            },
+            {
+                "selectionId": 526012,
+                "handicap": 0.0,
+                "status": "LOSER",
+                "ex": {
+                    "availableToBack": [],
+                    "availableToLay": [],
+                    "tradedVolume": []
+                }
+            },
+            {
+                "selectionId": 2795147,
+                "handicap": 0.0,
+                "status": "LOSER",
+                "ex": {
+                    "availableToBack": [],
+                    "availableToLay": [],
+                    "tradedVolume": []
+                }
+            },
+            {
+                "selectionId": 526008,
+                "handicap": 0.0,
+                "status": "LOSER",
+                "ex": {
+                    "availableToBack": [],
+                    "availableToLay": [],
+                    "tradedVolume": []
+                }
+            },
+            {
+                "selectionId": 526013,
+                "handicap": 0.0,
+                "status": "LOSER",
+                "ex": {
+                    "availableToBack": [],
+                    "availableToLay": [],
+                    "tradedVolume": []
+                }
+            },
+            {
+                "selectionId": 3647906,
+                "handicap": 0.0,
+                "status": "LOSER",
+                "ex": {
+                    "availableToBack": [],
+                    "availableToLay": [],
+                    "tradedVolume": []
+                }
+            },
+            {
+                "selectionId": 526009,
+                "handicap": 0.0,
+                "status": "LOSER",
+                "ex": {
+                    "availableToBack": [],
+                    "availableToLay": [],
+                    "tradedVolume": []
+                }
+            },
+            {
+                "selectionId": 526014,
+                "handicap": 0.0,
+                "status": "LOSER",
+                "ex": {
+                    "availableToBack": [],
+                    "availableToLay": [],
+                    "tradedVolume": []
+                }
+            },
+            {
+                "selectionId": 3647907,
+                "handicap": 0.0,
+                "status": "LOSER",
+                "ex": {
+                    "availableToBack": [],
+                    "availableToLay": [],
+                    "tradedVolume": []
+                }
+            },
+            {
+                "selectionId": 526010,
+                "handicap": 0.0,
+                "status": "LOSER",
+                "ex": {
+                    "availableToBack": [],
+                    "availableToLay": [],
+                    "tradedVolume": []
+                }
+            },
+            {
+                "selectionId": 526015,
+                "handicap": 0.0,
+                "status": "LOSER",
+                "ex": {
+                    "availableToBack": [],
+                    "availableToLay": [],
+                    "tradedVolume": []
+                }
+            },
+            {
+                "selectionId": 3647908,
+                "handicap": 0.0,
+                "status": "LOSER",
+                "ex": {
+                    "availableToBack": [],
+                    "availableToLay": [],
+                    "tradedVolume": []
+                }
+            },
+            {
+                "selectionId": 4316861,
+                "handicap": 0.0,
+                "status": "WINNER",
+                "ex": {
+                    "availableToBack": [],
+                    "availableToLay": [],
+                    "tradedVolume": []
+                }
+            }
+        ]
+    }
+]

@@ -6,6 +6,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.http.StatusLine;
 import org.joda.time.DateTime;
 import snowmonkey.meeno.types.CustomerRef;
+import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.Markets;
 import snowmonkey.meeno.types.SessionToken;
 import snowmonkey.meeno.types.raw.*;
@@ -15,6 +16,7 @@ import java.util.Iterator;
 import java.util.UUID;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Sets.newHashSet;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static snowmonkey.meeno.CountryLookup.Argentina;
 import static snowmonkey.meeno.CountryLookup.UnitedKingdom;
@@ -40,7 +42,8 @@ public class GenerateTestData {
 
 //        generateTestData.listCountries();
 //        generateTestData.listMarketCatalogue();
-        generateTestData.placeOrders();
+        generateTestData.listMarketBook();
+//        generateTestData.placeOrders();
 //        generateTestData.listCurrentOrders();
 //        generateTestData.listCompetitions();
 //        generateTestData.listEvents();
@@ -51,6 +54,12 @@ public class GenerateTestData {
 //        generateTestData.accountFunds();
 
         generateTestData.cleanup();
+    }
+
+    private void listMarketBook() throws IOException {
+        PriceProjection priceProjection = new PriceProjection(newHashSet(PriceData.EX_BEST_OFFERS), null, false, false);
+        MarketId marketId = aMarket().marketId;
+        httpAccess.listMarketBook(marketId, priceProjection, fileWriter(ListMarketBook.listMarketBookFile()));
     }
 
     private void cleanup() {
@@ -107,7 +116,7 @@ public class GenerateTestData {
 
     private void placeOrders() throws IOException {
         snowmonkey.meeno.types.raw.MarketCatalogue marketCatalogue = aMarket();
-        LimitOrder limitOrder = new LimitOrder(2.00D, 1000d, PersistenceType.LAPSE);
+        LimitOrder limitOrder = new LimitOrder(2.00D, 1000, PersistenceType.LAPSE);
         PlaceInstruction placeLimitOrder = PlaceInstruction.createPlaceLimitOrder(marketCatalogue.runners.get(0).selectionId, Side.BACK, limitOrder);
         httpAccess.placeOrders(marketCatalogue.marketId, newArrayList(placeLimitOrder), CustomerRef.NONE, fileWriter(PlaceOrders.placeOrdersFile()));
     }
@@ -280,6 +289,12 @@ public class GenerateTestData {
 
         public static String listTimeRangesJson() throws IOException {
             return readFileToString(listTimeRangesFile());
+        }
+    }
+
+    private static class ListMarketBook {
+        private static File listMarketBookFile() {
+            return new File(TEST_DATA_DIR, "listMarketBook.json");
         }
     }
 
