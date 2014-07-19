@@ -43,14 +43,14 @@ public class GenerateTestData {
 //            generateTestData.listMarketCatalogue();
 //            generateTestData.listMarketBook();
 //            generateTestData.placeOrders();
-            generateTestData.listCurrentOrders();
-            generateTestData.cancelOrders();
+//            generateTestData.listCurrentOrders();
+//            generateTestData.cancelOrders();
 //        generateTestData.listCompetitions();
 //        generateTestData.listEvents();
 //        generateTestData.listEventTypes();
 //        generateTestData.listMarketTypes();
 //        generateTestData.listTimeRanges();
-//        generateTestData.accountDetails();
+            generateTestData.accountDetails();
 //        generateTestData.accountFunds();
         } finally {
             generateTestData.cleanup();
