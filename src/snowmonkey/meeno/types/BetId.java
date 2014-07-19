@@ -1,7 +1,7 @@
 package snowmonkey.meeno.types;
 
 
-public class BetId extends MicroValueType<String> {
+public class BetId extends MicroType<String> {
     public BetId(String value) {
         super(value);
     }

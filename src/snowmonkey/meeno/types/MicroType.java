@@ -2,10 +2,10 @@ package snowmonkey.meeno.types;
 
 import snowmonkey.meeno.Defect;
 
-public abstract class MicroValueType<T> {
+public abstract class MicroType<T> {
     protected final T value;
 
-    protected MicroValueType(T value) {
+    protected MicroType(T value) {
         this.value = value;
 
         if (value == null)
@@ -22,9 +22,9 @@ public abstract class MicroValueType<T> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MicroValueType microValueType = (MicroValueType) o;
+        MicroType microType = (MicroType) o;
 
-        if (!value.equals(microValueType.value)) return false;
+        if (!value.equals(microType.value)) return false;
 
         return true;
     }

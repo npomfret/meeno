@@ -1,7 +1,7 @@
 package snowmonkey.meeno.types;
 
 
-public class SelectionId extends MicroValueType<Long> {
+public class SelectionId extends MicroType<Long> {
     public SelectionId(Long value) {
         super(value);
     }

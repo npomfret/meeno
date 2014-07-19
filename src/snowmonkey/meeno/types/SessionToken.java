@@ -5,7 +5,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import snowmonkey.meeno.Defect;
 
-public class SessionToken extends MicroValueType<String> {
+public class SessionToken extends MicroType<String> {
     public SessionToken(String token) {
         super(token);
     }

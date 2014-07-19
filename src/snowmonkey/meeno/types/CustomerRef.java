@@ -8,7 +8,7 @@ import java.util.UUID;
  * Optional parameter allowing the client to pass a unique string (up to 32 chars) that is used to
  * de-dupe mistaken re-submissions.   CustomerRef can contain: upper/lower chars, digits, chars : - . _ + * : ; ~ only.
  */
-public class CustomerRef extends MicroValueType<String> {
+public class CustomerRef extends MicroType<String> {
     public static final CustomerRef NONE = new CustomerRef("");
 
     protected CustomerRef(String value) {

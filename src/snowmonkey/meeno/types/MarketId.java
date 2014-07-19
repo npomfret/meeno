@@ -1,7 +1,7 @@
 package snowmonkey.meeno.types;
 
 
-public class MarketId extends MicroValueType<String> {
+public class MarketId extends MicroType<String> {
     public MarketId(String value) {
         super(value);
     }
