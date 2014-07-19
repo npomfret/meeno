@@ -72,18 +72,18 @@ public class HttpAccess {
     }
 
     public void cancelOrders(MarketId marketId, List<CancelInstruction> cancelInstructions, Processor processor) throws IOException {
-        Payload payload = new Payload();
-        payload.addMarketId(marketId);
-        payload.addCancelInstructions(cancelInstructions);
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("cancelOrders"), payload);
+        PayloadBuilder payloadBuilder = new PayloadBuilder();
+        payloadBuilder.addMarketId(marketId);
+        payloadBuilder.addCancelInstructions(cancelInstructions);
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("cancelOrders"), payloadBuilder);
     }
 
     public void placeOrders(MarketId marketId, List<PlaceInstruction> instructions, CustomerRef customerRef, Processor processor) throws IOException {
-        Payload payload = new Payload();
-        payload.addMarketId(marketId);
-        payload.addPlaceInstructions(instructions);
-        payload.addCustomerRef(customerRef);
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("placeOrders"), payload);
+        PayloadBuilder payloadBuilder = new PayloadBuilder();
+        payloadBuilder.addMarketId(marketId);
+        payloadBuilder.addPlaceInstructions(instructions);
+        payloadBuilder.addCustomerRef(customerRef);
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("placeOrders"), payloadBuilder);
     }
 
     public void listMarketBook(MarketId marketId, PriceProjection priceProjection, Processor processor) throws IOException {
@@ -91,19 +91,19 @@ public class HttpAccess {
     }
 
     public void listMarketBook(List<MarketId> marketIds, PriceProjection priceProjection, Processor processor) throws IOException {
-        Payload payload = new Payload();
-        payload.addMarketIds(marketIds);
-        payload.addPriceProjection(priceProjection);
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listMarketBook"), payload);
+        PayloadBuilder payloadBuilder = new PayloadBuilder();
+        payloadBuilder.addMarketIds(marketIds);
+        payloadBuilder.addPriceProjection(priceProjection);
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listMarketBook"), payloadBuilder);
     }
 
     public void listMarketCatalogue(Processor processor, Set<MarketProjection> marketProjection, MarketSort sort, int maxResults, MarketFilter marketFilter) throws IOException {
-        Payload payload = new Payload();
-        payload.add(marketFilter);
-        payload.addMarketProjection(marketProjection);
-        payload.addMarketSort(sort);
-        payload.addMaxResults(maxResults);
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listMarketCatalogue"), payload);
+        PayloadBuilder payloadBuilder = new PayloadBuilder();
+        payloadBuilder.add(marketFilter);
+        payloadBuilder.addMarketProjection(marketProjection);
+        payloadBuilder.addMarketSort(sort);
+        payloadBuilder.addMaxResults(maxResults);
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listMarketCatalogue"), payloadBuilder);
     }
 
     public void listCountries(Processor processor) throws IOException {
@@ -144,10 +144,10 @@ public class HttpAccess {
     }
 
     public void listTimeRanges(Processor processor, TimeGranularity timeGranularity, MarketFilter marketFilter) throws IOException {
-        Payload payload = new Payload();
-        payload.add(marketFilter);
-        payload.add(timeGranularity);
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listTimeRanges"), payload);
+        PayloadBuilder payloadBuilder = new PayloadBuilder();
+        payloadBuilder.add(marketFilter);
+        payloadBuilder.add(timeGranularity);
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listTimeRanges"), payloadBuilder);
     }
 
     public void listEvents(Processor processor, MarketFilter marketFilter) throws IOException {
@@ -166,10 +166,10 @@ public class HttpAccess {
         sendPostRequest(processor, uri, noFilter());
     }
 
-    class Payload {
+    class PayloadBuilder {
         private final LinkedHashMap<String, Object> map = new LinkedHashMap<>();
 
-        public String toJson() {
+        public String buildJsonPayload() {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(DateTime.class, new JodaDateTimeTypeConverter())
                     .setDateFormat(DATE_FORMAT)
@@ -227,12 +227,12 @@ public class HttpAccess {
     }
 
     private void sendPostRequest(Processor processor, URI uri, MarketFilter marketFilter) throws IOException {
-        Payload payload = new Payload();
-        payload.add(marketFilter);
-        sendPostRequest(processor, uri, payload);
+        PayloadBuilder payloadBuilder = new PayloadBuilder();
+        payloadBuilder.add(marketFilter);
+        sendPostRequest(processor, uri, payloadBuilder);
     }
 
-    private void sendPostRequest(Processor processor, URI uri, Payload payload) throws IOException {
+    private void sendPostRequest(Processor processor, URI uri, PayloadBuilder payloadBuilder) throws IOException {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpPost httpPost = httpPost(uri);
 
@@ -242,7 +242,7 @@ public class HttpAccess {
             httpPost.setHeader(X_APPLICATION, appKey.asString());
             httpPost.setHeader("X-Authentication", sessionToken.asString());
 
-            String json = payload.toJson();
+            String json = payloadBuilder.buildJsonPayload();
 
             System.out.println(uri);
             System.out.println(json);
