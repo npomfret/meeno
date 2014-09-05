@@ -9,9 +9,14 @@
     <import file="meeno.xml"/>
 
     <target name="jar" depends="clean, all">
-        <jar destfile="out/app.jar">
-            <fileset dir="${meeno.output.dir}"/>
+        <jar destfile="out/meeno.jar">
+        <fileset dir="${meeno.output.dir}"/>
         </jar>
+    </target>
+
+    <target name="publish" depends="jar">
+        <copy file="out/meeno.jar" todir="/Users/nickpomfret/Documents/github/projects/betfair/lib/meeno"
+              overwrite="true"/>
     </target>
 
 </project>
