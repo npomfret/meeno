@@ -9,11 +9,11 @@
   },
   {
     "countryCode": "US",
-    "marketCount": 1192
+    "marketCount": 1184
   },
   {
     "countryCode": "NO",
-    "marketCount": 229
+    "marketCount": 227
   },
   {
     "countryCode": "SE",
@@ -25,11 +25,11 @@
   },
   {
     "countryCode": "CA",
-    "marketCount": 245
+    "marketCount": 239
   },
   {
     "countryCode": "SK",
-    "marketCount": 28
+    "marketCount": 78
   },
   {
     "countryCode": "PL",
@@ -37,7 +37,7 @@
   },
   {
     "countryCode": "DK",
-    "marketCount": 255
+    "marketCount": 217
   },
   {
     "countryCode": "SI",
@@ -53,11 +53,11 @@
   },
   {
     "countryCode": "CH",
-    "marketCount": 155
+    "marketCount": 152
   },
   {
     "countryCode": "RO",
-    "marketCount": 26
+    "marketCount": 301
   },
   {
     "countryCode": "UA",
@@ -65,7 +65,7 @@
   },
   {
     "countryCode": "HU",
-    "marketCount": 106
+    "marketCount": 67
   },
   {
     "countryCode": "BE",
@@ -73,7 +73,7 @@
   },
   {
     "countryCode": "CZ",
-    "marketCount": 387
+    "marketCount": 407
   },
   {
     "countryCode": "RU",
@@ -81,7 +81,7 @@
   },
   {
     "countryCode": "DE",
-    "marketCount": 484
+    "marketCount": 481
   },
   {
     "countryCode": "ZA",
@@ -97,11 +97,11 @@
   },
   {
     "countryCode": "PT",
-    "marketCount": 279
+    "marketCount": 248
   },
   {
     "countryCode": "ES",
-    "marketCount": 1104
+    "marketCount": 999
   },
   {
     "countryCode": "GR",
@@ -113,43 +113,35 @@
   },
   {
     "countryCode": "IT",
-    "marketCount": 467
+    "marketCount": 443
   },
   {
     "countryCode": "VC",
     "marketCount": 7
   },
   {
-    "countryCode": "GE",
-    "marketCount": 52
-  },
-  {
-    "countryCode": "CO",
-    "marketCount": 172
-  },
-  {
-    "countryCode": "PE",
-    "marketCount": 92
-  },
-  {
     "countryCode": "AR",
-    "marketCount": 379
+    "marketCount": 396
   },
   {
     "countryCode": "IL",
-    "marketCount": 102
+    "marketCount": 99
   },
   {
     "countryCode": "UY",
-    "marketCount": 60
+    "marketCount": 56
   },
   {
     "countryCode": "CR",
-    "marketCount": 45
+    "marketCount": 41
   },
   {
     "countryCode": "CL",
     "marketCount": 97
+  },
+  {
+    "countryCode": "PE",
+    "marketCount": 75
   },
   {
     "countryCode": "FO",
@@ -162,6 +154,10 @@
   {
     "countryCode": "BR",
     "marketCount": 1046
+  },
+  {
+    "countryCode": "CO",
+    "marketCount": 169
   },
   {
     "countryCode": "PY",
@@ -181,11 +177,11 @@
   },
   {
     "countryCode": "UZ",
-    "marketCount": 287
+    "marketCount": 289
   },
   {
     "countryCode": "IN",
-    "marketCount": 181
+    "marketCount": 183
   },
   {
     "countryCode": "KR",

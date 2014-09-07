@@ -1,11 +1,490 @@
 [
   {
     "event": {
+      "id": "27259797",
+      "name": "Sporting Cristal v UTC Cajamarca",
+      "countryCode": "PE",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T20:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27260888",
+      "name": "Cordoba B v Granada B",
+      "countryCode": "ES",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T18:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27259796",
+      "name": "Sport Huancayo v Universitario",
+      "countryCode": "PE",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T18:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27260890",
+      "name": "FC Cartagena v UCAM Murcia",
+      "countryCode": "ES",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T18:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27259793",
+      "name": "Sol de America v 12 de Octubre",
+      "countryCode": "PY",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T20:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257092",
+      "name": "Bari v Perugia",
+      "countryCode": "IT",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T18:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257113",
+      "name": "Ottawa Fury v Carolina Railhawks",
+      "countryCode": "CA",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T19:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
       "id": "27257237",
       "name": "Faroe Islands v Finland",
       "countryCode": "FO",
       "timezone": "Europe/London",
       "openDate": "2014-09-07T18:45:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257119",
+      "name": "Rochester Rhinos v Wilmington",
+      "countryCode": "US",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T20:05:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257238",
+      "name": "Gibraltar v Poland",
+      "countryCode": "GI",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T18:45:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27261860",
+      "name": "Mairena v Sanluqueno",
+      "countryCode": "ES",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T18:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257249",
+      "name": "Germany v Scotland",
+      "countryCode": "DE",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T18:45:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27261857",
+      "name": "Loja v Atarfe Industrial CF",
+      "countryCode": "ES",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T18:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257252",
+      "name": "Greece v Romania",
+      "countryCode": "GR",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T18:45:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257258",
+      "name": "Portugal v Albania",
+      "countryCode": "PT",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T18:45:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27256036",
+      "name": "Las Palmas v Lugo",
+      "countryCode": "ES",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T19:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27261875",
+      "name": "UD Los Barrios v Algeciras",
+      "countryCode": "ES",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T18:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257137",
+      "name": "Serbia v France",
+      "countryCode": "CS",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T18:45:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257285",
+      "name": "Guatemala v Belize",
+      "countryCode": "US",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T23:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257167",
+      "name": "Guadalajara v Universidad Guadalajara",
+      "countryCode": "MX",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T22:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27259741",
+      "name": "Instituto v Boca Unidos",
+      "countryCode": "AR",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T21:15:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27258671",
+      "name": "River Plate v Tigre",
+      "countryCode": "AR",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T22:15:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27259732",
+      "name": "Aldosivi v San Martin de San Juan",
+      "countryCode": "AR",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T21:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27259734",
+      "name": "CA Temperley v Santamarina",
+      "countryCode": "AR",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T21:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27259735",
+      "name": "Gimnasia Jujuy v Douglas Haig",
+      "countryCode": "AR",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T18:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257181",
+      "name": "Internacional v Figueirense",
+      "countryCode": "BR",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T21:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257180",
+      "name": "Fluminense v Cruzeiro",
+      "countryCode": "BR",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T19:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257182",
+      "name": "Sao Paulo v Sport Recife",
+      "countryCode": "BR",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T19:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257177",
+      "name": "Atletico PR v Palmeiras",
+      "countryCode": "BR",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T21:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257176",
+      "name": "Atletico MG v Botafogo RJ",
+      "countryCode": "BR",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T19:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27258674",
+      "name": "Racing Club v Lanus",
+      "countryCode": "AR",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T20:15:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257179",
+      "name": "Criciuma v Corinthians",
+      "countryCode": "BR",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T19:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257298",
+      "name": "New England v Chicago Fire",
+      "countryCode": "US",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T23:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27259240",
+      "name": "Junior v Alianza Petrolera",
+      "countryCode": "CO",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T22:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257178",
+      "name": "Bahia v Coritiba",
+      "countryCode": "BR",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T21:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27259238",
+      "name": "Deportivo Pasto v La Equidad",
+      "countryCode": "CO",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T20:15:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27259236",
+      "name": "Atletico Nacional v Boyaca Chico",
+      "countryCode": "CO",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T22:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27255845",
+      "name": "Morocco v Libya",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T19:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257188",
+      "name": "Portland Timbers v San Jose Earthquakes",
+      "countryCode": "US",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T21:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27261797",
+      "name": "CD Olimpia v Platense FC",
+      "countryCode": "HN",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T22:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257082",
+      "name": "Leganes v Mallorca",
+      "countryCode": "ES",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T19:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27257185",
+      "name": "Columbus v Chivas USA",
+      "countryCode": "US",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T19:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27261669",
+      "name": "Deportes Concepcion v Rangers (Chile)",
+      "countryCode": "CL",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T18:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27261671",
+      "name": "Union San Felipe v Magallanes",
+      "countryCode": "CL",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T18:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27261810",
+      "name": "Sao Caetano v Madureira",
+      "countryCode": "BR",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T19:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27261673",
+      "name": "Deportes Linares v Puerto Montt",
+      "countryCode": "CL",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T18:30:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27261676",
+      "name": "Bogota v Llaneros FC",
+      "countryCode": "CO",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T20:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27261677",
+      "name": "CD Real Santander v CA Bucaramanga CD",
+      "countryCode": "CO",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T20:00:00.000Z"
+    },
+    "marketCount": 1
+  },
+  {
+    "event": {
+      "id": "27261678",
+      "name": "CCD Tulua v CD Uni de Popayan",
+      "countryCode": "CO",
+      "timezone": "Europe/London",
+      "openDate": "2014-09-07T20:30:00.000Z"
     },
     "marketCount": 1
   }

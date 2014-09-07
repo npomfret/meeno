@@ -58,7 +58,7 @@ public class HttpAccess {
     public static final String X_APPLICATION = "X-Application";
 
     interface Processor {
-        void process(StatusLine statusLine, InputStream in) throws IOException;
+        void process(StatusLine statusLine, InputStream in) throws IOException, ApiException;
     }
 
     private final SessionToken sessionToken;
@@ -71,14 +71,14 @@ public class HttpAccess {
         this.exchange = exchange;
     }
 
-    public void cancelOrders(MarketId marketId, List<CancelInstruction> cancelInstructions, Processor processor) throws IOException {
+    public void cancelOrders(MarketId marketId, List<CancelInstruction> cancelInstructions, Processor processor) throws IOException, ApiException {
         PayloadBuilder payloadBuilder = new PayloadBuilder();
         payloadBuilder.addMarketId(marketId);
         payloadBuilder.addCancelInstructions(cancelInstructions);
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("cancelOrders"), payloadBuilder);
     }
 
-    public void placeOrders(MarketId marketId, List<PlaceInstruction> instructions, CustomerRef customerRef, Processor processor) throws IOException {
+    public void placeOrders(MarketId marketId, List<PlaceInstruction> instructions, CustomerRef customerRef, Processor processor) throws IOException, ApiException {
         PayloadBuilder payloadBuilder = new PayloadBuilder();
         payloadBuilder.addMarketId(marketId);
         payloadBuilder.addPlaceInstructions(instructions);
@@ -86,18 +86,18 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("placeOrders"), payloadBuilder);
     }
 
-    public void listMarketBook(MarketId marketId, PriceProjection priceProjection, Processor processor) throws IOException {
-        listMarketBook(newArrayList(marketId), priceProjection, processor);
+    public void listMarketBook(PriceProjection priceProjection, Processor processor, MarketId... marketId) throws IOException, ApiException {
+        listMarketBook(priceProjection, processor, Arrays.asList(marketId));
     }
 
-    public void listMarketBook(List<MarketId> marketIds, PriceProjection priceProjection, Processor processor) throws IOException {
+    public void listMarketBook(PriceProjection priceProjection, Processor processor, Iterable<MarketId> marketIds) throws IOException, ApiException {
         PayloadBuilder payloadBuilder = new PayloadBuilder();
         payloadBuilder.addMarketIds(marketIds);
         payloadBuilder.addPriceProjection(priceProjection);
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listMarketBook"), payloadBuilder);
     }
 
-    public void listMarketCatalogue(Processor processor, Set<MarketProjection> marketProjection, MarketSort sort, int maxResults, MarketFilter marketFilter) throws IOException {
+    public void listMarketCatalogue(Processor processor, Set<MarketProjection> marketProjection, MarketSort sort, int maxResults, MarketFilter marketFilter) throws IOException, ApiException {
         PayloadBuilder payloadBuilder = new PayloadBuilder();
         payloadBuilder.add(marketFilter);
         payloadBuilder.addMarketProjection(marketProjection);
@@ -106,28 +106,28 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listMarketCatalogue"), payloadBuilder);
     }
 
-    public void listCountries(Processor processor) throws IOException {
+    public void listCountries(Processor processor) throws IOException, ApiException {
         listCountries(processor, noFilter());
     }
 
-    public void listCountries(Processor processor, MarketFilter marketFilter) throws IOException {
+    public void listCountries(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listCountries"), marketFilter);
     }
 
     //todo:  Set<String>betIds,Set<String>marketIds, OrderProjection orderProjection, TimeRange placedDateRange, OrderBy orderBy, SortDir sortDir,intfromRecord,intrecordCount
-    public void listCurrentOrders(Processor processor) throws IOException {
+    public void listCurrentOrders(Processor processor) throws IOException, ApiException {
         listCurrentOrders(processor, noFilter());
     }
 
-    public void listClearedOrders(Processor processor) throws IOException {
+    public void listClearedOrders(Processor processor) throws IOException, ApiException {
         listClearedOrders(processor, new MarketId("99"));
     }
 
-    public void listCurrentOrders(Processor processor, MarketFilter marketFilter) throws IOException {
+    public void listCurrentOrders(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listCurrentOrders"), marketFilter);
     }
 
-    public void listClearedOrders(Processor processor, MarketId marketId) throws IOException {
+    public void listClearedOrders(Processor processor, MarketId marketId) throws IOException, ApiException {
         PayloadBuilder payloadBuilder = new PayloadBuilder();
         ZonedDateTime now = ZonedDateTime.now();
         payloadBuilder.addBetIds(newArrayList(new BetId("88")));
@@ -142,67 +142,67 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listClearedOrders"), payloadBuilder);
     }
 
-    public void listCompetitions(Processor processor, MarketFilter marketFilter) throws IOException {
+    public void listCompetitions(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listCompetitions"), marketFilter);
     }
 
-    public void listEventTypes(Processor processor) throws IOException {
+    public void listEventTypes(Processor processor) throws IOException, ApiException {
         listEventTypes(processor, noFilter());
     }
 
-    public void listEventTypes(Processor processor, MarketFilter marketFilter) throws IOException {
+    public void listEventTypes(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listEventTypes"), marketFilter);
     }
 
-    public void listMarketTypes(Processor processor) throws IOException {
+    public void listMarketTypes(Processor processor) throws IOException, ApiException {
         listMarketTypes(processor, noFilter());
     }
 
-    public void listMarketTypes(Processor processor, MarketFilter marketFilter) throws IOException {
+    public void listMarketTypes(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listMarketTypes"), marketFilter);
     }
 
-    public void listTimeRanges(Processor processor, TimeGranularity timeGranularity, MarketFilter marketFilter) throws IOException {
+    public void listTimeRanges(Processor processor, TimeGranularity timeGranularity, MarketFilter marketFilter) throws IOException, ApiException {
         PayloadBuilder payloadBuilder = new PayloadBuilder();
         payloadBuilder.add(marketFilter);
         payloadBuilder.add(timeGranularity);
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listTimeRanges"), payloadBuilder);
     }
 
-    public void listEvents(Processor processor, MarketFilter marketFilter) throws IOException {
+    public void listEvents(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listEvents"), marketFilter);
     }
 
-    public void getAccountDetails(Processor processor) throws IOException {
+    public void getAccountDetails(Processor processor) throws IOException, ApiException {
         sendPostRequest(processor, exchange.accountUris.jsonRestUri("getAccountDetails"));
     }
 
-    public void getAccountFunds(Processor processor) throws IOException {
+    public void getAccountFunds(Processor processor) throws IOException, ApiException {
         sendPostRequest(processor, exchange.accountUris.jsonRestUri("getAccountFunds"));
     }
 
-    private void sendPostRequest(Processor processor, URI uri) throws IOException {
+    private void sendPostRequest(Processor processor, URI uri) throws IOException, ApiException {
         sendPostRequest(processor, uri, noFilter());
     }
 
-    public void nav(Processor processor) throws IOException {
+    public void nav(Processor processor) throws IOException, ApiException {
         HttpGet httpGet = httpGet(Exchange.NAV);
         performHttpRequest(processor, Exchange.NAV, new PayloadBuilder(), httpGet);
     }
 
 
-    private void sendPostRequest(Processor processor, URI uri, MarketFilter marketFilter) throws IOException {
+    private void sendPostRequest(Processor processor, URI uri, MarketFilter marketFilter) throws IOException, ApiException {
         PayloadBuilder payloadBuilder = new PayloadBuilder();
         payloadBuilder.add(marketFilter);
         sendPostRequest(processor, uri, payloadBuilder);
     }
 
-    private void sendPostRequest(Processor processor, URI uri, PayloadBuilder payloadBuilder) throws IOException {
+    private void sendPostRequest(Processor processor, URI uri, PayloadBuilder payloadBuilder) throws IOException, ApiException {
         HttpPost httpPost = httpPost(uri);
         performHttpRequest(processor, uri, payloadBuilder, httpPost);
     }
 
-    private void performHttpRequest(Processor processor, URI uri, PayloadBuilder payloadBuilder, HttpPost httpPost) throws IOException {
+    private void performHttpRequest(Processor processor, URI uri, PayloadBuilder payloadBuilder, HttpPost httpPost) throws IOException, ApiException {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
 
             applyHeaders(httpPost);
@@ -218,7 +218,7 @@ public class HttpAccess {
         }
     }
 
-    private void performHttpRequest(Processor processor, URI uri, PayloadBuilder payloadBuilder, HttpGet httpGet) throws IOException {
+    private void performHttpRequest(Processor processor, URI uri, PayloadBuilder payloadBuilder, HttpGet httpGet) throws IOException, ApiException {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
 
             applyHeaders(httpGet);
@@ -277,7 +277,7 @@ public class HttpAccess {
                 .build();
     }
 
-    public void logout() throws IOException {
+    public void logout() throws IOException, ApiException {
         URI uri = URI.create("https://identitysso.betfair.com/api/logout");
         sendPostRequest(new Processor() {
             @Override
@@ -335,7 +335,7 @@ public class HttpAccess {
         return new SSLConnectionSocketFactory(ctx, new StrictHostnameVerifier());
     }
 
-    private void processResponse(Processor processor, CloseableHttpClient httpClient, HttpUriRequest httpPost) throws IOException {
+    private void processResponse(Processor processor, CloseableHttpClient httpClient, HttpUriRequest httpPost) throws IOException, ApiException {
         try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
             HttpEntity entity = response.getEntity();
             try (InputStream inputStream = entity.getContent()) {

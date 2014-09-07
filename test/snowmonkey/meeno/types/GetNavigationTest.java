@@ -4,7 +4,6 @@ import org.junit.Test;
 import snowmonkey.meeno.GenerateTestData;
 
 import java.time.ZonedDateTime;
-import java.util.Collection;
 import java.util.List;
 
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -42,7 +41,7 @@ public class GetNavigationTest {
     public void testFind() throws Exception {
         Navigation navigation = Navigation.parse(GenerateTestData.GetNavigation.getNavigationJson());
 
-        Collection<Navigation.Market> markets = navigation.findMarkets(
+        Navigation.Markets markets = navigation.findMarkets(
                 "Soccer",
                 between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(1)),
                 "Match Odds"

@@ -13,6 +13,7 @@ import snowmonkey.meeno.types.raw.TimeRange;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -123,7 +124,24 @@ public class Navigation {
         return results;
     }
 
-    public Collection<Market> findMarkets(String eventTypeName, TimeRange timeRange, String marketNamePattern) throws NotFoundException {
+    public static class Markets implements Iterable<Market> {
+        private final Collection<Market> markets;
+
+        public Markets(List<Market> markets) {
+            this.markets = markets;
+        }
+
+        @Override
+        public Iterator<Market> iterator() {
+            return markets.iterator();
+        }
+
+        public Iterable<MarketId> marketsIds() {
+            return markets.stream().map(m -> m.id).collect(Collectors.toList());
+        }
+    }
+
+    public Markets findMarkets(String eventTypeName, TimeRange timeRange, String marketNamePattern) throws NotFoundException {
         Pattern pattern = Pattern.compile(marketNamePattern);
 
         List<Market> markets = new ArrayList<>();
@@ -132,7 +150,7 @@ public class Navigation {
             go(timeRange, markets, event.children(), pattern);
         }
 
-        return markets;
+        return new Markets(markets);
     }
 
     private void go(TimeRange timeRange, List<Market> markets, List<Navigation> children, Pattern marketNamePattern) {
