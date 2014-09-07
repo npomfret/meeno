@@ -62,7 +62,7 @@ public class GenerateTestData {
 
             generateTestData.listEvents(soccer, markets.marketsIds());
 
-            snowmonkey.meeno.types.MarketCatalogue marketCatalogues = generateTestData.listMarketCatalogue(soccer, markets.marketsIds());
+            MarketCatalogues marketCatalogues = generateTestData.listMarketCatalogue(soccer, markets.marketsIds());
 
             generateTestData.listMarketBook(markets.marketsIds());
 
@@ -163,13 +163,13 @@ public class GenerateTestData {
     }
 
     private void placeOrders() throws IOException, ApiException {
-        snowmonkey.meeno.types.raw.MarketCatalogue marketCatalogue = aMarket();
+        MarketCatalogue marketCatalogue = aMarket();
         LimitOrder limitOrder = new LimitOrder(2.00D, 1000, PersistenceType.LAPSE);
         PlaceInstruction placeLimitOrder = PlaceInstruction.createPlaceLimitOrder(marketCatalogue.runners.get(0).selectionId, Side.BACK, limitOrder);
         httpAccess.placeOrders(marketCatalogue.marketId, newArrayList(placeLimitOrder), CustomerRef.NONE, fileWriter(PlaceOrders.placeOrdersFile()));
     }
 
-    private snowmonkey.meeno.types.MarketCatalogue listMarketCatalogue(EventType eventType, Iterable<MarketId> marketIds) throws IOException, ApiException {
+    private MarketCatalogues listMarketCatalogue(EventType eventType, Iterable<MarketId> marketIds) throws IOException, ApiException {
         int maxResults = 5;
         httpAccess.listMarketCatalogue(fileWriter(ListMarketCatalogue.listMarketCatalogueFile()),
                 MarketProjection.allMarketProjections(),
@@ -180,7 +180,7 @@ public class GenerateTestData {
                         .withMarketIds(Iterables.limit(marketIds, maxResults))
                         .build());
 
-        return snowmonkey.meeno.types.MarketCatalogue.parse(ListMarketCatalogue.listMarketCatalogueJson());
+        return MarketCatalogues.parse(ListMarketCatalogue.listMarketCatalogueJson());
     }
 
     private void listCountries() throws IOException, ApiException {
@@ -194,9 +194,9 @@ public class GenerateTestData {
         httpAccess = new HttpAccess(sessionToken, config.appKey(), Exchange.UK);
     }
 
-    private static snowmonkey.meeno.types.raw.MarketCatalogue aMarket() throws IOException, ApiException {
-        snowmonkey.meeno.types.MarketCatalogue marketCatalogue = snowmonkey.meeno.types.MarketCatalogue.parse(ListMarketCatalogue.listMarketCatalogueJson());
-        Iterator<snowmonkey.meeno.types.raw.MarketCatalogue> iterator = marketCatalogue.iterator();
+    private static MarketCatalogue aMarket() throws IOException, ApiException {
+        MarketCatalogues marketCatalogues = MarketCatalogues.parse(ListMarketCatalogue.listMarketCatalogueJson());
+        Iterator<MarketCatalogue> iterator = marketCatalogues.iterator();
         iterator.next();
         return iterator.next();
     }

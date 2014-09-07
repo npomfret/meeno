@@ -11,11 +11,11 @@ import java.util.*;
 
 import static snowmonkey.meeno.types.Events.printElement;
 
-public class MarketCatalogue implements Iterable<snowmonkey.meeno.types.raw.MarketCatalogue> {
-    private final Map<MarketId, snowmonkey.meeno.types.raw.MarketCatalogue> markets = new LinkedHashMap<>();
+public class MarketCatalogues implements Iterable<MarketCatalogue> {
+    private final Map<MarketId, MarketCatalogue> markets = new LinkedHashMap<>();
 
-    public static MarketCatalogue parse(String json) {
-        MarketCatalogue markets = new MarketCatalogue();
+    public static MarketCatalogues parse(String json) {
+        MarketCatalogues markets = new MarketCatalogues();
 
         try {
             JsonElement parsed = new JsonParser().parse(json);
@@ -83,7 +83,7 @@ public class MarketCatalogue implements Iterable<snowmonkey.meeno.types.raw.Mark
                             JsonHelp.optionalDateTime(eventObj, "openDate")
                     );
 
-                    snowmonkey.meeno.types.raw.MarketCatalogue marketCatalogue = new snowmonkey.meeno.types.raw.MarketCatalogue(
+                    MarketCatalogue marketCatalogue = new MarketCatalogue(
                             marketId,
                             marketName,
                             marketDescription,
@@ -106,12 +106,12 @@ public class MarketCatalogue implements Iterable<snowmonkey.meeno.types.raw.Mark
     }
 
     @Override
-    public Iterator<snowmonkey.meeno.types.raw.MarketCatalogue> iterator() {
+    public Iterator<MarketCatalogue> iterator() {
         return markets.values().iterator();
     }
 
-    public snowmonkey.meeno.types.raw.MarketCatalogue get(MarketId marketId) {
-        snowmonkey.meeno.types.raw.MarketCatalogue marketCatalogue = markets.get(marketId);
+    public MarketCatalogue get(MarketId marketId) {
+        MarketCatalogue marketCatalogue = markets.get(marketId);
         if (marketCatalogue == null) {
             throw new Defect("There is no market for id '" + marketId + "'");
         }

@@ -2,6 +2,7 @@ package snowmonkey.meeno;
 
 import org.junit.Test;
 import snowmonkey.meeno.types.*;
+import snowmonkey.meeno.types.raw.MarketCatalogue;
 
 import static java.time.ZonedDateTime.now;
 import static snowmonkey.meeno.MarketFilterBuilder.marketFilter;
@@ -33,9 +34,9 @@ public class HttpExchangeOperationsTest {
         Iterable<MarketId> marketIds = markets.marketsIds();
         System.out.println("marketIds = " + marketIds);
 
-        MarketCatalogue marketCatalogues = exchangeOperations.marketCatalogue(marketFilter(eventTypeId, marketIds));
+        MarketCatalogues marketCatalogues = exchangeOperations.marketCatalogue(marketFilter(eventTypeId, marketIds));
 
-        for (snowmonkey.meeno.types.raw.MarketCatalogue marketCatalogue : marketCatalogues) {
+        for (MarketCatalogue marketCatalogue : marketCatalogues) {
             System.out.println("marketCatalogue = " + marketCatalogue);
         }
 

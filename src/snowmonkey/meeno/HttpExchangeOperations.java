@@ -1,7 +1,7 @@
 package snowmonkey.meeno;
 
 import org.apache.http.StatusLine;
-import snowmonkey.meeno.types.MarketCatalogue;
+import snowmonkey.meeno.types.MarketCatalogues;
 import snowmonkey.meeno.types.Navigation;
 import snowmonkey.meeno.types.raw.MarketProjection;
 import snowmonkey.meeno.types.raw.MarketSort;
@@ -20,16 +20,16 @@ public class HttpExchangeOperations implements ExchangeOperations {
         this.httpAccess = httpAccess;
     }
 
-    public MarketCatalogue marketCatalogue(MarketFilter marketFilter) throws ApiException {
+    public MarketCatalogues marketCatalogue(MarketFilter marketFilter) throws ApiException {
         MarketSort marketSort = MarketSort.FIRST_TO_START;
         return marketCatalogue(allMarketProjections(), marketSort, marketFilter, MAX_MARKET_CATALOGUE_RESULTS);
     }
 
-    public MarketCatalogue marketCatalogue(Iterable<MarketProjection> marketProjections, MarketSort marketSort, MarketFilter marketFilter, int maxResults) throws ApiException {
+    public MarketCatalogues marketCatalogue(Iterable<MarketProjection> marketProjections, MarketSort marketSort, MarketFilter marketFilter, int maxResults) throws ApiException {
         try {
             JsonProcessor processor = new JsonProcessor();
             httpAccess.listMarketCatalogue(processor, marketProjections, marketSort, maxResults, marketFilter);
-            return MarketCatalogue.parse(processor.json);
+            return MarketCatalogues.parse(processor.json);
         } catch (IOException e) {
             throw new RuntimeEnvironmentException("listMarketCatalogue call failed", e);
         }

@@ -11,9 +11,9 @@ import static org.hamcrest.Matchers.equalTo;
 public class ListMarketCatalogueTest {
     @Test
     public void test() throws Exception {
-        MarketCatalogue markets = MarketCatalogue.parse(GenerateTestData.ListMarketCatalogue.listMarketCatalogueJson());
+        MarketCatalogues markets = MarketCatalogues.parse(GenerateTestData.ListMarketCatalogue.listMarketCatalogueJson());
         MarketId marketId = new MarketId("1.112645443");
-        snowmonkey.meeno.types.raw.MarketCatalogue marketCatalogue = markets.get(marketId);
+        MarketCatalogue marketCatalogue = markets.get(marketId);
 
         assertThat(marketCatalogue.competition, equalTo(new Competition(new CompetitionId("62815"), "Copa Libertadores")));
         assertThat(marketCatalogue.description, equalTo(new MarketDescription(
