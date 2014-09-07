@@ -10,7 +10,8 @@
 
     <target name="jar" depends="clean, all">
         <jar destfile="out/meeno.jar">
-        <fileset dir="${meeno.output.dir}"/>
+            <fileset dir="${meeno.output.dir}"/>
+            <fileset dir="${module.meeno.basedir}/src"/>
         </jar>
     </target>
 

@@ -1,8 +1,11 @@
 package snowmonkey.meeno;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class MeenoConfig {
@@ -13,11 +16,13 @@ public class MeenoConfig {
     }
 
     public static MeenoConfig load() {
-        File file = new File("credentials.properties");
+        return load(Paths.get("credentials.properties"));
+    }
 
+    public static MeenoConfig load(Path file) {
         Properties properties = new Properties();
         try {
-            try (FileReader reader = new FileReader(file)) {
+            try (Reader reader = Files.newBufferedReader(file)) {
                 properties.load(reader);
             }
         } catch (IOException e) {

@@ -57,7 +57,7 @@ public class HttpAccess {
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.forPattern(DATE_FORMAT);
     public static final String X_APPLICATION = "X-Application";
 
-    interface Processor {
+    public interface Processor {
         void process(StatusLine statusLine, InputStream in) throws IOException, ApiException;
     }
 
@@ -288,7 +288,7 @@ public class HttpAccess {
         }, uri);
     }
 
-    public static void login(File certFile, String certPassword, String betfairUsername, String betfairPassword, AppKey apiKey, HttpAccess.Processor processor) throws Exception {
+    public static SessionToken login(File certFile, String certPassword, String betfairUsername, String betfairPassword, AppKey apiKey) throws Exception {
 
         Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
                 .register("http", PlainConnectionSocketFactory.INSTANCE)
@@ -316,11 +316,12 @@ public class HttpAccess {
             HttpResponse response = client.execute(httpPost);
             HttpEntity entity = response.getEntity();
             try (InputStream content = entity.getContent()) {
-                processor.process(response.getStatusLine(), content);
+                String json = DefaultProcessor.processResponse(response.getStatusLine(), content);
+                return SessionToken.parseJson(json);
             }
+        } finally {
+            connManager.close();
         }
-
-        connManager.close();
     }
 
 

@@ -3,15 +3,12 @@ package snowmonkey.meeno;
 import com.google.common.collect.Iterables;
 import com.google.gson.*;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.http.StatusLine;
 import snowmonkey.meeno.types.*;
 import snowmonkey.meeno.types.raw.*;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -77,8 +74,8 @@ public class GenerateTestData {
 //            generateTestData.cancelOrders();
 //        generateTestData.listMarketTypes();
 //        generateTestData.listTimeRanges();
-//            generateTestData.accountDetails();
-//        generateTestData.accountFunds();
+            generateTestData.accountDetails();
+            generateTestData.accountFunds();
 //            generateTestData.listClearedOrders();
         } finally {
             generateTestData.cleanup();
@@ -202,16 +199,13 @@ public class GenerateTestData {
 
         AppKey apiKey = config.appKey();
 
-        HttpAccess.login(
+        SessionToken sessionToken = HttpAccess.login(
                 config.certificateFile(),
                 config.certificatePassword(),
                 config.username(),
                 config.password(),
-                apiKey,
-                fileWriter(loginFile)
+                apiKey
         );
-
-        SessionToken sessionToken = SessionToken.parseJson(readFileToString(loginFile.toFile()));
 
         httpAccess = new HttpAccess(sessionToken, apiKey, Exchange.UK);
     }
@@ -231,61 +225,10 @@ public class GenerateTestData {
         return new HttpAccess.Processor() {
             @Override
             public void process(StatusLine statusLine, InputStream in) throws IOException, ApiException {
-
-//                if (file.exists()) {
-//                    System.out.println(file + " already exists - not overwriting");
-//                    return;
-//                }
-
-                try (Reader reader = new InputStreamReader(in, HttpAccess.UTF_8)) {
-                    JsonElement parsed = new JsonParser().parse(reader);
-
-                    if (statusLine.getStatusCode() != 200) {
-                        JsonObject object = parsed.getAsJsonObject();
-
-                        System.out.println(prettyPrintJson(parsed));
-
-                        if (object.has("detail")) {
-                            JsonObject detail = object.getAsJsonObject("detail");
-                            String exceptionName = detail.getAsJsonPrimitive("exceptionname").getAsString();
-                            JsonObject exception = detail.getAsJsonObject(exceptionName);
-                            throw new ApiException(
-                                    exception.getAsJsonPrimitive("errorDetails").getAsString(),
-                                    exception.getAsJsonPrimitive("errorCode").getAsString(),
-                                    exception.getAsJsonPrimitive("requestUUID").getAsString()
-                            );
-                        }
-
-                        if (!object.has("faultstring"))
-                            throw new Defect("Bad status code: " + statusLine.getStatusCode() + "\n" + IOUtils.toString(in));
-
-                        String faultstring = object.getAsJsonPrimitive("faultstring").getAsString();
-
-                        switch (faultstring) {
-                            case "DSC-0018": {
-                                throw new IllegalStateException("A parameter marked as mandatory was not provided");
-                            }
-                            default:
-                                throw new Defect("Bad status code: " + statusLine.getStatusCode() + "\n" + IOUtils.toString(in));
-                        }
-                    }
-
-                    FileUtils.writeStringToFile(file.toFile(), prettyPrintJson(parsed), HttpAccess.UTF_8);
-                }
-            }
-
-            private String prettyPrintJson(JsonElement parse) {
-                return gson()
-                        .toJson(parse);
+                String json = DefaultProcessor.processResponse(statusLine, in);
+                FileUtils.writeStringToFile(file.toFile(), json, HttpAccess.UTF_8);
             }
         };
-    }
-
-    private static Gson gson() {
-        return new GsonBuilder()
-                .disableHtmlEscaping()
-                .setPrettyPrinting()
-                .create();
     }
 
     public static class MarketCatalogue {
@@ -467,4 +410,5 @@ public class GenerateTestData {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(jsonElement);
     }
+
 }
