@@ -68,6 +68,20 @@ public class Navigation {
         return Collections.EMPTY_LIST;
     }
 
+    public String groupName() {
+        if (type.equals(Type.GROUP))
+            return name;
+
+        throw new IllegalStateException(this + " is not a group");
+    }
+
+    public String eventName() {
+        if (type.equals(Type.EVENT))
+            return name;
+
+        throw new IllegalStateException(this + " is not an event");
+    }
+
     public List<Navigation> children() {
         List<Navigation> results = new ArrayList<>();
         for (JsonElement child : children) {
@@ -79,7 +93,7 @@ public class Navigation {
         return results;
     }
 
-    private String print(List<Navigation> eventTypes) {
+    public String print(List<Navigation> eventTypes) {
         return StringUtils.join(eventTypes.stream().map(nav -> nav.name).iterator(), ",");
     }
 
@@ -127,6 +141,10 @@ public class Navigation {
         return results;
     }
 
+    public Navigation parent() {
+        return parent;
+    }
+
     public static class Markets implements Iterable<Market> {
         private final Collection<Market> markets;
 
@@ -141,6 +159,10 @@ public class Navigation {
 
         public Iterable<MarketId> marketsIds() {
             return markets.stream().map(m -> m.id).collect(Collectors.toList());
+        }
+
+        public Iterable<FootballMarket> asFootballMarkets() {
+            return markets.stream().map(m -> new FootballMarket(m)).collect(Collectors.toList());
         }
     }
 

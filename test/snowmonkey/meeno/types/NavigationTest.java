@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
 import static snowmonkey.meeno.types.EventTypeName.SOCCER;
 import static snowmonkey.meeno.types.raw.TimeRange.between;
 
-public class GetNavigationTest {
+public class NavigationTest {
     @Test
     public void canGetEventTypes() throws Exception {
         Navigation navigation = Navigation.parse(GenerateTestData.GetNavigation.getNavigationJson());
