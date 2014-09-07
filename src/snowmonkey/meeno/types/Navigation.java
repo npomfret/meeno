@@ -11,10 +11,7 @@ import snowmonkey.meeno.NotFoundException;
 import snowmonkey.meeno.types.raw.TimeRange;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -62,14 +59,14 @@ public class Navigation {
         return children().stream().filter(child -> child.type.equals(eventType)).collect(Collectors.toList());
     }
 
-    public List<Navigation> events(EventTypeName eventTypeName) throws NotFoundException {
+    public List<Navigation> events(EventTypeName eventTypeName) {
         for (Navigation topLevelEvent : getEventTypes()) {
             if (topLevelEvent.eventTypeName().equals(eventTypeName)) {
                 return topLevelEvent.children();
             }
         }
 
-        throw new NotFoundException("Cannot find events of type '" + eventTypeName + "' in " + print(getEventTypes()));
+        return Collections.EMPTY_LIST;
     }
 
     public List<Navigation> children() {
