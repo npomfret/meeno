@@ -15,7 +15,9 @@ public class CurrentOrders implements Iterable<CurrentOrder> {
 
     public static CurrentOrders parse(String json) {
         CurrentOrders currentOrders = new CurrentOrders();
+
         JsonElement parsed = new JsonParser().parse(json);
+
         for (JsonElement jsonElement : parsed.getAsJsonObject().get("currentOrders").getAsJsonArray()) {
             JsonObject currentOrderObj = jsonElement.getAsJsonObject();
             BetId betId = new BetId(currentOrderObj.getAsJsonPrimitive("betId").getAsString());
@@ -42,6 +44,7 @@ public class CurrentOrders implements Iterable<CurrentOrder> {
             double sizeVoided = currentOrderObj.getAsJsonPrimitive("sizeVoided").getAsDouble();
             String regulatorAuthCode = JsonHelp.optionalString(currentOrderObj, "regulatorAuthCode");
             String regulatorCode = JsonHelp.optionalString(currentOrderObj, "regulatorCode");
+
             currentOrders.orders.put(betId, new CurrentOrder(
                     betId,
                     marketId,
@@ -65,7 +68,6 @@ public class CurrentOrders implements Iterable<CurrentOrder> {
                     regulatorCode
             ));
         }
-
 
         return currentOrders;
     }

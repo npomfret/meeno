@@ -21,17 +21,11 @@ public final class CurrentOrder extends ImmutbleType {
     public final OrderType orderType;
     public final DateTime placedDate;
     public final DateTime matchedDate;
-    @Nullable
     public final double averagePriceMatched;
-    @Nullable
     public final double sizeMatched;
-    @Nullable
     public final double sizeRemaining;
-    @Nullable
     public final double sizeLapsed;
-    @Nullable
     public final double sizeCancelled;
-    @Nullable
     public final double sizeVoided;
     @Nullable
     public final String regulatorAuthCode;
