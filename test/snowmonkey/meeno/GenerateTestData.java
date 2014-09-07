@@ -49,7 +49,7 @@ public class GenerateTestData {
 
             Navigation navigation = generateTestData.navigation();
             Navigation.Markets markets = navigation.findMarkets(
-                    "Soccer",
+                    EventTypeName.SOCCER,
                     between(ZonedDateTime.now(), ZonedDateTime.now().plusHours(6)),
                     "Match Odds"
             );

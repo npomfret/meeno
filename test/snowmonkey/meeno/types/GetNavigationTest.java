@@ -8,6 +8,7 @@ import java.util.List;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
+import static snowmonkey.meeno.types.EventTypeName.SOCCER;
 import static snowmonkey.meeno.types.raw.TimeRange.between;
 
 public class GetNavigationTest {
@@ -16,6 +17,9 @@ public class GetNavigationTest {
         Navigation navigation = Navigation.parse(GenerateTestData.GetNavigation.getNavigationJson());
 
         List<Navigation> eventTypes = navigation.getEventTypes();
+        for (Navigation eventType : eventTypes) {
+            System.out.println("public static final EventTypeName " + eventType.eventTypeName().betfairName().toUpperCase().replaceAll("\\W", "_") + " = new EventTypeName(\"" + eventType.eventTypeName().betfairName() + "\");");
+        }
         assertThat(eventTypes.size(), equalTo(29));
     }
 
@@ -23,7 +27,7 @@ public class GetNavigationTest {
     public void canGetSoccerEvents() throws Exception {
         Navigation navigation = Navigation.parse(GenerateTestData.GetNavigation.getNavigationJson());
 
-        List<Navigation> eventTypes = navigation.events("Soccer");
+        List<Navigation> eventTypes = navigation.events(SOCCER);
         for (Navigation eventType : eventTypes) {
             System.out.println(eventType);
             List<Navigation> children = eventType.children();
@@ -42,7 +46,7 @@ public class GetNavigationTest {
         Navigation navigation = Navigation.parse(GenerateTestData.GetNavigation.getNavigationJson());
 
         Navigation.Markets markets = navigation.findMarkets(
-                "Soccer",
+                SOCCER,
                 between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(1)),
                 "Match Odds"
         );

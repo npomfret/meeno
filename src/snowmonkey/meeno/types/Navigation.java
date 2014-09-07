@@ -35,6 +35,12 @@ public class Navigation {
         this.children = children;
     }
 
+    public EventTypeName eventTypeName() {
+        if (this.type.equals(Type.EVENT_TYPE))
+            return new EventTypeName(name);
+        throw new IllegalStateException(this + " is not an event type name");
+    }
+
     @Override
     public String toString() {
         return StringUtils.join(new String[]{id, name, type.name(), children.size() + " children"}, ",");
@@ -56,12 +62,13 @@ public class Navigation {
         return children().stream().filter(child -> child.type.equals(eventType)).collect(Collectors.toList());
     }
 
-    public List<Navigation> events(String eventTypeName) throws NotFoundException {
+    public List<Navigation> events(EventTypeName eventTypeName) throws NotFoundException {
         for (Navigation topLevelEvent : getEventTypes()) {
-            if (topLevelEvent.name.equals(eventTypeName)) {
+            if (topLevelEvent.eventTypeName().equals(eventTypeName)) {
                 return topLevelEvent.children();
             }
         }
+
         throw new NotFoundException("Cannot find events of type '" + eventTypeName + "' in " + print(getEventTypes()));
     }
 
@@ -141,7 +148,7 @@ public class Navigation {
         }
     }
 
-    public Markets findMarkets(String eventTypeName, TimeRange timeRange, String marketNamePattern) throws NotFoundException {
+    public Markets findMarkets(EventTypeName eventTypeName, TimeRange timeRange, String marketNamePattern) throws NotFoundException {
         Pattern pattern = Pattern.compile(marketNamePattern);
 
         List<Market> markets = new ArrayList<>();
