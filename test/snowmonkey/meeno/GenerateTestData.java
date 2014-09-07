@@ -197,17 +197,9 @@ public class GenerateTestData {
     private void login() throws Exception {
         loginFile = Login.loginFile();
 
-        AppKey apiKey = config.appKey();
+        SessionToken sessionToken = HttpAccess.login(config);
 
-        SessionToken sessionToken = HttpAccess.login(
-                config.certificateFile(),
-                config.certificatePassword(),
-                config.username(),
-                config.password(),
-                apiKey
-        );
-
-        httpAccess = new HttpAccess(sessionToken, apiKey, Exchange.UK);
+        httpAccess = new HttpAccess(sessionToken, config.appKey(), Exchange.UK);
     }
 
     private static snowmonkey.meeno.types.raw.MarketCatalogue aMarket() throws IOException, ApiException {

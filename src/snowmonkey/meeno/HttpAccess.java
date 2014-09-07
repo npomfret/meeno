@@ -285,6 +285,16 @@ public class HttpAccess {
         }, uri);
     }
 
+    public static SessionToken login(MeenoConfig config) throws Exception {
+        return login(
+                config.certificateFile(),
+                config.certificatePassword(),
+                config.username(),
+                config.password(),
+                config.appKey()
+        );
+    }
+
     public static SessionToken login(File certFile, String certPassword, String betfairUsername, String betfairPassword, AppKey apiKey) throws Exception {
 
         Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
