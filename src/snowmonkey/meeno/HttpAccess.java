@@ -275,14 +275,13 @@ public class HttpAccess {
     }
 
     public void logout() throws IOException, ApiException {
-        URI uri = URI.create("https://identitysso.betfair.com/api/logout");
         sendPostRequest(new Processor() {
             @Override
             public void process(StatusLine statusLine, InputStream in) throws IOException {
 //                String response = IOUtils.toString(in);
 //                System.out.println("response = " + response);
             }
-        }, uri);
+        }, Exchange.LOGOUT_URI);
     }
 
     public static SessionToken login(MeenoConfig config) throws Exception {
