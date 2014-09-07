@@ -2,14 +2,14 @@ package snowmonkey.meeno.types.raw;
 
 import snowmonkey.meeno.types.ImmutbleType;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 public final class TimeRange extends ImmutbleType {
 
-    public final Date from;
-    public final Date to;
+    public final ZonedDateTime from;
+    public final ZonedDateTime to;
 
-    public TimeRange(Date from, Date to) {
+    public TimeRange(ZonedDateTime from, ZonedDateTime to) {
         this.from = from;
         this.to = to;
     }

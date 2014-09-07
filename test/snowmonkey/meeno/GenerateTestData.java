@@ -50,8 +50,9 @@ public class GenerateTestData {
 //        generateTestData.listEventTypes();
 //        generateTestData.listMarketTypes();
 //        generateTestData.listTimeRanges();
-            generateTestData.accountDetails();
+//            generateTestData.accountDetails();
 //        generateTestData.accountFunds();
+            generateTestData.listClearedOrders();
         } finally {
             generateTestData.cleanup();
         }
@@ -128,6 +129,10 @@ public class GenerateTestData {
         httpAccess.listCurrentOrders(fileWriter(CurrentOrders.listCurrentOrdersFile()));
     }
 
+    private void listClearedOrders() throws IOException {
+        httpAccess.listClearedOrders(fileWriter(CurrentOrders.listClearedOrdersFile()));
+    }
+
     private void placeOrders() throws IOException {
         snowmonkey.meeno.types.raw.MarketCatalogue marketCatalogue = aMarket();
         LimitOrder limitOrder = new LimitOrder(2.00D, 1000, PersistenceType.LAPSE);
@@ -185,21 +190,42 @@ public class GenerateTestData {
         return new HttpAccess.Processor() {
             @Override
             public void process(StatusLine statusLine, InputStream in) throws IOException {
-                if (statusLine.getStatusCode() != 200)
-                    throw new Defect("Bad status code: " + statusLine.getStatusCode() + "\n" + IOUtils.toString(in));
 
                 if (file.exists())
                     return;
 
                 try (Reader reader = new InputStreamReader(in, HttpAccess.UTF_8)) {
-                    JsonElement parse = new JsonParser().parse(reader);
-                    Gson gson = new GsonBuilder()
-                            .disableHtmlEscaping()
-                            .setPrettyPrinting()
-                            .create();
-                    String json = gson.toJson(parse);
-                    FileUtils.writeStringToFile(file, json, HttpAccess.UTF_8);
+                    JsonElement parsed = new JsonParser().parse(reader);
+
+                    if (statusLine.getStatusCode() != 200) {
+                        JsonObject object = parsed.getAsJsonObject();
+
+                        System.out.println(prettyPrintJson(parsed));
+
+                        if (!object.has("faultstring"))
+                            throw new Defect("Bad status code: " + statusLine.getStatusCode() + "\n" + IOUtils.toString(in));
+
+                        String faultstring = object.getAsJsonPrimitive("faultstring").getAsString();
+
+                        switch (faultstring) {
+                            case "DSC-0018": {
+                                throw new IllegalStateException("A parameter marked as mandatory was not provided");
+                            }
+                            default:
+                                throw new Defect("Bad status code: " + statusLine.getStatusCode() + "\n" + IOUtils.toString(in));
+                        }
+                    }
+
+                    FileUtils.writeStringToFile(file, prettyPrintJson(parsed), HttpAccess.UTF_8);
                 }
+            }
+
+            private String prettyPrintJson(JsonElement parse) {
+                return new GsonBuilder()
+                        .disableHtmlEscaping()
+                        .setPrettyPrinting()
+                        .create()
+                        .toJson(parse);
             }
         };
     }
@@ -230,6 +256,10 @@ public class GenerateTestData {
     public static class CurrentOrders {
         private static File listCurrentOrdersFile() {
             return new File(TEST_DATA_DIR, "listCurrentOrders.json");
+        }
+
+        private static File listClearedOrdersFile() {
+            return new File(TEST_DATA_DIR, "listClearedOrders.json");
         }
 
         public static String getCurrentOrderJson() throws IOException {

@@ -16,7 +16,7 @@ public class SessionToken extends MicroType<String> {
             return new SessionToken(parsed.getAsJsonPrimitive("sessionToken").getAsString());
         } else {
             JsonPrimitive status = parsed.getAsJsonPrimitive("loginStatus");
-            throw new Defect("Login failed: " + status.getAsString());
+            throw new Defect("Login failed: " + status.getAsString() + "\n" + json);
         }
     }
 
