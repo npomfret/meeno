@@ -1,10 +1,18 @@
 [
-    {
-        "competition": {
-            "id": "62815",
-            "name": "Copa Libertadores"
-        },
-        "marketCount": 41,
-        "competitionRegion": "International"
-    }
+  {
+    "competition": {
+      "id": "803237",
+      "name": "Argentinian Primera B Nacional"
+    },
+    "marketCount": 81,
+    "competitionRegion": "ARG"
+  },
+  {
+    "competition": {
+      "id": "67387",
+      "name": "Argentinian Primera Division"
+    },
+    "marketCount": 168,
+    "competitionRegion": "ARG"
+  }
 ]

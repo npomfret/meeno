@@ -15,7 +15,7 @@ public class MarketsTest {
         MarketId marketId = new MarketId("1.112645443");
         MarketCatalogue marketCatalogue = markets.get(marketId);
 
-        assertThat(marketCatalogue.competition, equalTo(new Competition("62815", "Copa Libertadores")));
+        assertThat(marketCatalogue.competition, equalTo(new Competition(new CompetitionId("62815"), "Copa Libertadores")));
         assertThat(marketCatalogue.description, equalTo(new MarketDescription(
                 true,
                 false,

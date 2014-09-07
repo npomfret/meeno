@@ -64,7 +64,7 @@ public class Markets implements Iterable<MarketCatalogue> {
 
                 JsonObject competitionObj = jsonObject.get("competition").getAsJsonObject();
                 Competition competition = new Competition(
-                        competitionObj.getAsJsonPrimitive("id").getAsString(),
+                        new CompetitionId(competitionObj.getAsJsonPrimitive("id").getAsString()),
                         competitionObj.getAsJsonPrimitive("name").getAsString()
                 );
 

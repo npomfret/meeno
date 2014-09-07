@@ -13,4 +13,8 @@ public final class TimeRange extends ImmutbleType {
         this.from = from;
         this.to = to;
     }
+
+    public static TimeRange between(ZonedDateTime from, ZonedDateTime to) {
+        return new TimeRange(from, to);
+    }
 }

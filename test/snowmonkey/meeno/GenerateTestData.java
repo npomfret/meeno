@@ -4,11 +4,11 @@ import com.google.gson.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.StatusLine;
-import org.joda.time.DateTime;
 import snowmonkey.meeno.types.*;
 import snowmonkey.meeno.types.raw.*;
 
 import java.io.*;
+import java.time.ZonedDateTime;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -18,11 +18,12 @@ import static com.google.common.collect.Sets.newHashSet;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static snowmonkey.meeno.CountryLookup.Argentina;
 import static snowmonkey.meeno.CountryLookup.UnitedKingdom;
-import static snowmonkey.meeno.MarketFilterBuilder.TimeRange.between;
 import static snowmonkey.meeno.types.TimeGranularity.MINUTES;
+import static snowmonkey.meeno.types.raw.TimeRange.between;
 
 public class GenerateTestData {
     public static final File TEST_DATA_DIR = new File("test-data/generated");
+    public static final CountryCode COUNTRY_CODE = Argentina;
     private MeenoConfig config;
     private HttpAccess httpAccess;
     private File loginFile;
@@ -40,19 +41,29 @@ public class GenerateTestData {
 
         try {
 //        generateTestData.listCountries();
-//            generateTestData.listMarketCatalogue();
+            EventType soccer = eventType("Soccer");
+
+            generateTestData.listCompetitions(soccer, 1);
+            Competitions competitions = Competitions.parse(ListCompetitions.listCompetitionsJson(1));
+
+            Competition competition = competitions.iterator().next();
+
+            generateTestData.listCompetitions(soccer, 2, competition.id);
+
+            generateTestData.listEvents(soccer, competition.id);
+
+//            snowmonkey.meeno.types.Events events = snowmonkey.meeno.types.Events.parse(GenerateTestData.Events.listEventsJson());
+
+//            generateTestData.listMarketCatalogue(soccer);
 //            generateTestData.listMarketBook();
 //            generateTestData.placeOrders();
 //            generateTestData.listCurrentOrders();
 //            generateTestData.cancelOrders();
-//        generateTestData.listCompetitions();
-//        generateTestData.listEvents();
-//        generateTestData.listEventTypes();
 //        generateTestData.listMarketTypes();
 //        generateTestData.listTimeRanges();
 //            generateTestData.accountDetails();
 //        generateTestData.accountFunds();
-            generateTestData.listClearedOrders();
+//            generateTestData.listClearedOrders();
         } finally {
             generateTestData.cleanup();
         }
@@ -94,7 +105,7 @@ public class GenerateTestData {
                 .withEventTypeIds("1")
                 .withEventIds(someEvent().id)
                 .withMarketCountries(UnitedKingdom)
-                .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(1)))
+                .withMarketStartTime(between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(1)))
                 .build());
     }
 
@@ -106,22 +117,30 @@ public class GenerateTestData {
         httpAccess.listEventTypes(fileWriter(EventTypes.listEventTypesFile()));
     }
 
-    private void listEvents() throws IOException {
+    private void listEvents(EventType eventType, CompetitionId id) throws IOException {
         httpAccess.listEvents(
                 fileWriter(Events.listEventsFile()),
                 new MarketFilterBuilder()
-                        .withEventTypeIds("1")
-                        .withMarketCountries(Argentina)
-                        .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(1)))
-                        .build());
+                        .withEventTypeIds(eventType.id)
+                        .withMarketCountries(COUNTRY_CODE)
+                        .withCompetitionIds(id)
+                        .withMarketStartTime(between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(10)))
+                        .build()
+        );
     }
 
-    private void listCompetitions() throws IOException {
-        httpAccess.listCompetitions(fileWriter(Competitions.listCompetitionsFile()),
+    private static EventType eventType(String eventName) throws IOException {
+        snowmonkey.meeno.types.EventTypes eventTypes = snowmonkey.meeno.types.EventTypes.parse(EventTypes.listEventTypesJson());
+        return eventTypes.lookup(eventName);
+    }
+
+    private void listCompetitions(EventType eventType, int level, CompetitionId... competitionIds) throws IOException {
+        httpAccess.listCompetitions(fileWriter(ListCompetitions.listCompetitionsFile(level)),
                 new MarketFilterBuilder()
-                        .withEventTypeIds("1")
-                        .withMarketCountries(Argentina)
-                        .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(1)))
+                        .withEventTypeIds(eventType.id)
+                        .withCompetitionIds(competitionIds)
+                        .withMarketCountries(COUNTRY_CODE)
+                        .withMarketStartTime(between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(1)))
                         .build());
     }
 
@@ -140,15 +159,17 @@ public class GenerateTestData {
         httpAccess.placeOrders(marketCatalogue.marketId, newArrayList(placeLimitOrder), CustomerRef.NONE, fileWriter(PlaceOrders.placeOrdersFile()));
     }
 
-    private void listMarketCatalogue() throws IOException {
+    private void listMarketCatalogue(EventType eventType) throws IOException {
         httpAccess.listMarketCatalogue(fileWriter(MarketCatalogue.listMarketCatalogueFile()),
                 MarketProjection.all(),
                 MarketSort.FIRST_TO_START,
                 5,
                 new MarketFilterBuilder()
-                        .withEventTypeIds("1")
-                        .withMarketCountries(Argentina)
-                        .withMarketStartTime(between(new DateTime(), new DateTime().plusDays(7)))
+                        .withEventIds()
+                        .withEventTypeIds(eventType.id)
+                        .withMarketCountries(COUNTRY_CODE)
+//                        .withMarketIds(marketIds)
+                        .withMarketStartTime(between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(1)))
                         .build());
     }
 
@@ -191,8 +212,10 @@ public class GenerateTestData {
             @Override
             public void process(StatusLine statusLine, InputStream in) throws IOException {
 
-                if (file.exists())
-                    return;
+//                if (file.exists()) {
+//                    System.out.println(file + " already exists - not overwriting");
+//                    return;
+//                }
 
                 try (Reader reader = new InputStreamReader(in, HttpAccess.UTF_8)) {
                     JsonElement parsed = new JsonParser().parse(reader);
@@ -221,13 +244,17 @@ public class GenerateTestData {
             }
 
             private String prettyPrintJson(JsonElement parse) {
-                return new GsonBuilder()
-                        .disableHtmlEscaping()
-                        .setPrettyPrinting()
-                        .create()
+                return gson()
                         .toJson(parse);
             }
         };
+    }
+
+    private static Gson gson() {
+        return new GsonBuilder()
+                .disableHtmlEscaping()
+                .setPrettyPrinting()
+                .create();
     }
 
     public static class MarketCatalogue {
@@ -273,18 +300,18 @@ public class GenerateTestData {
         }
     }
 
-    private static class Competitions {
+    private static class ListCompetitions {
 
-        private static File listCompetitionsFile() {
-            return new File(TEST_DATA_DIR, "listCompetitions.json");
+        private static File listCompetitionsFile(int level) {
+            return new File(TEST_DATA_DIR, "listCompetitions_" + level + ".json");
         }
 
-        public static String getCompetitionJson() throws IOException {
-            return jsonForFirstElementInArray(listCompetitionsJson());
+        public static String getCompetitionJson(int level) throws IOException {
+            return jsonForFirstElementInArray(listCompetitionsJson(level));
         }
 
-        public static String listCompetitionsJson() throws IOException {
-            return readFileToString(listCompetitionsFile());
+        public static String listCompetitionsJson(int level) throws IOException {
+            return readFileToString(listCompetitionsFile(level));
         }
     }
 
@@ -292,10 +319,6 @@ public class GenerateTestData {
 
         private static File listEventsFile() {
             return new File(TEST_DATA_DIR, "listEvents.json");
-        }
-
-        public static String getEventJson() throws IOException {
-            return jsonForFirstElementInArray(listEventsJson());
         }
 
         public static String listEventsJson() throws IOException {

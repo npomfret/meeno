@@ -53,4 +53,5 @@ public class Events implements Iterable<Event> {
     private void add(Event event) {
         this.eventsById.put(event.id, event);
     }
+
 }

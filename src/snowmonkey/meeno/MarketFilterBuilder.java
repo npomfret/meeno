@@ -1,12 +1,16 @@
 package snowmonkey.meeno;
 
 import com.google.common.base.Function;
-import org.joda.time.DateTime;
+import snowmonkey.meeno.types.CompetitionId;
 import snowmonkey.meeno.types.CountryCode;
-import snowmonkey.meeno.types.ImmutbleType;
+import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.raw.OrderStatus;
+import snowmonkey.meeno.types.raw.TimeRange;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.google.common.collect.Iterables.transform;
 import static com.google.common.collect.Sets.newHashSet;
@@ -18,10 +22,10 @@ public class MarketFilterBuilder implements MarketFilter {
     private String textQuery;
     private Set<String> exchangeIds;
     private Set<String> eventTypeIds;
-    private Set<String> marketIds;
+    private Set<MarketId> marketIds;
     private Boolean inPlayOnly;
     private Set<String> eventIds;
-    private Set<String> competitionIds;
+    private Set<CompetitionId> competitionIds;
     private Set<String> venues;
     private Boolean bspOnly;
     private Boolean turnInPlayEnabled;
@@ -59,12 +63,19 @@ public class MarketFilterBuilder implements MarketFilter {
     }
 
     public MarketFilterBuilder withMarketIds(String... marketIds) {
-        return withMarketIds(newHashSet(asList(marketIds)));
+        return withMarketIds(asList(marketIds));
     }
 
-    public MarketFilterBuilder withMarketIds(Set<String> marketIds) {
-        this.marketIds = marketIds;
+    public MarketFilterBuilder withMarketIds(Iterable<MarketId> marketIds) {
+        this.marketIds = newHashSet(marketIds);
         return this;
+    }
+
+    public MarketFilterBuilder withMarketIds(Collection<String> marketIds) {
+        return this.withMarketIds(
+                marketIds.stream()
+                        .map(id -> new MarketId(id))
+                        .collect(Collectors.toList()));
     }
 
     public MarketFilterBuilder withInPlayOnly(Boolean inPlayOnly) {
@@ -81,9 +92,20 @@ public class MarketFilterBuilder implements MarketFilter {
         return this;
     }
 
-    public MarketFilterBuilder withCompetitionIds(Set<String> competitionIds) {
-        this.competitionIds = competitionIds;
+    public MarketFilterBuilder withCompetitionIds(CompetitionId... competitionIds) {
+        return withCompetitionIds(Arrays.asList(competitionIds));
+    }
+
+    public MarketFilterBuilder withCompetitionIds(Iterable<CompetitionId> competitionIds) {
+        this.competitionIds = newHashSet(competitionIds);
         return this;
+    }
+
+    public MarketFilterBuilder withCompetitionIds(Set<String> competitionIds) {
+        return withCompetitionIds(competitionIds
+                .stream()
+                .map(id -> new CompetitionId(id))
+                .collect(Collectors.toList()));
     }
 
     public MarketFilterBuilder withVenues(Set<String> venues) {
@@ -162,17 +184,4 @@ public class MarketFilterBuilder implements MarketFilter {
         }
     }
 
-    public static class TimeRange extends ImmutbleType {
-        private final DateTime from;
-        private final DateTime to;
-
-        public TimeRange(DateTime from, DateTime to) {
-            this.from = from;
-            this.to = to;
-        }
-
-        public static TimeRange between(DateTime from, DateTime to) {
-            return new TimeRange(from, to);
-        }
-    }
 }
