@@ -7,7 +7,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.commons.lang3.StringUtils;
 import snowmonkey.meeno.HttpAccess;
-import snowmonkey.meeno.NotFoundException;
 import snowmonkey.meeno.types.raw.TimeRange;
 
 import java.time.ZonedDateTime;
@@ -145,7 +144,7 @@ public class Navigation {
         }
     }
 
-    public Markets findMarkets(EventTypeName eventTypeName, TimeRange timeRange, String marketNamePattern) throws NotFoundException {
+    public Markets findMarkets(EventTypeName eventTypeName, TimeRange timeRange, String marketNamePattern) {
         Pattern pattern = Pattern.compile(marketNamePattern);
 
         List<Market> markets = new ArrayList<>();
