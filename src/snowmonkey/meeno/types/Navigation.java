@@ -75,6 +75,13 @@ public class Navigation {
         throw new IllegalStateException(this + " is not a group");
     }
 
+    private EventTypeId eventTypeId() {
+        if (type.equals(Type.EVENT_TYPE))
+            return new EventTypeId(id);
+
+        throw new IllegalStateException(this + " is not an event type");
+    }
+
     public String eventName() {
         if (type.equals(Type.EVENT))
             return name;
@@ -198,7 +205,7 @@ public class Navigation {
     }
 
     public String printHierarchy() {
-        List<String> names = newArrayList();
+        List<String> names = newArrayList(name);
 
         Navigation node = parent;
         while (node.parent != null) {
@@ -236,12 +243,26 @@ public class Navigation {
 
         public Navigation group() {
             Navigation node = parent;
-            while (node.type.equals(Type.GROUP) || node == null) {
+            while (node.type.equals(Type.GROUP)) {
                 node = node.parent;
+
+                if (node == null)
+                    throw new IllegalStateException(this + " does not have a group");
             }
-            if (node == null)
-                throw new IllegalStateException(this + " does not have a group");
+
             return node;
         }
+
+        public EventTypeId eventTypeId() {
+            Navigation node = parent;
+            while (node.parent != null) {
+                if (node.type.equals(Type.EVENT_TYPE))
+                    return node.eventTypeId();
+                node = node.parent;
+            }
+
+            throw new IllegalStateException("Could not find the event type");
+        }
     }
+
 }

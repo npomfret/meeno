@@ -8,12 +8,12 @@ import snowmonkey.meeno.types.raw.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class MarketsTest {
+public class ListMarketCatalogueTest {
     @Test
     public void test() throws Exception {
-        Markets markets = Markets.parse(GenerateTestData.MarketCatalogue.listMarketCatalogueJson());
+        MarketCatalogue markets = MarketCatalogue.parse(GenerateTestData.ListMarketCatalogue.listMarketCatalogueJson());
         MarketId marketId = new MarketId("1.112645443");
-        MarketCatalogue marketCatalogue = markets.get(marketId);
+        snowmonkey.meeno.types.raw.MarketCatalogue marketCatalogue = markets.get(marketId);
 
         assertThat(marketCatalogue.competition, equalTo(new Competition(new CompetitionId("62815"), "Copa Libertadores")));
         assertThat(marketCatalogue.description, equalTo(new MarketDescription(
@@ -33,7 +33,7 @@ public class MarketsTest {
                 true,
                 null)));
         assertThat(marketCatalogue.event, equalTo(new Event("27140610", "Lanus v Caracas", "AR", "GMT", null, new DateTime("2014-02-07T01:00:00.000Z"))));
-        assertThat(marketCatalogue.eventType, equalTo(new EventType("1", "Soccer")));
+        assertThat(marketCatalogue.eventType, equalTo(new EventType(new EventTypeId("1"), "Soccer")));
         assertThat(marketCatalogue.marketId, equalTo(marketId));
         assertThat(marketCatalogue.marketName, equalTo("Caracas +1"));
         assertThat(marketCatalogue.runners.size(), equalTo(3));

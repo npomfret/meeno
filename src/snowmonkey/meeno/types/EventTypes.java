@@ -22,7 +22,7 @@ public class EventTypes {
             JsonObject eventTypeObj = jsonObject.get("eventType").getAsJsonObject();
             int marketCount = jsonObject.getAsJsonPrimitive("marketCount").getAsInt();
             EventType eventType = new EventType(
-                    eventTypeObj.getAsJsonPrimitive("id").getAsString(),
+                    new EventTypeId(eventTypeObj.getAsJsonPrimitive("id").getAsString()),
                     eventTypeObj.getAsJsonPrimitive("name").getAsString()
             );
             eventTypes.add(eventType);

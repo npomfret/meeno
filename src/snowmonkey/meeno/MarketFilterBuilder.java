@@ -3,6 +3,7 @@ package snowmonkey.meeno;
 import com.google.common.base.Function;
 import snowmonkey.meeno.types.CompetitionId;
 import snowmonkey.meeno.types.CountryCode;
+import snowmonkey.meeno.types.EventTypeId;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.raw.OrderStatus;
 import snowmonkey.meeno.types.raw.TimeRange;
@@ -21,7 +22,7 @@ public class MarketFilterBuilder implements MarketFilter {
 
     private String textQuery;
     private Set<String> exchangeIds;
-    private Set<String> eventTypeIds;
+    private Set<EventTypeId> eventTypeIds;
     private Set<MarketId> marketIds;
     private Boolean inPlayOnly;
     private Set<String> eventIds;
@@ -43,6 +44,20 @@ public class MarketFilterBuilder implements MarketFilter {
         return this;
     }
 
+    public static MarketFilter marketFilter(EventTypeId eventTypeId, MarketId... marketIds) {
+        return marketFilter(eventTypeId, Arrays.asList(marketIds));
+    }
+
+    public static MarketFilter marketFilter(EventTypeId eventTypeId, Iterable<MarketId> marketIds) {
+        if (!marketIds.iterator().hasNext())
+            throw new IllegalStateException("Must specify at least 1 market id");
+
+        return new MarketFilterBuilder()
+                .withMarketIds(marketIds)
+                .withEventTypeIds(eventTypeId)
+                .build();
+    }
+
     public MarketFilterBuilder withTextQuery(String textQuery) {
         this.textQuery = textQuery;
         return this;
@@ -57,8 +72,16 @@ public class MarketFilterBuilder implements MarketFilter {
         return withEventTypeIds(newHashSet(asList(eventTypeIds)));
     }
 
-    public MarketFilterBuilder withEventTypeIds(Set<String> eventTypeIds) {
-        this.eventTypeIds = eventTypeIds;
+    public MarketFilterBuilder withEventTypeIds(Collection<String> eventTypeIds) {
+        return withEventTypeIds(eventTypeIds.stream().map(id -> new EventTypeId(id)).collect(Collectors.toList()));
+    }
+
+    public MarketFilterBuilder withEventTypeIds(EventTypeId... eventTypeIds) {
+        return withEventTypeIds(Arrays.asList(eventTypeIds));
+    }
+
+    public MarketFilterBuilder withEventTypeIds(Iterable<EventTypeId> eventTypeIds) {
+        this.eventTypeIds = newHashSet(eventTypeIds);
         return this;
     }
 

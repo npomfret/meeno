@@ -43,7 +43,10 @@ import java.net.URI;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
@@ -102,10 +105,10 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listMarketBook"), payloadBuilder);
     }
 
-    public void listMarketCatalogue(Processor processor, Set<MarketProjection> marketProjection, MarketSort sort, int maxResults, MarketFilter marketFilter) throws IOException, ApiException {
+    public void listMarketCatalogue(Processor processor, Iterable<MarketProjection> marketProjection, MarketSort sort, int maxResults, MarketFilter marketFilter) throws IOException, ApiException {
         PayloadBuilder payloadBuilder = new PayloadBuilder();
         payloadBuilder.add(marketFilter);
-        payloadBuilder.addMarketProjection(marketProjection);
+        payloadBuilder.addMarketProjections(marketProjection);
         payloadBuilder.addMarketSort(sort);
         payloadBuilder.addMaxResults(maxResults);
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listMarketCatalogue"), payloadBuilder);
@@ -377,11 +380,18 @@ public class HttpAccess {
                     .setPrettyPrinting()
                     .registerTypeAdapter(ZonedDateTime.class, (JsonSerializer<ZonedDateTime>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(java.time.format.DateTimeFormatter.ISO_INSTANT.format(src)))
                     .registerTypeAdapter(ZonedDateTime.class, (JsonDeserializer<ZonedDateTime>) (json, typeOfT, context) -> json == null ? null : ZonedDateTime.parse(json.getAsString(), BETFAIR_DATE_TIME_FORMAT))
+
                     .registerTypeAdapter(MarketId.class, (JsonSerializer<MarketId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
                     .registerTypeAdapter(MarketId.class, (JsonDeserializer<MarketId>) (json, typeOfT, context) -> json == null ? null : new MarketId(json.getAsString()))
+
                     .registerTypeAdapter(BetId.class, (JsonSerializer<BetId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
                     .registerTypeAdapter(BetId.class, (JsonDeserializer<BetId>) (json, typeOfT, context) -> json == null ? null : new BetId(json.getAsString()))
+
+                    .registerTypeAdapter(EventTypeId.class, (JsonSerializer<EventTypeId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
+                    .registerTypeAdapter(EventTypeId.class, (JsonDeserializer<EventTypeId>) (json, typeOfT, context) -> json == null ? null : new EventTypeId(json.getAsString()))
+
                     .create();
+
             map.put("locale", "en_US");
 
             return gson.toJson(map);
@@ -416,8 +426,8 @@ public class HttpAccess {
                 map.put("customerRef", customerRef.asString());
         }
 
-        public void addMarketProjection(Set<MarketProjection> marketProjection) {
-            map.put("marketProjection", marketProjection);
+        public void addMarketProjections(Iterable<MarketProjection> marketProjection) {
+            map.put("marketProjection", newHashSet(marketProjection));
         }
 
         public void addMarketSort(MarketSort marketSort) {

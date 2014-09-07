@@ -1,9 +1,7 @@
 package snowmonkey.meeno.types.raw;
 
 import java.util.Arrays;
-import java.util.Set;
-
-import static com.google.common.collect.Sets.newHashSet;
+import java.util.List;
 
 public enum MarketProjection {
     COMPETITION,
@@ -12,7 +10,9 @@ public enum MarketProjection {
     MARKET_DESCRIPTION,
     RUNNER_DESCRIPTION;
 
-    public static Set<MarketProjection> all() {
-        return newHashSet(Arrays.asList(MarketProjection.values()));
+    private static final List<MarketProjection> ALL = Arrays.asList(MarketProjection.values());
+
+    public static Iterable<MarketProjection> allMarketProjections() {
+        return ALL;
     }
 }

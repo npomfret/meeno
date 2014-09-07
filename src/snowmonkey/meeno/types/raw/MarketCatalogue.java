@@ -1,5 +1,6 @@
 package snowmonkey.meeno.types.raw;
 
+import org.jetbrains.annotations.Nullable;
 import snowmonkey.meeno.types.ImmutbleType;
 import snowmonkey.meeno.types.MarketId;
 
@@ -12,10 +13,11 @@ public final class MarketCatalogue extends ImmutbleType {
     public final MarketDescription description;
     public final List<RunnerCatalog> runners;
     public final EventType eventType;
+    @Nullable
     public final Competition competition;
     public final Event event;
 
-    public MarketCatalogue(MarketId marketId, String marketName, MarketDescription description, List<RunnerCatalog> runners, EventType eventType, Competition competition, Event event) {
+    public MarketCatalogue(MarketId marketId, String marketName, MarketDescription description, List<RunnerCatalog> runners, EventType eventType, @Nullable Competition competition, Event event) {
         this.marketId = marketId;
         this.marketName = marketName;
         this.description = description;

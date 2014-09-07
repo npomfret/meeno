@@ -31,18 +31,17 @@ public class GenerateTestData {
     public static final CountryCode COUNTRY_CODE = Argentina;
     private MeenoConfig config;
     private HttpAccess httpAccess;
-    private Path loginFile;
 
     public GenerateTestData(MeenoConfig config) {
         this.config = config;
     }
 
     public static void main(String[] args) throws Exception {
-//        FileUtils.cleanDirectory(TEST_DATA_DIR);
         MeenoConfig config = MeenoConfig.load();
 
         GenerateTestData generateTestData = new GenerateTestData(config);
         generateTestData.login();
+        generateTestData.httpAccess.auditTraffic();
 
         try {
             generateTestData.listCountries();
@@ -54,8 +53,6 @@ public class GenerateTestData {
                     "Match Odds"
             );
 
-            Navigation.Market market = markets.iterator().next();
-
             EventType soccer = eventType("Soccer");
 
             generateTestData.listCompetitions(soccer, 1);
@@ -65,7 +62,7 @@ public class GenerateTestData {
 
             generateTestData.listEvents(soccer, markets.marketsIds());
 
-            Markets marketCatalogues = generateTestData.listMarketCatalogue(soccer, markets.marketsIds());
+            snowmonkey.meeno.types.MarketCatalogue marketCatalogues = generateTestData.listMarketCatalogue(soccer, markets.marketsIds());
 
             generateTestData.listMarketBook(markets.marketsIds());
 
@@ -104,11 +101,7 @@ public class GenerateTestData {
     }
 
     private void cleanup() throws IOException, ApiException {
-        try {
-            httpAccess.logout();
-        } finally {
-            Files.delete(loginFile);
-        }
+        httpAccess.logout();
     }
 
     private void accountFunds() throws IOException, ApiException {
@@ -176,10 +169,10 @@ public class GenerateTestData {
         httpAccess.placeOrders(marketCatalogue.marketId, newArrayList(placeLimitOrder), CustomerRef.NONE, fileWriter(PlaceOrders.placeOrdersFile()));
     }
 
-    private Markets listMarketCatalogue(EventType eventType, Iterable<MarketId> marketIds) throws IOException, ApiException {
+    private snowmonkey.meeno.types.MarketCatalogue listMarketCatalogue(EventType eventType, Iterable<MarketId> marketIds) throws IOException, ApiException {
         int maxResults = 5;
-        httpAccess.listMarketCatalogue(fileWriter(MarketCatalogue.listMarketCatalogueFile()),
-                MarketProjection.all(),
+        httpAccess.listMarketCatalogue(fileWriter(ListMarketCatalogue.listMarketCatalogueFile()),
+                MarketProjection.allMarketProjections(),
                 MarketSort.FIRST_TO_START,
                 maxResults,
                 new MarketFilterBuilder()
@@ -187,7 +180,7 @@ public class GenerateTestData {
                         .withMarketIds(Iterables.limit(marketIds, maxResults))
                         .build());
 
-        return Markets.parse(GenerateTestData.MarketCatalogue.listMarketCatalogueJson());
+        return snowmonkey.meeno.types.MarketCatalogue.parse(ListMarketCatalogue.listMarketCatalogueJson());
     }
 
     private void listCountries() throws IOException, ApiException {
@@ -195,7 +188,6 @@ public class GenerateTestData {
     }
 
     private void login() throws Exception {
-        loginFile = Login.loginFile();
 
         SessionToken sessionToken = HttpAccess.login(config);
 
@@ -203,8 +195,8 @@ public class GenerateTestData {
     }
 
     private static snowmonkey.meeno.types.raw.MarketCatalogue aMarket() throws IOException, ApiException {
-        Markets markets = Markets.parse(GenerateTestData.MarketCatalogue.listMarketCatalogueJson());
-        Iterator<snowmonkey.meeno.types.raw.MarketCatalogue> iterator = markets.iterator();
+        snowmonkey.meeno.types.MarketCatalogue marketCatalogue = snowmonkey.meeno.types.MarketCatalogue.parse(ListMarketCatalogue.listMarketCatalogueJson());
+        Iterator<snowmonkey.meeno.types.raw.MarketCatalogue> iterator = marketCatalogue.iterator();
         iterator.next();
         return iterator.next();
     }
@@ -223,7 +215,7 @@ public class GenerateTestData {
         };
     }
 
-    public static class MarketCatalogue {
+    public static class ListMarketCatalogue {
 
         public static Path listMarketCatalogueFile() {
             return TEST_DATA_DIR.resolve("listMarketCatalogue.json");
