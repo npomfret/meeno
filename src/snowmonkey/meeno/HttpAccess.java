@@ -187,7 +187,7 @@ public class HttpAccess {
 
     public void nav(Processor processor) throws IOException, ApiException {
         HttpGet httpGet = httpGet(Exchange.NAV);
-        performHttpRequest(processor, Exchange.NAV, new PayloadBuilder(), httpGet);
+        performHttpRequest(processor, Exchange.NAV, httpGet);
     }
 
 
@@ -218,15 +218,12 @@ public class HttpAccess {
         }
     }
 
-    private void performHttpRequest(Processor processor, URI uri, PayloadBuilder payloadBuilder, HttpGet httpGet) throws IOException, ApiException {
+    private void performHttpRequest(Processor processor, URI uri, HttpGet httpGet) throws IOException, ApiException {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
 
             applyHeaders(httpGet);
 
-            String json = payloadBuilder.buildJsonPayload();
-
             System.out.println(uri + " --> ");
-            System.out.println(indent(json));
 
             processResponse(processor, httpClient, httpGet);
         }
