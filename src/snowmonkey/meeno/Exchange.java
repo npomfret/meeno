@@ -13,6 +13,8 @@ public enum Exchange {
             new Uris("https://api-au.betfair.com/exchange/betting/json-rpc/v1", "https://api-au.betfair.com/exchange/betting/rest/v1.0")
     );
 
+    public static final URI NAV = URI.create("https://api.betfair.com/exchange/betting/rest/v1/en/navigation/menu.json");
+
     public static final String LOGIN_URI = "https://identitysso.betfair.com/api/certlogin";
     public final Exchange.Uris accountUris;
     public final Exchange.Uris bettingUris;

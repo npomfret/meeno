@@ -40,17 +40,19 @@ public class GenerateTestData {
         generateTestData.login();
 
         try {
+
+            generateTestData.navigation();
 //        generateTestData.listCountries();
-            EventType soccer = eventType("Soccer");
-
-            generateTestData.listCompetitions(soccer, 1);
-            Competitions competitions = Competitions.parse(ListCompetitions.listCompetitionsJson(1));
-
-            Competition competition = competitions.iterator().next();
-
-            generateTestData.listCompetitions(soccer, 2, competition.id);
-
-            generateTestData.listEvents(soccer, competition.id);
+//            EventType soccer = eventType("Soccer");
+//
+//            generateTestData.listCompetitions(soccer, 1);
+//            Competitions competitions = Competitions.parse(ListCompetitions.listCompetitionsJson(1));
+//
+//            Competition competition = competitions.iterator().next();
+//
+//            generateTestData.listCompetitions(soccer, 2, competition.id);
+//
+//            generateTestData.listEvents(soccer, competition.id);
 
 //            snowmonkey.meeno.types.Events events = snowmonkey.meeno.types.Events.parse(GenerateTestData.Events.listEventsJson());
 
@@ -67,6 +69,10 @@ public class GenerateTestData {
         } finally {
             generateTestData.cleanup();
         }
+    }
+
+    private void navigation() throws IOException {
+        httpAccess.nav(fileWriter(GetNavigation.navigationFile()));
     }
 
     private void cancelOrders() throws IOException {
@@ -353,6 +359,17 @@ public class GenerateTestData {
 
         public static String listMarketTypesJson() throws IOException {
             return readFileToString(listMarketTypesFile());
+        }
+    }
+
+    public static class GetNavigation {
+
+        public static File navigationFile() {
+            return new File(TEST_DATA_DIR, "navigation.json");
+        }
+
+        public static String getNavigationJson() throws IOException {
+            return readFileToString(navigationFile());
         }
     }
 

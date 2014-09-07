@@ -8,7 +8,9 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.config.ConnectionConfig;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
@@ -21,6 +23,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.message.AbstractHttpMessage;
 import org.apache.http.message.BasicNameValuePair;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -50,6 +53,7 @@ public class HttpAccess {
 
     public static final String UTF_8 = "UTF-8";
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    public static final java.time.format.DateTimeFormatter BETFAIR_DATE_TIME_FORMAT = java.time.format.DateTimeFormatter.ISO_DATE_TIME;
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.forPattern(DATE_FORMAT);
     public static final String X_APPLICATION = "X-Application";
 
@@ -181,17 +185,175 @@ public class HttpAccess {
         sendPostRequest(processor, uri, noFilter());
     }
 
+    public void nav(Processor processor) throws IOException {
+        HttpGet httpGet = httpGet(Exchange.NAV);
+        performHttpRequest(processor, Exchange.NAV, new PayloadBuilder(), httpGet);
+    }
+
+
+    private void sendPostRequest(Processor processor, URI uri, MarketFilter marketFilter) throws IOException {
+        PayloadBuilder payloadBuilder = new PayloadBuilder();
+        payloadBuilder.add(marketFilter);
+        sendPostRequest(processor, uri, payloadBuilder);
+    }
+
+    private void sendPostRequest(Processor processor, URI uri, PayloadBuilder payloadBuilder) throws IOException {
+        HttpPost httpPost = httpPost(uri);
+        performHttpRequest(processor, uri, payloadBuilder, httpPost);
+    }
+
+    private void performHttpRequest(Processor processor, URI uri, PayloadBuilder payloadBuilder, HttpPost httpPost) throws IOException {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+
+            applyHeaders(httpPost);
+
+            String json = payloadBuilder.buildJsonPayload();
+
+            System.out.println(uri + " --> ");
+            System.out.println(indent(json));
+
+            httpPost.setEntity(new StringEntity(json, UTF_8));
+
+            processResponse(processor, httpClient, httpPost);
+        }
+    }
+
+    private void performHttpRequest(Processor processor, URI uri, PayloadBuilder payloadBuilder, HttpGet httpGet) throws IOException {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+
+            applyHeaders(httpGet);
+
+            String json = payloadBuilder.buildJsonPayload();
+
+            System.out.println(uri + " --> ");
+            System.out.println(indent(json));
+
+            processResponse(processor, httpClient, httpGet);
+        }
+    }
+
+    private void applyHeaders(AbstractHttpMessage abstractHttpMessage) {
+        abstractHttpMessage.setHeader("Content-Type", "application/json");
+        abstractHttpMessage.setHeader("Accept", "application/json");
+        abstractHttpMessage.setHeader("Accept-Charset", UTF_8);
+        abstractHttpMessage.setHeader(X_APPLICATION, appKey.asString());
+        abstractHttpMessage.setHeader("X-Authentication", sessionToken.asString());
+    }
+
+    private String indent(String json) {
+        String[] split = json.split("\n");
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (String s : split) {
+            stringBuilder.append("\t").append(s).append("\n");
+        }
+
+        return stringBuilder.toString();
+    }
+
+    private static HttpPost httpPost(URI uri) {
+        HttpPost httpPost = new HttpPost(uri);
+        httpPost.setConfig(conf());
+        return httpPost;
+    }
+
+    private static HttpGet httpGet(URI uri) {
+        HttpGet httpGet = new HttpGet(uri);
+        httpGet.setConfig(conf());
+        return httpGet;
+    }
+
+    private static RequestConfig conf() {
+        RequestConfig defaultRequestConfig = RequestConfig.custom()
+                .setExpectContinueEnabled(true)
+                .setStaleConnectionCheckEnabled(true)
+                .build();
+
+        return RequestConfig.copy(defaultRequestConfig)
+                .setSocketTimeout(5000)
+                .setConnectTimeout(5000)
+                .setConnectionRequestTimeout(5000)
+                .build();
+    }
+
+    public void logout() throws IOException {
+        URI uri = URI.create("https://identitysso.betfair.com/api/logout");
+        sendPostRequest(new Processor() {
+            @Override
+            public void process(StatusLine statusLine, InputStream in) throws IOException {
+//                String response = IOUtils.toString(in);
+//                System.out.println("response = " + response);
+            }
+        }, uri);
+    }
+
+    public static void login(File certFile, String certPassword, String betfairUsername, String betfairPassword, AppKey apiKey, HttpAccess.Processor processor) throws Exception {
+
+        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
+                .register("http", PlainConnectionSocketFactory.INSTANCE)
+                .register("https", socketFactory(certFile, certPassword))
+                .build();
+
+        PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
+
+        connManager.setDefaultSocketConfig(SocketConfig.custom().build());
+        connManager.setDefaultConnectionConfig(ConnectionConfig.custom().build());
+        try (CloseableHttpClient client = HttpClients.custom()
+                .setConnectionManager(connManager)
+                .disableRedirectHandling()
+                .build()) {
+
+            HttpPost httpPost = new HttpPost(Exchange.LOGIN_URI);
+            List<NameValuePair> postFormData = new ArrayList<>();
+            postFormData.add(new BasicNameValuePair("username", betfairUsername));
+            postFormData.add(new BasicNameValuePair("password", betfairPassword));
+
+            httpPost.setEntity(new UrlEncodedFormEntity(postFormData));
+
+            httpPost.setHeader(X_APPLICATION, apiKey.asString());
+
+            HttpResponse response = client.execute(httpPost);
+            HttpEntity entity = response.getEntity();
+            try (InputStream content = entity.getContent()) {
+                processor.process(response.getStatusLine(), content);
+            }
+        }
+
+        connManager.close();
+    }
+
+
+    private static SSLConnectionSocketFactory socketFactory(File certFile, String certPassword) throws Exception {
+        SSLContext ctx = SSLContext.getInstance("TLS");
+        KeyStore keyStore = KeyStore.getInstance("pkcs12");
+        keyStore.load(new FileInputStream(certFile), certPassword.toCharArray());
+        KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+        kmf.init(keyStore, certPassword.toCharArray());
+        KeyManager[] keyManagers = kmf.getKeyManagers();
+        ctx.init(keyManagers, null, new SecureRandom());
+        return new SSLConnectionSocketFactory(ctx, new StrictHostnameVerifier());
+    }
+
+    private void processResponse(Processor processor, CloseableHttpClient httpClient, HttpUriRequest httpPost) throws IOException {
+        try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
+            HttpEntity entity = response.getEntity();
+            try (InputStream inputStream = entity.getContent()) {
+                processor.process(response.getStatusLine(), inputStream);
+            }
+        }
+    }
+
     class PayloadBuilder {
         private final LinkedHashMap<String, Object> map = new LinkedHashMap<>();
-        private final java.time.format.DateTimeFormatter BETFAIR_FORMAT = java.time.format.DateTimeFormatter.ISO_INSTANT;
 
         public String buildJsonPayload() {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(DateTime.class, new JodaDateTimeTypeConverter())
                     .setDateFormat(DATE_FORMAT)
                     .setPrettyPrinting()
-                    .registerTypeAdapter(ZonedDateTime.class, (JsonSerializer<ZonedDateTime>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(BETFAIR_FORMAT.format(src)))
-                    .registerTypeAdapter(ZonedDateTime.class, (JsonDeserializer<ZonedDateTime>) (json, typeOfT, context) -> json == null ? null : ZonedDateTime.parse(json.getAsString(), BETFAIR_FORMAT))
+                    .registerTypeAdapter(ZonedDateTime.class, (JsonSerializer<ZonedDateTime>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(BETFAIR_DATE_TIME_FORMAT.format(src)))
+                    .registerTypeAdapter(ZonedDateTime.class, (JsonDeserializer<ZonedDateTime>) (json, typeOfT, context) -> json == null ? null : ZonedDateTime.parse(json.getAsString(), BETFAIR_DATE_TIME_FORMAT))
                     .registerTypeAdapter(MarketId.class, (JsonSerializer<MarketId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
                     .registerTypeAdapter(MarketId.class, (JsonDeserializer<MarketId>) (json, typeOfT, context) -> json == null ? null : new MarketId(json.getAsString()))
                     .registerTypeAdapter(BetId.class, (JsonSerializer<BetId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
@@ -289,130 +451,6 @@ public class HttpAccess {
 
         public void addOrderProjection(OrderProjection orderProjection) {
             map.put("orderProjection", orderProjection);
-        }
-    }
-
-    private void sendPostRequest(Processor processor, URI uri, MarketFilter marketFilter) throws IOException {
-        PayloadBuilder payloadBuilder = new PayloadBuilder();
-        payloadBuilder.add(marketFilter);
-        sendPostRequest(processor, uri, payloadBuilder);
-    }
-
-    private void sendPostRequest(Processor processor, URI uri, PayloadBuilder payloadBuilder) throws IOException {
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpPost httpPost = httpPost(uri);
-
-            httpPost.setHeader("Content-Type", "application/json");
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Accept-Charset", UTF_8);
-            httpPost.setHeader(X_APPLICATION, appKey.asString());
-            httpPost.setHeader("X-Authentication", sessionToken.asString());
-
-            String json = payloadBuilder.buildJsonPayload();
-
-            System.out.println(uri + " --> ");
-            System.out.println(indent(json));
-
-            httpPost.setEntity(new StringEntity(json, UTF_8));
-
-            processResponse(processor, httpClient, httpPost);
-        }
-    }
-
-    private String indent(String json) {
-        String[] split = json.split("\n");
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (String s : split) {
-            stringBuilder.append("\t").append(s).append("\n");
-        }
-
-        return stringBuilder.toString();
-    }
-
-    private HttpPost httpPost(URI uri) {
-        HttpPost httpPost = new HttpPost(uri);
-
-        RequestConfig defaultRequestConfig = RequestConfig.custom()
-                .setExpectContinueEnabled(true)
-                .setStaleConnectionCheckEnabled(true)
-                .build();
-
-        RequestConfig requestConfig = RequestConfig.copy(defaultRequestConfig)
-                .setSocketTimeout(5000)
-                .setConnectTimeout(5000)
-                .setConnectionRequestTimeout(5000)
-                .build();
-
-        httpPost.setConfig(requestConfig);
-        return httpPost;
-    }
-
-    public void logout() throws IOException {
-        URI uri = URI.create("https://identitysso.betfair.com/api/logout");
-        sendPostRequest(new Processor() {
-            @Override
-            public void process(StatusLine statusLine, InputStream in) throws IOException {
-//                String response = IOUtils.toString(in);
-//                System.out.println("response = " + response);
-            }
-        }, uri);
-    }
-
-
-    public static void login(File certFile, String certPassword, String betfairUsername, String betfairPassword, AppKey apiKey, HttpAccess.Processor processor) throws Exception {
-
-        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
-                .register("http", PlainConnectionSocketFactory.INSTANCE)
-                .register("https", socketFactory(certFile, certPassword))
-                .build();
-
-        PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
-
-        connManager.setDefaultSocketConfig(SocketConfig.custom().build());
-        connManager.setDefaultConnectionConfig(ConnectionConfig.custom().build());
-        try (CloseableHttpClient client = HttpClients.custom()
-                .setConnectionManager(connManager)
-                .disableRedirectHandling()
-                .build()) {
-
-            HttpPost httpPost = new HttpPost(Exchange.LOGIN_URI);
-            List<NameValuePair> postFormData = new ArrayList<>();
-            postFormData.add(new BasicNameValuePair("username", betfairUsername));
-            postFormData.add(new BasicNameValuePair("password", betfairPassword));
-
-            httpPost.setEntity(new UrlEncodedFormEntity(postFormData));
-
-            httpPost.setHeader(X_APPLICATION, apiKey.asString());
-
-            HttpResponse response = client.execute(httpPost);
-            HttpEntity entity = response.getEntity();
-            try (InputStream content = entity.getContent()) {
-                processor.process(response.getStatusLine(), content);
-            }
-        }
-
-        connManager.close();
-    }
-
-    private static SSLConnectionSocketFactory socketFactory(File certFile, String certPassword) throws Exception {
-        SSLContext ctx = SSLContext.getInstance("TLS");
-        KeyStore keyStore = KeyStore.getInstance("pkcs12");
-        keyStore.load(new FileInputStream(certFile), certPassword.toCharArray());
-        KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-        kmf.init(keyStore, certPassword.toCharArray());
-        KeyManager[] keyManagers = kmf.getKeyManagers();
-        ctx.init(keyManagers, null, new SecureRandom());
-        return new SSLConnectionSocketFactory(ctx, new StrictHostnameVerifier());
-    }
-
-    private void processResponse(Processor processor, CloseableHttpClient httpClient, HttpPost httpPost) throws IOException {
-        try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
-            HttpEntity entity = response.getEntity();
-            try (InputStream inputStream = entity.getContent()) {
-                processor.process(response.getStatusLine(), inputStream);
-            }
         }
     }
 }

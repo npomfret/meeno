@@ -20,4 +20,5 @@ public abstract class ImmutbleType {
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
+
 }
