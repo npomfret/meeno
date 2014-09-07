@@ -42,9 +42,15 @@ public class GetNavigationTest {
     public void testFind() throws Exception {
         Navigation navigation = Navigation.parse(GenerateTestData.GetNavigation.getNavigationJson());
 
-        Collection<Navigation.Market> markets = navigation.findMarkets("Soccer", between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(1)), "Match Odds");
+        Collection<Navigation.Market> markets = navigation.findMarkets(
+                "Soccer",
+                between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(1)),
+                "Match Odds"
+        );
+
         for (Navigation.Market market : markets) {
             System.out.println("market = " + market);
+            System.out.println(market.group().printHierarchy());
         }
     }
 }

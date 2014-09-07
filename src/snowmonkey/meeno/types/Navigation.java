@@ -1,5 +1,6 @@
 package snowmonkey.meeno.types;
 
+import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -15,6 +16,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 public class Navigation {
     private final Navigation parent;
@@ -120,8 +123,8 @@ public class Navigation {
         return results;
     }
 
-    public Collection<Market> findMarkets(String eventTypeName, TimeRange timeRange, String marketnamePattern) throws NotFoundException {
-        Pattern pattern = Pattern.compile(marketnamePattern);
+    public Collection<Market> findMarkets(String eventTypeName, TimeRange timeRange, String marketNamePattern) throws NotFoundException {
+        Pattern pattern = Pattern.compile(marketNamePattern);
 
         List<Market> markets = new ArrayList<>();
 
@@ -135,15 +138,30 @@ public class Navigation {
     private void go(TimeRange timeRange, List<Market> markets, List<Navigation> children, Pattern marketNamePattern) {
         for (Navigation navigation : children) {
             for (Market market : navigation.markets()) {
-                if (market.startSDuring(timeRange) && marketNamePattern.matcher(market.name).matches()) {
-                    markets.add(market);
-                }
+                if (!market.startSDuring(timeRange))
+                    continue;
+                if (!marketNamePattern.matcher(market.name).matches())
+                    continue;
+
+                markets.add(market);
             }
             go(timeRange, markets, navigation.children(), marketNamePattern);
         }
     }
 
-    enum Type {
+    public String printHierarchy() {
+        List<String> names = newArrayList();
+
+        Navigation node = parent;
+        while (node.parent != null) {
+            names.add(node.name);
+            node = node.parent;
+        }
+
+        return StringUtils.join(Lists.reverse(names), " / ");
+    }
+
+    public enum Type {
         GROUP, EVENT_TYPE, EVENT, RACE, MARKET
     }
 
@@ -166,6 +184,16 @@ public class Navigation {
 
         public boolean startSDuring(TimeRange timeRange) {
             return !marketStartTime.isBefore(timeRange.from) && marketStartTime.isBefore(timeRange.to);
+        }
+
+        public Navigation group() {
+            Navigation node = parent;
+            while (node.type.equals(Type.GROUP) || node == null) {
+                node = node.parent;
+            }
+            if (node == null)
+                throw new IllegalStateException(this + " does not have a group");
+            return node;
         }
     }
 }

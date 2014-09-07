@@ -62,6 +62,10 @@ public class MarketFilterBuilder implements MarketFilter {
         return this;
     }
 
+    public MarketFilterBuilder withMarketIds(MarketId... marketIds) {
+        return withMarketIds(asList(marketIds));
+    }
+
     public MarketFilterBuilder withMarketIds(String... marketIds) {
         return withMarketIds(asList(marketIds));
     }

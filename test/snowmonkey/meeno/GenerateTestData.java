@@ -7,8 +7,16 @@ import org.apache.http.StatusLine;
 import snowmonkey.meeno.types.*;
 import snowmonkey.meeno.types.raw.*;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.FileTime;
 import java.time.ZonedDateTime;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -22,11 +30,11 @@ import static snowmonkey.meeno.types.TimeGranularity.MINUTES;
 import static snowmonkey.meeno.types.raw.TimeRange.between;
 
 public class GenerateTestData {
-    public static final File TEST_DATA_DIR = new File("test-data/generated");
+    public static final Path TEST_DATA_DIR = Paths.get("test-data/generated");
     public static final CountryCode COUNTRY_CODE = Argentina;
     private MeenoConfig config;
     private HttpAccess httpAccess;
-    private File loginFile;
+    private Path loginFile;
 
     public GenerateTestData(MeenoConfig config) {
         this.config = config;
@@ -40,19 +48,25 @@ public class GenerateTestData {
         generateTestData.login();
 
         try {
+            generateTestData.listCountries();
 
-            generateTestData.navigation();
-//        generateTestData.listCountries();
-//            EventType soccer = eventType("Soccer");
-//
-//            generateTestData.listCompetitions(soccer, 1);
-//            Competitions competitions = Competitions.parse(ListCompetitions.listCompetitionsJson(1));
-//
-//            Competition competition = competitions.iterator().next();
-//
-//            generateTestData.listCompetitions(soccer, 2, competition.id);
-//
-//            generateTestData.listEvents(soccer, competition.id);
+            Navigation navigation = generateTestData.navigation();
+            Collection<Navigation.Market> markets = navigation.findMarkets(
+                    "Soccer",
+                    between(ZonedDateTime.now(), ZonedDateTime.now().plusHours(6)),
+                    "Match Odds"
+            );
+
+            Navigation.Market market = markets.iterator().next();
+
+            EventType soccer = eventType("Soccer");
+
+            generateTestData.listCompetitions(soccer, 1);
+            Competitions competitions = Competitions.parse(ListCompetitions.listCompetitionsJson(1));
+            Competition competition = competitions.iterator().next();
+            generateTestData.listCompetitions(soccer, 2, competition.id);
+
+            generateTestData.listEvents(soccer, market.id);
 
 //            snowmonkey.meeno.types.Events events = snowmonkey.meeno.types.Events.parse(GenerateTestData.Events.listEventsJson());
 
@@ -71,8 +85,11 @@ public class GenerateTestData {
         }
     }
 
-    private void navigation() throws IOException {
-        httpAccess.nav(fileWriter(GetNavigation.navigationFile()));
+    private Navigation navigation() throws IOException {
+        FileTime lastModifiedTime = Files.getLastModifiedTime(GetNavigation.navigationFile());
+        if (lastModifiedTime.toInstant().isBefore(ZonedDateTime.now().minusDays(1).toInstant()))
+            httpAccess.nav(fileWriter(GetNavigation.navigationFile()));
+        return Navigation.parse(GetNavigation.getNavigationJson());
     }
 
     private void cancelOrders() throws IOException {
@@ -94,7 +111,7 @@ public class GenerateTestData {
         try {
             httpAccess.logout();
         } finally {
-            loginFile.delete();
+            Files.delete(loginFile);
         }
     }
 
@@ -123,14 +140,12 @@ public class GenerateTestData {
         httpAccess.listEventTypes(fileWriter(EventTypes.listEventTypesFile()));
     }
 
-    private void listEvents(EventType eventType, CompetitionId id) throws IOException {
+    private void listEvents(EventType eventType, MarketId... marketIds) throws IOException {
         httpAccess.listEvents(
                 fileWriter(Events.listEventsFile()),
                 new MarketFilterBuilder()
                         .withEventTypeIds(eventType.id)
-                        .withMarketCountries(COUNTRY_CODE)
-                        .withCompetitionIds(id)
-                        .withMarketStartTime(between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(10)))
+                        .withMarketIds(marketIds)
                         .build()
         );
     }
@@ -197,7 +212,7 @@ public class GenerateTestData {
                 fileWriter(loginFile)
         );
 
-        SessionToken sessionToken = SessionToken.parseJson(readFileToString(loginFile));
+        SessionToken sessionToken = SessionToken.parseJson(readFileToString(loginFile.toFile()));
 
         httpAccess = new HttpAccess(sessionToken, apiKey, Exchange.UK);
     }
@@ -213,7 +228,7 @@ public class GenerateTestData {
         return snowmonkey.meeno.types.Events.parse(Events.listEventsJson()).iterator().next();
     }
 
-    public static HttpAccess.Processor fileWriter(final File file) {
+    public static HttpAccess.Processor fileWriter(final Path file) {
         return new HttpAccess.Processor() {
             @Override
             public void process(StatusLine statusLine, InputStream in) throws IOException {
@@ -245,7 +260,7 @@ public class GenerateTestData {
                         }
                     }
 
-                    FileUtils.writeStringToFile(file, prettyPrintJson(parsed), HttpAccess.UTF_8);
+                    FileUtils.writeStringToFile(file.toFile(), prettyPrintJson(parsed), HttpAccess.UTF_8);
                 }
             }
 
@@ -265,34 +280,34 @@ public class GenerateTestData {
 
     public static class MarketCatalogue {
 
-        public static File listMarketCatalogueFile() {
-            return new File(TEST_DATA_DIR, "listMarketCatalogue.json");
+        public static Path listMarketCatalogueFile() {
+            return TEST_DATA_DIR.resolve("listMarketCatalogue.json");
         }
 
         public static String listMarketCatalogueJson() throws IOException {
-            return readFileToString(listMarketCatalogueFile());
+            return readFileToString(listMarketCatalogueFile().toFile());
         }
     }
 
     private static class CancelOrders {
-        public static File cancelOrdersFile() {
-            return new File(TEST_DATA_DIR, "cancelOrders.json");
+        public static Path cancelOrdersFile() {
+            return TEST_DATA_DIR.resolve("cancelOrders.json");
         }
     }
 
     private static class PlaceOrders {
-        private static File placeOrdersFile() {
-            return new File(TEST_DATA_DIR, "placeOrders.json");
+        public static Path placeOrdersFile() {
+            return TEST_DATA_DIR.resolve("placeOrders.json");
         }
     }
 
     public static class CurrentOrders {
-        private static File listCurrentOrdersFile() {
-            return new File(TEST_DATA_DIR, "listCurrentOrders.json");
+        public static Path listCurrentOrdersFile() {
+            return TEST_DATA_DIR.resolve("listCurrentOrders.json");
         }
 
-        private static File listClearedOrdersFile() {
-            return new File(TEST_DATA_DIR, "listClearedOrders.json");
+        public static Path listClearedOrdersFile() {
+            return TEST_DATA_DIR.resolve("listClearedOrders.json");
         }
 
         public static String getCurrentOrderJson() throws IOException {
@@ -302,14 +317,14 @@ public class GenerateTestData {
         }
 
         public static String listCurrentOrdersJson() throws IOException {
-            return readFileToString(listCurrentOrdersFile());
+            return readFileToString(listCurrentOrdersFile().toFile());
         }
     }
 
     private static class ListCompetitions {
 
-        private static File listCompetitionsFile(int level) {
-            return new File(TEST_DATA_DIR, "listCompetitions_" + level + ".json");
+        public static Path listCompetitionsFile(int level) {
+            return TEST_DATA_DIR.resolve("listCompetitions_" + level + ".json");
         }
 
         public static String getCompetitionJson(int level) throws IOException {
@@ -317,25 +332,25 @@ public class GenerateTestData {
         }
 
         public static String listCompetitionsJson(int level) throws IOException {
-            return readFileToString(listCompetitionsFile(level));
+            return readFileToString(listCompetitionsFile(level).toFile());
         }
     }
 
     public static class Events {
 
-        private static File listEventsFile() {
-            return new File(TEST_DATA_DIR, "listEvents.json");
+        private static Path listEventsFile() {
+            return TEST_DATA_DIR.resolve("listEvents.json");
         }
 
         public static String listEventsJson() throws IOException {
-            return readFileToString(listEventsFile());
+            return readFileToString(listEventsFile().toFile());
         }
     }
 
     public static class EventTypes {
 
-        private static File listEventTypesFile() {
-            return new File(TEST_DATA_DIR, "listEventTypes.json");
+        public static Path listEventTypesFile() {
+            return TEST_DATA_DIR.resolve("listEventTypes.json");
         }
 
         public static String getEventTypeJson() throws IOException {
@@ -343,14 +358,14 @@ public class GenerateTestData {
         }
 
         public static String listEventTypesJson() throws IOException {
-            return readFileToString(listEventTypesFile());
+            return readFileToString(listEventTypesFile().toFile());
         }
     }
 
     private static class MarketTypes {
 
-        private static File listMarketTypesFile() {
-            return new File(TEST_DATA_DIR, "listMarketTypes.json");
+        public static Path listMarketTypesFile() {
+            return TEST_DATA_DIR.resolve("listMarketTypes.json");
         }
 
         public static String getMarketTypeJson() throws IOException {
@@ -358,24 +373,24 @@ public class GenerateTestData {
         }
 
         public static String listMarketTypesJson() throws IOException {
-            return readFileToString(listMarketTypesFile());
+            return readFileToString(listMarketTypesFile().toFile());
         }
     }
 
     public static class GetNavigation {
 
-        public static File navigationFile() {
-            return new File(TEST_DATA_DIR, "navigation.json");
+        public static Path navigationFile() {
+            return TEST_DATA_DIR.resolve("navigation.json");
         }
 
         public static String getNavigationJson() throws IOException {
-            return readFileToString(navigationFile());
+            return readFileToString(navigationFile().toFile());
         }
     }
 
     private static class TimeRanges {
-        private static File listTimeRangesFile() {
-            return new File(TEST_DATA_DIR, "listTimeRanges.json");
+        public static Path listTimeRangesFile() {
+            return TEST_DATA_DIR.resolve("listTimeRanges.json");
         }
 
         public static String getTimeRangeJson() throws IOException {
@@ -383,51 +398,51 @@ public class GenerateTestData {
         }
 
         public static String listTimeRangesJson() throws IOException {
-            return readFileToString(listTimeRangesFile());
+            return readFileToString(listTimeRangesFile().toFile());
         }
     }
 
     private static class ListMarketBook {
-        private static File listMarketBookFile() {
-            return new File(TEST_DATA_DIR, "listMarketBook.json");
+        public static Path listMarketBookFile() {
+            return TEST_DATA_DIR.resolve("listMarketBook.json");
         }
     }
 
     private static class AccountFunds {
-        private static File getAccountFundsFile() {
-            return new File(TEST_DATA_DIR, "getAccountFunds.json");
+        public static Path getAccountFundsFile() {
+            return TEST_DATA_DIR.resolve("getAccountFunds.json");
         }
 
         public static String getAccountFundsJson() throws IOException {
-            return readFileToString(getAccountFundsFile());
+            return readFileToString(getAccountFundsFile().toFile());
         }
     }
 
     private static class AccountDetails {
 
-        private static File getAccountDetailsFile() {
-            return new File(TEST_DATA_DIR, "getAccountDetails.json");
+        public static Path getAccountDetailsFile() {
+            return TEST_DATA_DIR.resolve("getAccountDetails.json");
         }
 
         public static String getAccountDetailsJson() throws IOException {
-            return readFileToString(getAccountDetailsFile());
+            return readFileToString(getAccountDetailsFile().toFile());
         }
     }
 
     public static class Login {
 
         public static String loginJson() throws IOException {
-            return readFileToString(loginFile());
+            return readFileToString(loginFile().toFile());
         }
 
-        private static File loginFile() {
-            return new File(new File("private"), UUID.randomUUID() + ".login.json");
+        public static Path loginFile() {
+            return Paths.get("private").resolve(UUID.randomUUID() + ".login.json");
         }
     }
 
     private static class Countries {
-        private static File listCountriesFile() {
-            return new File(TEST_DATA_DIR, "listCountries.json");
+        public static Path listCountriesFile() {
+            return TEST_DATA_DIR.resolve("listCountries.json");
         }
     }
 

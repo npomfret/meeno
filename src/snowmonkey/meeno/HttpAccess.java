@@ -344,6 +344,10 @@ public class HttpAccess {
         }
     }
 
+    public static void main(String[] args) {
+        System.out.println(ZonedDateTime.parse(ZonedDateTime.now().format(java.time.format.DateTimeFormatter.ISO_INSTANT)));
+    }
+
     class PayloadBuilder {
         private final LinkedHashMap<String, Object> map = new LinkedHashMap<>();
 
@@ -352,7 +356,7 @@ public class HttpAccess {
                     .registerTypeAdapter(DateTime.class, new JodaDateTimeTypeConverter())
                     .setDateFormat(DATE_FORMAT)
                     .setPrettyPrinting()
-                    .registerTypeAdapter(ZonedDateTime.class, (JsonSerializer<ZonedDateTime>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(BETFAIR_DATE_TIME_FORMAT.format(src)))
+                    .registerTypeAdapter(ZonedDateTime.class, (JsonSerializer<ZonedDateTime>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(java.time.format.DateTimeFormatter.ISO_INSTANT.format(src)))
                     .registerTypeAdapter(ZonedDateTime.class, (JsonDeserializer<ZonedDateTime>) (json, typeOfT, context) -> json == null ? null : ZonedDateTime.parse(json.getAsString(), BETFAIR_DATE_TIME_FORMAT))
                     .registerTypeAdapter(MarketId.class, (JsonSerializer<MarketId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
                     .registerTypeAdapter(MarketId.class, (JsonDeserializer<MarketId>) (json, typeOfT, context) -> json == null ? null : new MarketId(json.getAsString()))
