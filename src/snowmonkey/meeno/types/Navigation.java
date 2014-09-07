@@ -145,28 +145,33 @@ public class Navigation {
     }
 
     public Markets findMarkets(EventTypeName eventTypeName, TimeRange timeRange, String marketNamePattern) {
-        Pattern pattern = Pattern.compile(marketNamePattern);
+        return findMarkets(eventTypeName, timeRange, Pattern.compile(marketNamePattern));
+    }
 
+    public Markets findMarkets(EventTypeName eventTypeName, TimeRange timeRange, Pattern pattern) {
         List<Market> markets = new ArrayList<>();
 
         for (Navigation event : events(eventTypeName)) {
-            go(timeRange, markets, event.children(), pattern);
+            findMarkets(timeRange, markets, event.children(), pattern);
         }
 
         return new Markets(markets);
     }
 
-    private void go(TimeRange timeRange, List<Market> markets, List<Navigation> children, Pattern marketNamePattern) {
+    private void findMarkets(TimeRange timeRange, List<Market> markets, List<Navigation> children, Pattern marketNamePattern) {
         for (Navigation navigation : children) {
             for (Market market : navigation.markets()) {
+
                 if (!market.startSDuring(timeRange))
                     continue;
+
                 if (!marketNamePattern.matcher(market.name).matches())
                     continue;
 
                 markets.add(market);
             }
-            go(timeRange, markets, navigation.children(), marketNamePattern);
+
+            findMarkets(timeRange, markets, navigation.children(), marketNamePattern);
         }
     }
 
