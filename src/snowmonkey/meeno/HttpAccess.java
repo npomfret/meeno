@@ -64,11 +64,16 @@ public class HttpAccess {
     private final SessionToken sessionToken;
     private final AppKey appKey;
     private final Exchange exchange;
+    private boolean auditTraffic = false;
 
     public HttpAccess(SessionToken sessionToken, AppKey appKey, Exchange exchange) {
         this.sessionToken = sessionToken;
         this.appKey = appKey;
         this.exchange = exchange;
+    }
+
+    public void auditTraffic() {
+        auditTraffic = true;
     }
 
     public void cancelOrders(MarketId marketId, List<CancelInstruction> cancelInstructions, Processor processor) throws IOException, ApiException {
@@ -209,8 +214,7 @@ public class HttpAccess {
 
             String json = payloadBuilder.buildJsonPayload();
 
-            System.out.println(uri + " --> ");
-            System.out.println(indent(json));
+            audit(uri, json);
 
             httpPost.setEntity(new StringEntity(json, UTF_8));
 
@@ -223,10 +227,22 @@ public class HttpAccess {
 
             applyHeaders(httpGet);
 
-            System.out.println(uri + " --> ");
+            audit(uri);
 
             processResponse(processor, httpClient, httpGet);
         }
+    }
+
+    private void audit(URI uri) {
+        if (auditTraffic)
+            System.out.println(uri + " --> ");
+    }
+
+    private void audit(URI uri, String json) {
+        audit(uri);
+
+        if (auditTraffic)
+            System.out.println(indent(json));
     }
 
     private void applyHeaders(AbstractHttpMessage abstractHttpMessage) {
@@ -349,10 +365,6 @@ public class HttpAccess {
                 processor.process(response.getStatusLine(), inputStream);
             }
         }
-    }
-
-    public static void main(String[] args) {
-        System.out.println(ZonedDateTime.parse(ZonedDateTime.now().format(java.time.format.DateTimeFormatter.ISO_INSTANT)));
     }
 
     class PayloadBuilder {
