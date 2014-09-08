@@ -1,5 +1,6 @@
 package snowmonkey.meeno;
 
+import live.GenerateTestData;
 import org.junit.Test;
 import snowmonkey.meeno.types.Events;
 import snowmonkey.meeno.types.raw.Event;

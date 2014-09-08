@@ -1,15 +1,15 @@
-package snowmonkey.meeno;
+package live;
 
 import com.google.common.collect.Iterables;
 import com.google.gson.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.StatusLine;
+import snowmonkey.meeno.*;
 import snowmonkey.meeno.types.*;
 import snowmonkey.meeno.types.raw.*;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,7 +24,6 @@ import static com.google.common.collect.Sets.newHashSet;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static snowmonkey.meeno.CountryLookup.Argentina;
 import static snowmonkey.meeno.CountryLookup.UnitedKingdom;
-import static snowmonkey.meeno.JsonSerialization.gson;
 import static snowmonkey.meeno.types.TimeGranularity.MINUTES;
 import static snowmonkey.meeno.types.raw.TimeRange.between;
 
@@ -75,13 +74,6 @@ public class GenerateTestData {
 //        generateTestData.listTimeRanges();
 //            generateTestData.accountDetails();
 //            generateTestData.accountFunds();
-            generateTestData.listClearedOrders();
-            String listClearedOrdersJson = ListCleanedOrders.listClearedOrdersJson();
-            JsonElement jsonElement = new JsonParser().parse(listClearedOrdersJson).getAsJsonObject().get("clearedOrders");
-            ClearedOrderSummaryReport[] clearedOrderSummaryReport = gson().fromJson(jsonElement, (Type) ClearedOrderSummaryReport[].class);
-            for (ClearedOrderSummaryReport orderSummaryReport : clearedOrderSummaryReport) {
-                System.out.println("clearedOrderSummaryReport = " + orderSummaryReport);
-            }
         } finally {
             generateTestData.cleanup();
         }
@@ -175,13 +167,6 @@ public class GenerateTestData {
 
     private void listCurrentOrders() throws IOException, ApiException {
         httpAccess.listCurrentOrders(fileWriter(ListCurrentOrders.listCurrentOrdersFile()));
-    }
-
-    private void listClearedOrders() throws IOException, ApiException {
-        httpAccess.listClearedOrders(fileWriter(ListCleanedOrders.listClearedOrdersFile()),
-                BetStatus.SETTLED,
-                between(ZonedDateTime.now().minusDays(7), ZonedDateTime.now())
-        );
     }
 
     private void placeOrders() throws IOException, ApiException {

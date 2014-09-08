@@ -1,8 +1,8 @@
 package snowmonkey.meeno.types;
 
+import live.GenerateTestData;
 import org.joda.time.DateTime;
 import org.junit.Test;
-import snowmonkey.meeno.GenerateTestData;
 import snowmonkey.meeno.types.raw.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;

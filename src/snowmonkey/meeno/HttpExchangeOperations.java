@@ -1,15 +1,23 @@
 package snowmonkey.meeno;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import org.apache.http.StatusLine;
 import snowmonkey.meeno.types.MarketCatalogues;
 import snowmonkey.meeno.types.Navigation;
+import snowmonkey.meeno.types.raw.BetStatus;
+import snowmonkey.meeno.types.raw.ClearedOrderSummaryReport;
 import snowmonkey.meeno.types.raw.MarketProjection;
 import snowmonkey.meeno.types.raw.MarketSort;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.time.ZonedDateTime;
 
+import static snowmonkey.meeno.JsonSerialization.gson;
 import static snowmonkey.meeno.types.raw.MarketProjection.allMarketProjections;
+import static snowmonkey.meeno.types.raw.TimeRange.between;
 
 public class HttpExchangeOperations implements ExchangeOperations {
     public static final int MAX_MARKET_CATALOGUE_RESULTS = 1000;
@@ -42,6 +50,22 @@ public class HttpExchangeOperations implements ExchangeOperations {
             return Navigation.parse(processor.json);
         } catch (IOException e) {
             throw new RuntimeEnvironmentException("navigation call failed", e);
+        }
+    }
+
+    public ClearedOrderSummaryReports clearedOrders() throws ApiException {
+        JsonProcessor processor = new JsonProcessor();
+        try {
+            httpAccess.listClearedOrders(processor,
+                    BetStatus.SETTLED,
+                    between(ZonedDateTime.now().minusDays(7), ZonedDateTime.now())
+            );
+
+            JsonElement jsonElement = new JsonParser().parse(processor.json).getAsJsonObject().get("clearedOrders");
+            ClearedOrderSummaryReport[] clearedOrderSummaryReport = gson().fromJson(jsonElement, (Type) ClearedOrderSummaryReport[].class);
+            return ClearedOrderSummaryReports.create(clearedOrderSummaryReport);
+        } catch (IOException e) {
+            throw new RuntimeEnvironmentException("listClearedOrders call failed", e);
         }
     }
 

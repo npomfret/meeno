@@ -27,6 +27,7 @@ import org.apache.http.message.AbstractHttpMessage;
 import org.apache.http.message.BasicNameValuePair;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import snowmonkey.meeno.requests.ListClearedOrders;
 import snowmonkey.meeno.types.*;
 import snowmonkey.meeno.types.TimeGranularity;
 import snowmonkey.meeno.types.raw.*;
@@ -55,6 +56,7 @@ public class HttpAccess {
     public static final String UTF_8 = "UTF-8";
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.forPattern(JsonSerialization.DATE_FORMAT);
     public static final String X_APPLICATION = "X-Application";
+    public static final String EN_US = "en_US";
 
     public interface Processor {
         void process(StatusLine statusLine, InputStream in) throws IOException, ApiException;
@@ -128,11 +130,19 @@ public class HttpAccess {
     }
 
     public void listClearedOrders(Processor processor, BetStatus betStatus, TimeRange between) throws IOException, ApiException {
-        PayloadBuilder payloadBuilder = new PayloadBuilder();
-        payloadBuilder.addBetStatus(betStatus);
-        payloadBuilder.addSettledDateRange(between);
-        payloadBuilder.addPage(0, 999);
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listClearedOrders"), payloadBuilder);
+        ListClearedOrders request = new ListClearedOrders(betStatus, null, null, null, null, null, null, between, null, null, EN_US, 0, 999);
+
+        listClearedOrders(processor, request);
+    }
+
+    public void listClearedOrders(Processor processor, final ListClearedOrders request) throws IOException, ApiException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listClearedOrders"), new PayloadBuilder() {
+            @Override
+            public String buildJsonPayload() {
+                Gson gson = JsonSerialization.gson();
+                return gson.toJson(request);
+            }
+        });
     }
 
     public void listCompetitions(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
@@ -361,7 +371,7 @@ public class HttpAccess {
         public String buildJsonPayload() {
             Gson gson = JsonSerialization.gson();
 
-            map.put("locale", "en_US");
+            map.put("locale", EN_US);
 
             return gson.toJson(map);
         }
