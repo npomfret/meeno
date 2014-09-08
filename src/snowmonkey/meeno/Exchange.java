@@ -1,6 +1,8 @@
 package snowmonkey.meeno;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 public enum Exchange {
     UK(
@@ -35,12 +37,47 @@ public enum Exchange {
             this.jsonRestUrl = jsonRestUrl;
         }
 
-        public URI jsonRcpUri(String method) {
-            return URI.create(jsonRcpUrl + "/" + method + "/");
+        public URI jsonRcpUri(MethodName method) {
+            return URI.create(jsonRcpUrl + "/" + method.pathPart + "/");
         }
 
-        public URI jsonRestUri(String method) {
-            return URI.create(jsonRestUrl + "/" + method + "/");
+        public URI jsonRestUri(MethodName method) {
+            return URI.create(jsonRestUrl + "/" + method.pathPart + "/");
         }
+    }
+
+    public static MethodName methodNameFrom(URI uri) {
+        String[] split = uri.toASCIIString().split("/");
+        return MethodName.lookup.get(split[split.length - 1]);
+    }
+
+    public static enum MethodName {
+        CANCEL_ORDERS("cancelOrders"),
+        GET_ACCOUNT_DETAILS("getAccountDetails"),
+        GET_ACCOUNT_FUNDS("getAccountFunds"),
+        LIST_CLEARED_ORDERS("listClearedOrders"),
+        LIST_COMPETITIONS("listCompetitions"),
+        LIST_COUNTRIES("listCountries"),
+        LIST_CURRENT_ORDERS("listCurrentOrders"),
+        LIST_EVENTS("listEvents"),
+        LIST_EVENT_TYPES("listEventTypes"),
+        LIST_MARKET_BOOK("listMarketBook"),
+        LIST_MARKET_CATALOGUE("listMarketCatalogue"),
+        LIST_MARKET_TYPES("listMarketTypes"),
+        LIST_TIME_RANGES("listTimeRanges"),
+        PLACE_ORDERS("placeOrders");
+
+        private static Map<String, MethodName> lookup = new HashMap<String, MethodName>() {{
+            for (MethodName methodName : MethodName.values()) {
+                put(methodName.pathPart, methodName);
+            }
+        }};
+
+        public final String pathPart;
+
+        MethodName(String pathPart) {
+            this.pathPart = pathPart;
+        }
+
     }
 }
