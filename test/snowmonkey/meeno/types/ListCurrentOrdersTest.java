@@ -8,10 +8,10 @@ import snowmonkey.meeno.types.raw.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-public class CurrentOrdersTest {
+public class ListCurrentOrdersTest {
     @Test
     public void test() throws Exception {
-        CurrentOrders currentOrders = CurrentOrders.parse(GenerateTestData.CurrentOrders.listCurrentOrdersJson());
+        CurrentOrders currentOrders = CurrentOrders.parse(GenerateTestData.ListCurrentOrders.listCurrentOrdersJson());
         CurrentOrder order = currentOrders.iterator().next();
 
         assertThat(order.betId, equalTo(new BetId("33903456243")));

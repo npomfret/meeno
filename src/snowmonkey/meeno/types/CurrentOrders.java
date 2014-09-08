@@ -26,8 +26,8 @@ public class CurrentOrders implements Iterable<CurrentOrder> {
             double handicap = currentOrderObj.getAsJsonPrimitive("handicap").getAsDouble();
             JsonObject priceSizeObj = currentOrderObj.getAsJsonObject("priceSize");
             PriceSize priceSize = new PriceSize(
-                    priceSizeObj.getAsJsonPrimitive("price").getAsDouble(),
-                    priceSizeObj.getAsJsonPrimitive("size").getAsDouble()
+                    new Price(priceSizeObj.getAsJsonPrimitive("price").getAsDouble()),
+                    new Size(priceSizeObj.getAsJsonPrimitive("size").getAsDouble())
             );
             double bspLiability = currentOrderObj.getAsJsonPrimitive("bspLiability").getAsDouble();
             Side side = Side.valueOf(currentOrderObj.getAsJsonPrimitive("side").getAsString());

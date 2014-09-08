@@ -9,4 +9,8 @@ public class SelectionId extends MicroType<Long> {
     public Long asNumber() {
         return value;
     }
+
+    public long asLong() {
+        return value;
+    }
 }

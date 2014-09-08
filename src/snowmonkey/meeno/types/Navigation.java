@@ -6,7 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.commons.lang3.StringUtils;
-import snowmonkey.meeno.HttpAccess;
+import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.types.raw.TimeRange;
 
 import java.time.ZonedDateTime;
@@ -133,7 +133,7 @@ public class Navigation {
                 String name = childObj.get("name").getAsString();
                 String exchangeId = childObj.get("exchangeId").getAsString();
                 String marketStartTime = childObj.get("marketStartTime").getAsString();
-                ZonedDateTime zonedDateTime = ZonedDateTime.parse(marketStartTime, HttpAccess.BETFAIR_DATE_TIME_FORMAT);
+                ZonedDateTime zonedDateTime = ZonedDateTime.parse(marketStartTime, JsonSerialization.BETFAIR_DATE_TIME_FORMAT);
                 results.add(new Market(
                         this,
                         new ExchangeId(exchangeId),

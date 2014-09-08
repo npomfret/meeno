@@ -9,6 +9,7 @@ import snowmonkey.meeno.types.raw.*;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,6 +24,7 @@ import static com.google.common.collect.Sets.newHashSet;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static snowmonkey.meeno.CountryLookup.Argentina;
 import static snowmonkey.meeno.CountryLookup.UnitedKingdom;
+import static snowmonkey.meeno.JsonSerialization.gson;
 import static snowmonkey.meeno.types.TimeGranularity.MINUTES;
 import static snowmonkey.meeno.types.raw.TimeRange.between;
 
@@ -44,36 +46,42 @@ public class GenerateTestData {
         generateTestData.httpAccess.auditTraffic();
 
         try {
-            generateTestData.listCountries();
+//            generateTestData.listCountries();
+//
+//            Navigation navigation = generateTestData.navigation();
+//            Navigation.Markets markets = navigation.findMarkets(
+//                    EventTypeName.SOCCER,
+//                    between(ZonedDateTime.now(), ZonedDateTime.now().plusHours(6)),
+//                    "Match Odds"
+//            );
 
-            Navigation navigation = generateTestData.navigation();
-            Navigation.Markets markets = navigation.findMarkets(
-                    EventTypeName.SOCCER,
-                    between(ZonedDateTime.now(), ZonedDateTime.now().plusHours(6)),
-                    "Match Odds"
-            );
+//            EventType soccer = eventType("Soccer");
+//
+//            generateTestData.listCompetitions(soccer, 1);
+//            Competitions competitions = Competitions.parse(ListCompetitions.listCompetitionsJson(1));
+//            Competition competition = competitions.iterator().next();
+//            generateTestData.listCompetitions(soccer, 2, competition.id);
+//
+//            generateTestData.listEvents(soccer, markets.marketsIds());
 
-            EventType soccer = eventType("Soccer");
+//            MarketCatalogues marketCatalogues = generateTestData.listMarketCatalogue(soccer, markets.marketsIds());
 
-            generateTestData.listCompetitions(soccer, 1);
-            Competitions competitions = Competitions.parse(ListCompetitions.listCompetitionsJson(1));
-            Competition competition = competitions.iterator().next();
-            generateTestData.listCompetitions(soccer, 2, competition.id);
-
-            generateTestData.listEvents(soccer, markets.marketsIds());
-
-            MarketCatalogues marketCatalogues = generateTestData.listMarketCatalogue(soccer, markets.marketsIds());
-
-            generateTestData.listMarketBook(markets.marketsIds());
+//            generateTestData.listMarketBook(markets.marketsIds());
 
 //            generateTestData.placeOrders();
 //            generateTestData.listCurrentOrders();
 //            generateTestData.cancelOrders();
 //        generateTestData.listMarketTypes();
 //        generateTestData.listTimeRanges();
-            generateTestData.accountDetails();
-            generateTestData.accountFunds();
+//            generateTestData.accountDetails();
+//            generateTestData.accountFunds();
             generateTestData.listClearedOrders();
+            String listClearedOrdersJson = ListCleanedOrders.listClearedOrdersJson();
+            JsonElement jsonElement = new JsonParser().parse(listClearedOrdersJson).getAsJsonObject().get("clearedOrders");
+            ClearedOrderSummaryReport[] clearedOrderSummaryReport = gson().fromJson(jsonElement, (Type) ClearedOrderSummaryReport[].class);
+            for (ClearedOrderSummaryReport orderSummaryReport : clearedOrderSummaryReport) {
+                System.out.println("clearedOrderSummaryReport = " + orderSummaryReport);
+            }
         } finally {
             generateTestData.cleanup();
         }
@@ -87,7 +95,7 @@ public class GenerateTestData {
     }
 
     private void cancelOrders() throws IOException, ApiException {
-        snowmonkey.meeno.types.CurrentOrders currentOrders = snowmonkey.meeno.types.CurrentOrders.parse(CurrentOrders.listCurrentOrdersJson());
+        snowmonkey.meeno.types.CurrentOrders currentOrders = snowmonkey.meeno.types.CurrentOrders.parse(ListCurrentOrders.listCurrentOrdersJson());
         CurrentOrder order = currentOrders.iterator().next();
         MarketId marketId = order.marketId;
         BetId betId = order.betId;
@@ -166,11 +174,14 @@ public class GenerateTestData {
     }
 
     private void listCurrentOrders() throws IOException, ApiException {
-        httpAccess.listCurrentOrders(fileWriter(CurrentOrders.listCurrentOrdersFile()));
+        httpAccess.listCurrentOrders(fileWriter(ListCurrentOrders.listCurrentOrdersFile()));
     }
 
     private void listClearedOrders() throws IOException, ApiException {
-        httpAccess.listClearedOrders(fileWriter(CurrentOrders.listClearedOrdersFile()), BetStatus.SETTLED);
+        httpAccess.listClearedOrders(fileWriter(ListCleanedOrders.listClearedOrdersFile()),
+                BetStatus.SETTLED,
+                between(ZonedDateTime.now().minusDays(7), ZonedDateTime.now())
+        );
     }
 
     private void placeOrders() throws IOException, ApiException {
@@ -249,13 +260,9 @@ public class GenerateTestData {
         }
     }
 
-    public static class CurrentOrders {
+    public static class ListCurrentOrders {
         public static Path listCurrentOrdersFile() {
             return TEST_DATA_DIR.resolve("listCurrentOrders.json");
-        }
-
-        public static Path listClearedOrdersFile() {
-            return TEST_DATA_DIR.resolve("listClearedOrders.json");
         }
 
         public static String getCurrentOrderJson() throws IOException, ApiException {
@@ -266,6 +273,16 @@ public class GenerateTestData {
 
         public static String listCurrentOrdersJson() throws IOException, ApiException {
             return readFileToString(listCurrentOrdersFile().toFile());
+        }
+    }
+
+    public static class ListCleanedOrders {
+        public static Path listClearedOrdersFile() {
+            return TEST_DATA_DIR.resolve("listClearedOrders.json");
+        }
+
+        public static String listClearedOrdersJson() throws IOException, ApiException {
+            return readFileToString(listClearedOrdersFile().toFile());
         }
     }
 

@@ -1,6 +1,6 @@
 package snowmonkey.meeno;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -25,7 +25,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.AbstractHttpMessage;
 import org.apache.http.message.BasicNameValuePair;
-import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import snowmonkey.meeno.types.*;
@@ -54,9 +53,7 @@ import static snowmonkey.meeno.MarketFilterBuilder.noFilter;
 public class HttpAccess {
 
     public static final String UTF_8 = "UTF-8";
-    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-    public static final java.time.format.DateTimeFormatter BETFAIR_DATE_TIME_FORMAT = java.time.format.DateTimeFormatter.ISO_DATE_TIME;
-    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.forPattern(DATE_FORMAT);
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.forPattern(JsonSerialization.DATE_FORMAT);
     public static final String X_APPLICATION = "X-Application";
 
     public interface Processor {
@@ -130,10 +127,10 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listCurrentOrders"), marketFilter);
     }
 
-    public void listClearedOrders(Processor processor, BetStatus betStatus) throws IOException, ApiException {
+    public void listClearedOrders(Processor processor, BetStatus betStatus, TimeRange between) throws IOException, ApiException {
         PayloadBuilder payloadBuilder = new PayloadBuilder();
         payloadBuilder.addBetStatus(betStatus);
-        payloadBuilder.addSettledDateRange(TimeRange.between(ZonedDateTime.now().minusDays(7), ZonedDateTime.now()));
+        payloadBuilder.addSettledDateRange(between);
         payloadBuilder.addPage(0, 999);
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listClearedOrders"), payloadBuilder);
     }
@@ -362,23 +359,7 @@ public class HttpAccess {
         private final LinkedHashMap<String, Object> map = new LinkedHashMap<>();
 
         public String buildJsonPayload() {
-            Gson gson = new GsonBuilder()
-                    .registerTypeAdapter(DateTime.class, new JodaDateTimeTypeConverter())
-                    .setDateFormat(DATE_FORMAT)
-                    .setPrettyPrinting()
-                    .registerTypeAdapter(ZonedDateTime.class, (JsonSerializer<ZonedDateTime>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(java.time.format.DateTimeFormatter.ISO_INSTANT.format(src)))
-                    .registerTypeAdapter(ZonedDateTime.class, (JsonDeserializer<ZonedDateTime>) (json, typeOfT, context) -> json == null ? null : ZonedDateTime.parse(json.getAsString(), BETFAIR_DATE_TIME_FORMAT))
-
-                    .registerTypeAdapter(MarketId.class, (JsonSerializer<MarketId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
-                    .registerTypeAdapter(MarketId.class, (JsonDeserializer<MarketId>) (json, typeOfT, context) -> json == null ? null : new MarketId(json.getAsString()))
-
-                    .registerTypeAdapter(BetId.class, (JsonSerializer<BetId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
-                    .registerTypeAdapter(BetId.class, (JsonDeserializer<BetId>) (json, typeOfT, context) -> json == null ? null : new BetId(json.getAsString()))
-
-                    .registerTypeAdapter(EventTypeId.class, (JsonSerializer<EventTypeId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
-                    .registerTypeAdapter(EventTypeId.class, (JsonDeserializer<EventTypeId>) (json, typeOfT, context) -> json == null ? null : new EventTypeId(json.getAsString()))
-
-                    .create();
+            Gson gson = JsonSerialization.gson();
 
             map.put("locale", "en_US");
 
@@ -481,4 +462,5 @@ public class HttpAccess {
             map.put("settledDateRange", timeRange);
         }
     }
+
 }
