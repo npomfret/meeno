@@ -213,8 +213,8 @@ public class HttpAccess {
     }
 
     public void nav(Processor processor) throws IOException, ApiException {
-        HttpGet httpGet = httpGet(Exchange.NAV);
-        performHttpRequest(processor, Exchange.NAV, httpGet);
+        HttpGet httpGet = httpGet(Exchange.NAVIGATION);
+        performHttpRequest(processor, Exchange.NAVIGATION, httpGet);
     }
 
 

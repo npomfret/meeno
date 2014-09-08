@@ -15,7 +15,7 @@ public enum Exchange {
             new Uris("https://api-au.betfair.com/exchange/betting/json-rpc/v1", "https://api-au.betfair.com/exchange/betting/rest/v1.0")
     );
 
-    public static final URI NAV = URI.create("https://api.betfair.com/exchange/betting/rest/v1/en/navigation/menu.json");
+    public static final URI NAVIGATION = URI.create("https://api.betfair.com/exchange/betting/rest/v1/en/navigation/menu.json");
 
     public static final URI LOGIN_URI = URI.create("https://identitysso.betfair.com/api/certlogin");
     public static final URI LOGOUT_URI = URI.create("https://identitysso.betfair.com/api/logout");
@@ -47,6 +47,8 @@ public enum Exchange {
     }
 
     public static MethodName methodNameFrom(URI uri) {
+        if (uri.equals(NAVIGATION))
+            return MethodName.NAVIGATION;
         String[] split = uri.toASCIIString().split("/");
         return MethodName.lookup.get(split[split.length - 1]);
     }
@@ -65,7 +67,8 @@ public enum Exchange {
         LIST_MARKET_CATALOGUE("listMarketCatalogue"),
         LIST_MARKET_TYPES("listMarketTypes"),
         LIST_TIME_RANGES("listTimeRanges"),
-        PLACE_ORDERS("placeOrders");
+        PLACE_ORDERS("placeOrders"),
+        NAVIGATION("navigation/menu.json");
 
         private static Map<String, MethodName> lookup = new HashMap<String, MethodName>() {{
             for (MethodName methodName : MethodName.values()) {
