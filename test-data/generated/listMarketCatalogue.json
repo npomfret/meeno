@@ -1,272 +1,177 @@
 [
   {
-    "marketId": "1.115232062",
+    "marketId": "1.115234044",
     "marketName": "Match Odds",
-    "description": {
-      "persistenceEnabled": true,
-      "bspMarket": false,
-      "marketTime": "2014-09-07T18:45:00.000Z",
-      "suspendTime": "2014-09-07T18:45:00.000Z",
-      "bettingType": "ODDS",
-      "turnInPlayEnabled": true,
-      "marketType": "MATCH_ODDS",
-      "marketBaseRate": 5.0,
-      "discountAllowed": true,
-      "wallet": "UK wallet",
-      "rules": "<br><a href=\"http://www.stats.betradar.com/statistics/betfaircom/?language=en\" target=\"_blank\"><img src=\"http://content-cache.betfair.com/images/en_GB/mr_fg.gif\" title=\"Form Guide\" border=\"0\"></a><a href=\"http://www.livescore.betradar.com/?alias=betfair&language=en\" target=\"_blank\"><img src=\"http://content-cache.betfair.com/images/en_GB/mr_ls.gif\" title=\"Live Scores\" border=\"0\"></a><br><br><b>Market Information</b><br><br>For further information please see <a href=http://content.betfair.com/aboutus/content.asp?sWhichKey=Rules%20and%20Regulations#undefined.do style=color:0163ad; text-decoration: underline; target=_blank>Rules & Regs</a>.<br><br>Predict the result of this match. <b><font color=red> All bets apply to Full Time according to the match officials, plus any stoppage time.  Extra-time/penalty shoot-outs are not included.</b></font><br><br> <b><font color=blue>If this market is re-opened for In-Play betting, </b></font> unmatched bets will be cancelled at kick off and the market turned in play. The market will be suspended if it appears that a goal has been scored, a penalty will be given, or a red card will be shown. With the exception of bets for which the \"keep\" option has been selected, unmatched bets will be cancelled in the event of a confirmed goal or sending off. Please note that should our data feeds fail we may be unable to manage this game in-play. <br><br>Customers should be aware that:<b><br><br><li>Transmissions described as “live” by some broadcasters may actually be delayed</li><br><li>The extent of any such delay may vary, depending on the set-up through which they are receiving pictures or data.</b><br><br> If this market is scheduled to go in-play, but due to unforeseen circumstances we are unable to offer the market in-play, then this market will be re-opened for the half-time interval and suspended again an hour after the scheduled kick-off time.  Whilst it is our intention to re-open this market for the half-time interval, in certain circumstances this may not always be possible.<br>",
-      "rulesHasDate": true
-    },
-    "totalMatched": 394214.25,
+    "marketStartTime": "2014-09-08T16:00:00.000Z",
+    "totalMatched": 561803.37,
     "runners": [
       {
-        "selectionId": 19,
-        "runnerName": "Portugal",
+        "selectionId": 25907,
+        "runnerName": "Russia",
         "handicap": 0.0,
-        "sortPriority": 1
+        "sortPriority": 1,
+        "metadata": {
+          "runnerId": "70036983"
+        }
       },
       {
-        "selectionId": 15285,
-        "runnerName": "Albania",
+        "selectionId": 25909,
+        "runnerName": "Liechtenstein",
         "handicap": 0.0,
-        "sortPriority": 2
+        "sortPriority": 2,
+        "metadata": {
+          "runnerId": "70036984"
+        }
       },
       {
         "selectionId": 58805,
         "runnerName": "The Draw",
         "handicap": 0.0,
-        "sortPriority": 3
+        "sortPriority": 3,
+        "metadata": {
+          "runnerId": "70036985"
+        }
       }
-    ],
-    "eventType": {
-      "id": "1",
-      "name": "Soccer"
-    },
-    "competition": {
-      "id": "4527196",
-      "name": "Euro 2016"
-    },
-    "event": {
-      "id": "27257258",
-      "name": "Portugal v Albania",
-      "countryCode": "PT",
-      "timezone": "Europe/London",
-      "openDate": "2014-09-07T18:45:00.000Z"
-    }
+    ]
   },
   {
-    "marketId": "1.115231121",
+    "marketId": "1.115233357",
     "marketName": "Match Odds",
-    "description": {
-      "persistenceEnabled": true,
-      "bspMarket": false,
-      "marketTime": "2014-09-07T18:45:00.000Z",
-      "suspendTime": "2014-09-07T18:45:00.000Z",
-      "bettingType": "ODDS",
-      "turnInPlayEnabled": true,
-      "marketType": "MATCH_ODDS",
-      "marketBaseRate": 5.0,
-      "discountAllowed": true,
-      "wallet": "UK wallet",
-      "rules": "<br><a href=\"http://www.stats.betradar.com/statistics/betfaircom/?language=en\" target=\"_blank\"><img src=\"http://content-cache.betfair.com/images/en_GB/mr_fg.gif\" title=\"Form Guide\" border=\"0\"></a><a href=\"http://www.livescore.betradar.com/?alias=betfair&language=en\" target=\"_blank\"><img src=\"http://content-cache.betfair.com/images/en_GB/mr_ls.gif\" title=\"Live Scores\" border=\"0\"></a><br><br><b>Market Information</b><br><br>For further information please see <a href=http://content.betfair.com/aboutus/content.asp?sWhichKey=Rules%20and%20Regulations#undefined.do style=color:0163ad; text-decoration: underline; target=_blank>Rules & Regs</a>.<br><br>Predict the result of this match. <b><font color=red> All bets apply to Full Time according to the match officials, plus any stoppage time.  Extra-time/penalty shoot-outs are not included.</b></font><br><br> <b><font color=blue>If this market is re-opened for In-Play betting, </b></font> unmatched bets will be cancelled at kick off and the market turned in play. The market will be suspended if it appears that a goal has been scored, a penalty will be given, or a red card will be shown. With the exception of bets for which the \"keep\" option has been selected, unmatched bets will be cancelled in the event of a confirmed goal or sending off. Please note that should our data feeds fail we may be unable to manage this game in-play. <br><br>Customers should be aware that:<b><br><br><li>Transmissions described as “live” by some broadcasters may actually be delayed</li><br><li>The extent of any such delay may vary, depending on the set-up through which they are receiving pictures or data.</b><br><br> If this market is scheduled to go in-play, but due to unforeseen circumstances we are unable to offer the market in-play, then this market will be re-opened for the half-time interval and suspended again an hour after the scheduled kick-off time.  Whilst it is our intention to re-open this market for the half-time interval, in certain circumstances this may not always be possible.<br>",
-      "rulesHasDate": true
-    },
-    "totalMatched": 205175.29,
+    "marketStartTime": "2014-09-08T18:45:00.000Z",
+    "totalMatched": 170047.28,
     "runners": [
       {
-        "selectionId": 29633,
-        "runnerName": "Faroe Islands",
+        "selectionId": 124773,
+        "runnerName": "Estonia",
         "handicap": 0.0,
-        "sortPriority": 1
+        "sortPriority": 1,
+        "metadata": {
+          "runnerId": "70035229"
+        }
       },
       {
-        "selectionId": 8178,
-        "runnerName": "Finland",
+        "selectionId": 25913,
+        "runnerName": "Slovenia",
         "handicap": 0.0,
-        "sortPriority": 2
+        "sortPriority": 2,
+        "metadata": {
+          "runnerId": "70035230"
+        }
       },
       {
         "selectionId": 58805,
         "runnerName": "The Draw",
         "handicap": 0.0,
-        "sortPriority": 3
+        "sortPriority": 3,
+        "metadata": {
+          "runnerId": "70035231"
+        }
       }
-    ],
-    "eventType": {
-      "id": "1",
-      "name": "Soccer"
-    },
-    "competition": {
-      "id": "4527196",
-      "name": "Euro 2016"
-    },
-    "event": {
-      "id": "27257237",
-      "name": "Faroe Islands v Finland",
-      "countryCode": "FO",
-      "timezone": "Europe/London",
-      "openDate": "2014-09-07T18:45:00.000Z"
-    }
+    ]
   },
   {
-    "marketId": "1.115231705",
+    "marketId": "1.115233577",
     "marketName": "Match Odds",
-    "description": {
-      "persistenceEnabled": true,
-      "bspMarket": false,
-      "marketTime": "2014-09-07T18:45:00.000Z",
-      "suspendTime": "2014-09-07T18:45:00.000Z",
-      "bettingType": "ODDS",
-      "turnInPlayEnabled": true,
-      "marketType": "MATCH_ODDS",
-      "marketBaseRate": 5.0,
-      "discountAllowed": true,
-      "wallet": "UK wallet",
-      "rules": "<br><a href=\"http://www.stats.betradar.com/statistics/betfaircom/?language=en\" target=\"_blank\"><img src=\"http://content-cache.betfair.com/images/en_GB/mr_fg.gif\" title=\"Form Guide\" border=\"0\"></a><a href=\"http://www.livescore.betradar.com/?alias=betfair&language=en\" target=\"_blank\"><img src=\"http://content-cache.betfair.com/images/en_GB/mr_ls.gif\" title=\"Live Scores\" border=\"0\"></a><br><br><b>Market Information</b><br><br>For further information please see <a href=http://content.betfair.com/aboutus/content.asp?sWhichKey=Rules%20and%20Regulations#undefined.do style=color:0163ad; text-decoration: underline; target=_blank>Rules & Regs</a>.<br><br>Predict the result of this match. <b><font color=red> All bets apply to Full Time according to the match officials, plus any stoppage time.  Extra-time/penalty shoot-outs are not included.</b></font><br><br> <b><font color=blue>If this market is re-opened for In-Play betting, </b></font> unmatched bets will be cancelled at kick off and the market turned in play. The market will be suspended if it appears that a goal has been scored, a penalty will be given, or a red card will be shown. With the exception of bets for which the \"keep\" option has been selected, unmatched bets will be cancelled in the event of a confirmed goal or sending off. Please note that should our data feeds fail we may be unable to manage this game in-play. <br><br>Customers should be aware that:<b><br><br><li>Transmissions described as “live” by some broadcasters may actually be delayed</li><br><li>The extent of any such delay may vary, depending on the set-up through which they are receiving pictures or data.</b><br><br> If this market is scheduled to go in-play, but due to unforeseen circumstances we are unable to offer the market in-play, then this market will be re-opened for the half-time interval and suspended again an hour after the scheduled kick-off time.  Whilst it is our intention to re-open this market for the half-time interval, in certain circumstances this may not always be possible.<br>",
-      "rulesHasDate": true
-    },
-    "totalMatched": 1084262.84,
+    "marketStartTime": "2014-09-08T18:45:00.000Z",
+    "totalMatched": 74410.5,
     "runners": [
       {
-        "selectionId": 18,
-        "runnerName": "Germany",
+        "selectionId": 2345367,
+        "runnerName": "Montenegro",
         "handicap": 0.0,
-        "sortPriority": 1
+        "sortPriority": 1,
+        "metadata": {
+          "runnerId": "70035789"
+        }
       },
       {
-        "selectionId": 447,
-        "runnerName": "Scotland",
+        "selectionId": 29875,
+        "runnerName": "Moldova",
         "handicap": 0.0,
-        "sortPriority": 2
+        "sortPriority": 2,
+        "metadata": {
+          "runnerId": "70035790"
+        }
       },
       {
         "selectionId": 58805,
         "runnerName": "The Draw",
         "handicap": 0.0,
-        "sortPriority": 3
+        "sortPriority": 3,
+        "metadata": {
+          "runnerId": "70035791"
+        }
       }
-    ],
-    "eventType": {
-      "id": "1",
-      "name": "Soccer"
-    },
-    "competition": {
-      "id": "4527196",
-      "name": "Euro 2016"
-    },
-    "event": {
-      "id": "27257249",
-      "name": "Germany v Scotland",
-      "countryCode": "DE",
-      "timezone": "Europe/London",
-      "openDate": "2014-09-07T18:45:00.000Z"
-    }
+    ]
   },
   {
-    "marketId": "1.115231824",
+    "marketId": "1.115233467",
     "marketName": "Match Odds",
-    "description": {
-      "persistenceEnabled": true,
-      "bspMarket": false,
-      "marketTime": "2014-09-07T18:45:00.000Z",
-      "suspendTime": "2014-09-07T18:45:00.000Z",
-      "bettingType": "ODDS",
-      "turnInPlayEnabled": true,
-      "marketType": "MATCH_ODDS",
-      "marketBaseRate": 5.0,
-      "discountAllowed": true,
-      "wallet": "UK wallet",
-      "rules": "<br><a href=\"http://www.stats.betradar.com/statistics/betfaircom/?language=en\" target=\"_blank\"><img src=\"http://content-cache.betfair.com/images/en_GB/mr_fg.gif\" title=\"Form Guide\" border=\"0\"></a><a href=\"http://www.livescore.betradar.com/?alias=betfair&language=en\" target=\"_blank\"><img src=\"http://content-cache.betfair.com/images/en_GB/mr_ls.gif\" title=\"Live Scores\" border=\"0\"></a><br><br><b>Market Information</b><br><br>For further information please see <a href=http://content.betfair.com/aboutus/content.asp?sWhichKey=Rules%20and%20Regulations#undefined.do style=color:0163ad; text-decoration: underline; target=_blank>Rules & Regs</a>.<br><br>Predict the result of this match. <b><font color=red> All bets apply to Full Time according to the match officials, plus any stoppage time.  Extra-time/penalty shoot-outs are not included.</b></font><br><br> <b><font color=blue>If this market is re-opened for In-Play betting, </b></font> unmatched bets will be cancelled at kick off and the market turned in play. The market will be suspended if it appears that a goal has been scored, a penalty will be given, or a red card will be shown. With the exception of bets for which the \"keep\" option has been selected, unmatched bets will be cancelled in the event of a confirmed goal or sending off. Please note that should our data feeds fail we may be unable to manage this game in-play. <br><br>Customers should be aware that:<b><br><br><li>Transmissions described as “live” by some broadcasters may actually be delayed</li><br><li>The extent of any such delay may vary, depending on the set-up through which they are receiving pictures or data.</b><br><br> If this market is scheduled to go in-play, but due to unforeseen circumstances we are unable to offer the market in-play, then this market will be re-opened for the half-time interval and suspended again an hour after the scheduled kick-off time.  Whilst it is our intention to re-open this market for the half-time interval, in certain circumstances this may not always be possible.<br>",
-      "rulesHasDate": true
-    },
-    "totalMatched": 146042.75,
+    "marketStartTime": "2014-09-08T18:45:00.000Z",
+    "totalMatched": 115412.57,
     "runners": [
       {
-        "selectionId": 15287,
-        "runnerName": "Greece",
+        "selectionId": 25911,
+        "runnerName": "Luxembourg",
         "handicap": 0.0,
-        "sortPriority": 1
+        "sortPriority": 1,
+        "metadata": {
+          "runnerId": "70035510"
+        }
       },
       {
-        "selectionId": 26,
-        "runnerName": "Romania",
+        "selectionId": 29634,
+        "runnerName": "Belarus",
         "handicap": 0.0,
-        "sortPriority": 2
+        "sortPriority": 2,
+        "metadata": {
+          "runnerId": "70035511"
+        }
       },
       {
         "selectionId": 58805,
         "runnerName": "The Draw",
         "handicap": 0.0,
-        "sortPriority": 3
+        "sortPriority": 3,
+        "metadata": {
+          "runnerId": "70035512"
+        }
       }
-    ],
-    "eventType": {
-      "id": "1",
-      "name": "Soccer"
-    },
-    "competition": {
-      "id": "4527196",
-      "name": "Euro 2016"
-    },
-    "event": {
-      "id": "27257252",
-      "name": "Greece v Romania",
-      "countryCode": "GR",
-      "timezone": "Europe/London",
-      "openDate": "2014-09-07T18:45:00.000Z"
-    }
+    ]
   },
   {
-    "marketId": "1.115231231",
+    "marketId": "1.115233925",
     "marketName": "Match Odds",
-    "description": {
-      "persistenceEnabled": true,
-      "bspMarket": false,
-      "marketTime": "2014-09-07T18:45:00.000Z",
-      "suspendTime": "2014-09-07T18:45:00.000Z",
-      "bettingType": "ODDS",
-      "turnInPlayEnabled": true,
-      "marketType": "MATCH_ODDS",
-      "marketBaseRate": 5.0,
-      "discountAllowed": true,
-      "wallet": "UK wallet",
-      "rules": "<br><a href=\"http://www.stats.betradar.com/statistics/betfaircom/?language=en\" target=\"_blank\"><img src=\"http://content-cache.betfair.com/images/en_GB/mr_fg.gif\" title=\"Form Guide\" border=\"0\"></a><a href=\"http://www.livescore.betradar.com/?alias=betfair&language=en\" target=\"_blank\"><img src=\"http://content-cache.betfair.com/images/en_GB/mr_ls.gif\" title=\"Live Scores\" border=\"0\"></a><br><br><b>Market Information</b><br><br>For further information please see <a href=http://content.betfair.com/aboutus/content.asp?sWhichKey=Rules%20and%20Regulations#undefined.do style=color:0163ad; text-decoration: underline; target=_blank>Rules & Regs</a>.<br><br>Predict the result of this match. <b><font color=red> All bets apply to Full Time according to the match officials, plus any stoppage time.  Extra-time/penalty shoot-outs are not included.</b></font><br><br> <b><font color=blue>If this market is re-opened for In-Play betting, </b></font> unmatched bets will be cancelled at kick off and the market turned in play. The market will be suspended if it appears that a goal has been scored, a penalty will be given, or a red card will be shown. With the exception of bets for which the \"keep\" option has been selected, unmatched bets will be cancelled in the event of a confirmed goal or sending off. Please note that should our data feeds fail we may be unable to manage this game in-play. <br><br>Customers should be aware that:<b><br><br><li>Transmissions described as “live” by some broadcasters may actually be delayed</li><br><li>The extent of any such delay may vary, depending on the set-up through which they are receiving pictures or data.</b><br><br> If this market is scheduled to go in-play, but due to unforeseen circumstances we are unable to offer the market in-play, then this market will be re-opened for the half-time interval and suspended again an hour after the scheduled kick-off time.  Whilst it is our intention to re-open this market for the half-time interval, in certain circumstances this may not always be possible.<br>",
-      "rulesHasDate": true
-    },
-    "totalMatched": 181766.85,
+    "marketStartTime": "2014-09-08T18:45:00.000Z",
+    "totalMatched": 169088.72,
     "runners": [
       {
-        "selectionId": 6458563,
-        "runnerName": "Gibraltar",
+        "selectionId": 61463,
+        "runnerName": "Austria",
         "handicap": 0.0,
-        "sortPriority": 1
+        "sortPriority": 1,
+        "metadata": {
+          "runnerId": "70036686"
+        }
       },
       {
-        "selectionId": 8207,
-        "runnerName": "Poland",
+        "selectionId": 25912,
+        "runnerName": "Sweden",
         "handicap": 0.0,
-        "sortPriority": 2
+        "sortPriority": 2,
+        "metadata": {
+          "runnerId": "70036687"
+        }
       },
       {
         "selectionId": 58805,
         "runnerName": "The Draw",
         "handicap": 0.0,
-        "sortPriority": 3
+        "sortPriority": 3,
+        "metadata": {
+          "runnerId": "70036688"
+        }
       }
-    ],
-    "eventType": {
-      "id": "1",
-      "name": "Soccer"
-    },
-    "competition": {
-      "id": "4527196",
-      "name": "Euro 2016"
-    },
-    "event": {
-      "id": "27257238",
-      "name": "Gibraltar v Poland",
-      "countryCode": "GI",
-      "timezone": "Europe/London",
-      "openDate": "2014-09-07T18:45:00.000Z"
-    }
+    ]
   }
 ]

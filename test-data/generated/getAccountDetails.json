@@ -1,10 +1,10 @@
 {
-    "currencyCode": "GBP",
-    "firstName": "bob",
-    "lastName": "smith",
-    "localeCode": "en",
-    "region": "GBR",
-    "timezone": "Europe/London",
-    "discountRate": 0.0,
-    "pointsBalance": 0
+  "currencyCode": "GBP",
+  "firstName": "Nick",
+  "lastName": "Pomfret",
+  "localeCode": "en_GB",
+  "region": "GBR",
+  "timezone": "Europe/London",
+  "discountRate": 0.0,
+  "pointsBalance": 0
 }

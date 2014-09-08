@@ -8,7 +8,9 @@ public enum MarketProjection {
     EVENT,
     EVENT_TYPE,
     MARKET_DESCRIPTION,
-    RUNNER_DESCRIPTION;
+    MARKET_START_TIME,
+    RUNNER_DESCRIPTION,
+    RUNNER_METADATA;
 
     private static final List<MarketProjection> ALL = Arrays.asList(MarketProjection.values());
 

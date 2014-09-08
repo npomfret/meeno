@@ -26,42 +26,50 @@ public class MarketCatalogues implements Iterable<MarketCatalogue> {
                     MarketId marketId = new MarketId(jsonObject.getAsJsonPrimitive("marketId").getAsString());
                     String marketName = jsonObject.getAsJsonPrimitive("marketName").getAsString();
 
-                    JsonObject description = jsonObject.get("description").getAsJsonObject();
-
-                    MarketDescription marketDescription = new MarketDescription(
-                            description.getAsJsonPrimitive("persistenceEnabled").getAsBoolean(),
-                            description.getAsJsonPrimitive("bspMarket").getAsBoolean(),
-                            HttpAccess.DATE_TIME_FORMATTER.parseDateTime(description.getAsJsonPrimitive("marketTime").getAsString()),
-                            HttpAccess.DATE_TIME_FORMATTER.parseDateTime(description.getAsJsonPrimitive("suspendTime").getAsString()),
-                            JsonHelp.optionalDateTime(description, "settleTime"),
-                            MarketBettingType.valueOf(description.getAsJsonPrimitive("bettingType").getAsString()),
-                            description.getAsJsonPrimitive("turnInPlayEnabled").getAsBoolean(),
-                            description.getAsJsonPrimitive("marketType").getAsString(),
-                            JsonHelp.optionalString(description, "regulator"),
-                            description.getAsJsonPrimitive("marketBaseRate").getAsDouble(),
-                            description.getAsJsonPrimitive("discountAllowed").getAsBoolean(),
-                            JsonHelp.optionalString(description, "wallet"),
-                            JsonHelp.optionalString(description, "rules"),
-                            JsonHelp.optionalBool(description, "rulesHasDate"),
-                            JsonHelp.optionalString(description, "clarifications")
-                    );
-
-                    List<RunnerCatalog> runners = new ArrayList<>();
-                    for (JsonElement runnerElement : jsonObject.get("runners").getAsJsonArray()) {
-                        JsonObject obj = runnerElement.getAsJsonObject();
-                        RunnerCatalog runnerCatalog = new RunnerCatalog(
-                                new SelectionId(obj.getAsJsonPrimitive("selectionId").getAsLong()),
-                                obj.getAsJsonPrimitive("runnerName").getAsString(),
-                                obj.getAsJsonPrimitive("handicap").getAsDouble()
+                    MarketDescription marketDescription = null;
+                    if (jsonObject.has("description")) {
+                        JsonObject description = jsonObject.get("description").getAsJsonObject();
+                        marketDescription = new MarketDescription(
+                                description.getAsJsonPrimitive("persistenceEnabled").getAsBoolean(),
+                                description.getAsJsonPrimitive("bspMarket").getAsBoolean(),
+                                HttpAccess.DATE_TIME_FORMATTER.parseDateTime(description.getAsJsonPrimitive("marketTime").getAsString()),
+                                HttpAccess.DATE_TIME_FORMATTER.parseDateTime(description.getAsJsonPrimitive("suspendTime").getAsString()),
+                                JsonHelp.optionalDateTime(description, "settleTime"),
+                                MarketBettingType.valueOf(description.getAsJsonPrimitive("bettingType").getAsString()),
+                                description.getAsJsonPrimitive("turnInPlayEnabled").getAsBoolean(),
+                                description.getAsJsonPrimitive("marketType").getAsString(),
+                                JsonHelp.optionalString(description, "regulator"),
+                                description.getAsJsonPrimitive("marketBaseRate").getAsDouble(),
+                                description.getAsJsonPrimitive("discountAllowed").getAsBoolean(),
+                                JsonHelp.optionalString(description, "wallet"),
+                                JsonHelp.optionalString(description, "rules"),
+                                JsonHelp.optionalBool(description, "rulesHasDate"),
+                                JsonHelp.optionalString(description, "clarifications")
                         );
-                        runners.add(runnerCatalog);
                     }
 
-                    JsonObject eventTypeObj = jsonObject.get("eventType").getAsJsonObject();
-                    EventType eventType = new EventType(
-                            new EventTypeId(eventTypeObj.getAsJsonPrimitive("id").getAsString()),
-                            eventTypeObj.getAsJsonPrimitive("name").getAsString()
-                    );
+                    List<RunnerCatalog> runners = null;
+                    if (jsonObject.has("runners")) {
+                        runners = new ArrayList<>();
+                        for (JsonElement runnerElement : jsonObject.get("runners").getAsJsonArray()) {
+                            JsonObject obj = runnerElement.getAsJsonObject();
+                            RunnerCatalog runnerCatalog = new RunnerCatalog(
+                                    new SelectionId(obj.getAsJsonPrimitive("selectionId").getAsLong()),
+                                    obj.getAsJsonPrimitive("runnerName").getAsString(),
+                                    obj.getAsJsonPrimitive("handicap").getAsDouble()
+                            );
+                            runners.add(runnerCatalog);
+                        }
+                    }
+
+                    EventType eventType = null;
+                    if (jsonObject.has("eventType")) {
+                        JsonObject eventTypeObj = jsonObject.get("eventType").getAsJsonObject();
+                        eventType = new EventType(
+                                new EventTypeId(eventTypeObj.getAsJsonPrimitive("id").getAsString()),
+                                eventTypeObj.getAsJsonPrimitive("name").getAsString()
+                        );
+                    }
 
                     Competition competition = null;
                     if (jsonObject.has("competition")) {
@@ -72,16 +80,18 @@ public class MarketCatalogues implements Iterable<MarketCatalogue> {
                         );
                     }
 
-
-                    JsonObject eventObj = jsonObject.get("event").getAsJsonObject();
-                    Event event = new Event(
-                            eventObj.getAsJsonPrimitive("id").getAsString(),
-                            eventObj.getAsJsonPrimitive("name").getAsString(),
-                            eventObj.getAsJsonPrimitive("countryCode").getAsString(),
-                            eventObj.getAsJsonPrimitive("timezone").getAsString(),
-                            JsonHelp.optionalString(eventObj, "venue"),
-                            JsonHelp.optionalDateTime(eventObj, "openDate")
-                    );
+                    Event event = null;
+                    if (jsonObject.has("event")) {
+                        JsonObject eventObj = jsonObject.get("event").getAsJsonObject();
+                        event = new Event(
+                                eventObj.getAsJsonPrimitive("id").getAsString(),
+                                eventObj.getAsJsonPrimitive("name").getAsString(),
+                                eventObj.getAsJsonPrimitive("countryCode").getAsString(),
+                                eventObj.getAsJsonPrimitive("timezone").getAsString(),
+                                JsonHelp.optionalString(eventObj, "venue"),
+                                JsonHelp.optionalDateTime(eventObj, "openDate")
+                        );
+                    }
 
                     MarketCatalogue marketCatalogue = new MarketCatalogue(
                             marketId,

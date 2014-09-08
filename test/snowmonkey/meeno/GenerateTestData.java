@@ -73,7 +73,7 @@ public class GenerateTestData {
 //        generateTestData.listTimeRanges();
             generateTestData.accountDetails();
             generateTestData.accountFunds();
-//            generateTestData.listClearedOrders();
+            generateTestData.listClearedOrders();
         } finally {
             generateTestData.cleanup();
         }
@@ -96,7 +96,18 @@ public class GenerateTestData {
     }
 
     private void listMarketBook(Iterable<MarketId> marketIds) throws IOException, ApiException {
-        PriceProjection priceProjection = new PriceProjection(newHashSet(PriceData.EX_BEST_OFFERS), null, false, false);
+        PriceProjection priceProjection = new PriceProjection(
+                newHashSet(PriceData.EX_BEST_OFFERS),
+                new ExBestOfferOverRides(
+                        3,
+                        RollupModel.STAKE,
+                        null,
+                        null,
+                        null
+                ),
+                true,
+                false
+        );
         httpAccess.listMarketBook(priceProjection, fileWriter(ListMarketBook.listMarketBookFile()), Iterables.limit(marketIds, 5));
     }
 
@@ -159,7 +170,7 @@ public class GenerateTestData {
     }
 
     private void listClearedOrders() throws IOException, ApiException {
-        httpAccess.listClearedOrders(fileWriter(CurrentOrders.listClearedOrdersFile()));
+        httpAccess.listClearedOrders(fileWriter(CurrentOrders.listClearedOrdersFile()), BetStatus.SETTLED);
     }
 
     private void placeOrders() throws IOException, ApiException {
@@ -172,7 +183,7 @@ public class GenerateTestData {
     private MarketCatalogues listMarketCatalogue(EventType eventType, Iterable<MarketId> marketIds) throws IOException, ApiException {
         int maxResults = 5;
         httpAccess.listMarketCatalogue(fileWriter(ListMarketCatalogue.listMarketCatalogueFile()),
-                MarketProjection.allMarketProjections(),
+                newHashSet(MarketProjection.MARKET_START_TIME, MarketProjection.RUNNER_METADATA),
                 MarketSort.FIRST_TO_START,
                 maxResults,
                 new MarketFilterBuilder()

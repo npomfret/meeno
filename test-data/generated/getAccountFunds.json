@@ -1,6 +1,9 @@
 {
-    "availableToBetBalance": 0.06,
-    "exposure": -2.0,
-    "retainedCommission": 0.0,
-    "exposureLimit": -5000.0
+  "availableToBetBalance": 2.04,
+  "exposure": 0.0,
+  "retainedCommission": 0.0,
+  "exposureLimit": -5000.0,
+  "discountRate": 0.0,
+  "pointsBalance": 0,
+  "wallet": "UK"
 }

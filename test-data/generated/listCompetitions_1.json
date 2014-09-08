@@ -1,10 +1,18 @@
 [
   {
     "competition": {
+      "id": "3765124",
+      "name": "Argentinian Primera B Metropolitana"
+    },
+    "marketCount": 15,
+    "competitionRegion": "ARG"
+  },
+  {
+    "competition": {
       "id": "803237",
       "name": "Argentinian Primera B Nacional"
     },
-    "marketCount": 79,
+    "marketCount": 50,
     "competitionRegion": "ARG"
   },
   {
@@ -12,7 +20,7 @@
       "id": "67387",
       "name": "Argentinian Primera Division"
     },
-    "marketCount": 120,
+    "marketCount": 40,
     "competitionRegion": "ARG"
   }
 ]

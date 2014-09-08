@@ -48,7 +48,6 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 import static snowmonkey.meeno.MarketFilterBuilder.noFilter;
 
@@ -127,26 +126,15 @@ public class HttpAccess {
         listCurrentOrders(processor, noFilter());
     }
 
-    public void listClearedOrders(Processor processor) throws IOException, ApiException {
-        listClearedOrders(processor, new MarketId("99"));
-    }
-
     public void listCurrentOrders(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listCurrentOrders"), marketFilter);
     }
 
-    public void listClearedOrders(Processor processor, MarketId marketId) throws IOException, ApiException {
+    public void listClearedOrders(Processor processor, BetStatus betStatus) throws IOException, ApiException {
         PayloadBuilder payloadBuilder = new PayloadBuilder();
-        ZonedDateTime now = ZonedDateTime.now();
-        payloadBuilder.addBetIds(newArrayList(new BetId("88")));
-        payloadBuilder.addMarketIds(marketId);
-        payloadBuilder.addOrderProjection(OrderProjection.ALL);
-//        payloadBuilder.addPlacedDateRange(now.minusDays(10), now);
-        payloadBuilder.addTimeRange(now.minusDays(10), now);
-        payloadBuilder.addOrderBy(OrderBy.BY_SETTLED_TIME);
-        payloadBuilder.addSortDirection(SortDirection.EARLIEST_TO_LATEST);
-        payloadBuilder.addPage(0, 1000);
-
+        payloadBuilder.addBetStatus(betStatus);
+        payloadBuilder.addSettledDateRange(TimeRange.between(ZonedDateTime.now().minusDays(7), ZonedDateTime.now()));
+        payloadBuilder.addPage(0, 999);
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listClearedOrders"), payloadBuilder);
     }
 
@@ -461,8 +449,7 @@ public class HttpAccess {
         }
 
         public void addTimeRange(ZonedDateTime from, ZonedDateTime to) {
-            TimeRange timeRange = new TimeRange(from, to);
-            addTimeRange(timeRange);
+            addTimeRange(new TimeRange(from, to));
         }
 
         public void addTimeRange(TimeRange timeRange) {
@@ -484,6 +471,14 @@ public class HttpAccess {
 
         public void addOrderProjection(OrderProjection orderProjection) {
             map.put("orderProjection", orderProjection);
+        }
+
+        public void addBetStatus(BetStatus betStatuses) {
+            map.put("betStatus", betStatuses);
+        }
+
+        public void addSettledDateRange(TimeRange timeRange) {
+            map.put("settledDateRange", timeRange);
         }
     }
 }
