@@ -11,6 +11,7 @@ import snowmonkey.meeno.types.Navigation;
 import snowmonkey.meeno.types.raw.*;
 
 import java.lang.reflect.Type;
+import java.time.LocalDate;
 
 import static com.google.common.collect.Iterables.limit;
 import static com.google.common.collect.Sets.newHashSet;
@@ -23,7 +24,7 @@ import static snowmonkey.meeno.types.raw.TimeRange.between;
 
 public class ListMarketBookTest extends AbstractLiveTestCase {
     @Test
-    public void test() throws Exception {
+    public void testRequestForPrices() throws Exception {
 
         Navigation navigation = navigation();
 
@@ -51,6 +52,36 @@ public class ListMarketBookTest extends AbstractLiveTestCase {
         httpAccess.listMarketBook(fileWriter(listMarketBookFile()), new ListMarketBook(
                 marketIds,
                 priceProjection,
+                null,
+                null,
+                null,
+                HttpAccess.EN_US
+        ));
+
+        JsonElement jsonElement = new JsonParser().parse(listMarketBookJson());
+
+        MarketBook[] marketBooks = gson().fromJson(jsonElement, (Type) MarketBook[].class);
+        for (MarketBook marketBook : marketBooks) {
+            System.out.println(marketBook.prettyPrint());
+        }
+    }
+
+    @Test
+    public void testRequestForResult() throws Exception {
+
+        Navigation navigation = Navigation.parse(GenerateTestData.GetNavigation.getNavigationJson(LocalDate.parse("2014-08-08")));
+
+        Navigation.Markets markets = navigation.findMarkets(
+                EventTypeName.SOCCER,
+                between(now().minusDays(1), now()),
+                "Match Odds"
+        );
+
+        Iterable<MarketId> marketIds = limit(markets.marketsIds(), 5);
+
+        httpAccess.listMarketBook(fileWriter(listMarketBookFile()), new ListMarketBook(
+                marketIds,
+                null,
                 null,
                 null,
                 null,

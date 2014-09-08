@@ -9,6 +9,7 @@ import snowmonkey.meeno.types.raw.EventType;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+//todo change this to the new style parse
 public class EventTypes {
     private final Map<String, EventType> eventTypesByName = new LinkedHashMap<>();
 

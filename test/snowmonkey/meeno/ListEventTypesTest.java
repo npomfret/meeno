@@ -8,10 +8,10 @@ import snowmonkey.meeno.types.raw.EventType;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class EventTypesTest {
+public class ListEventTypesTest {
     @Test
     public void canParse() throws Exception {
-        EventTypes eventTypes = EventTypes.parse(GenerateTestData.EventTypes.listEventTypesJson());
+        EventTypes eventTypes = EventTypes.parse(GenerateTestData.ListEventTypes.listEventTypesJson());
 
         EventType soccer = eventTypes.lookup("Soccer");
 
