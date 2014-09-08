@@ -4,10 +4,7 @@ package snowmonkey.meeno;
 import com.google.gson.*;
 import org.joda.time.DateTime;
 import snowmonkey.meeno.types.*;
-import snowmonkey.meeno.types.raw.ClearedOrderSummaryReport;
-import snowmonkey.meeno.types.raw.Handicap;
-import snowmonkey.meeno.types.raw.Price;
-import snowmonkey.meeno.types.raw.Size;
+import snowmonkey.meeno.types.raw.*;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Parameter;
@@ -31,6 +28,8 @@ public class JsonSerialization {
 
                 .registerTypeAdapter(BetId.class, (JsonSerializer<BetId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
 
+                .registerTypeAdapter(MatchId.class, (JsonSerializer<MatchId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
+
                 .registerTypeAdapter(EventId.class, (JsonSerializer<EventId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
 
                 .registerTypeAdapter(EventTypeId.class, (JsonSerializer<EventTypeId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
@@ -44,6 +43,10 @@ public class JsonSerialization {
                 .registerTypeAdapter(Size.class, (JsonSerializer<Size>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asDouble()))
 
                 .registerTypeAdapter(ClearedOrderSummaryReport.class, complexObjectDeserializer(ClearedOrderSummaryReport.class))
+                .registerTypeAdapter(MarketBook.class, complexObjectDeserializer(MarketBook.class))
+                .registerTypeAdapter(Runner.class, complexObjectDeserializer(Runner.class))
+                .registerTypeAdapter(Order.class, complexObjectDeserializer(Order.class))
+                .registerTypeAdapter(Match.class, complexObjectDeserializer(Match.class))
 
                 .create();
     }

@@ -1,25 +1,26 @@
 package snowmonkey.meeno.types.raw;
 
+import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.ImmutbleType;
+import snowmonkey.meeno.types.MatchId;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 public final class Match extends ImmutbleType {
 
-    public final String betId;
-    public final String matchId;
-    public final String side;
+    public final BetId betId;
+    public final MatchId matchId;
+    public final Side side;
     public final Double price;
-    public final Double Size;
-    public final Date matchDate;
+    public final Double size;
+    public final ZonedDateTime matchDate;
 
-
-    public Match(String betId, String matchId, String side, Double price, Double size, Date matchDate) {
+    public Match(BetId betId, MatchId matchId, Side side, Double price, Double size, ZonedDateTime matchDate) {
         this.betId = betId;
         this.matchId = matchId;
         this.side = side;
         this.price = price;
-        Size = size;
+        this.size = size;
         this.matchDate = matchDate;
     }
 }

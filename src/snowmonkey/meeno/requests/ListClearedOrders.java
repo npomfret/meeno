@@ -9,11 +9,11 @@ import java.util.Set;
 
 public class ListClearedOrders {
     public final BetStatus betStatus;
-    public final Set<EventTypeId> eventTypeIds;
-    public final Set<EventId> eventIds;
-    public final Set<MarketId> marketIds;
-    public final Set<RunnerId> runnerIds;
-    public final Set<BetId> betIds;
+    public final Iterable<EventTypeId> eventTypeIds;
+    public final Iterable<EventId> eventIds;
+    public final Iterable<MarketId> marketIds;
+    public final Iterable<RunnerId> runnerIds;
+    public final Iterable<BetId> betIds;
     public final Side side;
     public final TimeRange settledDateRange;
     public final GroupBy groupBy;

@@ -10,10 +10,8 @@ import snowmonkey.meeno.types.raw.*;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.attribute.FileTime;
 import java.time.ZonedDateTime;
 import java.util.Iterator;
 import java.util.List;
@@ -65,7 +63,6 @@ public class GenerateTestData {
 
 //            MarketCatalogues marketCatalogues = generateTestData.listMarketCatalogue(soccer, markets.marketsIds());
 
-//            generateTestData.listMarketBook(markets.marketsIds());
 
 //            generateTestData.placeOrders();
 //            generateTestData.listCurrentOrders();
@@ -79,13 +76,6 @@ public class GenerateTestData {
         }
     }
 
-    private Navigation navigation() throws IOException, ApiException {
-        FileTime lastModifiedTime = Files.getLastModifiedTime(GetNavigation.navigationFile());
-        if (lastModifiedTime.toInstant().isBefore(ZonedDateTime.now().minusDays(1).toInstant()))
-            httpAccess.nav(fileWriter(GetNavigation.navigationFile()));
-        return Navigation.parse(GetNavigation.getNavigationJson());
-    }
-
     private void cancelOrders() throws IOException, ApiException {
         snowmonkey.meeno.types.CurrentOrders currentOrders = snowmonkey.meeno.types.CurrentOrders.parse(ListCurrentOrders.listCurrentOrdersJson());
         CurrentOrder order = currentOrders.iterator().next();
@@ -93,22 +83,6 @@ public class GenerateTestData {
         BetId betId = order.betId;
         List<CancelInstruction> cancelInstructions = newArrayList(CancelInstruction.cancel(betId));
         httpAccess.cancelOrders(marketId, cancelInstructions, fileWriter(CancelOrders.cancelOrdersFile()));
-    }
-
-    private void listMarketBook(Iterable<MarketId> marketIds) throws IOException, ApiException {
-        PriceProjection priceProjection = new PriceProjection(
-                newHashSet(PriceData.EX_BEST_OFFERS),
-                new ExBestOfferOverRides(
-                        3,
-                        RollupModel.STAKE,
-                        null,
-                        null,
-                        null
-                ),
-                true,
-                false
-        );
-        httpAccess.listMarketBook(priceProjection, fileWriter(ListMarketBook.listMarketBookFile()), Iterables.limit(marketIds, 5));
     }
 
     private void cleanup() throws IOException, ApiException {
@@ -352,9 +326,13 @@ public class GenerateTestData {
         }
     }
 
-    private static class ListMarketBook {
+    public static class ListMarketBook {
         public static Path listMarketBookFile() {
             return TEST_DATA_DIR.resolve("listMarketBook.json");
+        }
+
+        public static String listMarketBookJson() throws IOException, ApiException {
+            return readFileToString(listMarketBookFile().toFile());
         }
     }
 

@@ -1,16 +1,17 @@
 package snowmonkey.meeno.types.raw;
 
+import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.ImmutbleType;
 
 import java.util.Date;
 
 public final class Order extends ImmutbleType {
 
-    public final String betId;
-    public final String orderType;
-    public final String status;
-    public final String persistenceType;
-    public final String side;
+    public final BetId betId;
+    public final OrderType orderType;
+    public final OrderStatus status;
+    public final PersistenceType persistenceType;
+    public final Side side;
     public final Double price;
     public final Double size;
     public final Double bspLiability;
@@ -22,8 +23,7 @@ public final class Order extends ImmutbleType {
     public final Double sizeCancelled;
     public final Double sizeVoided;
 
-
-    public Order(String betId, String orderType, String status, String persistenceType, String side, Double price, Double size, Double bspLiability, Date placedDate, Double avgPriceMatched, Double sizeMatched, Double sizeRemaining, Double sizeLapsed, Double sizeCancelled, Double sizeVoided) {
+    public Order(BetId betId, OrderType orderType, OrderStatus status, PersistenceType persistenceType, Side side, Double price, Double size, Double bspLiability, Date placedDate, Double avgPriceMatched, Double sizeMatched, Double sizeRemaining, Double sizeLapsed, Double sizeCancelled, Double sizeVoided) {
         this.betId = betId;
         this.orderType = orderType;
         this.status = status;

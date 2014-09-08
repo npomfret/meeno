@@ -28,6 +28,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import snowmonkey.meeno.requests.ListClearedOrders;
+import snowmonkey.meeno.requests.ListMarketBook;
 import snowmonkey.meeno.types.*;
 import snowmonkey.meeno.types.TimeGranularity;
 import snowmonkey.meeno.types.raw.*;
@@ -92,15 +93,31 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri("placeOrders"), payloadBuilder);
     }
 
-    public void listMarketBook(PriceProjection priceProjection, Processor processor, MarketId... marketId) throws IOException, ApiException {
-        listMarketBook(priceProjection, processor, Arrays.asList(marketId));
+    public void listMarketBook(Processor processor, PriceProjection priceProjection, MarketId... marketId) throws IOException, ApiException {
+        listMarketBook(processor, priceProjection, Arrays.asList(marketId));
     }
 
-    public void listMarketBook(PriceProjection priceProjection, Processor processor, Iterable<MarketId> marketIds) throws IOException, ApiException {
-        PayloadBuilder payloadBuilder = new PayloadBuilder();
-        payloadBuilder.addMarketIds(marketIds);
-        payloadBuilder.addPriceProjection(priceProjection);
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listMarketBook"), payloadBuilder);
+    public void listMarketBook(Processor processor, PriceProjection priceProjection, Iterable<MarketId> marketIds) throws IOException, ApiException {
+        ListMarketBook request = new ListMarketBook(
+                marketIds,
+                priceProjection,
+                null,
+                null,
+                null,
+                EN_US
+        );
+
+        listMarketBook(processor, request);
+    }
+
+    public void listMarketBook(Processor processor, final ListMarketBook request) throws IOException, ApiException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri("listMarketBook"), new PayloadBuilder() {
+            @Override
+            public String buildJsonPayload() {
+                Gson gson = JsonSerialization.gson();
+                return gson.toJson(request);
+            }
+        });
     }
 
     public void listMarketCatalogue(Processor processor, Iterable<MarketProjection> marketProjection, MarketSort sort, int maxResults, MarketFilter marketFilter) throws IOException, ApiException {

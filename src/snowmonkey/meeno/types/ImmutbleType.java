@@ -5,6 +5,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import static snowmonkey.meeno.JsonSerialization.gson;
+
 public abstract class ImmutbleType {
     @Override
     public boolean equals(Object obj) {
@@ -20,4 +22,9 @@ public abstract class ImmutbleType {
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
+
+    public String prettyPrint() {
+        return gson().toJson(this);
+    }
+
 }
