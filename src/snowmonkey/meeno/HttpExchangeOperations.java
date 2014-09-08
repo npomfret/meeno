@@ -54,8 +54,9 @@ public class HttpExchangeOperations implements ExchangeOperations {
     }
 
     public ClearedOrderSummaryReports clearedOrders() throws ApiException {
-        JsonProcessor processor = new JsonProcessor();
         try {
+            JsonProcessor processor = new JsonProcessor();
+
             httpAccess.listClearedOrders(processor,
                     BetStatus.SETTLED,
                     between(ZonedDateTime.now().minusDays(7), ZonedDateTime.now())
@@ -79,8 +80,9 @@ public class HttpExchangeOperations implements ExchangeOperations {
         public String json;
 
         @Override
-        public void process(StatusLine statusLine, InputStream in) throws IOException, ApiException {
+        public String process(StatusLine statusLine, InputStream in) throws IOException, ApiException {
             json = DefaultProcessor.processResponse(statusLine, in);
+            return json;
         }
     }
 }

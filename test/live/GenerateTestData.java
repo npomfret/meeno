@@ -40,7 +40,6 @@ public class GenerateTestData {
 
         GenerateTestData generateTestData = new GenerateTestData(config);
         generateTestData.login();
-        generateTestData.httpAccess.auditTraffic();
 
         try {
 //            generateTestData.listEvents(soccer, markets.marketsIds());
@@ -163,9 +162,10 @@ public class GenerateTestData {
     public static HttpAccess.Processor fileWriter(final Path file) {
         return new HttpAccess.Processor() {
             @Override
-            public void process(StatusLine statusLine, InputStream in) throws IOException, ApiException {
+            public String process(StatusLine statusLine, InputStream in) throws IOException, ApiException {
                 String json = DefaultProcessor.processResponse(statusLine, in);
                 FileUtils.writeStringToFile(file.toFile(), json, HttpAccess.UTF_8);
+                return json;
             }
         };
     }

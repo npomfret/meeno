@@ -16,7 +16,6 @@ public class HttpExchangeOperationsTest {
         SessionToken login = HttpAccess.login(config);
 
         HttpAccess httpAccess = new HttpAccess(login, config.appKey(), Exchange.UK);
-        httpAccess.auditTraffic();
 
         HttpExchangeOperations exchangeOperations = new HttpExchangeOperations(httpAccess);
 

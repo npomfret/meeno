@@ -1,6 +1,7 @@
 package snowmonkey.meeno;
 
 import com.google.gson.Gson;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -54,19 +55,25 @@ import static snowmonkey.meeno.MarketFilterBuilder.noFilter;
 
 public class HttpAccess {
 
+    public static interface Auditor {
+        void auditPost(URI uri, String body, String response);
+
+        void auditGet(URI uri, String response);
+    }
+
     public static final String UTF_8 = "UTF-8";
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.forPattern(JsonSerialization.DATE_FORMAT);
     public static final String X_APPLICATION = "X-Application";
     public static final String EN_US = "en_US";
 
     public interface Processor {
-        void process(StatusLine statusLine, InputStream in) throws IOException, ApiException;
+        String process(StatusLine statusLine, InputStream in) throws IOException, ApiException;
     }
 
+    private final List<Auditor> auditors = new ArrayList<>();
     private final SessionToken sessionToken;
     private final AppKey appKey;
     private final Exchange exchange;
-    private boolean auditTraffic = false;
 
     public HttpAccess(SessionToken sessionToken, AppKey appKey, Exchange exchange) {
         this.sessionToken = sessionToken;
@@ -74,8 +81,8 @@ public class HttpAccess {
         this.exchange = exchange;
     }
 
-    public void auditTraffic() {
-        auditTraffic = true;
+    public void addAuditor(Auditor auditor) {
+        this.auditors.add(auditor);
     }
 
     public void cancelOrders(MarketId marketId, List<CancelInstruction> cancelInstructions, Processor processor) throws IOException, ApiException {
@@ -229,11 +236,13 @@ public class HttpAccess {
 
             String json = payloadBuilder.buildJsonPayload();
 
-            audit(uri, json);
-
             httpPost.setEntity(new StringEntity(json, UTF_8));
 
-            processResponse(processor, httpClient, httpPost);
+            String responseBody = processResponse(processor, httpClient, httpPost);
+
+            for (Auditor auditor : auditors) {
+                auditor.auditPost(uri, json, responseBody);
+            }
         }
     }
 
@@ -242,22 +251,12 @@ public class HttpAccess {
 
             applyHeaders(httpGet);
 
-            audit(uri);
+            String body = processResponse(processor, httpClient, httpGet);
 
-            processResponse(processor, httpClient, httpGet);
+            for (Auditor auditor : auditors) {
+                auditor.auditGet(uri, body);
+            }
         }
-    }
-
-    private void audit(URI uri) {
-        if (auditTraffic)
-            System.out.println(uri + " --> ");
-    }
-
-    private void audit(URI uri, String json) {
-        audit(uri);
-
-        if (auditTraffic)
-            System.out.println(indent(json));
     }
 
     private void applyHeaders(AbstractHttpMessage abstractHttpMessage) {
@@ -308,9 +307,10 @@ public class HttpAccess {
     public void logout() throws IOException, ApiException {
         sendPostRequest(new Processor() {
             @Override
-            public void process(StatusLine statusLine, InputStream in) throws IOException {
-//                String response = IOUtils.toString(in);
+            public String process(StatusLine statusLine, InputStream in) throws IOException {
+                String response = IOUtils.toString(in);
 //                System.out.println("response = " + response);
+                return response;
             }
         }, Exchange.LOGOUT_URI);
     }
@@ -373,11 +373,11 @@ public class HttpAccess {
         return new SSLConnectionSocketFactory(ctx, new StrictHostnameVerifier());
     }
 
-    private void processResponse(Processor processor, CloseableHttpClient httpClient, HttpUriRequest httpPost) throws IOException, ApiException {
+    private String processResponse(Processor processor, CloseableHttpClient httpClient, HttpUriRequest httpPost) throws IOException, ApiException {
         try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
             HttpEntity entity = response.getEntity();
             try (InputStream inputStream = entity.getContent()) {
-                processor.process(response.getStatusLine(), inputStream);
+                return processor.process(response.getStatusLine(), inputStream);
             }
         }
     }
