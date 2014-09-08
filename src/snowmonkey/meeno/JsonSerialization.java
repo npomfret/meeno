@@ -43,16 +43,16 @@ public class JsonSerialization {
 
                 .registerTypeAdapter(Size.class, (JsonSerializer<Size>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asDouble()))
 
-                .registerTypeAdapter(ClearedOrderSummaryReport.class, complexObjectDeserializer())
+                .registerTypeAdapter(ClearedOrderSummaryReport.class, complexObjectDeserializer(ClearedOrderSummaryReport.class))
 
                 .create();
     }
 
-    private static <T> JsonDeserializer<T> complexObjectDeserializer() {
+    private static <T> JsonDeserializer<T> complexObjectDeserializer(Class<T> t) {
         return (jsonElement, type, context) -> {
             final JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            Constructor<?> c = ClearedOrderSummaryReport.class.getConstructors()[0];
+            Constructor<?> c = t.getConstructors()[0];
             Class[] parameterTypes = c.getParameterTypes();
             Parameter[] parameters = c.getParameters();
 
@@ -63,13 +63,14 @@ public class JsonSerialization {
                 Class parameterType = parameterTypes[i];
 
                 String name = parameter.getName();
-                if (name.equals("arg1"))
-                    throw new IllegalStateException("Cannot get parameter names, you need to compile with '-parameters' option");
 
+                if (name.equals("arg1"))
+                    throw new IllegalStateException("Cannot get parameter names, you need to compile with the '-parameters' option");
 
                 if (parameterType.getSuperclass() == MicroType.class) {
                     Constructor constructor = parameterType.getConstructors()[0];
                     Class aClass = constructor.getParameterTypes()[0];
+
                     try {
                         if (!jsonObject.has(name)) {
                             args[i] = null;
@@ -89,11 +90,10 @@ public class JsonSerialization {
                         throw new Defect("Problem parsing " + parameterType.getName() + " named '" + name + "'", e);
                     }
                 }
-
             }
 
             try {
-                return (T) c.newInstance(args);
+                return t.cast(c.newInstance(args));
             } catch (Exception e) {
                 throw new Defect("Cannot create", e);
             }
