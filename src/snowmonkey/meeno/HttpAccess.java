@@ -315,7 +315,7 @@ public class HttpAccess {
         }, Exchange.LOGOUT_URI);
     }
 
-    public static SessionToken login(MeenoConfig config) throws Exception {
+    public static SessionToken login(MeenoConfig config) {
         return login(
                 config.certificateFile(),
                 config.certificatePassword(),
@@ -325,39 +325,43 @@ public class HttpAccess {
         );
     }
 
-    public static SessionToken login(File certFile, String certPassword, String betfairUsername, String betfairPassword, AppKey apiKey) throws Exception {
+    public static SessionToken login(File certFile, String certPassword, String betfairUsername, String betfairPassword, AppKey apiKey) {
 
-        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
-                .register("http", PlainConnectionSocketFactory.INSTANCE)
-                .register("https", socketFactory(certFile, certPassword))
-                .build();
+        try {
+            Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
+                    .register("http", PlainConnectionSocketFactory.INSTANCE)
+                    .register("https", socketFactory(certFile, certPassword))
+                    .build();
 
-        PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
+            PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
 
-        connManager.setDefaultSocketConfig(SocketConfig.custom().build());
-        connManager.setDefaultConnectionConfig(ConnectionConfig.custom().build());
-        try (CloseableHttpClient client = HttpClients.custom()
-                .setConnectionManager(connManager)
-                .disableRedirectHandling()
-                .build()) {
+            connManager.setDefaultSocketConfig(SocketConfig.custom().build());
+            connManager.setDefaultConnectionConfig(ConnectionConfig.custom().build());
+            try (CloseableHttpClient client = HttpClients.custom()
+                    .setConnectionManager(connManager)
+                    .disableRedirectHandling()
+                    .build()) {
 
-            HttpPost httpPost = new HttpPost(Exchange.LOGIN_URI);
-            List<NameValuePair> postFormData = new ArrayList<>();
-            postFormData.add(new BasicNameValuePair("username", betfairUsername));
-            postFormData.add(new BasicNameValuePair("password", betfairPassword));
+                HttpPost httpPost = new HttpPost(Exchange.LOGIN_URI);
+                List<NameValuePair> postFormData = new ArrayList<>();
+                postFormData.add(new BasicNameValuePair("username", betfairUsername));
+                postFormData.add(new BasicNameValuePair("password", betfairPassword));
 
-            httpPost.setEntity(new UrlEncodedFormEntity(postFormData));
+                httpPost.setEntity(new UrlEncodedFormEntity(postFormData));
 
-            httpPost.setHeader(X_APPLICATION, apiKey.asString());
+                httpPost.setHeader(X_APPLICATION, apiKey.asString());
 
-            HttpResponse response = client.execute(httpPost);
-            HttpEntity entity = response.getEntity();
-            try (InputStream content = entity.getContent()) {
-                String json = DefaultProcessor.processResponse(response.getStatusLine(), content);
-                return SessionToken.parseJson(json);
+                HttpResponse response = client.execute(httpPost);
+                HttpEntity entity = response.getEntity();
+                try (InputStream content = entity.getContent()) {
+                    String json = DefaultProcessor.processResponse(response.getStatusLine(), content);
+                    return SessionToken.parseJson(json);
+                }
+            } finally {
+                connManager.close();
             }
-        } finally {
-            connManager.close();
+        } catch (Exception e) {
+            throw new IllegalStateException("Cannot log in", e);
         }
     }
 

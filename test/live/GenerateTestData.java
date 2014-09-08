@@ -141,7 +141,7 @@ public class GenerateTestData {
         httpAccess.listCountries(fileWriter(ListCountries.listCountriesFile()));
     }
 
-    private void login() throws Exception {
+    private void login() {
 
         SessionToken sessionToken = HttpAccess.login(config);
 
