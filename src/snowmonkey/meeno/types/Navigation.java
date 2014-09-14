@@ -1,5 +1,6 @@
 package snowmonkey.meeno.types;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -10,7 +11,10 @@ import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.types.raw.TimeRange;
 
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -160,23 +164,34 @@ public class Navigation {
     }
 
     public static class Markets implements Iterable<Market> {
-        private final Collection<Market> markets;
+        public final ImmutableMap<MarketId, Market> markets;
 
         public Markets(List<Market> markets) {
-            this.markets = markets;
+            ImmutableMap.Builder<MarketId, Market> builder = ImmutableMap.builder();
+            for (Market market : markets) {
+                builder.put(market.id, market);
+            }
+            this.markets = builder.build();
         }
 
         @Override
         public Iterator<Market> iterator() {
-            return markets.iterator();
+            return markets.values().iterator();
         }
 
         public Iterable<MarketId> marketsIds() {
-            return markets.stream().map(m -> m.id).collect(Collectors.toList());
+            return markets.keySet();
         }
 
         public Iterable<FootballMarket> asFootballMarkets() {
-            return markets.stream().map(m -> new FootballMarket(m)).collect(Collectors.toList());
+            return markets.values().stream().map(m -> new FootballMarket(m)).collect(Collectors.toList());
+        }
+
+        public Market get(MarketId marketId) {
+            if (!markets.containsKey(marketId))
+                throw new IllegalStateException("There is no market with id " + marketId);
+
+            return markets.get(marketId);
         }
     }
 
@@ -269,6 +284,10 @@ public class Navigation {
             }
 
             throw new IllegalStateException("Could not find the event type");
+        }
+
+        public String printHierarchy() {
+            return name + " " + parent.printHierarchy();
         }
     }
 

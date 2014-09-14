@@ -26,10 +26,16 @@ public class DefaultProcessor {
                         if (detail.has("exceptionname")) {
                             String exceptionName = detail.getAsJsonPrimitive("exceptionname").getAsString();
                             JsonObject exception = detail.getAsJsonObject(exceptionName);
+                            String errorCode = exception.getAsJsonPrimitive("errorCode").getAsString();
+                            String requestUUID = exception.getAsJsonPrimitive("requestUUID").getAsString();
+
+                            if (errorCode.equals("TOO_MUCH_DATA"))
+                                throw new TooMuchDataException(exception, errorCode, requestUUID);
+
                             throw new ApiException(
                                     exception.getAsJsonPrimitive("errorDetails").getAsString(),
-                                    exception.getAsJsonPrimitive("errorCode").getAsString(),
-                                    exception.getAsJsonPrimitive("requestUUID").getAsString()
+                                    errorCode,
+                                    requestUUID
                             );
                         }
                     }
@@ -78,4 +84,5 @@ public class DefaultProcessor {
         return gson()
                 .toJson(parse);
     }
+
 }

@@ -1,482 +1,554 @@
 [
-    {
-        "marketType": "NONSPORT",
-        "marketCount": 106
-    },
-    {
-        "marketType": "WINNER",
-        "marketCount": 70
-    },
-    {
-        "marketType": "UNDIFFERENTIATED",
-        "marketCount": 199
-    },
-    {
-        "marketType": "SPECIAL",
-        "marketCount": 121
-    },
-    {
-        "marketType": "ROCK BOTTOM",
-        "marketCount": 10
-    },
-    {
-        "marketType": "TOURNAMENT_WINNER",
-        "marketCount": 62
-    },
-    {
-        "marketType": "OUTRIGHT_WINNER",
-        "marketCount": 34
-    },
-    {
-        "marketType": "UNUSED",
-        "marketCount": 121
-    },
-    {
-        "marketType": "TOP_N_FINISH",
-        "marketCount": 5
-    },
-    {
-        "marketType": "HANDICAP",
-        "marketCount": 260
-    },
-    {
-        "marketType": "TO_REACH_FINAL",
-        "marketCount": 4
-    },
-    {
-        "marketType": "STEWARDS",
-        "marketCount": 2
-    },
-    {
-        "marketType": "FIRST_SCORING_PLAY",
-        "marketCount": 10
-    },
-    {
-        "marketType": "ANTEPOST_WIN",
-        "marketCount": 46
-    },
-    {
-        "marketType": "SERIES_WINNER",
-        "marketCount": 8
-    },
-    {
-        "marketType": "HALF_TIME_SCORE",
-        "marketCount": 625
-    },
-    {
-        "marketType": "HALF_TIME_FULL_TIME",
-        "marketCount": 651
-    },
-    {
-        "marketType": "ACCA",
-        "marketCount": 2
-    },
-    {
-        "marketType": "TOTAL_POINTS",
-        "marketCount": 25
-    },
-    {
-        "marketType": "MATCH_ODDS",
-        "marketCount": 1679
-    },
-    {
-        "marketType": "OVER_UNDER_05",
-        "marketCount": 605
-    },
-    {
-        "marketType": "SET_BETTING",
-        "marketCount": 69
-    },
-    {
-        "marketType": "OVER_UNDER_35",
-        "marketCount": 609
-    },
-    {
-        "marketType": "OVER_UNDER_15",
-        "marketCount": 606
-    },
-    {
-        "marketType": "CORRECT_SCORE",
-        "marketCount": 643
-    },
-    {
-        "marketType": "OVER_UNDER_25",
-        "marketCount": 898
-    },
-    {
-        "marketType": "OVER_UNDER_55",
-        "marketCount": 609
-    },
-    {
-        "marketType": "OVER_UNDER_65",
-        "marketCount": 611
-    },
-    {
-        "marketType": "FIRST_HALF_GOALS_15",
-        "marketCount": 603
-    },
-    {
-        "marketType": "TOTAL_GAMES",
-        "marketCount": 4
-    },
-    {
-        "marketType": "SET_WINNER",
-        "marketCount": 135
-    },
-    {
-        "marketType": "6-0_SET",
-        "marketCount": 32
-    },
-    {
-        "marketType": "OVER_UNDER_45",
-        "marketCount": 608
-    },
-    {
-        "marketType": "BOTH_TEAMS_TO_SCORE",
-        "marketCount": 608
-    },
-    {
-        "marketType": "TEAM_B_1",
-        "marketCount": 608
-    },
-    {
-        "marketType": "ASIAN_HANDICAP",
-        "marketCount": 628
-    },
-    {
-        "marketType": "TOTAL_GOALS",
-        "marketCount": 629
-    },
-    {
-        "marketType": "TEAM_A_1",
-        "marketCount": 608
-    },
-    {
-        "marketType": "NEXT_GOAL",
-        "marketCount": 607
-    },
-    {
-        "marketType": "DOUBLE_CHANCE",
-        "marketCount": 377
-    },
-    {
-        "marketType": "CORRECT_SCORE2",
-        "marketCount": 754
-    },
-    {
-        "marketType": "OVER_UNDER_85",
-        "marketCount": 377
-    },
-    {
-        "marketType": "OVER_UNDER_75",
-        "marketCount": 379
-    },
-    {
-        "marketType": "DRAW_NO_BET",
-        "marketCount": 387
-    },
-    {
-        "marketType": "COMPLETED_MATCH",
-        "marketCount": 37
-    },
-    {
-        "marketType": "ODD_OR_EVEN",
-        "marketCount": 377
-    },
-    {
-        "marketType": "TIED_MATCH",
-        "marketCount": 39
-    },
-    {
-        "marketType": "FIRST_HALF_GOALS_05",
-        "marketCount": 599
-    },
-    {
-        "marketType": "HALF_TIME",
-        "marketCount": 633
-    },
-    {
-        "marketType": "WIN",
-        "marketCount": 89
-    },
-    {
-        "marketType": "PLACE",
-        "marketCount": 78
-    },
-    {
-        "marketType": "FORECAST",
-        "marketCount": 28
-    },
-    {
-        "marketType": "SCORE_CAST",
-        "marketCount": 24
-    },
-    {
-        "marketType": "TEAM_B_2",
-        "marketCount": 40
-    },
-    {
-        "marketType": "FIRST_CORNER",
-        "marketCount": 40
-    },
-    {
-        "marketType": "PENALTY_TAKEN",
-        "marketCount": 160
-    },
-    {
-        "marketType": "TEAM_A_3",
-        "marketCount": 40
-    },
-    {
-        "marketType": "TO_SCORE_BOTH_HALVES",
-        "marketCount": 80
-    },
-    {
-        "marketType": "WIN_BOTH_HALVES",
-        "marketCount": 320
-    },
-    {
-        "marketType": "TEAM_A_2",
-        "marketCount": 40
-    },
-    {
-        "marketType": "2ND_HALF_MATCH_ODDS",
-        "marketCount": 40
-    },
-    {
-        "marketType": "TEAM_B_3",
-        "marketCount": 40
-    },
-    {
-        "marketType": "BOOKING_MATCH_BET",
-        "marketCount": 40
-    },
-    {
-        "marketType": "TOTAL_CORNERS",
-        "marketCount": 40
-    },
-    {
-        "marketType": "LAST_GOALSCORER",
-        "marketCount": 24
-    },
-    {
-        "marketType": "TEAM_TOTAL_GOALS",
-        "marketCount": 320
-    },
-    {
-        "marketType": "SHOWN_A_CARD",
-        "marketCount": 24
-    },
-    {
-        "marketType": "TOTAL_GOALS_INDEX",
-        "marketCount": 40
-    },
-    {
-        "marketType": "BOOKING_ODDS",
-        "marketCount": 80
-    },
-    {
-        "marketType": "TO_SCORE",
-        "marketCount": 24
-    },
-    {
-        "marketType": "HAT_TRICKED_SCORED",
-        "marketCount": 160
-    },
-    {
-        "marketType": "WIN_FROM_BEHIND",
-        "marketCount": 80
-    },
-    {
-        "marketType": "CORNER_MATCH_BET",
-        "marketCount": 40
-    },
-    {
-        "marketType": "WIN_TO_NIL",
-        "marketCount": 320
-    },
-    {
-        "marketType": "CLEAN_SHEET",
-        "marketCount": 320
-    },
-    {
-        "marketType": "WIN_HALF",
-        "marketCount": 80
-    },
-    {
-        "marketType": "FIRST_HALF_GOALS_25",
-        "marketCount": 160
-    },
-    {
-        "marketType": "SENDING_OFF",
-        "marketCount": 160
-    },
-    {
-        "marketType": "CORNER_ODDS",
-        "marketCount": 40
-    },
-    {
-        "marketType": "WINNING_MARGIN",
-        "marketCount": 51
-    },
-    {
-        "marketType": "FIRST_GOAL_ODDS",
-        "marketCount": 160
-    },
-    {
-        "marketType": "FIRST_GOAL_SCORER",
-        "marketCount": 24
-    },
-    {
-        "marketType": "TIE_BREAK",
-        "marketCount": 31
-    },
-    {
-        "marketType": "SET_CORRECT_SCORE",
-        "marketCount": 31
-    },
-    {
-        "marketType": "MONEY_LINE",
-        "marketCount": 190
-    },
-    {
-        "marketType": "HALF_HANDICAP",
-        "marketCount": 11
-    },
-    {
-        "marketType": "HALF_TOTAL_POINTS",
-        "marketCount": 11
-    },
-    {
-        "marketType": "QUARTER_TOTAL_POINTS",
-        "marketCount": 11
-    },
-    {
-        "marketType": "HALF_MATCH_ODDS",
-        "marketCount": 48
-    },
-    {
-        "marketType": "QUARTER_HANDICAP",
-        "marketCount": 11
-    },
-    {
-        "marketType": "QUARTER_MATCH_ODDS",
-        "marketCount": 46
-    },
-    {
-        "marketType": "REGULAR_TIME_GOALS",
-        "marketCount": 190
-    },
-    {
-        "marketType": "TOP_BATSMAN",
-        "marketCount": 6
-    },
-    {
-        "marketType": "INNINGS_RUNS",
-        "marketCount": 25
-    },
-    {
-        "marketType": "TO_QUALIFY",
-        "marketCount": 47
-    },
-    {
-        "marketType": "HIGHEST_OVER_TOTAL",
-        "marketCount": 21
-    },
-    {
-        "marketType": "TOTAL_SIXES",
-        "marketCount": 14
-    },
-    {
-        "marketType": "TOTAL_FOURS",
-        "marketCount": 7
-    },
-    {
-        "marketType": "MOST_FOURS",
-        "marketCount": 7
-    },
-    {
-        "marketType": "ROUND_LEADER",
-        "marketCount": 1
-    },
-    {
-        "marketType": "EVENT_WINNER_WS",
-        "marketCount": 3
-    },
-    {
-        "marketType": "HIGHEST_CO_PLAYER",
-        "marketCount": 6
-    },
-    {
-        "marketType": "MOST_180S",
-        "marketCount": 6
-    },
-    {
-        "marketType": "FIRST_TRY_ODDS",
-        "marketCount": 6
-    },
-    {
-        "marketType": "FIRST_TO_SCORE",
-        "marketCount": 6
-    },
-    {
-        "marketType": "REG_TIME_MODDS_WS",
-        "marketCount": 90
-    },
-    {
-        "marketType": "SESSION_RUNS",
-        "marketCount": 3
-    },
-    {
-        "marketType": "OPENING_PARTNERSHIP",
-        "marketCount": 6
-    },
-    {
-        "marketType": "TO_SCORE_100",
-        "marketCount": 4
-    },
-    {
-        "marketType": "TO_SCORE_50",
-        "marketCount": 2
-    },
-    {
-        "marketType": "TOTAL_GOALS_WS",
-        "marketCount": 24
-    },
-    {
-        "marketType": "1ST_PERIOD_GOALS_WS",
-        "marketCount": 12
-    },
-    {
-        "marketType": "1ST_PERIOD_MODDS_WS",
-        "marketCount": 12
-    },
-    {
-        "marketType": "MONEYLINE_WS",
-        "marketCount": 12
-    },
-    {
-        "marketType": "METHOD_OF_VICTORY",
-        "marketCount": 6
-    },
-    {
-        "marketType": "FIRST_OVER_RUNS",
-        "marketCount": 6
-    },
-    {
-        "marketType": "FIFTY_SCORED",
-        "marketCount": 3
-    },
-    {
-        "marketType": "CENTURY_SCORED",
-        "marketCount": 3
-    },
-    {
-        "marketType": "TO_REACH_QUARTERS",
-        "marketCount": 1
-    },
-    {
-        "marketType": "TO_REACH_SEMIS",
-        "marketCount": 1
-    }
+  {
+    "marketType": "NONSPORT",
+    "marketCount": 72
+  },
+  {
+    "marketType": "SEASON_SPECIALS",
+    "marketCount": 61
+  },
+  {
+    "marketType": "SPECIAL",
+    "marketCount": 76
+  },
+  {
+    "marketType": "SPECIALS_NEXT_MGR",
+    "marketCount": 2
+  },
+  {
+    "marketType": "UNUSED",
+    "marketCount": 81
+  },
+  {
+    "marketType": "STEWARDS",
+    "marketCount": 2
+  },
+  {
+    "marketType": "GRAND_SLAM_SPECIALS",
+    "marketCount": 1
+  },
+  {
+    "marketType": "TOURNAMENT_WINNER",
+    "marketCount": 35
+  },
+  {
+    "marketType": "OUTRIGHT_WINNER",
+    "marketCount": 30
+  },
+  {
+    "marketType": "WINNER",
+    "marketCount": 66
+  },
+  {
+    "marketType": "HEAD_TO_HEAD",
+    "marketCount": 7
+  },
+  {
+    "marketType": "UNDIFFERENTIATED",
+    "marketCount": 248
+  },
+  {
+    "marketType": "TOP_N_FINISH",
+    "marketCount": 8
+  },
+  {
+    "marketType": "HANDICAP",
+    "marketCount": 183
+  },
+  {
+    "marketType": "TOP_GOALSCORER",
+    "marketCount": 8
+  },
+  {
+    "marketType": "ROCK_BOTTOM",
+    "marketCount": 10
+  },
+  {
+    "marketType": "SERIES_WINNER",
+    "marketCount": 3
+  },
+  {
+    "marketType": "WINNING_MARGIN",
+    "marketCount": 70
+  },
+  {
+    "marketType": "TOP_EUROPEAN",
+    "marketCount": 1
+  },
+  {
+    "marketType": "DAVIS_HOPMAN_CUP_TIE",
+    "marketCount": 5
+  },
+  {
+    "marketType": "TOP_BATSMAN",
+    "marketCount": 18
+  },
+  {
+    "marketType": "DRAW_NO_BET",
+    "marketCount": 258
+  },
+  {
+    "marketType": "MATCH_ODDS",
+    "marketCount": 1989
+  },
+  {
+    "marketType": "INNINGS_RUNS",
+    "marketCount": 34
+  },
+  {
+    "marketType": "TIED_MATCH",
+    "marketCount": 18
+  },
+  {
+    "marketType": "DAILY_GOALS",
+    "marketCount": 3
+  },
+  {
+    "marketType": "SET_WINNER",
+    "marketCount": 294
+  },
+  {
+    "marketType": "SET_BETTING",
+    "marketCount": 144
+  },
+  {
+    "marketType": "COMPLETED_MATCH",
+    "marketCount": 17
+  },
+  {
+    "marketType": "OVER_UNDER_25",
+    "marketCount": 1342
+  },
+  {
+    "marketType": "REGULAR_TIME_GOALS",
+    "marketCount": 89
+  },
+  {
+    "marketType": "MONEY_LINE",
+    "marketCount": 89
+  },
+  {
+    "marketType": "TEAM_A_1",
+    "marketCount": 243
+  },
+  {
+    "marketType": "CORRECT_SCORE2",
+    "marketCount": 485
+  },
+  {
+    "marketType": "ASIAN_HANDICAP",
+    "marketCount": 372
+  },
+  {
+    "marketType": "TEAM_B_1",
+    "marketCount": 243
+  },
+  {
+    "marketType": "FIRST_HALF_GOALS_05",
+    "marketCount": 317
+  },
+  {
+    "marketType": "OVER_UNDER_55",
+    "marketCount": 401
+  },
+  {
+    "marketType": "FIRST_HALF_GOALS_15",
+    "marketCount": 329
+  },
+  {
+    "marketType": "OVER_UNDER_85",
+    "marketCount": 243
+  },
+  {
+    "marketType": "OVER_UNDER_75",
+    "marketCount": 243
+  },
+  {
+    "marketType": "OVER_UNDER_65",
+    "marketCount": 401
+  },
+  {
+    "marketType": "HALF_TIME_FULL_TIME",
+    "marketCount": 321
+  },
+  {
+    "marketType": "BOTH_TEAMS_TO_SCORE",
+    "marketCount": 494
+  },
+  {
+    "marketType": "OVER_UNDER_05",
+    "marketCount": 584
+  },
+  {
+    "marketType": "HALF_TIME",
+    "marketCount": 387
+  },
+  {
+    "marketType": "HALF_TIME_SCORE",
+    "marketCount": 379
+  },
+  {
+    "marketType": "CORRECT_SCORE",
+    "marketCount": 634
+  },
+  {
+    "marketType": "TOTAL_GOALS",
+    "marketCount": 254
+  },
+  {
+    "marketType": "OVER_UNDER_45",
+    "marketCount": 623
+  },
+  {
+    "marketType": "NEXT_GOAL",
+    "marketCount": 365
+  },
+  {
+    "marketType": "OVER_UNDER_15",
+    "marketCount": 603
+  },
+  {
+    "marketType": "OVER_UNDER_35",
+    "marketCount": 622
+  },
+  {
+    "marketType": "TWO_BALLS",
+    "marketCount": 14
+  },
+  {
+    "marketType": "BOOKING_ODDS",
+    "marketCount": 24
+  },
+  {
+    "marketType": "TEAM_TOTAL_GOALS",
+    "marketCount": 218
+  },
+  {
+    "marketType": "EXACT_GOALS",
+    "marketCount": 24
+  },
+  {
+    "marketType": "TEAM_A_3",
+    "marketCount": 24
+  },
+  {
+    "marketType": "TEAM_B_2",
+    "marketCount": 24
+  },
+  {
+    "marketType": "DOUBLE_CHANCE",
+    "marketCount": 109
+  },
+  {
+    "marketType": "HAT_TRICKED_SCORED",
+    "marketCount": 110
+  },
+  {
+    "marketType": "ODD_OR_EVEN",
+    "marketCount": 113
+  },
+  {
+    "marketType": "TEAM_B_3",
+    "marketCount": 24
+  },
+  {
+    "marketType": "OVER_UNDER_105_CORNR",
+    "marketCount": 24
+  },
+  {
+    "marketType": "TEAM_B_WIN_TO_NIL",
+    "marketCount": 106
+  },
+  {
+    "marketType": "TEAM_A_WIN_TO_NIL",
+    "marketCount": 104
+  },
+  {
+    "marketType": "PENALTY_TAKEN",
+    "marketCount": 108
+  },
+  {
+    "marketType": "SENDING_OFF",
+    "marketCount": 108
+  },
+  {
+    "marketType": "FIRST_GOAL_ODDS",
+    "marketCount": 103
+  },
+  {
+    "marketType": "CLEAN_SHEET",
+    "marketCount": 210
+  },
+  {
+    "marketType": "CORNER_ODDS",
+    "marketCount": 24
+  },
+  {
+    "marketType": "FIRST_GOAL_SCORER",
+    "marketCount": 16
+  },
+  {
+    "marketType": "TO_SCORE",
+    "marketCount": 16
+  },
+  {
+    "marketType": "CORNER_MATCH_BET",
+    "marketCount": 24
+  },
+  {
+    "marketType": "TEAM_A_2",
+    "marketCount": 24
+  },
+  {
+    "marketType": "WIN_BOTH_HALVES",
+    "marketCount": 210
+  },
+  {
+    "marketType": "PLAYER_A_WIN_A_SET",
+    "marketCount": 46
+  },
+  {
+    "marketType": "TOTAL_GAMES",
+    "marketCount": 30
+  },
+  {
+    "marketType": "NUMBER_OF_SETS",
+    "marketCount": 46
+  },
+  {
+    "marketType": "TIE_BREAK",
+    "marketCount": 46
+  },
+  {
+    "marketType": "6-0_SET",
+    "marketCount": 46
+  },
+  {
+    "marketType": "TOTAL_POINTS",
+    "marketCount": 53
+  },
+  {
+    "marketType": "HALF_WITH_MOST_GOALS",
+    "marketCount": 22
+  },
+  {
+    "marketType": "TOTAL_TEAM_POINTS",
+    "marketCount": 8
+  },
+  {
+    "marketType": "RACE_TO_3_GOALS",
+    "marketCount": 21
+  },
+  {
+    "marketType": "FIRST_HALF_GOALS_25",
+    "marketCount": 104
+  },
+  {
+    "marketType": "HALF_MATCH_ODDS",
+    "marketCount": 16
+  },
+  {
+    "marketType": "HALF_HANDICAP",
+    "marketCount": 16
+  },
+  {
+    "marketType": "TO_SCORE_BOTH_HALVES",
+    "marketCount": 46
+  },
+  {
+    "marketType": "HALF_TOTAL_POINTS",
+    "marketCount": 16
+  },
+  {
+    "marketType": "HCAP_PTS_DOUBLE",
+    "marketCount": 15
+  },
+  {
+    "marketType": "QUARTER_MATCH_ODDS",
+    "marketCount": 5
+  },
+  {
+    "marketType": "QUARTER_HANDICAP",
+    "marketCount": 5
+  },
+  {
+    "marketType": "QUARTER_TOTAL_POINTS",
+    "marketCount": 5
+  },
+  {
+    "marketType": "WINCAST",
+    "marketCount": 17
+  },
+  {
+    "marketType": "SHOWN_A_CARD",
+    "marketCount": 13
+  },
+  {
+    "marketType": "OVER_UNDER_65_CARDS",
+    "marketCount": 5
+  },
+  {
+    "marketType": "OVER_UNDER_135_CORNR",
+    "marketCount": 11
+  },
+  {
+    "marketType": "RACE_TO_2_GOALS",
+    "marketCount": 21
+  },
+  {
+    "marketType": "OVER_UNDER_45_CARDS",
+    "marketCount": 11
+  },
+  {
+    "marketType": "TO_SCORE_HATTRICK",
+    "marketCount": 13
+  },
+  {
+    "marketType": "SCORE_CAST",
+    "marketCount": 13
+  },
+  {
+    "marketType": "TOTAL_RUNS_LISTED",
+    "marketCount": 15
+  },
+  {
+    "marketType": "RUN_LINE_LISTED",
+    "marketCount": 54
+  },
+  {
+    "marketType": "WIN",
+    "marketCount": 157
+  },
+  {
+    "marketType": "PLACE",
+    "marketCount": 157
+  },
+  {
+    "marketType": "FORECAST",
+    "marketCount": 31
+  },
+  {
+    "marketType": "FIRST_SCORING_PLAY",
+    "marketCount": 10
+  },
+  {
+    "marketType": "SET_CORRECT_SCORE",
+    "marketCount": 45
+  },
+  {
+    "marketType": "PLAYER_B_WIN_A_SET",
+    "marketCount": 45
+  },
+  {
+    "marketType": "TO_QUALIFY",
+    "marketCount": 2
+  },
+  {
+    "marketType": "BOOKING_MATCH_BET",
+    "marketCount": 7
+  },
+  {
+    "marketType": "WIN_FROM_BEHIND",
+    "marketCount": 14
+  },
+  {
+    "marketType": "WIN_HALF",
+    "marketCount": 14
+  },
+  {
+    "marketType": "GOAL_BOTH_HALVES",
+    "marketCount": 7
+  },
+  {
+    "marketType": "FIRST_HALF_CORNERS",
+    "marketCount": 7
+  },
+  {
+    "marketType": "OVER_UNDER_55_CORNR",
+    "marketCount": 7
+  },
+  {
+    "marketType": "FIRST_CORNER",
+    "marketCount": 7
+  },
+  {
+    "marketType": "2ND_HALF_MATCH_ODDS",
+    "marketCount": 7
+  },
+  {
+    "marketType": "SECOND_HALF_GOALS_05",
+    "marketCount": 7
+  },
+  {
+    "marketType": "SECOND_HALF_GOALS_15",
+    "marketCount": 7
+  },
+  {
+    "marketType": "HIGHEST_OVER_TOTAL",
+    "marketCount": 33
+  },
+  {
+    "marketType": "TO_SCORE_50",
+    "marketCount": 16
+  },
+  {
+    "marketType": "TO_SCORE_25",
+    "marketCount": 16
+  },
+  {
+    "marketType": "FIRST_OVER_RUNS",
+    "marketCount": 18
+  },
+  {
+    "marketType": "TOTAL_FOURS",
+    "marketCount": 11
+  },
+  {
+    "marketType": "TOTAL_SIXES",
+    "marketCount": 22
+  },
+  {
+    "marketType": "OPENING_PARTNERSHIP",
+    "marketCount": 9
+  },
+  {
+    "marketType": "CENTURY_SCORED",
+    "marketCount": 9
+  },
+  {
+    "marketType": "FIFTY_SCORED",
+    "marketCount": 8
+  },
+  {
+    "marketType": "TO_REACH_FINAL",
+    "marketCount": 1
+  },
+  {
+    "marketType": "ANTEPOST_WIN",
+    "marketCount": 34
+  },
+  {
+    "marketType": "FIRST_TRY_ODDS",
+    "marketCount": 4
+  },
+  {
+    "marketType": "FIRST_TO_SCORE",
+    "marketCount": 8
+  },
+  {
+    "marketType": "QUALIFYING_WINNER",
+    "marketCount": 2
+  },
+  {
+    "marketType": "GO_THE_DISTANCE",
+    "marketCount": 3
+  },
+  {
+    "marketType": "METHOD_OF_VICTORY",
+    "marketCount": 7
+  },
+  {
+    "marketType": "ROUND_BETTING",
+    "marketCount": 3
+  }
 ]

@@ -54,9 +54,16 @@ import static snowmonkey.meeno.MarketFilterBuilder.noFilter;
 public class HttpAccess {
 
     public static interface Auditor {
-        void auditPost(URI uri, String body, String response);
+        default void auditPost(URI uri, String body, String response) {
+            System.out.println("[post " + uri + "]");
+            System.out.println("--> " + body);
+            System.out.println("<-- " + response);
+        }
 
-        void auditGet(URI uri, String response);
+        default void auditGet(URI uri, String response) {
+            System.out.println("[get " + uri + "]");
+            System.out.println("<-- " + response);
+        }
     }
 
     public static final String UTF_8 = "UTF-8";
@@ -99,15 +106,15 @@ public class HttpAccess {
     }
 
     public void listMarketBook(Processor processor, PriceProjection priceProjection, MarketId... marketId) throws IOException, ApiException {
-        listMarketBook(processor, priceProjection, Arrays.asList(marketId));
+        listMarketBook(processor, priceProjection, Arrays.asList(marketId), null, null);
     }
 
-    public void listMarketBook(Processor processor, PriceProjection priceProjection, Iterable<MarketId> marketIds) throws IOException, ApiException {
+    public void listMarketBook(Processor processor, PriceProjection priceProjection, Iterable<MarketId> marketIds, OrderProjection orderProjection, MatchProjection matchProjection) throws IOException, ApiException {
         ListMarketBook request = new ListMarketBook(
                 marketIds,
                 priceProjection,
-                null,
-                null,
+                orderProjection,
+                matchProjection,
                 null,
                 EN_US
         );
@@ -125,12 +132,12 @@ public class HttpAccess {
         });
     }
 
-    public void listMarketCatalogue(Processor processor, Iterable<MarketProjection> marketProjection, MarketSort sort, int maxResults, MarketFilter marketFilter) throws IOException, ApiException {
+    public void listMarketCatalogue(Processor processor, Iterable<MarketProjection> marketProjection, MarketSort sort, MarketFilter marketFilter) throws IOException, ApiException {
         PayloadBuilder payloadBuilder = new PayloadBuilder();
         payloadBuilder.add(marketFilter);
         payloadBuilder.addMarketProjections(marketProjection);
         payloadBuilder.addMarketSort(sort);
-        payloadBuilder.addMaxResults(maxResults);
+        payloadBuilder.addMaxResults(999);
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_CATALOGUE), payloadBuilder);
     }
 

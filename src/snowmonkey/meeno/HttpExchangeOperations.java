@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import org.apache.http.StatusLine;
 import snowmonkey.meeno.types.MarketCatalogues;
+import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.Navigation;
 import snowmonkey.meeno.types.raw.*;
 
@@ -11,8 +12,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 
 import static snowmonkey.meeno.JsonSerialization.gson;
+import static snowmonkey.meeno.JsonSerialization.parse;
 import static snowmonkey.meeno.types.raw.MarketProjection.allMarketProjections;
 import static snowmonkey.meeno.types.raw.TimeRange.between;
 
@@ -33,7 +36,7 @@ public class HttpExchangeOperations implements ExchangeOperations {
     public MarketCatalogues marketCatalogue(Iterable<MarketProjection> marketProjections, MarketSort marketSort, MarketFilter marketFilter, int maxResults) throws ApiException {
         try {
             JsonProcessor processor = new JsonProcessor();
-            httpAccess.listMarketCatalogue(processor, marketProjections, marketSort, maxResults, marketFilter);
+            httpAccess.listMarketCatalogue(processor, marketProjections, marketSort, marketFilter);
             MarketCatalogue[] catalogues = JsonSerialization.parse(processor.json, MarketCatalogue[].class);
             return MarketCatalogues.createMarketCatalogues(catalogues);
         } catch (IOException e) {
@@ -65,6 +68,29 @@ public class HttpExchangeOperations implements ExchangeOperations {
             return ClearedOrderSummaryReports.create(clearedOrderSummaryReport);
         } catch (IOException e) {
             throw new RuntimeEnvironmentException("listClearedOrders call failed", e);
+        }
+    }
+
+    public MarketBooks marketBook(Iterable<MarketId> marketIds) throws ApiException {
+        try {
+            JsonProcessor processor = new JsonProcessor();
+
+            httpAccess.listMarketBook(
+                    processor,
+                    new PriceProjection(
+                            new ArrayList<>(),
+                            null,
+                            false,
+                            false
+                    ),
+                    marketIds,
+                    null,
+                    null
+            );
+
+            return MarketBooks.parseMarketBooks(parse(processor.json, MarketBook[].class));
+        } catch (IOException e) {
+            throw new RuntimeEnvironmentException("listMarketBook call failed", e);
         }
     }
 

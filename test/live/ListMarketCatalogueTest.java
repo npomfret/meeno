@@ -5,10 +5,10 @@ import org.junit.Test;
 import snowmonkey.meeno.MarketFilterBuilder;
 import snowmonkey.meeno.types.*;
 import snowmonkey.meeno.types.raw.MarketCatalogue;
-import snowmonkey.meeno.types.raw.MarketProjection;
 import snowmonkey.meeno.types.raw.MarketSort;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import static com.google.common.collect.Sets.newHashSet;
 import static java.time.ZonedDateTime.now;
@@ -17,13 +17,14 @@ import static live.GenerateTestData.ListMarketCatalogue.listMarketCatalogueFile;
 import static live.GenerateTestData.ListMarketCatalogue.listMarketCatalogueJson;
 import static live.GenerateTestData.fileWriter;
 import static snowmonkey.meeno.JsonSerialization.parse;
+import static snowmonkey.meeno.types.raw.MarketProjection.*;
 import static snowmonkey.meeno.types.raw.TimeRange.between;
 
 public class ListMarketCatalogueTest extends AbstractLiveTestCase {
     @Test
     public void test() throws Exception {
 
-        int maxResults = 5;
+        int maxResults = 50;
 
         EventTypes eventTypes = EventTypes.parse(listEventTypesJson());
 
@@ -31,25 +32,37 @@ public class ListMarketCatalogueTest extends AbstractLiveTestCase {
 
         Navigation navigation = navigation();
 
-        ZonedDateTime from = now().plusDays(2);
+        ZonedDateTime from = now();
         Navigation.Markets markets = navigation.findMarkets(
                 EventTypeName.SOCCER,
-                between(from, from.plusHours(6)),
-                "Match Odds"
+                between(from, from.plusDays(3)),
+                "Correct Score*"
         );
 
-        httpAccess.listMarketCatalogue(fileWriter(listMarketCatalogueFile()),
-                newHashSet(MarketProjection.MARKET_START_TIME, MarketProjection.RUNNER_METADATA),
-                MarketSort.FIRST_TO_START,
-                maxResults,
-                new MarketFilterBuilder()
-                        .withEventTypeIds(soccer)
-                        .withMarketIds(Iterables.limit(markets.marketsIds(), maxResults))
-                        .build());
+        int i = 0;
 
-        MarketCatalogues marketCatalogues = MarketCatalogues.createMarketCatalogues(parse(listMarketCatalogueJson(), MarketCatalogue[].class));
-        for (MarketCatalogue marketCatalogue : marketCatalogues) {
-            System.out.println("marketCatalogue = " + marketCatalogue);
+        for (List<MarketId> marketIds : Iterables.partition(markets.marketsIds(), maxResults)) {
+
+            httpAccess.listMarketCatalogue(fileWriter(listMarketCatalogueFile()),
+                    newHashSet(MARKET_START_TIME, RUNNER_METADATA, MARKET_DESCRIPTION),
+                    MarketSort.FIRST_TO_START,
+                    new MarketFilterBuilder()
+                            .withEventTypeIds(soccer)
+                            .withMarketIds(marketIds)
+                            .build());
+
+            MarketCatalogues marketCatalogues = MarketCatalogues.createMarketCatalogues(parse(listMarketCatalogueJson(), MarketCatalogue[].class));
+
+            for (MarketId marketId : marketIds) {
+                if (marketCatalogues.has(marketId)) {
+                    MarketCatalogue marketCatalogue = marketCatalogues.get(marketId);
+                    System.out.println(++i + " " + markets.get(marketId).printHierarchy());
+                    System.out.println("\t" + marketCatalogue);
+                } else {
+                    System.out.println("Missing " + markets.get(marketId).printHierarchy());
+                }
+            }
+            System.out.println();
         }
     }
 }

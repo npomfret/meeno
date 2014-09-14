@@ -33,4 +33,8 @@ public class MarketCatalogues implements Iterable<MarketCatalogue> {
         }
         return new MarketCatalogues(markets);
     }
+
+    public boolean has(MarketId marketId) {
+        return markets.containsKey(marketId);
+    }
 }
