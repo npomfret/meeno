@@ -5,7 +5,9 @@ import com.google.gson.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.StatusLine;
 import snowmonkey.meeno.*;
-import snowmonkey.meeno.types.*;
+import snowmonkey.meeno.types.MarketCatalogues;
+import snowmonkey.meeno.types.MarketId;
+import snowmonkey.meeno.types.SessionToken;
 import snowmonkey.meeno.types.raw.*;
 
 import java.io.IOException;
@@ -15,10 +17,8 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Iterator;
-import java.util.List;
 import java.util.UUID;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static snowmonkey.meeno.CountryLookup.UnitedKingdom;
@@ -60,12 +60,6 @@ public class GenerateTestData {
     }
 
     private void cancelOrders() throws IOException, ApiException {
-        snowmonkey.meeno.types.CurrentOrders currentOrders = snowmonkey.meeno.types.CurrentOrders.parse(ListCurrentOrders.listCurrentOrdersJson());
-        CurrentOrder order = currentOrders.iterator().next();
-        MarketId marketId = order.marketId;
-        BetId betId = order.betId;
-        List<CancelInstruction> cancelInstructions = newArrayList(CancelInstruction.cancel(betId));
-        httpAccess.cancelOrders(marketId, cancelInstructions, fileWriter(CancelOrders.cancelOrdersFile()));
     }
 
     private void cleanup() throws IOException, ApiException {
@@ -110,17 +104,6 @@ public class GenerateTestData {
     private static EventType eventType(String eventName) throws IOException, ApiException {
         snowmonkey.meeno.types.EventTypes eventTypes = parse(ListEventTypes.listEventTypesJson());
         return eventTypes.lookup(eventName);
-    }
-
-    private void listCurrentOrders() throws IOException, ApiException {
-        httpAccess.listCurrentOrders(fileWriter(ListCurrentOrders.listCurrentOrdersFile()));
-    }
-
-    private void placeOrders() throws IOException, ApiException {
-        MarketCatalogue marketCatalogue = aMarket();
-        LimitOrder limitOrder = new LimitOrder(2.00D, 1000, PersistenceType.LAPSE);
-        PlaceInstruction placeLimitOrder = PlaceInstruction.createPlaceLimitOrder(marketCatalogue.runners.get(0).selectionId, Side.BACK, limitOrder);
-        httpAccess.placeOrders(marketCatalogue.marketId, newArrayList(placeLimitOrder), CustomerRef.NONE, fileWriter(PlaceOrders.placeOrdersFile()));
     }
 
     private MarketCatalogues listMarketCatalogue(EventType eventType, Iterable<MarketId> marketIds) throws IOException, ApiException {
@@ -181,15 +164,19 @@ public class GenerateTestData {
         }
     }
 
-    private static class CancelOrders {
+    public static class CancelOrders {
         public static Path cancelOrdersFile() {
             return TEST_DATA_DIR.resolve("cancelOrders.json");
         }
     }
 
-    private static class PlaceOrders {
+    public static class PlaceOrders {
         public static Path placeOrdersFile() {
             return TEST_DATA_DIR.resolve("placeOrders.json");
+        }
+
+        public static String placeOrdersJson() throws IOException {
+            return readFileToString(placeOrdersFile().toFile());
         }
     }
 

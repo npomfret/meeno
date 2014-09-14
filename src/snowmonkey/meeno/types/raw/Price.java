@@ -10,4 +10,8 @@ public class Price extends MicroType<Double> {
     public double asDouble() {
         return value;
     }
+
+    public static Price price(double v) {
+        return new Price(v);
+    }
 }

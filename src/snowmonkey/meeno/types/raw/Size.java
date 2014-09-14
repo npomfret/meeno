@@ -10,4 +10,8 @@ public class Size extends MicroType<Double> {
     public double asDouble() {
         return value;
     }
+
+    public static Size size(double v) {
+        return new Size(v);
+    }
 }

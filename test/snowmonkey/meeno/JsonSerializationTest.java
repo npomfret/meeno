@@ -2,16 +2,20 @@ package snowmonkey.meeno;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import org.joda.time.DateTime;
 import org.junit.Test;
 import snowmonkey.meeno.requests.ListMarketBook;
+import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.EventId;
 import snowmonkey.meeno.types.MarketId;
+import snowmonkey.meeno.types.SelectionId;
 import snowmonkey.meeno.types.raw.*;
 
 import java.lang.reflect.Type;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static live.GenerateTestData.ListCleanedOrders.listClearedOrdersJson;
+import static live.GenerateTestData.ListCurrentOrders.listCurrentOrdersJson;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import static snowmonkey.meeno.JsonSerialization.gson;
@@ -60,4 +64,28 @@ public class JsonSerializationTest {
         assertThat(clearedOrderSummaryReport.length, equalTo(1));
         assertThat(clearedOrderSummaryReport[0].eventId, equalTo(new EventId("27256514")));
     }
+
+    @Test
+    public void test() throws Exception {
+        CurrentOrderSummaryReport currentOrders = JsonSerialization.parse(listCurrentOrdersJson(), CurrentOrderSummaryReport.class);
+        CurrentOrderSummary order = currentOrders.currentOrders.iterator().next();
+
+        assertThat(order.betId, equalTo(new BetId("33903456243")));
+        assertThat(order.marketId, equalTo(new MarketId("1.112624260")));
+        assertThat(order.selectionId, equalTo(new SelectionId(223503L)));
+        assertThat(order.priceSize.price, equalTo(Price.price(1000d)));
+        assertThat(order.priceSize.size, equalTo(Size.size(21.0d)));
+        assertThat(order.side, equalTo(Side.BACK));
+        assertThat(order.status, equalTo(OrderStatus.EXECUTABLE));
+        assertThat(order.persistenceType, equalTo(PersistenceType.LAPSE));
+        assertThat(order.orderType, equalTo(OrderType.LIMIT));
+        assertThat(order.placedDate, equalTo(new DateTime("2014-02-03T18:11:21.000Z")));
+        assertThat(order.averagePriceMatched, equalTo(1d));
+        assertThat(order.sizeMatched, equalTo(2d));
+        assertThat(order.sizeRemaining, equalTo(3d));
+        assertThat(order.sizeLapsed, equalTo(4d));
+        assertThat(order.sizeCancelled, equalTo(5d));
+        assertThat(order.sizeVoided, equalTo(6d));
+    }
+
 }

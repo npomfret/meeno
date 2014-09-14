@@ -7,8 +7,7 @@ import snowmonkey.meeno.types.ImmutbleType;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.SelectionId;
 
-public final class CurrentOrder extends ImmutbleType {
-
+public class CurrentOrderSummary extends ImmutbleType {
     public final BetId betId;
     public final MarketId marketId;
     public final SelectionId selectionId;
@@ -32,11 +31,11 @@ public final class CurrentOrder extends ImmutbleType {
     @Nullable
     public final String regulatorCode;
 
-    public CurrentOrder(BetId betId, MarketId marketId, SelectionId selectionId, double handicap, PriceSize priceSize,
-                        double bspLiability, Side side, OrderStatus status, PersistenceType persistenceType, OrderType orderType,
-                        DateTime placedDate, DateTime matchedDate, double averagePriceMatched, double sizeMatched,
-                        double sizeRemaining, double sizeLapsed, double sizeCancelled, double sizeVoided,
-                        String regulatorAuthCode, String regulatorCode) {
+    public CurrentOrderSummary(BetId betId, MarketId marketId, SelectionId selectionId, double handicap, PriceSize priceSize,
+                               double bspLiability, Side side, OrderStatus status, PersistenceType persistenceType, OrderType orderType,
+                               DateTime placedDate, DateTime matchedDate, double averagePriceMatched, double sizeMatched,
+                               double sizeRemaining, double sizeLapsed, double sizeCancelled, double sizeVoided,
+                               @Nullable String regulatorAuthCode, @Nullable String regulatorCode) {
         this.betId = betId;
         this.marketId = marketId;
         this.selectionId = selectionId;
