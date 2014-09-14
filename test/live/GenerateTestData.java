@@ -14,14 +14,10 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.util.UUID;
 
 import static org.apache.commons.io.FileUtils.readFileToString;
-import static snowmonkey.meeno.CountryLookup.UnitedKingdom;
 import static snowmonkey.meeno.types.EventTypes.parse;
-import static snowmonkey.meeno.types.TimeGranularity.MINUTES;
-import static snowmonkey.meeno.types.raw.TimeRange.between;
 
 public class GenerateTestData {
     public static final Path TEST_DATA_DIR = Paths.get("test-data/generated");
@@ -44,9 +40,6 @@ public class GenerateTestData {
 //            MarketCatalogues marketCatalogues = generateTestData.listMarketCatalogue(soccer, markets.marketsIds());
 
 //        generateTestData.listMarketTypes();
-//        generateTestData.listTimeRanges();
-//            generateTestData.accountDetails();
-//            generateTestData.accountFunds();
         } finally {
             generateTestData.cleanup();
         }
@@ -59,21 +52,7 @@ public class GenerateTestData {
         httpAccess.logout();
     }
 
-    private void accountFunds() throws IOException, ApiException {
-        httpAccess.getAccountFunds(fileWriter(AccountFunds.getAccountFundsFile()));
-    }
-
-    private void accountDetails() throws IOException, ApiException {
-        httpAccess.getAccountDetails(fileWriter(AccountDetails.getAccountDetailsFile()));
-    }
-
     private void listTimeRanges() throws IOException, ApiException {
-        httpAccess.listTimeRanges(fileWriter(TimeRanges.listTimeRangesFile()), MINUTES, new MarketFilterBuilder()
-                .withEventTypeIds("1")
-                .withEventIds(someEvent().id)
-                .withMarketCountries(UnitedKingdom)
-                .withMarketStartTime(between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(1)))
-                .build());
     }
 
     private void listMarketTypes() throws IOException, ApiException {
@@ -249,7 +228,7 @@ public class GenerateTestData {
         }
     }
 
-    private static class TimeRanges {
+    public static class TimeRanges {
         public static Path listTimeRangesFile() {
             return TEST_DATA_DIR.resolve("listTimeRanges.json");
         }
@@ -273,7 +252,7 @@ public class GenerateTestData {
         }
     }
 
-    private static class AccountFunds {
+    public static class GetAccountFunds {
         public static Path getAccountFundsFile() {
             return TEST_DATA_DIR.resolve("getAccountFunds.json");
         }
@@ -283,7 +262,7 @@ public class GenerateTestData {
         }
     }
 
-    private static class AccountDetails {
+    public static class GetAccountDetails {
 
         public static Path getAccountDetailsFile() {
             return TEST_DATA_DIR.resolve("getAccountDetails.json");

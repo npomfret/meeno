@@ -1,10 +1,8 @@
 package snowmonkey.meeno;
 
 import com.google.common.base.Function;
-import snowmonkey.meeno.types.CompetitionId;
-import snowmonkey.meeno.types.CountryCode;
-import snowmonkey.meeno.types.EventTypeId;
-import snowmonkey.meeno.types.MarketId;
+import com.google.common.collect.ImmutableSet;
+import snowmonkey.meeno.types.*;
 import snowmonkey.meeno.types.raw.OrderStatus;
 import snowmonkey.meeno.types.raw.TimeRange;
 
@@ -25,7 +23,7 @@ public class MarketFilterBuilder implements MarketFilter {
     private Set<EventTypeId> eventTypeIds;
     private Set<MarketId> marketIds;
     private Boolean inPlayOnly;
-    private Set<String> eventIds;
+    private Set<EventId> eventIds;
     private Set<CompetitionId> competitionIds;
     private Set<String> venues;
     private Boolean bspOnly;
@@ -110,12 +108,20 @@ public class MarketFilterBuilder implements MarketFilter {
         return this;
     }
 
-    public MarketFilterBuilder withEventIds(String... eventIds) {
+    public MarketFilterBuilder withEventIds(EventId... eventIds) {
         return withEventIds(newHashSet(asList(eventIds)));
     }
 
-    public MarketFilterBuilder withEventIds(Set<String> eventIds) {
-        this.eventIds = eventIds;
+    public MarketFilterBuilder withEventIds(String... eventIds) {
+        return withEventIds(Arrays.asList(eventIds));
+    }
+
+    public MarketFilterBuilder withEventIds(Collection<String> eventIds) {
+        return withEventIds(eventIds.stream().map(e -> new EventId(e)).collect(Collectors.toList()));
+    }
+
+    public MarketFilterBuilder withEventIds(Iterable<EventId> eventIds) {
+        this.eventIds = ImmutableSet.copyOf(eventIds);
         return this;
     }
 

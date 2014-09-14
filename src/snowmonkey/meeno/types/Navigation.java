@@ -39,7 +39,7 @@ public class Navigation {
 
     @Override
     public String toString() {
-        return StringUtils.join(new String[]{id, name, type.name(), children.size() + " children"}, ",");
+        return "[" + StringUtils.join(new String[]{id, name, type.name(), children.size() + " children"}, ",") + "]";
     }
 
     public static Navigation parse(String json) {
@@ -72,21 +72,28 @@ public class Navigation {
         if (type.equals(Type.GROUP))
             return name;
 
-        throw new IllegalStateException(this + " is not a group");
+        throw new IllegalStateException(this + " is a " + type + " not a " + Type.GROUP);
     }
 
-    private EventTypeId eventTypeId() {
+    public EventTypeId eventTypeId() {
         if (type.equals(Type.EVENT_TYPE))
             return new EventTypeId(id);
 
-        throw new IllegalStateException(this + " is not an event type");
+        throw new IllegalStateException(this + " is a " + type + " not a " + Type.EVENT_TYPE);
+    }
+
+    public EventId eventId() {
+        if (type.equals(Type.EVENT))
+            return new EventId(id);
+
+        throw new IllegalStateException(this + " is a " + type + " not a " + Type.EVENT);
     }
 
     public String eventName() {
         if (type.equals(Type.EVENT))
             return name;
 
-        throw new IllegalStateException(this + " is not an event");
+        throw new IllegalStateException(this + " is a " + type + " not a " + Type.EVENT);
     }
 
     public List<Navigation> children() {
