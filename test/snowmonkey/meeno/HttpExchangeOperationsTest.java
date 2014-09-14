@@ -12,7 +12,7 @@ public class HttpExchangeOperationsTest {
 
     @Test
     public void test() throws Exception {
-        MeenoConfig config = MeenoConfig.load();
+        MeenoConfig config = MeenoConfig.loadMeenoConfig();
         SessionToken login = HttpAccess.login(config);
 
         HttpAccess httpAccess = new HttpAccess(login, config.appKey(), Exchange.UK);

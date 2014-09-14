@@ -15,11 +15,11 @@ public class MeenoConfig {
         this.properties = properties;
     }
 
-    public static MeenoConfig load() {
-        return load(Paths.get("credentials.properties"));
+    public static MeenoConfig loadMeenoConfig() {
+        return loadMeenoConfig(Paths.get("credentials.properties"));
     }
 
-    public static MeenoConfig load(Path file) {
+    public static MeenoConfig loadMeenoConfig(Path file) {
         Properties properties = new Properties();
         try {
             try (Reader reader = Files.newBufferedReader(file)) {

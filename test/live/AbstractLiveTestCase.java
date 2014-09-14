@@ -24,7 +24,7 @@ public abstract class AbstractLiveTestCase {
 
     @BeforeClass
     public static void setup() throws Exception {
-        MeenoConfig config = MeenoConfig.load();
+        MeenoConfig config = MeenoConfig.loadMeenoConfig();
 
         SessionToken sessionToken = HttpAccess.login(config);
 
