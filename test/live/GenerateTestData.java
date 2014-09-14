@@ -1,13 +1,10 @@
 package live;
 
-import com.google.gson.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.StatusLine;
-import snowmonkey.meeno.*;
-import snowmonkey.meeno.types.MarketId;
-import snowmonkey.meeno.types.SessionToken;
-import snowmonkey.meeno.types.raw.Event;
-import snowmonkey.meeno.types.raw.EventType;
+import snowmonkey.meeno.ApiException;
+import snowmonkey.meeno.DefaultProcessor;
+import snowmonkey.meeno.HttpAccess;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,81 +14,9 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import static org.apache.commons.io.FileUtils.readFileToString;
-import static snowmonkey.meeno.types.EventTypes.parse;
 
 public class GenerateTestData {
     public static final Path TEST_DATA_DIR = Paths.get("test-data/generated");
-    private MeenoConfig config;
-    private HttpAccess httpAccess;
-
-    public GenerateTestData(MeenoConfig config) {
-        this.config = config;
-    }
-
-    public static void main(String[] args) throws Exception {
-        MeenoConfig config = MeenoConfig.load();
-
-        GenerateTestData generateTestData = new GenerateTestData(config);
-        generateTestData.login();
-
-        try {
-//            generateTestData.listEvents(soccer, markets.marketsIds());
-
-//            MarketCatalogues marketCatalogues = generateTestData.listMarketCatalogue(soccer, markets.marketsIds());
-
-//        generateTestData.listMarketTypes();
-        } finally {
-            generateTestData.cleanup();
-        }
-    }
-
-    private void cancelOrders() throws IOException, ApiException {
-    }
-
-    private void cleanup() throws IOException, ApiException {
-        httpAccess.logout();
-    }
-
-    private void listTimeRanges() throws IOException, ApiException {
-    }
-
-    private void listMarketTypes() throws IOException, ApiException {
-        httpAccess.listMarketTypes(fileWriter(MarketTypes.listMarketTypesFile()));
-    }
-
-    private void listEventTypes() throws IOException, ApiException {
-        httpAccess.listEventTypes(fileWriter(ListEventTypes.listEventTypesFile()));
-    }
-
-    private void listEvents(EventType eventType, Iterable<MarketId> marketIds) throws IOException, ApiException {
-        httpAccess.listEvents(
-                fileWriter(Events.listEventsFile()),
-                new MarketFilterBuilder()
-                        .withEventTypeIds(eventType.id)
-                        .withMarketIds(marketIds)
-                        .build()
-        );
-    }
-
-    private static EventType eventType(String eventName) throws IOException, ApiException {
-        snowmonkey.meeno.types.EventTypes eventTypes = parse(ListEventTypes.listEventTypesJson());
-        return eventTypes.lookup(eventName);
-    }
-
-    private void listCountries() throws IOException, ApiException {
-        httpAccess.listCountries(fileWriter(ListCountries.listCountriesFile()));
-    }
-
-    private void login() {
-
-        SessionToken sessionToken = HttpAccess.login(config);
-
-        httpAccess = new HttpAccess(sessionToken, config.appKey(), Exchange.UK);
-    }
-
-    private static Event someEvent() throws IOException, ApiException {
-        return snowmonkey.meeno.types.Events.parse(Events.listEventsJson()).iterator().next();
-    }
 
     public static HttpAccess.Processor fileWriter(final Path file) {
         return new HttpAccess.Processor() {
@@ -136,12 +61,6 @@ public class GenerateTestData {
             return TEST_DATA_DIR.resolve("listCurrentOrders.json");
         }
 
-        public static String getCurrentOrderJson() throws IOException, ApiException {
-            JsonElement parse = new JsonParser().parse(listCurrentOrdersJson());
-            JsonElement currentOrders = parse.getAsJsonObject().get("currentOrders");
-            return array(currentOrders);
-        }
-
         public static String listCurrentOrdersJson() throws IOException, ApiException {
             return readFileToString(listCurrentOrdersFile().toFile());
         }
@@ -163,10 +82,6 @@ public class GenerateTestData {
             return TEST_DATA_DIR.resolve("listCompetitions_" + level + ".json");
         }
 
-        public static String getCompetitionJson(int level) throws IOException, ApiException {
-            return jsonForFirstElementInArray(listCompetitionsJson(level));
-        }
-
         public static String listCompetitionsJson(int level) throws IOException, ApiException {
             return readFileToString(listCompetitionsFile(level).toFile());
         }
@@ -174,7 +89,7 @@ public class GenerateTestData {
 
     public static class Events {
 
-        private static Path listEventsFile() {
+        public static Path listEventsFile() {
             return TEST_DATA_DIR.resolve("listEvents.json");
         }
 
@@ -189,23 +104,15 @@ public class GenerateTestData {
             return TEST_DATA_DIR.resolve("listEventTypes.json");
         }
 
-        public static String getEventTypeJson() throws IOException, ApiException {
-            return jsonForFirstElementInArray(listEventTypesJson());
-        }
-
         public static String listEventTypesJson() throws IOException, ApiException {
             return readFileToString(listEventTypesFile().toFile());
         }
     }
 
-    private static class MarketTypes {
+    public static class MarketTypes {
 
         public static Path listMarketTypesFile() {
             return TEST_DATA_DIR.resolve("listMarketTypes.json");
-        }
-
-        public static String getMarketTypeJson() throws IOException, ApiException {
-            return jsonForFirstElementInArray(listMarketTypesJson());
         }
 
         public static String listMarketTypesJson() throws IOException, ApiException {
@@ -231,10 +138,6 @@ public class GenerateTestData {
     public static class TimeRanges {
         public static Path listTimeRangesFile() {
             return TEST_DATA_DIR.resolve("listTimeRanges.json");
-        }
-
-        public static String getTimeRangeJson() throws IOException, ApiException {
-            return jsonForFirstElementInArray(listTimeRangesJson());
         }
 
         public static String listTimeRangesJson() throws IOException, ApiException {
@@ -289,17 +192,4 @@ public class GenerateTestData {
             return TEST_DATA_DIR.resolve("listCountries.json");
         }
     }
-
-    private static String jsonForFirstElementInArray(String json) {
-        JsonElement parse = new JsonParser().parse(json);
-        return array(parse);
-    }
-
-    private static String array(JsonElement currentOrders) {
-        JsonArray jsonArray = currentOrders.getAsJsonArray();
-        JsonElement jsonElement = jsonArray.get(0);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(jsonElement);
-    }
-
 }
