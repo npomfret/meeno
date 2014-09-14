@@ -137,7 +137,7 @@ public class HttpAccess {
         payloadBuilder.add(marketFilter);
         payloadBuilder.addMarketProjections(marketProjection);
         payloadBuilder.addMarketSort(sort);
-        payloadBuilder.addMaxResults(999);
+        payloadBuilder.addMaxResults(1000);
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_CATALOGUE), payloadBuilder);
     }
 

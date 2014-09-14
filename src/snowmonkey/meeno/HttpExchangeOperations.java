@@ -20,7 +20,6 @@ import static snowmonkey.meeno.types.raw.MarketProjection.allMarketProjections;
 import static snowmonkey.meeno.types.raw.TimeRange.between;
 
 public class HttpExchangeOperations implements ExchangeOperations {
-    public static final int MAX_MARKET_CATALOGUE_RESULTS = 1000;
 
     private final HttpAccess httpAccess;
 
@@ -30,10 +29,10 @@ public class HttpExchangeOperations implements ExchangeOperations {
 
     public MarketCatalogues marketCatalogue(MarketFilter marketFilter) throws ApiException {
         MarketSort marketSort = MarketSort.FIRST_TO_START;
-        return marketCatalogue(allMarketProjections(), marketSort, marketFilter, MAX_MARKET_CATALOGUE_RESULTS);
+        return marketCatalogue(allMarketProjections(), marketSort, marketFilter);
     }
 
-    public MarketCatalogues marketCatalogue(Iterable<MarketProjection> marketProjections, MarketSort marketSort, MarketFilter marketFilter, int maxResults) throws ApiException {
+    public MarketCatalogues marketCatalogue(Iterable<MarketProjection> marketProjections, MarketSort marketSort, MarketFilter marketFilter) throws ApiException {
         try {
             JsonProcessor processor = new JsonProcessor();
             httpAccess.listMarketCatalogue(processor, marketProjections, marketSort, marketFilter);

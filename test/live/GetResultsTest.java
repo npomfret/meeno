@@ -55,8 +55,8 @@ public class GetResultsTest extends AbstractLiveTestCase {
                 MarketSort.FIRST_TO_START,
                 new MarketFilterBuilder()
                         .withMarketIds(marketIds)
-                        .build(),
-                1000);
+                        .build()
+        );
         for (MarketCatalogue marketCatalogue : marketCatalogues) {
             System.out.println("marketCatalogue = " + marketCatalogue);
         }
