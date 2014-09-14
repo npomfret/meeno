@@ -1,5 +1,6 @@
 package snowmonkey.meeno.types;
 
+import com.google.common.collect.ImmutableMap;
 import snowmonkey.meeno.types.raw.MarketCatalogue;
 
 import java.util.Iterator;
@@ -7,10 +8,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MarketCatalogues implements Iterable<MarketCatalogue> {
-    private final Map<MarketId, MarketCatalogue> markets;
+    public final ImmutableMap<MarketId, MarketCatalogue> markets;
 
-    public MarketCatalogues(Map<MarketId, MarketCatalogue> markets) {
-        this.markets = markets;
+    public MarketCatalogues(ImmutableMap<MarketId, MarketCatalogue> marketIdMarketCatalogueImmutableMap) {
+        this.markets = marketIdMarketCatalogueImmutableMap;
     }
 
     @Override
@@ -31,7 +32,7 @@ public class MarketCatalogues implements Iterable<MarketCatalogue> {
         for (MarketCatalogue marketCatalogue : catalogues) {
             markets.put(marketCatalogue.marketId, marketCatalogue);
         }
-        return new MarketCatalogues(markets);
+        return new MarketCatalogues(ImmutableMap.copyOf(markets));
     }
 
     public boolean has(MarketId marketId) {
