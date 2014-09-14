@@ -1,17 +1,19 @@
 package snowmonkey.meeno.types;
 
-import live.GenerateTestData;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import snowmonkey.meeno.types.raw.*;
 
+import static live.GenerateTestData.ListMarketCatalogue.listMarketCatalogueJson;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static snowmonkey.meeno.JsonSerialization.parse;
+import static snowmonkey.meeno.types.MarketCatalogues.createMarketCatalogues;
 
 public class ListMarketCatalogueTest {
     @Test
     public void test() throws Exception {
-        MarketCatalogues markets = MarketCatalogues.parse(GenerateTestData.ListMarketCatalogue.listMarketCatalogueJson());
+        MarketCatalogues markets = createMarketCatalogues(parse(listMarketCatalogueJson(), MarketCatalogue[].class));
         MarketId marketId = new MarketId("1.112645443");
         MarketCatalogue marketCatalogue = markets.get(marketId);
 

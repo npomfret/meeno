@@ -1,14 +1,13 @@
 package live;
 
-import com.google.common.collect.Iterables;
 import com.google.gson.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.StatusLine;
 import snowmonkey.meeno.*;
-import snowmonkey.meeno.types.MarketCatalogues;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.SessionToken;
-import snowmonkey.meeno.types.raw.*;
+import snowmonkey.meeno.types.raw.Event;
+import snowmonkey.meeno.types.raw.EventType;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,10 +15,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.util.Iterator;
 import java.util.UUID;
 
-import static com.google.common.collect.Sets.newHashSet;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static snowmonkey.meeno.CountryLookup.UnitedKingdom;
 import static snowmonkey.meeno.types.EventTypes.parse;
@@ -106,20 +103,6 @@ public class GenerateTestData {
         return eventTypes.lookup(eventName);
     }
 
-    private MarketCatalogues listMarketCatalogue(EventType eventType, Iterable<MarketId> marketIds) throws IOException, ApiException {
-        int maxResults = 5;
-        httpAccess.listMarketCatalogue(fileWriter(ListMarketCatalogue.listMarketCatalogueFile()),
-                newHashSet(MarketProjection.MARKET_START_TIME, MarketProjection.RUNNER_METADATA),
-                MarketSort.FIRST_TO_START,
-                maxResults,
-                new MarketFilterBuilder()
-                        .withEventTypeIds(eventType.id)
-                        .withMarketIds(Iterables.limit(marketIds, maxResults))
-                        .build());
-
-        return MarketCatalogues.parse(ListMarketCatalogue.listMarketCatalogueJson());
-    }
-
     private void listCountries() throws IOException, ApiException {
         httpAccess.listCountries(fileWriter(ListCountries.listCountriesFile()));
     }
@@ -129,13 +112,6 @@ public class GenerateTestData {
         SessionToken sessionToken = HttpAccess.login(config);
 
         httpAccess = new HttpAccess(sessionToken, config.appKey(), Exchange.UK);
-    }
-
-    private static MarketCatalogue aMarket() throws IOException, ApiException {
-        MarketCatalogues marketCatalogues = MarketCatalogues.parse(ListMarketCatalogue.listMarketCatalogueJson());
-        Iterator<MarketCatalogue> iterator = marketCatalogues.iterator();
-        iterator.next();
-        return iterator.next();
     }
 
     private static Event someEvent() throws IOException, ApiException {

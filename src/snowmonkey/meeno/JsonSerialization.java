@@ -47,6 +47,7 @@ public class JsonSerialization {
                 .registerTypeAdapter(Size.class, (JsonSerializer<Size>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asDouble()))
 
                 .registerTypeAdapter(ClearedOrderSummaryReport.class, complexObjectDeserializer(ClearedOrderSummaryReport.class))
+                .registerTypeAdapter(MarketCatalogue.class, complexObjectDeserializer(MarketCatalogue.class))
                 .registerTypeAdapter(PlaceExecutionReport.class, complexObjectDeserializer(PlaceExecutionReport.class))
                 .registerTypeAdapter(PlaceInstructionReport.class, complexObjectDeserializer(PlaceInstructionReport.class))
                 .registerTypeAdapter(CurrentOrderSummaryReport.class, complexObjectDeserializer(CurrentOrderSummaryReport.class))
@@ -54,6 +55,7 @@ public class JsonSerialization {
                 .registerTypeAdapter(PriceSize.class, complexObjectDeserializer(PriceSize.class))
                 .registerTypeAdapter(MarketBook.class, complexObjectDeserializer(MarketBook.class))
                 .registerTypeAdapter(Runner.class, complexObjectDeserializer(Runner.class))
+                .registerTypeAdapter(RunnerCatalog.class, complexObjectDeserializer(RunnerCatalog.class))
                 .registerTypeAdapter(Order.class, complexObjectDeserializer(Order.class))
                 .registerTypeAdapter(Match.class, complexObjectDeserializer(Match.class))
 

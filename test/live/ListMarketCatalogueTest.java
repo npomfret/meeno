@@ -16,6 +16,7 @@ import static live.GenerateTestData.ListEventTypes.listEventTypesJson;
 import static live.GenerateTestData.ListMarketCatalogue.listMarketCatalogueFile;
 import static live.GenerateTestData.ListMarketCatalogue.listMarketCatalogueJson;
 import static live.GenerateTestData.fileWriter;
+import static snowmonkey.meeno.JsonSerialization.parse;
 import static snowmonkey.meeno.types.raw.TimeRange.between;
 
 public class ListMarketCatalogueTest extends AbstractLiveTestCase {
@@ -46,7 +47,7 @@ public class ListMarketCatalogueTest extends AbstractLiveTestCase {
                         .withMarketIds(Iterables.limit(markets.marketsIds(), maxResults))
                         .build());
 
-        MarketCatalogues marketCatalogues = MarketCatalogues.parse(listMarketCatalogueJson());
+        MarketCatalogues marketCatalogues = MarketCatalogues.createMarketCatalogues(parse(listMarketCatalogueJson(), MarketCatalogue[].class));
         for (MarketCatalogue marketCatalogue : marketCatalogues) {
             System.out.println("marketCatalogue = " + marketCatalogue);
         }

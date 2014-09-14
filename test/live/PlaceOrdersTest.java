@@ -16,18 +16,19 @@ import static live.GenerateTestData.ListCurrentOrders.listCurrentOrdersJson;
 import static live.GenerateTestData.ListMarketCatalogue.listMarketCatalogueJson;
 import static live.GenerateTestData.PlaceOrders.placeOrdersJson;
 import static live.GenerateTestData.fileWriter;
+import static snowmonkey.meeno.JsonSerialization.parse;
 
 public class PlaceOrdersTest extends AbstractLiveTestCase {
     @Test
     public void test() throws Exception {
-        MarketCatalogue marketCatalogue = MarketCatalogues.parse(listMarketCatalogueJson()).iterator().next();
-        System.out.println(marketCatalogue);
+        MarketCatalogues markets = MarketCatalogues.createMarketCatalogues(JsonSerialization.parse(listMarketCatalogueJson(), MarketCatalogue[].class));
+        System.out.println(markets);
 
 //        LimitOrder limitOrder = new LimitOrder(2.00D, 1000, PersistenceType.LAPSE);
 //        PlaceInstruction placeLimitOrder = PlaceInstruction.createPlaceLimitOrder(marketCatalogue.runners.get(0).selectionId, Side.BACK, limitOrder);
 //        httpAccess.placeOrders(marketCatalogue.marketId, newArrayList(placeLimitOrder), CustomerRef.NONE, fileWriter(placeOrdersFile()));
 
-        PlaceExecutionReport placeInstructionReport = JsonSerialization.parse(placeOrdersJson(), PlaceExecutionReport.class);
+        PlaceExecutionReport placeInstructionReport = parse(placeOrdersJson(), PlaceExecutionReport.class);
 
         System.out.println("placeInstructionReport = " + placeInstructionReport);
 
@@ -35,7 +36,7 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
 
         httpAccess.listCurrentOrders(fileWriter(listCurrentOrdersFile()));
 
-        CurrentOrderSummaryReport currentOrders = JsonSerialization.parse(listCurrentOrdersJson(), CurrentOrderSummaryReport.class);
+        CurrentOrderSummaryReport currentOrders = parse(listCurrentOrdersJson(), CurrentOrderSummaryReport.class);
 
         for (CurrentOrderSummary currentOrder : currentOrders.currentOrders) {
             if (currentOrder.betId.equals(betId)) {

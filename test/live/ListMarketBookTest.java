@@ -1,16 +1,14 @@
 package live;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import org.junit.Test;
 import snowmonkey.meeno.HttpAccess;
+import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.requests.ListMarketBook;
 import snowmonkey.meeno.types.EventTypeName;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.Navigation;
 import snowmonkey.meeno.types.raw.*;
 
-import java.lang.reflect.Type;
 import java.time.LocalDate;
 
 import static com.google.common.collect.Iterables.limit;
@@ -19,7 +17,6 @@ import static java.time.ZonedDateTime.now;
 import static live.GenerateTestData.ListMarketBook.listMarketBookFile;
 import static live.GenerateTestData.ListMarketBook.listMarketBookJson;
 import static live.GenerateTestData.fileWriter;
-import static snowmonkey.meeno.JsonSerialization.gson;
 import static snowmonkey.meeno.types.raw.TimeRange.between;
 
 public class ListMarketBookTest extends AbstractLiveTestCase {
@@ -58,11 +55,10 @@ public class ListMarketBookTest extends AbstractLiveTestCase {
                 HttpAccess.EN_US
         ));
 
-        JsonElement jsonElement = new JsonParser().parse(listMarketBookJson());
+        MarketBook[] marketBooks = JsonSerialization.parse(listMarketBookJson(), MarketBook[].class);
 
-        MarketBook[] marketBooks = gson().fromJson(jsonElement, (Type) MarketBook[].class);
         for (MarketBook marketBook : marketBooks) {
-            System.out.println(marketBook.prettyPrint());
+            System.out.println(marketBook);
         }
     }
 
@@ -88,9 +84,7 @@ public class ListMarketBookTest extends AbstractLiveTestCase {
                 HttpAccess.EN_US
         ));
 
-        JsonElement jsonElement = new JsonParser().parse(listMarketBookJson());
-
-        MarketBook[] marketBooks = gson().fromJson(jsonElement, (Type) MarketBook[].class);
+        MarketBook[] marketBooks = JsonSerialization.parse(listMarketBookJson(), MarketBook[].class);
         for (MarketBook marketBook : marketBooks) {
             System.out.println(marketBook.prettyPrint());
         }

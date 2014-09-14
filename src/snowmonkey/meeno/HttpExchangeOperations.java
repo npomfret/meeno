@@ -5,10 +5,7 @@ import com.google.gson.JsonParser;
 import org.apache.http.StatusLine;
 import snowmonkey.meeno.types.MarketCatalogues;
 import snowmonkey.meeno.types.Navigation;
-import snowmonkey.meeno.types.raw.BetStatus;
-import snowmonkey.meeno.types.raw.ClearedOrderSummaryReport;
-import snowmonkey.meeno.types.raw.MarketProjection;
-import snowmonkey.meeno.types.raw.MarketSort;
+import snowmonkey.meeno.types.raw.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,7 +34,8 @@ public class HttpExchangeOperations implements ExchangeOperations {
         try {
             JsonProcessor processor = new JsonProcessor();
             httpAccess.listMarketCatalogue(processor, marketProjections, marketSort, maxResults, marketFilter);
-            return MarketCatalogues.parse(processor.json);
+            MarketCatalogue[] catalogues = JsonSerialization.parse(processor.json, MarketCatalogue[].class);
+            return MarketCatalogues.createMarketCatalogues(catalogues);
         } catch (IOException e) {
             throw new RuntimeEnvironmentException("listMarketCatalogue call failed", e);
         }
