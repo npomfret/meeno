@@ -89,13 +89,13 @@ public class JsonSerialization {
                         Object primitive = getPrimitive(jsonObject, aClass, name);
                         args[i] = constructor.newInstance(primitive);
                     } catch (Exception e) {
-                        throw new Defect("Cannot create " + aClass + " for '" + name + "'", e);
+                        throw new IllegalStateException("Cannot create " + aClass + " for '" + name + "'", e);
                     }
                 } else if (parameterType.isPrimitive()) {
                     try {
                         args[i] = getPrimitive(jsonObject, parameterType, name);
                     } catch (Exception e) {
-                        throw new Defect("Problem parsing " + name + " from " + jsonObject, e);
+                        throw new IllegalStateException("Problem parsing " + name + " from " + jsonObject, e);
                     }
                 } else if (jsonObject.get(name).isJsonArray()) {
                     try {
@@ -107,13 +107,13 @@ public class JsonSerialization {
                         }
                         args[i] = list;
                     } catch (JsonParseException e) {
-                        throw new Defect("Problem parsing " + parameterType.getName() + " named '" + name + "'", e);
+                        throw new IllegalStateException("Problem parsing " + parameterType.getName() + " named '" + name + "'", e);
                     }
                 } else {
                     try {
                         args[i] = context.deserialize(jsonObject.get(name), parameterType);
                     } catch (JsonParseException e) {
-                        throw new Defect("Problem parsing " + parameterType.getName() + " named '" + name + "'", e);
+                        throw new IllegalStateException("Problem parsing " + parameterType.getName() + " named '" + name + "'", e);
                     }
                 }
             }
@@ -121,7 +121,7 @@ public class JsonSerialization {
             try {
                 return t.cast(c.newInstance(args));
             } catch (Exception e) {
-                throw new Defect("Cannot create", e);
+                throw new IllegalStateException("Cannot create", e);
             }
         };
     }

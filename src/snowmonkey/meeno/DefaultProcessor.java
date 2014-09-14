@@ -35,7 +35,7 @@ public class DefaultProcessor {
                     }
 
                     if (!object.has("faultstring"))
-                        throw new Defect("Bad status code: " + statusLine.getStatusCode() + "\n" + IOUtils.toString(in));
+                        throw new IllegalStateException("Bad status code: " + statusLine.getStatusCode() + "\n" + IOUtils.toString(in));
 
                     String faultString = object.getAsJsonPrimitive("faultstring").getAsString();
 
@@ -50,7 +50,7 @@ public class DefaultProcessor {
             } catch (HttpException e) {
                 throw e;
             } catch (RuntimeException e) {
-                throw new Defect("Failed to parse: " + prettyPrintJson(parsed), e);
+                throw new IllegalStateException("Failed to parse: " + prettyPrintJson(parsed), e);
             }
 
             return prettyPrintJson(parsed);

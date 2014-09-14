@@ -3,7 +3,6 @@ package snowmonkey.meeno.types;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import snowmonkey.meeno.Defect;
 import snowmonkey.meeno.HttpAccess;
 import snowmonkey.meeno.types.raw.*;
 
@@ -105,7 +104,7 @@ public class MarketCatalogues implements Iterable<MarketCatalogue> {
 
                     markets.markets.put(marketId, marketCatalogue);
                 } catch (RuntimeException e) {
-                    throw new Defect("Cannot parse:\n" + printElement(jsonElement), e);
+                    throw new IllegalStateException("Cannot parse:\n" + printElement(jsonElement), e);
                 }
             }
         } catch (RuntimeException e) {
@@ -123,7 +122,7 @@ public class MarketCatalogues implements Iterable<MarketCatalogue> {
     public MarketCatalogue get(MarketId marketId) {
         MarketCatalogue marketCatalogue = markets.get(marketId);
         if (marketCatalogue == null) {
-            throw new Defect("There is no market for id '" + marketId + "'");
+            throw new IllegalStateException("There is no market for id '" + marketId + "'");
         }
         return marketCatalogue;
     }

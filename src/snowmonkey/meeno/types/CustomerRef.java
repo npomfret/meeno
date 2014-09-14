@@ -1,6 +1,5 @@
 package snowmonkey.meeno.types;
 
-import snowmonkey.meeno.Defect;
 
 import java.util.UUID;
 
@@ -23,7 +22,7 @@ public class CustomerRef extends MicroType<String> {
         CustomerRef customerRef = safeCustomerRef(value);
         String safe = customerRef.asString();
         if (!safe.equals(value)) {
-            throw new Defect("'" + value + "' is no a valid customer ref - see https://api.developer.betfair.com/services/webapps/docs/display/1smk3cen4v3lu3yomq5qye0ni/placeOrders");
+            throw new IllegalStateException("'" + value + "' is no a valid customer ref - see https://api.developer.betfair.com/services/webapps/docs/display/1smk3cen4v3lu3yomq5qye0ni/placeOrders");
         }
         return customerRef;
     }

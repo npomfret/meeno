@@ -1,7 +1,6 @@
 package snowmonkey.meeno.types;
 
 import com.google.gson.*;
-import snowmonkey.meeno.Defect;
 import snowmonkey.meeno.types.raw.Event;
 
 import java.util.Iterator;
@@ -33,7 +32,7 @@ public class Events implements Iterable<Event> {
 
                 events.add(event);
             } catch (RuntimeException e) {
-                throw new Defect("Cannot parse:\n" + printElement(jsonElement), e);
+                throw new IllegalStateException("Cannot parse:\n" + printElement(jsonElement), e);
             }
         }
 

@@ -3,7 +3,6 @@ package snowmonkey.meeno.types;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
-import snowmonkey.meeno.Defect;
 
 public class SessionToken extends MicroType<String> {
     public SessionToken(String token) {
@@ -16,7 +15,7 @@ public class SessionToken extends MicroType<String> {
             return new SessionToken(parsed.getAsJsonPrimitive("sessionToken").getAsString());
         } else {
             JsonPrimitive status = parsed.getAsJsonPrimitive("loginStatus");
-            throw new Defect("Login failed: " + status.getAsString() + "\n" + json);
+            throw new IllegalStateException("Login failed: " + status.getAsString() + "\n" + json);
         }
     }
 

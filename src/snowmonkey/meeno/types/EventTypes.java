@@ -3,7 +3,6 @@ package snowmonkey.meeno.types;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import snowmonkey.meeno.Defect;
 import snowmonkey.meeno.types.raw.EventType;
 
 import java.util.LinkedHashMap;
@@ -39,7 +38,7 @@ public class EventTypes {
     public EventType lookup(String eventName) {
         EventType eventType = eventTypesByName.get(eventName);
         if (eventName == null)
-            throw new Defect("There is no event named '" + eventName + "'");
+            throw new IllegalStateException("There is no event named '" + eventName + "'");
         return eventType;
     }
 }

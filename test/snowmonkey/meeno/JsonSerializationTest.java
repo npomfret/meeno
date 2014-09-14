@@ -66,7 +66,7 @@ public class JsonSerializationTest {
     }
 
     @Test
-    public void test() throws Exception {
+    public void canDeserializeStructuredComplexObjects() throws Exception {
         CurrentOrderSummaryReport currentOrders = JsonSerialization.parse(listCurrentOrdersJson(), CurrentOrderSummaryReport.class);
         CurrentOrderSummary order = currentOrders.currentOrders.iterator().next();
 

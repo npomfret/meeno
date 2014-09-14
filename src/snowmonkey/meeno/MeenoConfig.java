@@ -26,7 +26,7 @@ public class MeenoConfig {
                 properties.load(reader);
             }
         } catch (IOException e) {
-            throw new Defect("Cannot read config file " + file, e);
+            throw new IllegalStateException("Cannot read config file " + file, e);
         }
         return new MeenoConfig(properties);
     }

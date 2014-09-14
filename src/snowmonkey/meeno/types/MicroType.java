@@ -1,6 +1,5 @@
 package snowmonkey.meeno.types;
 
-import snowmonkey.meeno.Defect;
 
 public abstract class MicroType<T> {
     protected final T value;
@@ -9,7 +8,7 @@ public abstract class MicroType<T> {
         this.value = value;
 
         if (value == null)
-            throw new Defect("ValueType cannot be null");
+            throw new IllegalStateException("ValueType cannot be null");
     }
 
     @Override
