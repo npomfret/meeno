@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.commons.lang3.StringUtils;
 import snowmonkey.meeno.JsonSerialization;
+import snowmonkey.meeno.NotFoundException;
 import snowmonkey.meeno.types.raw.TimeRange;
 
 import java.time.ZonedDateTime;
@@ -63,13 +64,25 @@ public class Navigation {
     }
 
     public List<Navigation> events(EventTypeName eventTypeName) {
+        try {
+            Navigation topLevelEvent = eventType(eventTypeName);
+            return topLevelEvent.children();
+        } catch (NotFoundException e) {
+            return Collections.EMPTY_LIST;
+        }
+    }
+
+    public Navigation eventType(EventTypeName eventTypeName) throws NotFoundException {
+        Navigation topLevelEvent1 = null;
         for (Navigation topLevelEvent : getEventTypes()) {
             if (topLevelEvent.eventTypeName().equals(eventTypeName)) {
-                return topLevelEvent.children();
+                topLevelEvent1 = topLevelEvent;
             }
         }
 
-        return Collections.EMPTY_LIST;
+        if (topLevelEvent1 == null)
+            throw new NotFoundException("There is no event type with name '" + eventTypeName + "'");
+        return topLevelEvent1;
     }
 
     public String groupName() {
