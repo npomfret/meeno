@@ -22,8 +22,8 @@ public enum Exchange {
     public static final URI LOGIN_URI = URI.create("https://identitysso.betfair.com/api/certlogin");
     public static final URI LOGOUT_URI = URI.create("https://identitysso.betfair.com/api/logout");
 
-    public static final ExchangeId DEFAULT_EXCHANGE_ID = new ExchangeId("0");
-    public static final ExchangeId AUSTRALIAN_EXCHANGE_ID = new ExchangeId("1");
+    public static final ExchangeId DEFAULT_EXCHANGE_ID = new ExchangeId("1");
+    public static final ExchangeId AUSTRALIAN_EXCHANGE_ID = new ExchangeId("2");
 
     public static Exchange lookupByExchangeId(ExchangeId exchangeId) {
         if (exchangeId.equals(DEFAULT_EXCHANGE_ID))
