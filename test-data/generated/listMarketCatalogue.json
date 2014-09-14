@@ -1,26 +1,40 @@
 [
   {
-    "marketId": "1.115224805",
+    "marketId": "1.115387747",
     "marketName": "Match Odds",
-    "marketStartTime": "2014-09-16T18:45:00.000Z",
-    "totalMatched": 992.93,
+    "marketStartTime": "2014-09-17T15:00:00.000Z",
+    "description": {
+      "persistenceEnabled": true,
+      "bspMarket": false,
+      "marketTime": "2014-09-17T15:00:00.000Z",
+      "suspendTime": "2014-09-17T15:00:00.000Z",
+      "bettingType": "ODDS",
+      "turnInPlayEnabled": false,
+      "marketType": "MATCH_ODDS",
+      "marketBaseRate": 5.0,
+      "discountAllowed": true,
+      "wallet": "UK wallet",
+      "rules": "<br><a href=\"http://www.stats.betradar.com/statistics/betfaircom/?language=en\" target=\"_blank\"><img src=\"http://content-cache.betfair.com/images/en_GB/mr_fg.gif\" title=\"Form Guide\" border=\"0\"></a><a href=\"http://www.livescore.betradar.com/?alias=betfair&language=en\" target=\"_blank\"><img src=\"http://content-cache.betfair.com/images/en_GB/mr_ls.gif\" title=\"Live Scores\" border=\"0\"></a><br><br><b>Market Information</b><br><br>For further information please see <a href=http://content.betfair.com/aboutus/content.asp?sWhichKey=Rules%20and%20Regulations#undefined.do style=color:0163ad; text-decoration: underline; target=_blank>Rules & Regs</a>.<br><br>Predict the result of this match. <b><font color=red> All bets apply to Full Time according to the match officials, plus any stoppage time.  Extra-time/penalty shoot-outs are not included.</b></font><br><br> <b><font color=blue>If this market is re-opened for In-Play betting, </b></font> unmatched bets will be cancelled at kick off and the market turned in play. The market will be suspended if it appears that a goal has been scored, a penalty will be given, or a red card will be shown. With the exception of bets for which the \"keep\" option has been selected, unmatched bets will be cancelled in the event of a confirmed goal or sending off. Please note that should our data feeds fail we may be unable to manage this game in-play. <br><br>Customers should be aware that:<b><br><br><li>Transmissions described as “live” by some broadcasters may actually be delayed</li><br><li>The extent of any such delay may vary, depending on the set-up through which they are receiving pictures or data.</b><br><br> If this market is scheduled to go in-play, but due to unforeseen circumstances we are unable to offer the market in-play, then this market will be re-opened for the half-time interval and suspended again an hour after the scheduled kick-off time.  Whilst it is our intention to re-open this market for the half-time interval, in certain circumstances this may not always be possible.<br>",
+      "rulesHasDate": true
+    },
+    "totalMatched": 0.0,
     "runners": [
       {
-        "selectionId": 2436,
-        "runnerName": "Galatasaray",
+        "selectionId": 3377768,
+        "runnerName": "Ukraine (W)",
         "handicap": 0.0,
         "sortPriority": 1,
         "metadata": {
-          "runnerId": "70012704"
+          "runnerId": "70560318"
         }
       },
       {
-        "selectionId": 58163,
-        "runnerName": "Anderlecht",
+        "selectionId": 3071928,
+        "runnerName": "Wales (W)",
         "handicap": 0.0,
         "sortPriority": 2,
         "metadata": {
-          "runnerId": "70012705"
+          "runnerId": "70560319"
         }
       },
       {
@@ -29,147 +43,7 @@
         "handicap": 0.0,
         "sortPriority": 3,
         "metadata": {
-          "runnerId": "70012706"
-        }
-      }
-    ]
-  },
-  {
-    "marketId": "1.115224686",
-    "marketName": "Match Odds",
-    "marketStartTime": "2014-09-16T18:45:00.000Z",
-    "totalMatched": 19597.79,
-    "runners": [
-      {
-        "selectionId": 113144,
-        "runnerName": "Benfica",
-        "handicap": 0.0,
-        "sortPriority": 1,
-        "metadata": {
-          "runnerId": "70012410"
-        }
-      },
-      {
-        "selectionId": 197960,
-        "runnerName": "Zenit St Petersburg",
-        "handicap": 0.0,
-        "sortPriority": 2,
-        "metadata": {
-          "runnerId": "70012411"
-        }
-      },
-      {
-        "selectionId": 58805,
-        "runnerName": "The Draw",
-        "handicap": 0.0,
-        "sortPriority": 3,
-        "metadata": {
-          "runnerId": "70012412"
-        }
-      }
-    ]
-  },
-  {
-    "marketId": "1.115221235",
-    "marketName": "Match Odds",
-    "marketStartTime": "2014-09-16T18:45:00.000Z",
-    "totalMatched": 5954.82,
-    "runners": [
-      {
-        "selectionId": 56323,
-        "runnerName": "Liverpool",
-        "handicap": 0.0,
-        "sortPriority": 1,
-        "metadata": {
-          "runnerId": "70003623"
-        }
-      },
-      {
-        "selectionId": 5112599,
-        "runnerName": "Ludogorets",
-        "handicap": 0.0,
-        "sortPriority": 2,
-        "metadata": {
-          "runnerId": "70003624"
-        }
-      },
-      {
-        "selectionId": 58805,
-        "runnerName": "The Draw",
-        "handicap": 0.0,
-        "sortPriority": 3,
-        "metadata": {
-          "runnerId": "70003625"
-        }
-      }
-    ]
-  },
-  {
-    "marketId": "1.115221112",
-    "marketName": "Match Odds",
-    "marketStartTime": "2014-09-16T18:45:00.000Z",
-    "totalMatched": 15369.81,
-    "runners": [
-      {
-        "selectionId": 2423,
-        "runnerName": "Juventus",
-        "handicap": 0.0,
-        "sortPriority": 1,
-        "metadata": {
-          "runnerId": "70003320"
-        }
-      },
-      {
-        "selectionId": 50044,
-        "runnerName": "Malmo",
-        "handicap": 0.0,
-        "sortPriority": 2,
-        "metadata": {
-          "runnerId": "70003323"
-        }
-      },
-      {
-        "selectionId": 58805,
-        "runnerName": "The Draw",
-        "handicap": 0.0,
-        "sortPriority": 3,
-        "metadata": {
-          "runnerId": "70003324"
-        }
-      }
-    ]
-  },
-  {
-    "marketId": "1.115224925",
-    "marketName": "Match Odds",
-    "marketStartTime": "2014-09-16T18:45:00.000Z",
-    "totalMatched": 45048.08,
-    "runners": [
-      {
-        "selectionId": 44785,
-        "runnerName": "Dortmund",
-        "handicap": 0.0,
-        "sortPriority": 1,
-        "metadata": {
-          "runnerId": "70013001"
-        }
-      },
-      {
-        "selectionId": 1096,
-        "runnerName": "Arsenal",
-        "handicap": 0.0,
-        "sortPriority": 2,
-        "metadata": {
-          "runnerId": "70013002"
-        }
-      },
-      {
-        "selectionId": 58805,
-        "runnerName": "The Draw",
-        "handicap": 0.0,
-        "sortPriority": 3,
-        "metadata": {
-          "runnerId": "70013003"
+          "runnerId": "70560320"
         }
       }
     ]

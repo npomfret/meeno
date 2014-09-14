@@ -4,6 +4,8 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 import snowmonkey.meeno.types.raw.*;
 
+import java.time.ZonedDateTime;
+
 import static live.GenerateTestData.ListMarketCatalogue.listMarketCatalogueJson;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -14,9 +16,14 @@ public class ListMarketCatalogueTest {
     @Test
     public void test() throws Exception {
         MarketCatalogues markets = createMarketCatalogues(parse(listMarketCatalogueJson(), MarketCatalogue[].class));
-        MarketId marketId = new MarketId("1.112645443");
+
+        MarketId marketId = new MarketId("1.115387747");
         MarketCatalogue marketCatalogue = markets.get(marketId);
 
+        assertThat(marketCatalogue.marketStartTime, equalTo(ZonedDateTime.now()));
+        assertThat(marketCatalogue.marketId, equalTo(marketId));
+        assertThat(marketCatalogue.marketName, equalTo("Caracas +1"));
+        assertThat(marketCatalogue.eventType, equalTo(new EventType(new EventTypeId("1"), "Soccer")));
         assertThat(marketCatalogue.competition, equalTo(new Competition(new CompetitionId("62815"), "Copa Libertadores")));
         assertThat(marketCatalogue.description, equalTo(new MarketDescription(
                 true,
@@ -35,9 +42,6 @@ public class ListMarketCatalogueTest {
                 true,
                 null)));
         assertThat(marketCatalogue.event, equalTo(new Event("27140610", "Lanus v Caracas", "AR", "GMT", null, new DateTime("2014-02-07T01:00:00.000Z"))));
-        assertThat(marketCatalogue.eventType, equalTo(new EventType(new EventTypeId("1"), "Soccer")));
-        assertThat(marketCatalogue.marketId, equalTo(marketId));
-        assertThat(marketCatalogue.marketName, equalTo("Caracas +1"));
         assertThat(marketCatalogue.runners.size(), equalTo(3));
         assertThat(marketCatalogue.runners.get(0), equalTo(new RunnerCatalog(new SelectionId(7039291L), "Caracas +1", 0.0d)));
         assertThat(marketCatalogue.runners.get(1), equalTo(new RunnerCatalog(new SelectionId(6747604L), "Lanus -1", 0.0d)));

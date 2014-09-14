@@ -36,7 +36,7 @@ public class ListMarketCatalogueTest extends AbstractLiveTestCase {
         Navigation.Markets markets = navigation.findMarkets(
                 EventTypeName.SOCCER,
                 between(from, from.plusDays(3)),
-                "Correct Score*"
+                "Match Odds*"
         );
 
         int i = 0;
