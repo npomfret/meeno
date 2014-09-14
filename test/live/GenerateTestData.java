@@ -43,10 +43,6 @@ public class GenerateTestData {
 
 //            MarketCatalogues marketCatalogues = generateTestData.listMarketCatalogue(soccer, markets.marketsIds());
 
-
-//            generateTestData.placeOrders();
-//            generateTestData.listCurrentOrders();
-//            generateTestData.cancelOrders();
 //        generateTestData.listMarketTypes();
 //        generateTestData.listTimeRanges();
 //            generateTestData.accountDetails();

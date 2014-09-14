@@ -1,5 +1,6 @@
 package snowmonkey.meeno;
 
+import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -45,10 +46,7 @@ import java.net.URI;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 import static com.google.common.collect.Sets.newHashSet;
 import static snowmonkey.meeno.MarketFilterBuilder.noFilter;
@@ -85,7 +83,7 @@ public class HttpAccess {
         this.auditors.add(auditor);
     }
 
-    public void cancelOrders(MarketId marketId, List<CancelInstruction> cancelInstructions, Processor processor) throws IOException, ApiException {
+    public void cancelOrders(MarketId marketId, Collection<CancelInstruction> cancelInstructions, Processor processor) throws IOException, ApiException {
         PayloadBuilder payloadBuilder = new PayloadBuilder();
         payloadBuilder.addMarketId(marketId);
         payloadBuilder.addCancelInstructions(cancelInstructions);
@@ -450,8 +448,8 @@ public class HttpAccess {
             map.put("priceProjection", priceProjection);
         }
 
-        public void addCancelInstructions(List<CancelInstruction> cancelInstructions) {
-            map.put("instructions", cancelInstructions);
+        public void addCancelInstructions(Collection<CancelInstruction> cancelInstructions) {
+            map.put("instructions", ImmutableList.copyOf(cancelInstructions));
         }
 
         @Deprecated//apprarently
