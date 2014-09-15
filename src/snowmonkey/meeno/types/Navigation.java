@@ -1,12 +1,15 @@
 package snowmonkey.meeno.types;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.commons.lang3.StringUtils;
+import snowmonkey.meeno.Exchange;
 import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.NotFoundException;
 import snowmonkey.meeno.types.raw.TimeRange;
@@ -242,6 +245,15 @@ public class Navigation {
                 builder.put(market.id, market);
             }
             this.markets = builder.build();
+        }
+
+        public Multimap<Exchange, MarketId> marketIdsByExchange() {
+            Multimap<Exchange, MarketId> idsByExchange = ArrayListMultimap.create();
+            markets.values().stream().forEach(m -> {
+                Exchange exchange = Exchange.lookupByExchangeId(m.exchangeId);
+                idsByExchange.put(exchange, m.id);
+            });
+            return idsByExchange;
         }
 
         @Override
