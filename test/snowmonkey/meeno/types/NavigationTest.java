@@ -48,12 +48,11 @@ public class NavigationTest {
         Navigation.Markets markets = navigation.findMarkets(
                 SOCCER,
                 between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(1)),
-                "Match Odds"
+                "Correct Score.*"
         );
 
         for (Navigation.Market market : markets) {
-            System.out.println("market = " + market);
-            System.out.println(market.group().printHierarchy());
+            System.out.println(market.printHierarchy());
         }
     }
 }
