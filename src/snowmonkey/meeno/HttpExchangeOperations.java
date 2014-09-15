@@ -1,7 +1,5 @@
 package snowmonkey.meeno;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import org.apache.http.StatusLine;
 import snowmonkey.meeno.types.MarketCatalogues;
 import snowmonkey.meeno.types.MarketId;
@@ -10,15 +8,11 @@ import snowmonkey.meeno.types.raw.*;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Type;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static snowmonkey.meeno.JsonSerialization.gson;
 import static snowmonkey.meeno.JsonSerialization.parse;
 import static snowmonkey.meeno.types.raw.MarketProjection.allMarketProjections;
-import static snowmonkey.meeno.types.raw.TimeRange.between;
 
 public class HttpExchangeOperations implements ExchangeOperations {
 
@@ -52,28 +46,6 @@ public class HttpExchangeOperations implements ExchangeOperations {
         } catch (IOException e) {
             throw new RuntimeEnvironmentException("navigation call failed", e);
         }
-    }
-
-    public ClearedOrderSummaryReports clearedOrders() throws ApiException {
-        try {
-            JsonProcessor processor = new JsonProcessor();
-
-            httpAccess.listClearedOrders(processor,
-                    BetStatus.SETTLED,
-                    between(ZonedDateTime.now().minusDays(7), ZonedDateTime.now())
-            );
-
-            JsonElement jsonElement = new JsonParser().parse(processor.json).getAsJsonObject().get("clearedOrders");
-            ClearedOrderSummaryReport[] clearedOrderSummaryReport = gson().fromJson(jsonElement, (Type) ClearedOrderSummaryReport[].class);
-            return ClearedOrderSummaryReports.create(clearedOrderSummaryReport);
-        } catch (IOException e) {
-            throw new RuntimeEnvironmentException("listClearedOrders call failed", e);
-        }
-    }
-
-    public MarketBook marketBook(MarketId marketId) throws ApiException, NotFoundException {
-        MarketBooks marketBooks = marketBooks(newArrayList(marketId));
-        return marketBooks.get(marketId);
     }
 
     public MarketBooks marketBooks(MarketId marketIds) throws ApiException {

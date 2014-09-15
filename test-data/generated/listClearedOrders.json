@@ -2,22 +2,18 @@
   "clearedOrders": [
     {
       "eventTypeId": "1",
-      "eventId": "27256514",
-      "marketId": "1.115212810",
-      "selectionId": 15298,
+      "eventId": "27266646",
+      "marketId": "1.115469179",
+      "selectionId": 58805,
       "handicap": 0.0,
-      "betId": "40855372348",
-      "placedDate": "2014-09-05T12:01:58.000Z",
+      "betId": "41207247339",
+      "placedDate": "2014-09-15T15:21:23.000Z",
       "persistenceType": "LAPSE",
       "orderType": "LIMIT",
-      "side": "LAY",
-      "priceRequested": 1.01,
-      "settledDate": "2014-09-05T12:19:36.000Z",
-      "betCount": 1,
-      "priceMatched": 1.01,
-      "priceReduced": false,
-      "sizeSettled": 2.0,
-      "profit": -0.02
+      "side": "BACK",
+      "priceRequested": 1000.0,
+      "settledDate": "2014-09-15T15:24:02.000Z",
+      "sizeCancelled": 2.0
     }
   ],
   "moreAvailable": false

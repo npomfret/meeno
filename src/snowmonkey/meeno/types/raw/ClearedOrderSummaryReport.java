@@ -1,5 +1,6 @@
 package snowmonkey.meeno.types.raw;
 
+import org.jetbrains.annotations.Nullable;
 import snowmonkey.meeno.types.*;
 
 import java.time.ZonedDateTime;
@@ -18,15 +19,19 @@ public class ClearedOrderSummaryReport extends ImmutbleType {
     public final ItemDescription itemDescription;
     public final Price priceRequested;
     public final ZonedDateTime settledDate;
-    public final int betCount;
+    public final Integer betCount;
     public final Size commission;
     public final Price priceMatched;
-    public final boolean priceReduced;
+    public final Boolean priceReduced;
     public final Size sizeSettled;
     public final Size profit;
     public final Size sizeCancelled;
 
-    public ClearedOrderSummaryReport(EventTypeId eventTypeId, EventId eventId, MarketId marketId, SelectionId selectionId, Handicap handicap, BetId betId, ZonedDateTime placedDate, PersistenceType persistenceType, OrderType orderType, Side side, ItemDescription itemDescription, Price priceRequested, ZonedDateTime settledDate, int betCount, Size commission, Price priceMatched, boolean priceReduced, Size sizeSettled, Size profit, Size sizeCancelled) {
+    public ClearedOrderSummaryReport(EventTypeId eventTypeId, EventId eventId, MarketId marketId, SelectionId selectionId,
+                                     Handicap handicap, BetId betId, ZonedDateTime placedDate, PersistenceType persistenceType,
+                                     OrderType orderType, Side side, ItemDescription itemDescription, Price priceRequested,
+                                     ZonedDateTime settledDate, @Nullable Integer betCount, @Nullable Size commission, @Nullable Price priceMatched,
+                                     @Nullable Boolean priceReduced, @Nullable Size sizeSettled, @Nullable Size profit, @Nullable Size sizeCancelled) {
         this.eventTypeId = eventTypeId;
         this.eventId = eventId;
         this.marketId = marketId;

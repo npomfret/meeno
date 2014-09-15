@@ -12,6 +12,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class JsonSerialization {
@@ -124,7 +125,7 @@ public class JsonSerialization {
             try {
                 return t.cast(c.newInstance(args));
             } catch (Exception e) {
-                throw new IllegalStateException("Cannot create", e);
+                throw new IllegalStateException("Cannot create " + type + " with args " + Arrays.toString(args), e);
             }
         };
     }

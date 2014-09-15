@@ -31,7 +31,7 @@ public class ListClearedOrdersTest extends AbstractLiveTestCase {
     public void canGetCancelledOrders() throws Exception {
 
         httpAccess.listClearedOrders(fileWriter(listClearedOrdersFile()),
-                BetStatus.CANCELLED,
+                BetStatus.LAPSED,
                 between(now().minusMonths(3), now())
         );
 
