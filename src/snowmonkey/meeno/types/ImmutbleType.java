@@ -1,11 +1,17 @@
 package snowmonkey.meeno.types;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializer;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import snowmonkey.meeno.JsonSerialization;
 
-import static snowmonkey.meeno.JsonSerialization.gson;
+import java.time.ZonedDateTime;
+
+import static java.time.format.DateTimeFormatter.ISO_INSTANT;
 
 public abstract class ImmutbleType {
     @Override
@@ -24,6 +30,11 @@ public abstract class ImmutbleType {
     }
 
     public String prettyPrint() {
-        return gson().toJson(this);
+        return new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(ZonedDateTime.class, (JsonSerializer<ZonedDateTime>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(ISO_INSTANT.format(src)))
+                .setDateFormat(JsonSerialization.DATE_FORMAT)
+                .create()
+                .toJson(this);
     }
 }
