@@ -159,7 +159,21 @@ public class HttpAccess {
     }
 
     public void listClearedOrders(Processor processor, BetStatus betStatus, TimeRange between) throws IOException, ApiException {
-        ListClearedOrders request = new ListClearedOrders(betStatus, null, null, null, null, null, null, between, null, null, EN_US, 0, 999);
+        ListClearedOrders request = new ListClearedOrders(
+                betStatus,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                between,
+                null,
+                null,
+                EN_US,
+                0,
+                0
+        );
 
         listClearedOrders(processor, request);
     }

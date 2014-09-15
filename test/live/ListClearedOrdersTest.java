@@ -14,10 +14,24 @@ import static snowmonkey.meeno.types.raw.TimeRange.between;
 
 public class ListClearedOrdersTest extends AbstractLiveTestCase {
     @Test
-    public void test() throws Exception {
+    public void canGetSettledOrders() throws Exception {
 
         httpAccess.listClearedOrders(fileWriter(listClearedOrdersFile()),
                 BetStatus.SETTLED,
+                between(now().minusMonths(3), now())
+        );
+
+        ClearedOrderSummary clearedOrderSummaryReport = JsonSerialization.parse(listClearedOrdersJson(), ClearedOrderSummary.class);
+        for (ClearedOrderSummaryReport orderSummaryReport : clearedOrderSummaryReport.clearedOrders) {
+            System.out.println("clearedOrderSummaryReport = " + orderSummaryReport);
+        }
+    }
+
+    @Test
+    public void canGetCancelledOrders() throws Exception {
+
+        httpAccess.listClearedOrders(fileWriter(listClearedOrdersFile()),
+                BetStatus.CANCELLED,
                 between(now().minusMonths(3), now())
         );
 

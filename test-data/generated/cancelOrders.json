@@ -1,13 +1,13 @@
 {
-    "status": "SUCCESS",
-    "marketId": "1.112643860",
-    "instructionReports": [
-        {
-            "status": "SUCCESS",
-            "instruction": {
-                "betId": "34017131399"
-            },
-            "sizeCancelled": 2.0
-        }
-    ]
+  "status": "SUCCESS",
+  "marketId": "1.115444799",
+  "instructionReports": [
+    {
+      "status": "SUCCESS",
+      "instruction": {
+        "betId": "41206731612"
+      },
+      "sizeCancelled": 2.0
+    }
+  ]
 }
