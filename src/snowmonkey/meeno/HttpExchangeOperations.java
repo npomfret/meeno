@@ -48,6 +48,11 @@ public class HttpExchangeOperations implements ExchangeOperations {
         }
     }
 
+    public MarketBook marketBook(MarketId marketId) throws ApiException, NotFoundException {
+        MarketBooks marketBooks = marketBooks(newArrayList(marketId));
+        return marketBooks.get(marketId);
+    }
+
     public MarketBooks marketBooks(MarketId marketIds) throws ApiException {
         return marketBooks(newArrayList(marketIds));
     }
