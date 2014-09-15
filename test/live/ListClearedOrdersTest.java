@@ -1,18 +1,15 @@
 package live;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import org.junit.Test;
+import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.types.raw.BetStatus;
+import snowmonkey.meeno.types.raw.ClearedOrderSummary;
 import snowmonkey.meeno.types.raw.ClearedOrderSummaryReport;
-
-import java.lang.reflect.Type;
 
 import static java.time.ZonedDateTime.now;
 import static live.GenerateTestData.ListCleanedOrders.listClearedOrdersFile;
 import static live.GenerateTestData.ListCleanedOrders.listClearedOrdersJson;
 import static live.GenerateTestData.fileWriter;
-import static snowmonkey.meeno.JsonSerialization.gson;
 import static snowmonkey.meeno.types.raw.TimeRange.between;
 
 public class ListClearedOrdersTest extends AbstractLiveTestCase {
@@ -21,13 +18,11 @@ public class ListClearedOrdersTest extends AbstractLiveTestCase {
 
         httpAccess.listClearedOrders(fileWriter(listClearedOrdersFile()),
                 BetStatus.SETTLED,
-                between(now().minusDays(7), now())
+                between(now().minusMonths(3), now())
         );
 
-        JsonElement jsonElement = new JsonParser().parse(listClearedOrdersJson()).getAsJsonObject().get("clearedOrders");
-
-        ClearedOrderSummaryReport[] clearedOrderSummaryReport = gson().fromJson(jsonElement, (Type) ClearedOrderSummaryReport[].class);
-        for (ClearedOrderSummaryReport orderSummaryReport : clearedOrderSummaryReport) {
+        ClearedOrderSummary clearedOrderSummaryReport = JsonSerialization.parse(listClearedOrdersJson(), ClearedOrderSummary.class);
+        for (ClearedOrderSummaryReport orderSummaryReport : clearedOrderSummaryReport.clearedOrders) {
             System.out.println("clearedOrderSummaryReport = " + orderSummaryReport);
         }
     }
