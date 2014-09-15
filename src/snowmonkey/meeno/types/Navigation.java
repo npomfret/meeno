@@ -303,12 +303,40 @@ public class Navigation {
         }
 
         public Navigation group() {
+            return findNearestAncestor(Type.GROUP);
+        }
+
+        public Navigation event() {
+            return findNearestAncestor(Type.EVENT);
+        }
+
+        private Navigation findNearestAncestor(Type type) {
             Navigation node = parent;
-            while (node.type.equals(Type.GROUP)) {
+
+            while (node.parent != null) {
                 node = node.parent;
 
-                if (node == null)
-                    throw new IllegalStateException(this + " does not have a group");
+                if (node.type.equals(type))
+                    break;
+            }
+
+            return node;
+        }
+
+        public Navigation topGroup() {
+            return findMostDistantAncestor(Type.GROUP);
+        }
+
+        public Navigation topEvent() {
+            return findMostDistantAncestor(Type.EVENT);
+        }
+
+        private Navigation findMostDistantAncestor(Type type) {
+            Navigation node = parent;
+
+            while (node.parent != null) {
+                if (node.parent.type.equals(type))
+                    node = node.parent;
             }
 
             return node;
