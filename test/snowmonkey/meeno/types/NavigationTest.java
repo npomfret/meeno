@@ -1,8 +1,10 @@
 package snowmonkey.meeno.types;
 
 import live.GenerateTestData;
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
+import java.nio.file.Paths;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -62,5 +64,25 @@ public class NavigationTest {
         for (String name : names) {
             System.out.println("name = " + name);
         }
+    }
+
+    @Test
+    public void testSiblings() throws Exception {
+//        Navigation navigation = Navigation.parse(GenerateTestData.GetNavigation.getNavigationJson());
+        Navigation navigation = Navigation.parse(FileUtils.readFileToString(Paths.get("/Users/nickpomfret/Documents/github/projects/betfair/cache/navigation/navigation.json").toFile()));
+        Navigation.Markets markets = navigation.findMarkets(
+                SOCCER,
+                between(ZonedDateTime.now().minusDays(10), ZonedDateTime.now().plusDays(20)),
+                "Match Odds"
+        );
+        Navigation.Market market = markets.get(new MarketId("1.115333855"));
+        System.out.println(market);
+        Navigation group = market.group();
+        System.out.println(group);
+        Navigation.Markets siblingMarkets = market.findSiblingMarkets("Correct Score.*");
+        for (Navigation.Market siblingMarket : siblingMarkets) {
+            System.out.println(siblingMarket.printHierarchy());
+        }
+
     }
 }
