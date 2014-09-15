@@ -314,13 +314,12 @@ public class Navigation {
             Navigation node = parent;
 
             while (node.parent != null) {
-                node = node.parent;
-
                 if (node.type.equals(type))
-                    break;
+                    return node;
+                node = node.parent;
             }
 
-            return node;
+            throw new IllegalStateException("Could not find a " + type + " ancestor");
         }
 
         public Navigation topGroup() {
@@ -333,13 +332,15 @@ public class Navigation {
 
         private Navigation findMostDistantAncestor(Type type) {
             Navigation node = parent;
+            Navigation found = null;
 
-            while (node.parent != null) {
-                if (node.parent.type.equals(type))
-                    node = node.parent;
+            while (node != null) {
+                if (node.type.equals(type) && node.parent != null)
+                    found = node;
+                node = node.parent;
             }
 
-            return node;
+            return found;
         }
 
         public EventTypeId eventTypeId() {
