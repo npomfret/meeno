@@ -12,7 +12,7 @@ import java.util.List;
 public final class MarketBook extends ImmutbleType {
     public final MarketId marketId;
     public final Boolean isMarketDataDelayed;
-    public final String status;
+    public final MarketStatus status;
     public final int betDelay;
     public final Boolean bspReconciled;
     public final Boolean complete;
@@ -28,7 +28,7 @@ public final class MarketBook extends ImmutbleType {
     public final Long version;
     public final ImmutableList<Runner> runners;
 
-    public MarketBook(MarketId marketId, Boolean isMarketDataDelayed, String status, int betDelay, Boolean bspReconciled, Boolean complete, Boolean inplay, int numberOfWinners, int numberOfRunners, int numberOfActiveRunners, Date lastMatchTime, Double totalMatched, Double totalAvailable, Boolean crossMatching, Boolean runnersVoidable, Long version, List<Runner> runners) {
+    public MarketBook(MarketId marketId, Boolean isMarketDataDelayed, MarketStatus status, int betDelay, Boolean bspReconciled, Boolean complete, Boolean inplay, int numberOfWinners, int numberOfRunners, int numberOfActiveRunners, Date lastMatchTime, Double totalMatched, Double totalAvailable, Boolean crossMatching, Boolean runnersVoidable, Long version, List<Runner> runners) {
         this.marketId = marketId;
         this.isMarketDataDelayed = isMarketDataDelayed;
         this.status = status;

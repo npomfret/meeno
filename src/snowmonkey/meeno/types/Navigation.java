@@ -25,8 +25,8 @@ import java.util.stream.Collectors;
 import static com.google.common.collect.Lists.newArrayList;
 
 public class Navigation {
-    private final Navigation parent;
-    private final Type type;
+    public final Navigation parent;
+    public final Type type;
     private final String id;
     private final String name;
     private final JsonArray children;
@@ -320,27 +320,6 @@ public class Navigation {
             }
 
             throw new IllegalStateException("Could not find a " + type + " ancestor");
-        }
-
-        public Navigation topGroup() {
-            return findMostDistantAncestor(Type.GROUP);
-        }
-
-        public Navigation topEvent() {
-            return findMostDistantAncestor(Type.EVENT);
-        }
-
-        private Navigation findMostDistantAncestor(Type type) {
-            Navigation node = parent;
-            Navigation found = null;
-
-            while (node != null) {
-                if (node.type.equals(type) && node.parent != null)
-                    found = node;
-                node = node.parent;
-            }
-
-            return found;
         }
 
         public EventTypeId eventTypeId() {
