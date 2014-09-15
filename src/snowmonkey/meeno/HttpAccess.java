@@ -17,6 +17,7 @@ import org.apache.http.config.ConnectionConfig;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.config.SocketConfig;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -384,7 +385,6 @@ public class HttpAccess {
         }
     }
 
-
     private static SSLConnectionSocketFactory socketFactory(File certFile, String certPassword) throws Exception {
         SSLContext ctx = SSLContext.getInstance("TLS");
         KeyStore keyStore = KeyStore.getInstance("pkcs12");
@@ -397,11 +397,16 @@ public class HttpAccess {
     }
 
     private String processResponse(Processor processor, CloseableHttpClient httpClient, HttpUriRequest httpPost) throws IOException, ApiException {
+        long start = System.currentTimeMillis();
+
         try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
             HttpEntity entity = response.getEntity();
             try (InputStream inputStream = entity.getContent()) {
                 return processor.process(response.getStatusLine(), inputStream);
             }
+        } catch (ConnectTimeoutException e) {
+            long time = (System.currentTimeMillis() - start);
+            throw new IOException("Connection timed out after " + time + "ms", e);
         }
     }
 
