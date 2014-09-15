@@ -4,7 +4,9 @@ import live.GenerateTestData;
 import org.junit.Test;
 
 import java.time.ZonedDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
@@ -45,14 +47,20 @@ public class NavigationTest {
     public void testFind() throws Exception {
         Navigation navigation = Navigation.parse(GenerateTestData.GetNavigation.getNavigationJson());
 
+        Set<String> names = new HashSet<>();
         Navigation.Markets markets = navigation.findMarkets(
                 SOCCER,
-                between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(1)),
+                between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(20)),
                 "Correct Score.*"
         );
 
         for (Navigation.Market market : markets) {
+            names.add(market.name);
             System.out.println(market.printHierarchy());
+        }
+
+        for (String name : names) {
+            System.out.println("name = " + name);
         }
     }
 }
