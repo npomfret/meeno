@@ -71,11 +71,16 @@ public class HttpExchangeOperations implements ExchangeOperations {
         }
     }
 
-    public MarketBooks marketBook(MarketId marketIds) throws ApiException {
-        return marketBook(newArrayList(marketIds));
+    public MarketBook marketBook(MarketId marketId) throws ApiException, NotFoundException {
+        MarketBooks marketBooks = marketBooks(newArrayList(marketId));
+        return marketBooks.get(marketId);
     }
 
-    public MarketBooks marketBook(Iterable<MarketId> marketIds) throws ApiException {
+    public MarketBooks marketBooks(MarketId marketIds) throws ApiException {
+        return marketBooks(newArrayList(marketIds));
+    }
+
+    public MarketBooks marketBooks(Iterable<MarketId> marketIds) throws ApiException {
         try {
             JsonProcessor processor = new JsonProcessor();
 

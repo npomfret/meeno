@@ -1,13 +1,14 @@
 package snowmonkey.meeno.types.raw;
 
 import com.google.common.collect.ImmutableMap;
+import snowmonkey.meeno.NotFoundException;
 import snowmonkey.meeno.types.ImmutbleType;
 import snowmonkey.meeno.types.MarketId;
 
 import java.util.Iterator;
 
 public final class MarketBooks extends ImmutbleType implements Iterable<MarketBook> {
-    private final ImmutableMap<MarketId, MarketBook> marketBooks;
+    public final ImmutableMap<MarketId, MarketBook> marketBooks;
 
     public MarketBooks(ImmutableMap<MarketId, MarketBook> marketBooks) {
         this.marketBooks = marketBooks;
@@ -26,5 +27,13 @@ public final class MarketBooks extends ImmutbleType implements Iterable<MarketBo
     @Override
     public Iterator<MarketBook> iterator() {
         return marketBooks.values().iterator();
+    }
+
+    public MarketBook get(MarketId marketId) throws NotFoundException {
+        MarketBook marketBook = marketBooks.get(marketId);
+        if (marketBook == null)
+            throw new NotFoundException("There is no market book with id " + marketId);
+
+        return marketBook;
     }
 }

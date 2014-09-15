@@ -27,7 +27,7 @@ public class GetResultsTest extends AbstractLiveTestCase {
         Navigation.Markets markets = navigation.findMarkets(SOCCER, timeRange, "Match Odds*");
         for (Navigation.Market market : markets) {
             Navigation.Market correctScoreMarkets = market.findSiblingMarkets("Correct Score*").iterator().next();
-            MarketBooks marketBooks = httpExchangeOperations.marketBook(correctScoreMarkets.id);
+            MarketBooks marketBooks = httpExchangeOperations.marketBooks(correctScoreMarkets.id);
             System.out.println(marketBooks.iterator().next());
         }
 

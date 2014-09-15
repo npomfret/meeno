@@ -26,5 +26,4 @@ public abstract class ImmutbleType {
     public String prettyPrint() {
         return gson().toJson(this);
     }
-
 }

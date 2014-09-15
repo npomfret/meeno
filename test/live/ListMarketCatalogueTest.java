@@ -3,6 +3,7 @@ package live;
 import com.google.common.collect.Iterables;
 import org.junit.Test;
 import snowmonkey.meeno.MarketFilterBuilder;
+import snowmonkey.meeno.NotFoundException;
 import snowmonkey.meeno.types.*;
 import snowmonkey.meeno.types.raw.MarketCatalogue;
 import snowmonkey.meeno.types.raw.MarketSort;
@@ -21,8 +22,25 @@ import static snowmonkey.meeno.types.raw.MarketProjection.*;
 import static snowmonkey.meeno.types.raw.TimeRange.between;
 
 public class ListMarketCatalogueTest extends AbstractLiveTestCase {
+
+    @Test(expected = NotFoundException.class)
+    public void willBlowUpIfMarketHasExpired() throws Exception {
+        EventTypes eventTypes = EventTypes.parse(listEventTypesJson());
+
+        EventTypeId soccer = eventTypes.lookup("Soccer").id;
+
+        httpAccess.listMarketCatalogue(fileWriter(listMarketCatalogueFile()),
+                newHashSet(MARKET_START_TIME, RUNNER_METADATA, MARKET_DESCRIPTION),
+                MarketSort.FIRST_TO_START,
+                new MarketFilterBuilder()
+                        .withEventTypeIds(soccer)
+                        .withMarketIds(new MarketId("1.115377642"))
+                        .build());
+
+    }
+
     @Test
-    public void test() throws Exception {
+    public void canGetMarketDataUsingNavigation() throws Exception {
 
         int maxResults = 50;
 
