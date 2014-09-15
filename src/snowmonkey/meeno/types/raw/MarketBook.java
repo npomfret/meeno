@@ -1,7 +1,10 @@
 package snowmonkey.meeno.types.raw;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import snowmonkey.meeno.types.ImmutbleType;
 import snowmonkey.meeno.types.MarketId;
+import snowmonkey.meeno.types.SelectionId;
 
 import java.util.Date;
 import java.util.List;
@@ -23,7 +26,7 @@ public final class MarketBook extends ImmutbleType {
     public final Boolean crossMatching;
     public final Boolean runnersVoidable;
     public final Long version;
-    public final List<Runner> runners;
+    public final ImmutableList<Runner> runners;
 
     public MarketBook(MarketId marketId, Boolean isMarketDataDelayed, String status, int betDelay, Boolean bspReconciled, Boolean complete, Boolean inplay, int numberOfWinners, int numberOfRunners, int numberOfActiveRunners, Date lastMatchTime, Double totalMatched, Double totalAvailable, Boolean crossMatching, Boolean runnersVoidable, Long version, List<Runner> runners) {
         this.marketId = marketId;
@@ -42,6 +45,14 @@ public final class MarketBook extends ImmutbleType {
         this.crossMatching = crossMatching;
         this.runnersVoidable = runnersVoidable;
         this.version = version;
-        this.runners = runners;
+        this.runners = ImmutableList.copyOf(runners);
+    }
+
+    public ImmutableMap<SelectionId, Runner> runners() {
+        ImmutableMap.Builder<SelectionId, Runner> builder = ImmutableMap.builder();
+        for (Runner runner : runners) {
+            builder.put(runner.selectionId, runner);
+        }
+        return builder.build();
     }
 }
