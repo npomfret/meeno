@@ -247,11 +247,11 @@ public class Navigation {
             this.markets = builder.build();
         }
 
-        public Multimap<Exchange, MarketId> marketIdsByExchange() {
-            Multimap<Exchange, MarketId> idsByExchange = ArrayListMultimap.create();
+        public Multimap<Exchange, Market> marketsByExchange() {
+            Multimap<Exchange, Market> idsByExchange = ArrayListMultimap.create();
             markets.values().stream().forEach(m -> {
                 Exchange exchange = Exchange.lookupByExchangeId(m.exchangeId);
-                idsByExchange.put(exchange, m.id);
+                idsByExchange.put(exchange, m);
             });
             return idsByExchange;
         }
