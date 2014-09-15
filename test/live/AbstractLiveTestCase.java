@@ -12,9 +12,7 @@ import snowmonkey.meeno.types.SessionToken;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.attribute.FileTime;
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
 
 import static live.GenerateTestData.GetNavigation.navigationFile;
 import static live.GenerateTestData.fileWriter;
@@ -41,12 +39,7 @@ public abstract class AbstractLiveTestCase {
 
         Path path = navigationFile(now);
 
-        if (Files.exists(path)) {
-            FileTime lastModifiedTime = Files.getLastModifiedTime(path);
-
-            if (lastModifiedTime.toInstant().isBefore(ZonedDateTime.now().minusHours(1).toInstant()))
-                httpAccess.nav(fileWriter(navigationFile(now)));
-        } else {
+        if (!Files.exists(path)) {
             httpAccess.nav(fileWriter(navigationFile(now)));
         }
 

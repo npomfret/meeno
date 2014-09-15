@@ -14,6 +14,7 @@ import java.lang.reflect.Type;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static snowmonkey.meeno.JsonSerialization.gson;
 import static snowmonkey.meeno.JsonSerialization.parse;
 import static snowmonkey.meeno.types.raw.MarketProjection.allMarketProjections;
@@ -68,6 +69,10 @@ public class HttpExchangeOperations implements ExchangeOperations {
         } catch (IOException e) {
             throw new RuntimeEnvironmentException("listClearedOrders call failed", e);
         }
+    }
+
+    public MarketBooks marketBook(MarketId marketIds) throws ApiException {
+        return marketBook(newArrayList(marketIds));
     }
 
     public MarketBooks marketBook(Iterable<MarketId> marketIds) throws ApiException {

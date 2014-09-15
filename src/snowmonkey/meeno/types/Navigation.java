@@ -176,6 +176,63 @@ public class Navigation {
         return parent;
     }
 
+    private Markets markets(Pattern marketNamePattern) {
+        List<Market> markets = new ArrayList<>();
+
+        for (Market market : markets()) {
+
+            if (!marketNamePattern.matcher(market.name).matches())
+                continue;
+
+            markets.add(market);
+        }
+
+        return new Markets(markets);
+    }
+
+    public Markets findMarkets(EventTypeName eventTypeName, TimeRange timeRange, String marketNamePattern) {
+        return findMarkets(eventTypeName, timeRange, Pattern.compile(marketNamePattern));
+    }
+
+    public Markets findMarkets(EventTypeName eventTypeName, TimeRange timeRange, Pattern pattern) {
+        List<Market> markets = new ArrayList<>();
+
+        for (Navigation event : events(eventTypeName)) {
+            findMarkets(timeRange, markets, event.children(), pattern);
+        }
+
+        return new Markets(markets);
+    }
+
+    private void findMarkets(TimeRange timeRange, List<Market> markets, List<Navigation> children, Pattern marketNamePattern) {
+        for (Navigation navigation : children) {
+            for (Market market : navigation.markets()) {
+
+                if (!market.startsDuring(timeRange))
+                    continue;
+
+                if (!marketNamePattern.matcher(market.name).matches())
+                    continue;
+
+                markets.add(market);
+            }
+
+            findMarkets(timeRange, markets, navigation.children(), marketNamePattern);
+        }
+    }
+
+    public String printHierarchy() {
+        List<String> names = newArrayList(name);
+
+        Navigation node = parent;
+        while (node.parent != null) {
+            names.add(node.name);
+            node = node.parent;
+        }
+
+        return StringUtils.join(Lists.reverse(names), " / ");
+    }
+
     public static class Markets implements Iterable<Market> {
         public final ImmutableMap<MarketId, Market> markets;
 
@@ -208,49 +265,6 @@ public class Navigation {
         }
     }
 
-    public Markets findMarkets(EventTypeName eventTypeName, TimeRange timeRange, String marketNamePattern) {
-        return findMarkets(eventTypeName, timeRange, Pattern.compile(marketNamePattern));
-    }
-
-    public Markets findMarkets(EventTypeName eventTypeName, TimeRange timeRange, Pattern pattern) {
-        List<Market> markets = new ArrayList<>();
-
-        for (Navigation event : events(eventTypeName)) {
-            findMarkets(timeRange, markets, event.children(), pattern);
-        }
-
-        return new Markets(markets);
-    }
-
-    private void findMarkets(TimeRange timeRange, List<Market> markets, List<Navigation> children, Pattern marketNamePattern) {
-        for (Navigation navigation : children) {
-            for (Market market : navigation.markets()) {
-
-                if (!market.startSDuring(timeRange))
-                    continue;
-
-                if (!marketNamePattern.matcher(market.name).matches())
-                    continue;
-
-                markets.add(market);
-            }
-
-            findMarkets(timeRange, markets, navigation.children(), marketNamePattern);
-        }
-    }
-
-    public String printHierarchy() {
-        List<String> names = newArrayList(name);
-
-        Navigation node = parent;
-        while (node.parent != null) {
-            names.add(node.name);
-            node = node.parent;
-        }
-
-        return StringUtils.join(Lists.reverse(names), " / ");
-    }
-
     public enum Type {
         GROUP, EVENT_TYPE, EVENT, RACE, MARKET
     }
@@ -272,7 +286,7 @@ public class Navigation {
             this.type = type;
         }
 
-        public boolean startSDuring(TimeRange timeRange) {
+        public boolean startsDuring(TimeRange timeRange) {
             return !marketStartTime.isBefore(timeRange.from) && marketStartTime.isBefore(timeRange.to);
         }
 
@@ -302,6 +316,13 @@ public class Navigation {
         public String printHierarchy() {
             return name + " " + parent.printHierarchy();
         }
-    }
 
+        public Markets findSiblingMarkets(String namePattern) {
+            return findSiblingMarkets(Pattern.compile(namePattern));
+        }
+
+        public Markets findSiblingMarkets(Pattern pattern) {
+            return parent.markets(pattern);
+        }
+    }
 }
