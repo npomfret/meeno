@@ -250,8 +250,7 @@ public class Navigation {
         public Multimap<Exchange, Market> marketsByExchange() {
             Multimap<Exchange, Market> idsByExchange = ArrayListMultimap.create();
             markets.values().stream().forEach(m -> {
-                Exchange exchange = Exchange.lookupByExchangeId(m.exchangeId);
-                idsByExchange.put(exchange, m);
+                idsByExchange.put(m.exchange(), m);
             });
             return idsByExchange;
         }
@@ -343,6 +342,10 @@ public class Navigation {
 
         public Markets findSiblingMarkets(Pattern pattern) {
             return parent.markets(pattern);
+        }
+
+        public Exchange exchange() {
+            return Exchange.lookupByExchangeId(exchangeId);
         }
     }
 }
