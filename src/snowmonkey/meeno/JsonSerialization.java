@@ -47,6 +47,7 @@ public class JsonSerialization {
 
                 .registerTypeAdapter(Size.class, (JsonSerializer<Size>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asDouble()))
 
+                .registerTypeAdapter(ExchangePrices.class, complexObjectDeserializer(ExchangePrices.class))
                 .registerTypeAdapter(ClearedOrderSummary.class, complexObjectDeserializer(ClearedOrderSummary.class))
                 .registerTypeAdapter(ClearedOrderSummaryReport.class, complexObjectDeserializer(ClearedOrderSummaryReport.class))
                 .registerTypeAdapter(MarketCatalogue.class, complexObjectDeserializer(MarketCatalogue.class))
@@ -110,13 +111,13 @@ public class JsonSerialization {
                             list.add(context.deserialize(element, collectionType));
                         }
                         args[i] = list;
-                    } catch (JsonParseException e) {
+                    } catch (Exception e) {
                         throw new IllegalStateException("Problem parsing " + parameterType.getName() + " named '" + name + "'", e);
                     }
                 } else {
                     try {
                         args[i] = context.deserialize(jsonObject.get(name), parameterType);
-                    } catch (JsonParseException e) {
+                    } catch (Exception e) {
                         throw new IllegalStateException("Problem parsing " + parameterType.getName() + " named '" + name + "'", e);
                     }
                 }

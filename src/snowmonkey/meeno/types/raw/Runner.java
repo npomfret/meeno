@@ -22,7 +22,8 @@ public final class Runner extends ImmutbleType {
     public final ImmutableList<Order> orders;
     public final ImmutableList<Match> matches;
 
-    public Runner(SelectionId selectionId, Handicap handicap, RunnerStatus status, Double adjustmentFactor, Double lastPriceTraded, Double totalMatched, ZonedDateTime removalDate, StartingPrices sp, ExchangePrices ex, List<Order> orders, List<Match> matches) {
+    public Runner(SelectionId selectionId, Handicap handicap, RunnerStatus status, Double adjustmentFactor, Double lastPriceTraded, Double totalMatched,
+                  ZonedDateTime removalDate, StartingPrices sp, ExchangePrices ex, List<Order> orders, List<Match> matches) {
         this.selectionId = selectionId;
         this.handicap = handicap;
         this.status = status;

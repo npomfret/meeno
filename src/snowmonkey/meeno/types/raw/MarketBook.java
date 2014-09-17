@@ -2,6 +2,7 @@ package snowmonkey.meeno.types.raw;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import org.jetbrains.annotations.Nullable;
 import snowmonkey.meeno.types.ImmutbleType;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.SelectionId;
@@ -20,6 +21,7 @@ public final class MarketBook extends ImmutbleType {
     public final int numberOfWinners;
     public final int numberOfRunners;
     public final int numberOfActiveRunners;
+    @Nullable
     public final ZonedDateTime lastMatchTime;
     public final Double totalMatched;
     public final Double totalAvailable;
@@ -29,7 +31,7 @@ public final class MarketBook extends ImmutbleType {
     public final ImmutableList<Runner> runners;
 
     public MarketBook(MarketId marketId, Boolean isMarketDataDelayed, MarketStatus status, int betDelay, Boolean bspReconciled, Boolean complete, Boolean inplay, int numberOfWinners,
-                      int numberOfRunners, int numberOfActiveRunners, ZonedDateTime lastMatchTime, Double totalMatched, Double totalAvailable, Boolean crossMatching,
+                      int numberOfRunners, int numberOfActiveRunners, @Nullable ZonedDateTime lastMatchTime, Double totalMatched, Double totalAvailable, Boolean crossMatching,
                       Boolean runnersVoidable, Long version, List<Runner> runners) {
         this.marketId = marketId;
         this.isMarketDataDelayed = isMarketDataDelayed;
