@@ -1,5 +1,6 @@
 package snowmonkey.meeno.types.raw;
 
+import com.google.common.collect.ImmutableList;
 import snowmonkey.meeno.types.ImmutbleType;
 import snowmonkey.meeno.types.SelectionId;
 
@@ -16,8 +17,8 @@ public final class Runner extends ImmutbleType {
     public final Date removalDate;
     public final StartingPrices startingPrices;
     public final ExchangePrices exchangePrices;
-    public final List<Order> orders;
-    public final List<Match> matches;
+    public final ImmutableList<Order> orders;
+    public final ImmutableList<Match> matches;
 
     public Runner(SelectionId selectionId, Handicap handicap, RunnerStatus status, Double adjustmentFactor, Double lastPriceTraded, Double totalMatched, Date removalDate, StartingPrices sp, ExchangePrices ex, List<Order> orders, List<Match> matches) {
         this.selectionId = selectionId;
@@ -29,7 +30,7 @@ public final class Runner extends ImmutbleType {
         this.removalDate = removalDate;
         this.startingPrices = sp;
         this.exchangePrices = ex;
-        this.orders = orders;
-        this.matches = matches;
+        this.orders = ImmutableList.copyOf(orders);
+        this.matches = ImmutableList.copyOf(matches);
     }
 }
