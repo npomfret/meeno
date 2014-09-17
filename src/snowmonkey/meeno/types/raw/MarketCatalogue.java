@@ -38,9 +38,10 @@ public final class MarketCatalogue extends ImmutbleType {
 
     public ImmutableMap<SelectionId, RunnerCatalog> runners() {
         ImmutableMap.Builder<SelectionId, RunnerCatalog> builder = ImmutableMap.builder();
-        for (RunnerCatalog runner : runners) {
-            builder.put(runner.selectionId, runner);
-        }
+        if (runners != null)
+            for (RunnerCatalog runner : runners) {
+                builder.put(runner.selectionId, runner);
+            }
         return builder.build();
     }
 }

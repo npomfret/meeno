@@ -30,7 +30,7 @@ public final class Runner extends ImmutbleType {
         this.removalDate = removalDate;
         this.startingPrices = sp;
         this.exchangePrices = ex;
-        this.orders = ImmutableList.copyOf(orders);
-        this.matches = ImmutableList.copyOf(matches);
+        this.orders = orders == null ? null : ImmutableList.copyOf(orders);
+        this.matches = matches == null ? null : ImmutableList.copyOf(matches);
     }
 }

@@ -47,14 +47,15 @@ public final class MarketBook extends ImmutbleType {
         this.crossMatching = crossMatching;
         this.runnersVoidable = runnersVoidable;
         this.version = version;
-        this.runners = ImmutableList.copyOf(runners);
+        this.runners = runners == null ? null : ImmutableList.copyOf(runners);
     }
 
     public ImmutableMap<SelectionId, Runner> runners() {
         ImmutableMap.Builder<SelectionId, Runner> builder = ImmutableMap.builder();
-        for (Runner runner : runners) {
-            builder.put(runner.selectionId, runner);
-        }
+        if (runners != null)
+            for (Runner runner : runners) {
+                builder.put(runner.selectionId, runner);
+            }
         return builder.build();
     }
 }
