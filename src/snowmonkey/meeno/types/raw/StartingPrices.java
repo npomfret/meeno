@@ -15,8 +15,8 @@ public final class StartingPrices extends ImmutbleType {
     public StartingPrices(Double nearPrice, Double farPrice, List<PriceSize> backStakeTaken, List<PriceSize> layLiabilityTaken, Double actualSP) {
         this.nearPrice = nearPrice;
         this.farPrice = farPrice;
-        this.backStakeTaken = ImmutableList.copyOf(backStakeTaken);
-        this.layLiabilityTaken = ImmutableList.copyOf(layLiabilityTaken);
+        this.backStakeTaken = backStakeTaken == null ? ImmutableList.of() : ImmutableList.copyOf(backStakeTaken);
+        this.layLiabilityTaken = layLiabilityTaken == null ? ImmutableList.of() : ImmutableList.copyOf(layLiabilityTaken);
         this.actualSP = actualSP;
     }
 }
