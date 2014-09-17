@@ -14,8 +14,8 @@ public final class Runner extends ImmutbleType {
     public final Double lastPriceTraded;
     public final Double totalMatched;
     public final Date removalDate;
-    public final StartingPrices sp;
-    public final ExchangePrices ex;
+    public final StartingPrices startingPrices;
+    public final ExchangePrices exchangePrices;
     public final List<Order> orders;
     public final List<Match> matches;
 
@@ -27,8 +27,8 @@ public final class Runner extends ImmutbleType {
         this.lastPriceTraded = lastPriceTraded;
         this.totalMatched = totalMatched;
         this.removalDate = removalDate;
-        this.sp = sp;
-        this.ex = ex;
+        this.startingPrices = sp;
+        this.exchangePrices = ex;
         this.orders = orders;
         this.matches = matches;
     }
