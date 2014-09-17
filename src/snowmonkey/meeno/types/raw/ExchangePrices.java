@@ -12,8 +12,8 @@ public final class ExchangePrices extends ImmutbleType {
     public final ImmutableList<PriceSize> tradedVolume;
 
     public ExchangePrices(List<PriceSize> availableToBack, List<PriceSize> availableToLay, List<PriceSize> tradedVolume) {
-        this.availableToBack = availableToBack == null ? null : ImmutableList.copyOf(availableToBack);
-        this.availableToLay = availableToLay == null ? null : ImmutableList.copyOf(availableToLay);
-        this.tradedVolume = tradedVolume == null ? null : ImmutableList.copyOf(tradedVolume);
+        this.availableToBack = availableToBack == null ? ImmutableList.of() : ImmutableList.copyOf(availableToBack);
+        this.availableToLay = availableToLay == null ? ImmutableList.of() : ImmutableList.copyOf(availableToLay);
+        this.tradedVolume = tradedVolume == null ? ImmutableList.of() : ImmutableList.copyOf(tradedVolume);
     }
 }

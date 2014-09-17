@@ -8,7 +8,6 @@ import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.SelectionId;
 
 import java.time.ZonedDateTime;
-import java.util.Collections;
 import java.util.List;
 
 public final class MarketCatalogue extends ImmutbleType {
@@ -30,7 +29,7 @@ public final class MarketCatalogue extends ImmutbleType {
         this.marketName = marketName;
         this.marketStartTime = marketStartTime;
         this.description = description;
-        this.runners = runners == null ? (ImmutableList<RunnerCatalog>) Collections.EMPTY_LIST : ImmutableList.copyOf(runners);
+        this.runners = runners == null ? ImmutableList.of() : ImmutableList.copyOf(runners);
         this.eventType = eventType;
         this.competition = competition;
         this.event = event;
