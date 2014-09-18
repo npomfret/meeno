@@ -4,6 +4,8 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import org.apache.http.StatusLine;
 import snowmonkey.meeno.requests.ListCurrentOrders;
+import snowmonkey.meeno.requests.PlaceOrders;
+import snowmonkey.meeno.types.CustomerRef;
 import snowmonkey.meeno.types.MarketCatalogues;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.Navigation;
@@ -16,6 +18,8 @@ import snowmonkey.meeno.types.raw.MarketBooks;
 import snowmonkey.meeno.types.raw.MarketCatalogue;
 import snowmonkey.meeno.types.raw.MarketProjection;
 import snowmonkey.meeno.types.raw.MarketSort;
+import snowmonkey.meeno.types.raw.PlaceExecutionReport;
+import snowmonkey.meeno.types.raw.PlaceInstruction;
 import snowmonkey.meeno.types.raw.PriceProjection;
 
 import java.io.IOException;
@@ -87,6 +91,16 @@ public class HttpExchangeOperations implements ExchangeOperations {
         }
 
         return results;
+    }
+
+    public PlaceExecutionReport placeOrders(MarketId marketId, List<PlaceInstruction> instructions, CustomerRef customerRef) throws ApiException {
+        try {
+            JsonProcessor processor = new JsonProcessor();
+            httpAccess.placeOrders(processor, new PlaceOrders(marketId, instructions, customerRef));
+            return parse(processor.json, PlaceExecutionReport.class);
+        } catch (IOException e) {
+            throw new RuntimeEnvironmentException("cancel bets call failed", e);
+        }
     }
 
     public CancelExecutionReport cancelOrders(MarketId marketId, Collection<CancelInstruction> instructions) throws ApiException {
