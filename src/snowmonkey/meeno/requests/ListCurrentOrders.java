@@ -24,8 +24,8 @@ public class ListCurrentOrders extends ImmutbleType {
     public final int recordCount;
 
     public ListCurrentOrders(Set<BetId> betIds, Set<MarketId> marketIds, OrderProjection orderProjection, TimeRange placedDateRange, TimeRange dateRange, OrderBy orderBy, SortDir sortDir, int fromRecord, int recordCount) {
-        this.betIds = ImmutableList.copyOf(betIds);
-        this.marketIds = ImmutableList.copyOf(marketIds);
+        this.betIds = betIds == null ? ImmutableList.of() : ImmutableList.copyOf(betIds);
+        this.marketIds = marketIds == null ? ImmutableList.of() : ImmutableList.copyOf(marketIds);
         this.orderProjection = orderProjection;
         this.placedDateRange = placedDateRange;
         this.dateRange = dateRange;
