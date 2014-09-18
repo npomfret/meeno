@@ -2,14 +2,15 @@ package snowmonkey.meeno.types.raw;
 
 import org.jetbrains.annotations.Nullable;
 import snowmonkey.meeno.types.BetId;
+import snowmonkey.meeno.types.ImmutbleType;
 
-public class CancelInstruction {
-    public final String betId;
+public class CancelInstruction extends ImmutbleType {
+    public final BetId betId;
     @Nullable
     public final Double sizeReduction;
 
     public CancelInstruction(BetId betId, Double sizeReduction) {
-        this.betId = betId.asString();
+        this.betId = betId;
         this.sizeReduction = sizeReduction;
     }
 

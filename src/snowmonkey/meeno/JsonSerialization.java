@@ -1,10 +1,42 @@
 package snowmonkey.meeno;
 
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializer;
 import org.joda.time.DateTime;
-import snowmonkey.meeno.types.*;
-import snowmonkey.meeno.types.raw.*;
+import snowmonkey.meeno.types.BetId;
+import snowmonkey.meeno.types.EventId;
+import snowmonkey.meeno.types.EventTypeId;
+import snowmonkey.meeno.types.MarketId;
+import snowmonkey.meeno.types.MatchId;
+import snowmonkey.meeno.types.MicroType;
+import snowmonkey.meeno.types.SelectionId;
+import snowmonkey.meeno.types.raw.CancelExecutionReport;
+import snowmonkey.meeno.types.raw.CancelInstruction;
+import snowmonkey.meeno.types.raw.CancelInstructionReport;
+import snowmonkey.meeno.types.raw.ClearedOrderSummary;
+import snowmonkey.meeno.types.raw.ClearedOrderSummaryReport;
+import snowmonkey.meeno.types.raw.CurrentOrderSummary;
+import snowmonkey.meeno.types.raw.CurrentOrderSummaryReport;
+import snowmonkey.meeno.types.raw.ExchangePrices;
+import snowmonkey.meeno.types.raw.Handicap;
+import snowmonkey.meeno.types.raw.MarketBook;
+import snowmonkey.meeno.types.raw.MarketCatalogue;
+import snowmonkey.meeno.types.raw.Match;
+import snowmonkey.meeno.types.raw.Order;
+import snowmonkey.meeno.types.raw.PlaceExecutionReport;
+import snowmonkey.meeno.types.raw.PlaceInstructionReport;
+import snowmonkey.meeno.types.raw.Price;
+import snowmonkey.meeno.types.raw.PriceSize;
+import snowmonkey.meeno.types.raw.Runner;
+import snowmonkey.meeno.types.raw.RunnerCatalog;
+import snowmonkey.meeno.types.raw.Size;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Parameter;
@@ -47,6 +79,9 @@ public class JsonSerialization {
 
                 .registerTypeAdapter(Size.class, (JsonSerializer<Size>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asDouble()))
 
+                .registerTypeAdapter(CancelInstruction.class, complexObjectDeserializer(CancelInstruction.class))
+                .registerTypeAdapter(CancelInstructionReport.class, complexObjectDeserializer(CancelInstructionReport.class))
+                .registerTypeAdapter(CancelExecutionReport.class, complexObjectDeserializer(CancelExecutionReport.class))
                 .registerTypeAdapter(ExchangePrices.class, complexObjectDeserializer(ExchangePrices.class))
                 .registerTypeAdapter(ClearedOrderSummary.class, complexObjectDeserializer(ClearedOrderSummary.class))
                 .registerTypeAdapter(ClearedOrderSummaryReport.class, complexObjectDeserializer(ClearedOrderSummaryReport.class))

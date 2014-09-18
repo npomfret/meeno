@@ -1,18 +1,30 @@
 package snowmonkey.meeno;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import org.apache.http.StatusLine;
 import snowmonkey.meeno.types.MarketCatalogues;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.Navigation;
-import snowmonkey.meeno.types.raw.*;
+import snowmonkey.meeno.types.raw.CancelExecutionReport;
+import snowmonkey.meeno.types.raw.CancelInstruction;
+import snowmonkey.meeno.types.raw.CurrentOrderSummary;
+import snowmonkey.meeno.types.raw.CurrentOrderSummaryReport;
+import snowmonkey.meeno.types.raw.MarketBook;
+import snowmonkey.meeno.types.raw.MarketBooks;
+import snowmonkey.meeno.types.raw.MarketCatalogue;
+import snowmonkey.meeno.types.raw.MarketProjection;
+import snowmonkey.meeno.types.raw.MarketSort;
+import snowmonkey.meeno.types.raw.PriceProjection;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static snowmonkey.meeno.JsonSerialization.parse;
-import static snowmonkey.meeno.types.raw.MarketProjection.allMarketProjections;
+import static com.google.common.collect.Lists.*;
+import static snowmonkey.meeno.JsonSerialization.*;
+import static snowmonkey.meeno.types.raw.MarketProjection.*;
 
 public class HttpExchangeOperations implements ExchangeOperations {
 
@@ -48,27 +60,54 @@ public class HttpExchangeOperations implements ExchangeOperations {
         }
     }
 
-    public MarketBook marketBook(MarketId marketId) throws ApiException, NotFoundException {
-        MarketBooks marketBooks = marketBooks(newArrayList(marketId));
+    public CurrentOrderSummaryReport listCurrentOrders() throws ApiException {
+        try {
+            JsonProcessor processor = new JsonProcessor();
+            httpAccess.listCurrentOrders(processor, new MarketFilterBuilder());
+            return parse(processor.json, CurrentOrderSummaryReport.class);
+        } catch (IOException e) {
+            throw new RuntimeEnvironmentException("list orders call failed", e);
+        }
+    }
+
+    public Iterable<CancelExecutionReport> cancel(CurrentOrderSummaryReport currentOrders) throws ApiException {
+        Multimap<MarketId, CancelInstruction> cancelInstructions = ArrayListMultimap.create();
+        for (CurrentOrderSummary currentOrder : currentOrders.currentOrders) {
+            MarketId marketId = currentOrder.marketId;
+            cancelInstructions.put(marketId, CancelInstruction.cancel(currentOrder.betId));
+        }
+
+        List<CancelExecutionReport> results = new ArrayList<>();
+        for (MarketId marketId : cancelInstructions.keySet()) {
+            try {
+                JsonProcessor processor = new JsonProcessor();
+                httpAccess.cancelOrders(marketId, cancelInstructions.get(marketId), processor);
+                CancelExecutionReport cancelExecutionReport = parse(processor.json, CancelExecutionReport.class);
+                results.add(cancelExecutionReport);
+            } catch (IOException e) {
+                throw new RuntimeEnvironmentException("cancel bets call failed", e);
+            }
+        }
+
+        return results;
+    }
+
+    public MarketBook marketBook(MarketId marketId, PriceProjection priceProjection) throws ApiException, NotFoundException {
+        MarketBooks marketBooks = marketBooks(newArrayList(marketId), priceProjection);
         return marketBooks.get(marketId);
     }
 
-    public MarketBooks marketBooks(MarketId marketIds) throws ApiException {
-        return marketBooks(newArrayList(marketIds));
+    public MarketBooks marketBooks(MarketId marketIds, PriceProjection priceProjection) throws ApiException {
+        return marketBooks(newArrayList(marketIds), priceProjection);
     }
 
-    public MarketBooks marketBooks(Iterable<MarketId> marketIds) throws ApiException {
+    public MarketBooks marketBooks(Iterable<MarketId> marketIds, PriceProjection priceProjection) throws ApiException {
         try {
             JsonProcessor processor = new JsonProcessor();
 
             httpAccess.listMarketBook(
                     processor,
-                    new PriceProjection(
-                            new ArrayList<>(),
-                            null,
-                            false,
-                            false
-                    ),
+                    priceProjection,
                     marketIds,
                     null,
                     null

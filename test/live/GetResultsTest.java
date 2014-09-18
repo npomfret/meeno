@@ -5,13 +5,15 @@ import snowmonkey.meeno.HttpAccess;
 import snowmonkey.meeno.HttpExchangeOperations;
 import snowmonkey.meeno.types.Navigation;
 import snowmonkey.meeno.types.raw.MarketBooks;
+import snowmonkey.meeno.types.raw.PriceProjection;
 import snowmonkey.meeno.types.raw.TimeRange;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
-import static java.time.ZonedDateTime.now;
-import static snowmonkey.meeno.types.EventTypeName.SOCCER;
-import static snowmonkey.meeno.types.raw.TimeRange.between;
+import static java.time.ZonedDateTime.*;
+import static snowmonkey.meeno.types.EventTypeName.*;
+import static snowmonkey.meeno.types.raw.TimeRange.*;
 
 public class GetResultsTest extends AbstractLiveTestCase {
     @Test
@@ -27,7 +29,12 @@ public class GetResultsTest extends AbstractLiveTestCase {
         Navigation.Markets markets = navigation.findMarkets(SOCCER, timeRange, "Match Odds*");
         for (Navigation.Market market : markets) {
             Navigation.Market correctScoreMarkets = market.findSiblingMarkets("Correct Score*").iterator().next();
-            MarketBooks marketBooks = httpExchangeOperations.marketBooks(correctScoreMarkets.id);
+            MarketBooks marketBooks = httpExchangeOperations.marketBooks(correctScoreMarkets.id, new PriceProjection(
+                    new ArrayList<>(),
+                    null,
+                    false,
+                    false
+            ));
             System.out.println(marketBooks.iterator().next());
         }
 

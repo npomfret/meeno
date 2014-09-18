@@ -7,7 +7,9 @@ import org.junit.Test;
 import snowmonkey.meeno.ApiException;
 import snowmonkey.meeno.DefaultProcessor;
 import snowmonkey.meeno.HttpAccess;
+import snowmonkey.meeno.HttpExchangeOperations;
 import snowmonkey.meeno.types.MarketId;
+import snowmonkey.meeno.types.raw.CancelExecutionReport;
 import snowmonkey.meeno.types.raw.CancelInstruction;
 import snowmonkey.meeno.types.raw.CurrentOrderSummary;
 import snowmonkey.meeno.types.raw.CurrentOrderSummaryReport;
@@ -15,12 +17,22 @@ import snowmonkey.meeno.types.raw.CurrentOrderSummaryReport;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static live.GenerateTestData.ListCurrentOrders.listCurrentOrdersFile;
-import static live.GenerateTestData.ListCurrentOrders.listCurrentOrdersJson;
-import static live.GenerateTestData.fileWriter;
-import static snowmonkey.meeno.JsonSerialization.parse;
+import static live.GenerateTestData.ListCurrentOrders.*;
+import static live.GenerateTestData.*;
+import static snowmonkey.meeno.JsonSerialization.*;
 
 public class CancelOrdersTest extends AbstractLiveTestCase {
+
+    @Test
+    public void test() throws Exception {
+        HttpExchangeOperations httpExchangeOperations = new HttpExchangeOperations(httpAccess);
+        CurrentOrderSummaryReport currentOrders = httpExchangeOperations.listCurrentOrders();
+        Iterable<CancelExecutionReport> cancelled = httpExchangeOperations.cancel(currentOrders);
+        for (CancelExecutionReport cancelExecutionReport : cancelled) {
+            System.out.println("cancelExecutionReport = " + cancelExecutionReport);
+        }
+    }
+
     @Test
     public void cancelAllOrders() throws Exception {
 
@@ -45,7 +57,6 @@ public class CancelOrdersTest extends AbstractLiveTestCase {
                 }
             });
         }
-
     }
 
 }
