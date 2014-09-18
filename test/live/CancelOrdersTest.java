@@ -12,7 +12,6 @@ import snowmonkey.meeno.requests.CancelInstruction;
 import snowmonkey.meeno.types.CancelExecutionReport;
 import snowmonkey.meeno.types.CurrentOrderSummary;
 import snowmonkey.meeno.types.CurrentOrderSummaryReport;
-import snowmonkey.meeno.types.CustomerRef;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.OrderProjection;
 
@@ -37,7 +36,7 @@ public class CancelOrdersTest extends AbstractLiveTestCase {
                 .withDateRange(between(now().minusDays(1), now().plusMonths(1)))
                 .build());
 
-        Iterable<CancelExecutionReport> cancelled = httpExchangeOperations.cancelAllOrders(currentOrders, CustomerRef.unique());
+        Iterable<CancelExecutionReport> cancelled = httpExchangeOperations.cancelAllOrders(currentOrders);
         for (CancelExecutionReport cancelExecutionReport : cancelled) {
             System.out.println("cancelExecutionReport = " + cancelExecutionReport);
         }
