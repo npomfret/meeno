@@ -94,9 +94,13 @@ public class HttpExchangeOperations implements ExchangeOperations {
     }
 
     public PlaceExecutionReport placeOrders(MarketId marketId, List<PlaceInstruction> instructions, CustomerRef customerRef) throws ApiException {
+        return placeOrders(new PlaceOrders(marketId, instructions, customerRef));
+    }
+
+    public PlaceExecutionReport placeOrders(PlaceOrders request) throws ApiException {
         try {
             JsonProcessor processor = new JsonProcessor();
-            httpAccess.placeOrders(processor, new PlaceOrders(marketId, instructions, customerRef));
+            httpAccess.placeOrders(processor, request);
             return parse(processor.json, PlaceExecutionReport.class);
         } catch (IOException e) {
             throw new RuntimeEnvironmentException("cancel bets call failed", e);
