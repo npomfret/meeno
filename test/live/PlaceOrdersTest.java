@@ -51,7 +51,7 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
 
         LimitOrder limitOrder = new LimitOrder(2.00D, 1000, PersistenceType.LAPSE);
         PlaceInstruction placeLimitOrder = createPlaceLimitOrder(marketCatalogue.runners.get(0).selectionId, Side.BACK, limitOrder);
-        httpAccess.placeOrders(marketCatalogue.marketId, newArrayList(placeLimitOrder), CustomerRef.NONE, fileWriter(placeOrdersFile()));
+        httpAccess.placeOrders(fileWriter(placeOrdersFile()), marketCatalogue.marketId, newArrayList(placeLimitOrder), CustomerRef.NONE);
 
         PlaceExecutionReport placeInstructionReport = parse(placeOrdersJson(), PlaceExecutionReport.class);
 

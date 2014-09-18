@@ -1,17 +1,16 @@
 package snowmonkey.meeno.requests;
 
+import snowmonkey.meeno.types.ImmutbleType;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.raw.MatchProjection;
 import snowmonkey.meeno.types.raw.OrderProjection;
 import snowmonkey.meeno.types.raw.PriceProjection;
 
-import java.util.Set;
+import static com.google.common.collect.Sets.*;
 
-import static com.google.common.collect.Sets.newHashSet;
+public class ListMarketBook extends ImmutbleType {
 
-public class ListMarketBook {
-
-    public final Set<MarketId> marketIds;
+    public final Iterable<MarketId> marketIds;
     public final PriceProjection priceProjection;
     public final OrderProjection orderProjection;
     public final MatchProjection matchProjection;

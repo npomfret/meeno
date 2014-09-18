@@ -1,13 +1,19 @@
 package snowmonkey.meeno.requests;
 
-import snowmonkey.meeno.types.*;
+import snowmonkey.meeno.types.BetId;
+import snowmonkey.meeno.types.EventId;
+import snowmonkey.meeno.types.EventTypeId;
+import snowmonkey.meeno.types.GroupBy;
+import snowmonkey.meeno.types.ImmutbleType;
+import snowmonkey.meeno.types.MarketId;
+import snowmonkey.meeno.types.RunnerId;
 import snowmonkey.meeno.types.raw.BetStatus;
 import snowmonkey.meeno.types.raw.Side;
 import snowmonkey.meeno.types.raw.TimeRange;
 
 import java.util.Set;
 
-public class ListClearedOrders {
+public class ListClearedOrders extends ImmutbleType {
     public final BetStatus betStatus;
     public final Iterable<EventTypeId> eventTypeIds;
     public final Iterable<EventId> eventIds;

@@ -33,6 +33,7 @@ import org.joda.time.format.DateTimeFormatter;
 import snowmonkey.meeno.requests.ListClearedOrders;
 import snowmonkey.meeno.requests.ListCurrentOrders;
 import snowmonkey.meeno.requests.ListMarketBook;
+import snowmonkey.meeno.requests.PlaceOrders;
 import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.CustomerRef;
 import snowmonkey.meeno.types.MarketId;
@@ -118,12 +119,19 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.CANCEL_ORDERS), payloadBuilder);
     }
 
-    public void placeOrders(MarketId marketId, List<PlaceInstruction> instructions, CustomerRef customerRef, Processor processor) throws IOException, ApiException {
-        PayloadBuilder payloadBuilder = new PayloadBuilder();
-        payloadBuilder.addMarketId(marketId);
-        payloadBuilder.addPlaceInstructions(instructions);
-        payloadBuilder.addCustomerRef(customerRef);
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.PLACE_ORDERS), payloadBuilder);
+    public void placeOrders(Processor processor, MarketId marketId, List<PlaceInstruction> instructions, CustomerRef customerRef) throws IOException, ApiException {
+        PlaceOrders request = new PlaceOrders(marketId, instructions, customerRef);
+        placeOrders(processor, request);
+    }
+
+    public void placeOrders(Processor processor, final PlaceOrders request) throws IOException, ApiException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.PLACE_ORDERS), new PayloadBuilder() {
+            @Override
+            public String buildJsonPayload() {
+                Gson gson = JsonSerialization.gson();
+                return gson.toJson(request);
+            }
+        });
     }
 
     public void listMarketBook(Processor processor, PriceProjection priceProjection, MarketId... marketId) throws IOException, ApiException {
@@ -189,7 +197,7 @@ public class HttpAccess {
     }
 
     public void listCurrentOrders(Processor processor, final ListCurrentOrders request) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_CLEARED_ORDERS), new PayloadBuilder() {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_CURRENT_ORDERS), new PayloadBuilder() {
             @Override
             public String buildJsonPayload() {
                 Gson gson = JsonSerialization.gson();

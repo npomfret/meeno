@@ -12,8 +12,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ListCurrentOrders extends ImmutbleType {
-    public final Set<BetId> betIds;
-    public final Set<MarketId> marketIds;
+    public final Iterable<BetId> betIds;
+    public final Iterable<MarketId> marketIds;
     public final OrderProjection orderProjection;
     public final TimeRange placedDateRange;
     public final TimeRange dateRange;
