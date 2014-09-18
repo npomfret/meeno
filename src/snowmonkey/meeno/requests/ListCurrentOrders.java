@@ -1,5 +1,6 @@
 package snowmonkey.meeno.requests;
 
+import com.google.common.collect.ImmutableList;
 import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.ImmutbleType;
 import snowmonkey.meeno.types.MarketId;
@@ -8,11 +9,12 @@ import snowmonkey.meeno.types.OrderProjection;
 import snowmonkey.meeno.types.SortDir;
 import snowmonkey.meeno.types.TimeRange;
 
+import java.util.Collection;
 import java.util.Set;
 
 public class ListCurrentOrders extends ImmutbleType {
-    public final Iterable<BetId> betIds;
-    public final Iterable<MarketId> marketIds;
+    public final Collection<BetId> betIds;
+    public final Collection<MarketId> marketIds;
     public final OrderProjection orderProjection;
     public final TimeRange placedDateRange;
     public final TimeRange dateRange;
@@ -22,8 +24,8 @@ public class ListCurrentOrders extends ImmutbleType {
     public final int recordCount;
 
     public ListCurrentOrders(Set<BetId> betIds, Set<MarketId> marketIds, OrderProjection orderProjection, TimeRange placedDateRange, TimeRange dateRange, OrderBy orderBy, SortDir sortDir, int fromRecord, int recordCount) {
-        this.betIds = betIds;
-        this.marketIds = marketIds;
+        this.betIds = ImmutableList.copyOf(betIds);
+        this.marketIds = ImmutableList.copyOf(marketIds);
         this.orderProjection = orderProjection;
         this.placedDateRange = placedDateRange;
         this.dateRange = dateRange;

@@ -7,11 +7,11 @@ import snowmonkey.meeno.types.MatchProjection;
 import snowmonkey.meeno.types.OrderProjection;
 import snowmonkey.meeno.types.PriceProjection;
 
-import java.util.List;
+import java.util.Collection;
 
 public class ListMarketBook extends ImmutbleType {
 
-    public final List<MarketId> marketIds;
+    public final Collection<MarketId> marketIds;
     public final PriceProjection priceProjection;
     public final OrderProjection orderProjection;
     public final MatchProjection matchProjection;

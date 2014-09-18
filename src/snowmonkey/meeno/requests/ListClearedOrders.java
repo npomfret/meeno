@@ -1,5 +1,6 @@
 package snowmonkey.meeno.requests;
 
+import com.google.common.collect.ImmutableList;
 import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.BetStatus;
 import snowmonkey.meeno.types.EventId;
@@ -11,15 +12,16 @@ import snowmonkey.meeno.types.RunnerId;
 import snowmonkey.meeno.types.Side;
 import snowmonkey.meeno.types.TimeRange;
 
+import java.util.Collection;
 import java.util.Set;
 
 public class ListClearedOrders extends ImmutbleType {
     public final BetStatus betStatus;
-    public final Iterable<EventTypeId> eventTypeIds;
-    public final Iterable<EventId> eventIds;
-    public final Iterable<MarketId> marketIds;
-    public final Iterable<RunnerId> runnerIds;
-    public final Iterable<BetId> betIds;
+    public final Collection<EventTypeId> eventTypeIds;
+    public final Collection<EventId> eventIds;
+    public final Collection<MarketId> marketIds;
+    public final Collection<RunnerId> runnerIds;
+    public final Collection<BetId> betIds;
     public final Side side;
     public final TimeRange settledDateRange;
     public final GroupBy groupBy;
@@ -32,11 +34,11 @@ public class ListClearedOrders extends ImmutbleType {
                              Set<RunnerId> runnerIds, Set<BetId> betIds, Side side, TimeRange settledDateRange,
                              GroupBy groupBy, Boolean includeItemDescription, String locale, int fromRecord, int recordCount) {
         this.betStatus = betStatus;
-        this.eventTypeIds = eventTypeIds;
-        this.eventIds = eventIds;
-        this.marketIds = marketIds;
-        this.runnerIds = runnerIds;
-        this.betIds = betIds;
+        this.eventTypeIds = ImmutableList.copyOf(eventTypeIds);
+        this.eventIds = ImmutableList.copyOf(eventIds);
+        this.marketIds = ImmutableList.copyOf(marketIds);
+        this.runnerIds = ImmutableList.copyOf(runnerIds);
+        this.betIds = ImmutableList.copyOf(betIds);
         this.side = side;
         this.settledDateRange = settledDateRange;
         this.groupBy = groupBy;
