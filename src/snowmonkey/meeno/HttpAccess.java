@@ -1,6 +1,5 @@
 package snowmonkey.meeno;
 
-import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -30,6 +29,7 @@ import org.apache.http.message.AbstractHttpMessage;
 import org.apache.http.message.BasicNameValuePair;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import snowmonkey.meeno.requests.CancelOrders;
 import snowmonkey.meeno.requests.ListClearedOrders;
 import snowmonkey.meeno.requests.ListCurrentOrders;
 import snowmonkey.meeno.requests.ListMarketBook;
@@ -49,7 +49,6 @@ import snowmonkey.meeno.types.raw.OrderProjection;
 import snowmonkey.meeno.types.raw.PlaceInstruction;
 import snowmonkey.meeno.types.raw.PriceProjection;
 import snowmonkey.meeno.types.raw.SortDir;
-import snowmonkey.meeno.types.raw.SortDirection;
 import snowmonkey.meeno.types.raw.TimeRange;
 
 import javax.net.ssl.KeyManager;
@@ -62,7 +61,6 @@ import java.io.InputStream;
 import java.net.URI;
 import java.security.KeyStore;
 import java.security.SecureRandom;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -71,6 +69,7 @@ import java.util.List;
 import java.util.Set;
 
 import static com.google.common.collect.Sets.*;
+import static snowmonkey.meeno.JsonSerialization.*;
 import static snowmonkey.meeno.MarketFilterBuilder.*;
 
 public class HttpAccess {
@@ -113,10 +112,17 @@ public class HttpAccess {
     }
 
     public void cancelOrders(MarketId marketId, Collection<CancelInstruction> cancelInstructions, Processor processor) throws IOException, ApiException {
-        PayloadBuilder payloadBuilder = new PayloadBuilder();
-        payloadBuilder.addMarketId(marketId);
-        payloadBuilder.addCancelInstructions(cancelInstructions);
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.CANCEL_ORDERS), payloadBuilder);
+        CancelOrders request = new CancelOrders(marketId, cancelInstructions, CustomerRef.NONE);
+        cancelOrders(processor, request);
+    }
+
+    public void cancelOrders(Processor processor, final CancelOrders request) throws IOException, ApiException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.CANCEL_ORDERS), new PayloadBuilder() {
+            @Override
+            public String buildJsonPayload() {
+                return gson().toJson(request);
+            }
+        });
     }
 
     public void placeOrders(Processor processor, MarketId marketId, List<PlaceInstruction> instructions, CustomerRef customerRef) throws IOException, ApiException {
@@ -128,8 +134,7 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.PLACE_ORDERS), new PayloadBuilder() {
             @Override
             public String buildJsonPayload() {
-                Gson gson = JsonSerialization.gson();
-                return gson.toJson(request);
+                return gson().toJson(request);
             }
         });
     }
@@ -155,8 +160,7 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_BOOK), new PayloadBuilder() {
             @Override
             public String buildJsonPayload() {
-                Gson gson = JsonSerialization.gson();
-                return gson.toJson(request);
+                return gson().toJson(request);
             }
         });
     }
@@ -200,8 +204,7 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_CURRENT_ORDERS), new PayloadBuilder() {
             @Override
             public String buildJsonPayload() {
-                Gson gson = JsonSerialization.gson();
-                return gson.toJson(request);
+                return gson().toJson(request);
             }
         });
     }
@@ -230,8 +233,7 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_CLEARED_ORDERS), new PayloadBuilder() {
             @Override
             public String buildJsonPayload() {
-                Gson gson = JsonSerialization.gson();
-                return gson.toJson(request);
+                return gson().toJson(request);
             }
         });
     }
@@ -284,7 +286,6 @@ public class HttpAccess {
         performHttpRequest(processor, Exchange.NAVIGATION, httpGet);
     }
 
-
     private void sendPostRequest(Processor processor, URI uri, MarketFilter marketFilter) throws IOException, ApiException {
         PayloadBuilder payloadBuilder = new PayloadBuilder();
         payloadBuilder.add(marketFilter);
@@ -332,18 +333,6 @@ public class HttpAccess {
         abstractHttpMessage.setHeader("Accept-Charset", UTF_8);
         abstractHttpMessage.setHeader(X_APPLICATION, appKey.asString());
         abstractHttpMessage.setHeader("X-Authentication", sessionToken.asString());
-    }
-
-    private String indent(String json) {
-        String[] split = json.split("\n");
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (String s : split) {
-            stringBuilder.append("\t").append(s).append("\n");
-        }
-
-        return stringBuilder.toString();
     }
 
     private static HttpPost httpPost(URI uri) {
@@ -461,7 +450,7 @@ public class HttpAccess {
         private final LinkedHashMap<String, Object> map = new LinkedHashMap<>();
 
         public String buildJsonPayload() {
-            Gson gson = JsonSerialization.gson();
+            Gson gson = gson();
 
             map.put("locale", EN_US);
 
@@ -476,25 +465,8 @@ public class HttpAccess {
             map.put("granularity", timeGranularity);
         }
 
-        public void addMarketId(MarketId marketId) {
-            map.put("marketId", marketId.asString());
-        }
-
-        public void addBetIds(BetId... betIds) {
-            addBetIds(Arrays.asList(betIds));
-        }
-
         public void addBetIds(Iterable<BetId> value) {
             map.put("betIds", newHashSet(value));
-        }
-
-        public void addPlaceInstructions(List<PlaceInstruction> instructions) {
-            map.put("instructions", instructions);
-        }
-
-        public void addCustomerRef(CustomerRef customerRef) {
-            if (customerRef != CustomerRef.NONE)
-                map.put("customerRef", customerRef.asString());
         }
 
         public void addMarketProjections(Iterable<MarketProjection> marketProjection) {
@@ -509,60 +481,10 @@ public class HttpAccess {
             map.put("maxResults", maxResults);
         }
 
-        public void addMarketIds(MarketId... marketIds) {
-            addMarketIds(Arrays.asList(marketIds));
-        }
-
         public void addMarketIds(Iterable<MarketId> marketIds) {
             map.put("marketIds", newHashSet(marketIds));
         }
 
-        public void addPriceProjection(PriceProjection priceProjection) {
-            map.put("priceProjection", priceProjection);
-        }
-
-        public void addCancelInstructions(Collection<CancelInstruction> cancelInstructions) {
-            map.put("instructions", ImmutableList.copyOf(cancelInstructions));
-        }
-
-        @Deprecated//apprarently
-        public void addPlacedDateRange(ZonedDateTime from, ZonedDateTime to) {
-            TimeRange timeRange = new TimeRange(from, to);
-            map.put("placedDateRange", timeRange);
-        }
-
-        public void addTimeRange(ZonedDateTime from, ZonedDateTime to) {
-            addTimeRange(new TimeRange(from, to));
-        }
-
-        public void addTimeRange(TimeRange timeRange) {
-            map.put("dateRange", timeRange);
-        }
-
-        public void addOrderBy(OrderBy orderBy) {
-            map.put("orderBy", orderBy);
-        }
-
-        public void addSortDirection(SortDirection sortDirection) {
-            map.put("sortDir", sortDirection);
-        }
-
-        public void addPage(int from, int recordCount) {
-            map.put("fromRecord", from);
-            map.put("recordCount", recordCount);
-        }
-
-        public void addOrderProjection(OrderProjection orderProjection) {
-            map.put("orderProjection", orderProjection);
-        }
-
-        public void addBetStatus(BetStatus betStatuses) {
-            map.put("betStatus", betStatuses);
-        }
-
-        public void addSettledDateRange(TimeRange timeRange) {
-            map.put("settledDateRange", timeRange);
-        }
     }
 
 }
