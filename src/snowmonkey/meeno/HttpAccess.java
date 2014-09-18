@@ -170,10 +170,6 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_COUNTRIES), marketFilter);
     }
 
-    public void listCurrentOrders(Processor processor) throws IOException, ApiException {
-        listCurrentOrders(processor);
-    }
-
     public void listCurrentOrders(Processor processor, Set<BetId> betIds, Set<MarketId> marketIds, OrderProjection orderProjection, TimeRange dateRange, OrderBy orderBy, SortDir sortDir, int fromRecord) throws IOException, ApiException {
         TimeRange placedDateRange = null;
 

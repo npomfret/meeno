@@ -20,13 +20,14 @@ import java.io.InputStream;
 import static live.GenerateTestData.ListCurrentOrders.*;
 import static live.GenerateTestData.*;
 import static snowmonkey.meeno.JsonSerialization.*;
+import static snowmonkey.meeno.requests.ListCurrentOrders.*;
 
 public class CancelOrdersTest extends AbstractLiveTestCase {
 
     @Test
     public void test() throws Exception {
         HttpExchangeOperations httpExchangeOperations = new HttpExchangeOperations(httpAccess);
-        CurrentOrderSummaryReport currentOrders = httpExchangeOperations.listCurrentOrders();
+        CurrentOrderSummaryReport currentOrders = httpExchangeOperations.listCurrentOrders(new Builder().build());
         Iterable<CancelExecutionReport> cancelled = httpExchangeOperations.cancelAllOrders(currentOrders);
         for (CancelExecutionReport cancelExecutionReport : cancelled) {
             System.out.println("cancelExecutionReport = " + cancelExecutionReport);
@@ -36,7 +37,7 @@ public class CancelOrdersTest extends AbstractLiveTestCase {
     @Test
     public void cancelAllOrders() throws Exception {
 
-        httpAccess.listCurrentOrders(fileWriter(listCurrentOrdersFile()));
+        httpAccess.listCurrentOrders(fileWriter(listCurrentOrdersFile()), new Builder().build());
 
         CurrentOrderSummaryReport currentOrders = parse(listCurrentOrdersJson(), CurrentOrderSummaryReport.class);
 

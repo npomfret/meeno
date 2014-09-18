@@ -3,6 +3,7 @@ package live;
 import org.junit.Test;
 import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.MarketFilterBuilder;
+import snowmonkey.meeno.requests.ListCurrentOrders;
 import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.CustomerRef;
 import snowmonkey.meeno.types.EventTypeName;
@@ -58,7 +59,7 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
 
         BetId betId = placeInstructionReport.instructionReports.get(0).betId;
 
-        httpAccess.listCurrentOrders(fileWriter(listCurrentOrdersFile()));
+        httpAccess.listCurrentOrders(fileWriter(listCurrentOrdersFile()), new ListCurrentOrders.Builder().build());
 
         CurrentOrderSummaryReport currentOrders = parse(listCurrentOrdersJson(), CurrentOrderSummaryReport.class);
 

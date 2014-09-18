@@ -3,6 +3,7 @@ package snowmonkey.meeno;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import org.apache.http.StatusLine;
+import snowmonkey.meeno.requests.ListCurrentOrders;
 import snowmonkey.meeno.types.MarketCatalogues;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.Navigation;
@@ -61,10 +62,10 @@ public class HttpExchangeOperations implements ExchangeOperations {
         }
     }
 
-    public CurrentOrderSummaryReport listCurrentOrders() throws ApiException {
+    public CurrentOrderSummaryReport listCurrentOrders(ListCurrentOrders request) throws ApiException {
         try {
             JsonProcessor processor = new JsonProcessor();
-            httpAccess.listCurrentOrders(processor);
+            httpAccess.listCurrentOrders(processor, request);
             return parse(processor.json, CurrentOrderSummaryReport.class);
         } catch (IOException e) {
             throw new RuntimeEnvironmentException("list orders call failed", e);
