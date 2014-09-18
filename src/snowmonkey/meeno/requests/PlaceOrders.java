@@ -9,7 +9,7 @@ import java.util.List;
 
 public class PlaceOrders extends ImmutbleType {
     public final MarketId marketId;
-    public final Iterable<PlaceInstruction> instructions;
+    public final List<PlaceInstruction> instructions;
     public final CustomerRef customerRef;
 
     public PlaceOrders(MarketId marketId, List<PlaceInstruction> instructions, CustomerRef customerRef) {

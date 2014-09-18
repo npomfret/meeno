@@ -111,8 +111,8 @@ public class HttpAccess {
         this.auditors.add(auditor);
     }
 
-    public void cancelOrders(MarketId marketId, Collection<CancelInstruction> cancelInstructions, Processor processor) throws IOException, ApiException {
-        CancelOrders request = new CancelOrders(marketId, cancelInstructions, CustomerRef.NONE);
+    public void cancelOrders(MarketId marketId, Collection<CancelInstruction> cancelInstructions, Processor processor, CustomerRef customerRef) throws IOException, ApiException {
+        CancelOrders request = new CancelOrders(marketId, cancelInstructions, customerRef);
         cancelOrders(processor, request);
     }
 

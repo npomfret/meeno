@@ -8,14 +8,13 @@ import java.util.UUID;
  * de-dupe mistaken re-submissions.   CustomerRef can contain: upper/lower chars, digits, chars : - . _ + * : ; ~ only.
  */
 public class CustomerRef extends MicroType<String> {
-    public static final CustomerRef NONE = new CustomerRef("");
 
-    protected CustomerRef(String value) {
+    public CustomerRef(String value) {
         super(value);
     }
 
     public static CustomerRef unique() {
-        return safeCustomerRef(UUID.randomUUID().toString());
+        return safeCustomerRef(UUID.randomUUID().toString().replaceAll("-", ""));
     }
 
     public static CustomerRef customerRef(String value) {
@@ -28,7 +27,7 @@ public class CustomerRef extends MicroType<String> {
     }
 
     public static CustomerRef safeCustomerRef(String value) {
-        String cleaned = value.replaceAll("[^a-zA-Z0-9\\._+*;~:-]", "");
+        String cleaned = value.replaceAll("[^a-zA-Z0-9\\._\\+\\*;~:-]", "");
         String chopped = cleaned.substring(0, Math.min(cleaned.length(), 32));
         return new CustomerRef(chopped);
     }

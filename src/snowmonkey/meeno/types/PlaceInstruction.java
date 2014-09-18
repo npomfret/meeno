@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 public final class PlaceInstruction extends ImmutbleType {
 
     public final OrderType orderType;
-    public final long selectionId;
+    public final SelectionId selectionId;
     @Nullable
     public Double handicap;
     public final Side side;
@@ -17,9 +17,9 @@ public final class PlaceInstruction extends ImmutbleType {
     @Nullable
     public final MarketOnCloseOrder marketOnCloseOrder;
 
-    private PlaceInstruction(OrderType orderType, SelectionId selectionId, Double handicap, Side side, LimitOrder limitOrder, LimitOnCloseOrder limitOnCloseOrder, MarketOnCloseOrder marketOnCloseOrder) {
+    public PlaceInstruction(OrderType orderType, SelectionId selectionId, Double handicap, Side side, LimitOrder limitOrder, LimitOnCloseOrder limitOnCloseOrder, MarketOnCloseOrder marketOnCloseOrder) {
         this.orderType = orderType;
-        this.selectionId = selectionId.asNumber();
+        this.selectionId = selectionId;
         this.handicap = handicap;
         this.side = side;
         this.limitOrder = limitOrder;

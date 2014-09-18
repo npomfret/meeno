@@ -8,7 +8,6 @@ import snowmonkey.meeno.types.OrderProjection;
 import snowmonkey.meeno.types.SortDir;
 import snowmonkey.meeno.types.TimeRange;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class ListCurrentOrders extends ImmutbleType {
@@ -35,8 +34,8 @@ public class ListCurrentOrders extends ImmutbleType {
     }
 
     public static class Builder {
-        private Set<BetId> betIds = new HashSet<>();
-        private Set<MarketId> marketIds = new HashSet<>();
+        private Set<BetId> betIds = null;
+        private Set<MarketId> marketIds = null;
         private OrderProjection orderProjection = OrderProjection.ALL;
         private TimeRange dateRange = null;
         private OrderBy orderBy = OrderBy.BY_BET;

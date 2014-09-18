@@ -76,7 +76,7 @@ public class HttpExchangeOperations implements ExchangeOperations {
         }
     }
 
-    public Iterable<CancelExecutionReport> cancelAllOrders(CurrentOrderSummaryReport currentOrders) throws ApiException {
+    public Iterable<CancelExecutionReport> cancelAllOrders(CurrentOrderSummaryReport currentOrders, CustomerRef unique) throws ApiException {
         Multimap<MarketId, CancelInstruction> cancelInstructions = ArrayListMultimap.create();
         for (CurrentOrderSummary currentOrder : currentOrders.currentOrders) {
             MarketId marketId = currentOrder.marketId;
@@ -87,7 +87,8 @@ public class HttpExchangeOperations implements ExchangeOperations {
 
         for (MarketId marketId : cancelInstructions.keySet()) {
             Collection<CancelInstruction> instructions = cancelInstructions.get(marketId);
-            results.add(cancelOrders(marketId, instructions));
+            CancelExecutionReport cancelExecutionReport = cancelOrders(marketId, instructions, unique);
+            results.add(cancelExecutionReport);
         }
 
         return results;
@@ -107,10 +108,10 @@ public class HttpExchangeOperations implements ExchangeOperations {
         }
     }
 
-    public CancelExecutionReport cancelOrders(MarketId marketId, Collection<CancelInstruction> instructions) throws ApiException {
+    public CancelExecutionReport cancelOrders(MarketId marketId, Collection<CancelInstruction> instructions, CustomerRef customerRef) throws ApiException {
         try {
             JsonProcessor processor = new JsonProcessor();
-            httpAccess.cancelOrders(marketId, instructions, processor);
+            httpAccess.cancelOrders(marketId, instructions, processor, customerRef);
             return parse(processor.json, CancelExecutionReport.class);
         } catch (IOException e) {
             throw new RuntimeEnvironmentException("cancel orders call failed", e);

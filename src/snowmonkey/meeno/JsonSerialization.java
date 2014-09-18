@@ -18,6 +18,7 @@ import snowmonkey.meeno.types.ClearedOrderSummary;
 import snowmonkey.meeno.types.ClearedOrderSummaryReport;
 import snowmonkey.meeno.types.CurrentOrderSummary;
 import snowmonkey.meeno.types.CurrentOrderSummaryReport;
+import snowmonkey.meeno.types.CustomerRef;
 import snowmonkey.meeno.types.EventId;
 import snowmonkey.meeno.types.EventTypeId;
 import snowmonkey.meeno.types.ExchangePrices;
@@ -30,6 +31,7 @@ import snowmonkey.meeno.types.MatchId;
 import snowmonkey.meeno.types.MicroType;
 import snowmonkey.meeno.types.Order;
 import snowmonkey.meeno.types.PlaceExecutionReport;
+import snowmonkey.meeno.types.PlaceInstruction;
 import snowmonkey.meeno.types.PlaceInstructionReport;
 import snowmonkey.meeno.types.Price;
 import snowmonkey.meeno.types.PriceSize;
@@ -79,6 +81,9 @@ public class JsonSerialization {
 
                 .registerTypeAdapter(Size.class, (JsonSerializer<Size>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asDouble()))
 
+                .registerTypeAdapter(CustomerRef.class, (JsonSerializer<CustomerRef>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
+
+                .registerTypeAdapter(PlaceInstruction.class, complexObjectDeserializer(PlaceInstruction.class))
                 .registerTypeAdapter(CancelInstruction.class, complexObjectDeserializer(CancelInstruction.class))
                 .registerTypeAdapter(CancelInstructionReport.class, complexObjectDeserializer(CancelInstructionReport.class))
                 .registerTypeAdapter(CancelExecutionReport.class, complexObjectDeserializer(CancelExecutionReport.class))
@@ -122,7 +127,11 @@ public class JsonSerialization {
                 if (!jsonObject.has(name)) {
                     args[i] = null;
                 } else if (parameterType.getSuperclass() == MicroType.class) {
-                    Constructor constructor = parameterType.getConstructors()[0];
+                    Constructor<?>[] constructors = parameterType.getConstructors();
+                    if (constructors.length == 0)
+                        throw new IllegalStateException(parameterType + " has no public constructor");
+
+                    Constructor constructor = constructors[0];
                     Class aClass = constructor.getParameterTypes()[0];
 
                     try {

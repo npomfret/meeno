@@ -12,23 +12,32 @@ import snowmonkey.meeno.requests.CancelInstruction;
 import snowmonkey.meeno.types.CancelExecutionReport;
 import snowmonkey.meeno.types.CurrentOrderSummary;
 import snowmonkey.meeno.types.CurrentOrderSummaryReport;
+import snowmonkey.meeno.types.CustomerRef;
 import snowmonkey.meeno.types.MarketId;
+import snowmonkey.meeno.types.OrderProjection;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import static java.time.ZonedDateTime.*;
 import static live.GenerateTestData.ListCurrentOrders.*;
 import static live.GenerateTestData.*;
-import static snowmonkey.meeno.JsonSerialization.*;
+import static snowmonkey.meeno.JsonSerialization.parse;
 import static snowmonkey.meeno.requests.ListCurrentOrders.*;
+import static snowmonkey.meeno.types.TimeRange.*;
 
 public class CancelOrdersTest extends AbstractLiveTestCase {
 
     @Test
     public void test() throws Exception {
         HttpExchangeOperations httpExchangeOperations = new HttpExchangeOperations(httpAccess);
-        CurrentOrderSummaryReport currentOrders = httpExchangeOperations.listCurrentOrders(new Builder().build());
-        Iterable<CancelExecutionReport> cancelled = httpExchangeOperations.cancelAllOrders(currentOrders);
+
+        CurrentOrderSummaryReport currentOrders = httpExchangeOperations.listCurrentOrders(new Builder()
+                .withOrderProjection(OrderProjection.ALL)
+                .withDateRange(between(now().minusDays(1), now().plusMonths(1)))
+                .build());
+
+        Iterable<CancelExecutionReport> cancelled = httpExchangeOperations.cancelAllOrders(currentOrders, CustomerRef.unique());
         for (CancelExecutionReport cancelExecutionReport : cancelled) {
             System.out.println("cancelExecutionReport = " + cancelExecutionReport);
         }
@@ -56,7 +65,7 @@ public class CancelOrdersTest extends AbstractLiveTestCase {
                     System.out.println(s);
                     return s;
                 }
-            });
+            }, null);
         }
     }
 

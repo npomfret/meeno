@@ -1,5 +1,6 @@
 package live;
 
+import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.MarketFilterBuilder;
@@ -18,6 +19,7 @@ import snowmonkey.meeno.types.Navigation;
 import snowmonkey.meeno.types.PersistenceType;
 import snowmonkey.meeno.types.PlaceExecutionReport;
 import snowmonkey.meeno.types.PlaceInstruction;
+import snowmonkey.meeno.types.PlaceInstructionReport;
 import snowmonkey.meeno.types.Side;
 
 import java.util.List;
@@ -51,25 +53,26 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
 
         LimitOrder limitOrder = new LimitOrder(2.00D, 1000, PersistenceType.LAPSE);
         PlaceInstruction placeLimitOrder = createPlaceLimitOrder(marketCatalogue.runners.get(0).selectionId, Side.BACK, limitOrder);
-        httpAccess.placeOrders(fileWriter(placeOrdersFile()), marketCatalogue.marketId, newArrayList(placeLimitOrder), CustomerRef.NONE);
+        httpAccess.placeOrders(fileWriter(placeOrdersFile()), marketCatalogue.marketId, newArrayList(placeLimitOrder), CustomerRef.unique());
 
         PlaceExecutionReport placeInstructionReport = parse(placeOrdersJson(), PlaceExecutionReport.class);
 
         System.out.println("placeInstructionReport = " + placeInstructionReport);
 
-        BetId betId = placeInstructionReport.instructionReports.get(0).betId;
+        ImmutableList<PlaceInstructionReport> instructionReports = placeInstructionReport.instructionReports;
+        BetId betId = instructionReports.get(0).betId;
 
         httpAccess.listCurrentOrders(fileWriter(listCurrentOrdersFile()), new ListCurrentOrders.Builder().build());
 
         CurrentOrderSummaryReport currentOrders = parse(listCurrentOrdersJson(), CurrentOrderSummaryReport.class);
 
         for (CurrentOrderSummary currentOrder : currentOrders.currentOrders) {
-            if (placeInstructionReport.instructionReports.get(0).betId.equals(betId)) {
+            if (instructionReports.get(0).betId.equals(betId)) {
                 MarketId marketId = currentOrder.marketId;
 
                 List<CancelInstruction> cancelInstructions = newArrayList(CancelInstruction.cancel(betId));
 
-                httpAccess.cancelOrders(marketId, cancelInstructions, fileWriter(cancelOrdersFile()));
+                httpAccess.cancelOrders(marketId, cancelInstructions, fileWriter(cancelOrdersFile()), null);
             }
         }
     }

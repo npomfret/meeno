@@ -1,17 +1,24 @@
 package snowmonkey.meeno.types;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.time.ZonedDateTime;
 
 public final class PlaceInstructionReport extends ImmutbleType {
     public final InstructionReportStatus status;
     public final InstructionReportErrorCode errorCode;
     public final PlaceInstruction instruction;
+    @Nullable
     public final BetId betId;
+    @Nullable
     public final ZonedDateTime placedDate;
-    public final double averagePriceMatched;
-    public final double sizeMatched;
+    @Nullable
+    public final Double averagePriceMatched;
+    @Nullable
+    public final Double sizeMatched;
 
-    public PlaceInstructionReport(InstructionReportStatus status, InstructionReportErrorCode errorCode, PlaceInstruction instruction, BetId betId, ZonedDateTime placedDate, double averagePriceMatched, double sizeMatched) {
+    public PlaceInstructionReport(InstructionReportStatus status, InstructionReportErrorCode errorCode, PlaceInstruction instruction,
+                                  BetId betId, ZonedDateTime placedDate, Double averagePriceMatched, Double sizeMatched) {
         this.status = status;
         this.errorCode = errorCode;
         this.instruction = instruction;
