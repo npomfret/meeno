@@ -31,10 +31,25 @@ import org.apache.http.message.BasicNameValuePair;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import snowmonkey.meeno.requests.ListClearedOrders;
+import snowmonkey.meeno.requests.ListCurrentOrders;
 import snowmonkey.meeno.requests.ListMarketBook;
-import snowmonkey.meeno.types.*;
+import snowmonkey.meeno.types.BetId;
+import snowmonkey.meeno.types.CustomerRef;
+import snowmonkey.meeno.types.MarketId;
+import snowmonkey.meeno.types.SessionToken;
 import snowmonkey.meeno.types.TimeGranularity;
-import snowmonkey.meeno.types.raw.*;
+import snowmonkey.meeno.types.raw.BetStatus;
+import snowmonkey.meeno.types.raw.CancelInstruction;
+import snowmonkey.meeno.types.raw.MarketProjection;
+import snowmonkey.meeno.types.raw.MarketSort;
+import snowmonkey.meeno.types.raw.MatchProjection;
+import snowmonkey.meeno.types.raw.OrderBy;
+import snowmonkey.meeno.types.raw.OrderProjection;
+import snowmonkey.meeno.types.raw.PlaceInstruction;
+import snowmonkey.meeno.types.raw.PriceProjection;
+import snowmonkey.meeno.types.raw.SortDir;
+import snowmonkey.meeno.types.raw.SortDirection;
+import snowmonkey.meeno.types.raw.TimeRange;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
@@ -47,10 +62,15 @@ import java.net.URI;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Set;
 
-import static com.google.common.collect.Sets.newHashSet;
-import static snowmonkey.meeno.MarketFilterBuilder.noFilter;
+import static com.google.common.collect.Sets.*;
+import static snowmonkey.meeno.MarketFilterBuilder.*;
 
 public class HttpAccess {
 
@@ -150,16 +170,39 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_COUNTRIES), marketFilter);
     }
 
-    //todo:  Set<String>betIds,Set<String>marketIds, OrderProjection orderProjection, TimeRange placedDateRange, OrderBy orderBy, SortDir sortDir,intfromRecord,intrecordCount
     public void listCurrentOrders(Processor processor) throws IOException, ApiException {
-        listCurrentOrders(processor, noFilter());
+        listCurrentOrders(processor);
     }
 
-    public void listCurrentOrders(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_CURRENT_ORDERS), marketFilter);
+    public void listCurrentOrders(Processor processor, Set<BetId> betIds, Set<MarketId> marketIds, OrderProjection orderProjection, TimeRange dateRange, OrderBy orderBy, SortDir sortDir, int fromRecord) throws IOException, ApiException {
+        TimeRange placedDateRange = null;
+
+        ListCurrentOrders request = new ListCurrentOrders(
+                betIds,
+                marketIds,
+                orderProjection,
+                placedDateRange,
+                dateRange,
+                orderBy,
+                sortDir,
+                fromRecord,
+                0
+        );
+
+        listCurrentOrders(processor, request);
     }
 
-    public void listClearedOrders(Processor processor, BetStatus betStatus, TimeRange between) throws IOException, ApiException {
+    public void listCurrentOrders(Processor processor, final ListCurrentOrders request) throws IOException, ApiException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_CLEARED_ORDERS), new PayloadBuilder() {
+            @Override
+            public String buildJsonPayload() {
+                Gson gson = JsonSerialization.gson();
+                return gson.toJson(request);
+            }
+        });
+    }
+
+    public void listClearedOrders(Processor processor, BetStatus betStatus, TimeRange between, int fromRecord) throws IOException, ApiException {
         ListClearedOrders request = new ListClearedOrders(
                 betStatus,
                 null,
@@ -172,7 +215,7 @@ public class HttpAccess {
                 null,
                 null,
                 EN_US,
-                0,
+                fromRecord,
                 0
         );
 

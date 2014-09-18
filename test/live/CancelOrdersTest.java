@@ -27,7 +27,7 @@ public class CancelOrdersTest extends AbstractLiveTestCase {
     public void test() throws Exception {
         HttpExchangeOperations httpExchangeOperations = new HttpExchangeOperations(httpAccess);
         CurrentOrderSummaryReport currentOrders = httpExchangeOperations.listCurrentOrders();
-        Iterable<CancelExecutionReport> cancelled = httpExchangeOperations.cancel(currentOrders);
+        Iterable<CancelExecutionReport> cancelled = httpExchangeOperations.cancelAllOrders(currentOrders);
         for (CancelExecutionReport cancelExecutionReport : cancelled) {
             System.out.println("cancelExecutionReport = " + cancelExecutionReport);
         }

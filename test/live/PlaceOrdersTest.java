@@ -3,26 +3,36 @@ package live;
 import org.junit.Test;
 import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.MarketFilterBuilder;
-import snowmonkey.meeno.types.*;
-import snowmonkey.meeno.types.raw.*;
+import snowmonkey.meeno.types.BetId;
+import snowmonkey.meeno.types.CustomerRef;
+import snowmonkey.meeno.types.EventTypeName;
+import snowmonkey.meeno.types.MarketId;
+import snowmonkey.meeno.types.Navigation;
+import snowmonkey.meeno.types.raw.CancelInstruction;
+import snowmonkey.meeno.types.raw.CurrentOrderSummary;
+import snowmonkey.meeno.types.raw.CurrentOrderSummaryReport;
+import snowmonkey.meeno.types.raw.LimitOrder;
+import snowmonkey.meeno.types.raw.MarketCatalogue;
+import snowmonkey.meeno.types.raw.MarketSort;
+import snowmonkey.meeno.types.raw.PersistenceType;
+import snowmonkey.meeno.types.raw.PlaceExecutionReport;
+import snowmonkey.meeno.types.raw.PlaceInstruction;
+import snowmonkey.meeno.types.raw.Side;
 
 import java.util.List;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Sets.newHashSet;
-import static java.time.ZonedDateTime.now;
-import static live.GenerateTestData.CancelOrders.cancelOrdersFile;
-import static live.GenerateTestData.ListCurrentOrders.listCurrentOrdersFile;
-import static live.GenerateTestData.ListCurrentOrders.listCurrentOrdersJson;
-import static live.GenerateTestData.ListMarketCatalogue.listMarketCatalogueFile;
-import static live.GenerateTestData.ListMarketCatalogue.listMarketCatalogueJson;
-import static live.GenerateTestData.PlaceOrders.placeOrdersFile;
-import static live.GenerateTestData.PlaceOrders.placeOrdersJson;
-import static live.GenerateTestData.fileWriter;
+import static com.google.common.collect.Lists.*;
+import static com.google.common.collect.Sets.*;
+import static java.time.ZonedDateTime.*;
+import static live.GenerateTestData.CancelOrders.*;
+import static live.GenerateTestData.ListCurrentOrders.*;
+import static live.GenerateTestData.ListMarketCatalogue.*;
+import static live.GenerateTestData.PlaceOrders.*;
+import static live.GenerateTestData.*;
 import static snowmonkey.meeno.JsonSerialization.parse;
-import static snowmonkey.meeno.types.raw.MarketProjection.RUNNER_METADATA;
-import static snowmonkey.meeno.types.raw.PlaceInstruction.createPlaceLimitOrder;
-import static snowmonkey.meeno.types.raw.TimeRange.between;
+import static snowmonkey.meeno.types.raw.MarketProjection.*;
+import static snowmonkey.meeno.types.raw.PlaceInstruction.*;
+import static snowmonkey.meeno.types.raw.TimeRange.*;
 
 public class PlaceOrdersTest extends AbstractLiveTestCase {
     @Test
@@ -48,7 +58,7 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
 
         BetId betId = placeInstructionReport.instructionReports.get(0).betId;
 
-        httpAccess.listCurrentOrders(fileWriter(listCurrentOrdersFile()), new MarketFilterBuilder().withMarketIds(market.id));
+        httpAccess.listCurrentOrders(fileWriter(listCurrentOrdersFile()));
 
         CurrentOrderSummaryReport currentOrders = parse(listCurrentOrdersJson(), CurrentOrderSummaryReport.class);
 

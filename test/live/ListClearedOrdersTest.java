@@ -6,11 +6,10 @@ import snowmonkey.meeno.types.raw.BetStatus;
 import snowmonkey.meeno.types.raw.ClearedOrderSummary;
 import snowmonkey.meeno.types.raw.ClearedOrderSummaryReport;
 
-import static java.time.ZonedDateTime.now;
-import static live.GenerateTestData.ListCleanedOrders.listClearedOrdersFile;
-import static live.GenerateTestData.ListCleanedOrders.listClearedOrdersJson;
-import static live.GenerateTestData.fileWriter;
-import static snowmonkey.meeno.types.raw.TimeRange.between;
+import static java.time.ZonedDateTime.*;
+import static live.GenerateTestData.ListCleanedOrders.*;
+import static live.GenerateTestData.*;
+import static snowmonkey.meeno.types.raw.TimeRange.*;
 
 public class ListClearedOrdersTest extends AbstractLiveTestCase {
     @Test
@@ -18,7 +17,7 @@ public class ListClearedOrdersTest extends AbstractLiveTestCase {
 
         httpAccess.listClearedOrders(fileWriter(listClearedOrdersFile()),
                 BetStatus.SETTLED,
-                between(now().minusMonths(3), now())
+                between(now().minusMonths(3), now()), 0
         );
 
         ClearedOrderSummary clearedOrderSummaryReport = JsonSerialization.parse(listClearedOrdersJson(), ClearedOrderSummary.class);
@@ -32,7 +31,7 @@ public class ListClearedOrdersTest extends AbstractLiveTestCase {
 
         httpAccess.listClearedOrders(fileWriter(listClearedOrdersFile()),
                 BetStatus.LAPSED,
-                between(now().minusMonths(3), now())
+                between(now().minusMonths(3), now()), 0
         );
 
         ClearedOrderSummary clearedOrderSummaryReport = JsonSerialization.parse(listClearedOrdersJson(), ClearedOrderSummary.class);

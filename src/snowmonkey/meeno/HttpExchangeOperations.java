@@ -20,6 +20,7 @@ import snowmonkey.meeno.types.raw.PriceProjection;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static com.google.common.collect.Lists.*;
@@ -63,14 +64,14 @@ public class HttpExchangeOperations implements ExchangeOperations {
     public CurrentOrderSummaryReport listCurrentOrders() throws ApiException {
         try {
             JsonProcessor processor = new JsonProcessor();
-            httpAccess.listCurrentOrders(processor, new MarketFilterBuilder());
+            httpAccess.listCurrentOrders(processor);
             return parse(processor.json, CurrentOrderSummaryReport.class);
         } catch (IOException e) {
             throw new RuntimeEnvironmentException("list orders call failed", e);
         }
     }
 
-    public Iterable<CancelExecutionReport> cancel(CurrentOrderSummaryReport currentOrders) throws ApiException {
+    public Iterable<CancelExecutionReport> cancelAllOrders(CurrentOrderSummaryReport currentOrders) throws ApiException {
         Multimap<MarketId, CancelInstruction> cancelInstructions = ArrayListMultimap.create();
         for (CurrentOrderSummary currentOrder : currentOrders.currentOrders) {
             MarketId marketId = currentOrder.marketId;
@@ -78,18 +79,23 @@ public class HttpExchangeOperations implements ExchangeOperations {
         }
 
         List<CancelExecutionReport> results = new ArrayList<>();
+
         for (MarketId marketId : cancelInstructions.keySet()) {
-            try {
-                JsonProcessor processor = new JsonProcessor();
-                httpAccess.cancelOrders(marketId, cancelInstructions.get(marketId), processor);
-                CancelExecutionReport cancelExecutionReport = parse(processor.json, CancelExecutionReport.class);
-                results.add(cancelExecutionReport);
-            } catch (IOException e) {
-                throw new RuntimeEnvironmentException("cancel bets call failed", e);
-            }
+            Collection<CancelInstruction> instructions = cancelInstructions.get(marketId);
+            results.add(cancelOrders(marketId, instructions));
         }
 
         return results;
+    }
+
+    public CancelExecutionReport cancelOrders(MarketId marketId, Collection<CancelInstruction> instructions) throws ApiException {
+        try {
+            JsonProcessor processor = new JsonProcessor();
+            httpAccess.cancelOrders(marketId, instructions, processor);
+            return parse(processor.json, CancelExecutionReport.class);
+        } catch (IOException e) {
+            throw new RuntimeEnvironmentException("cancel bets call failed", e);
+        }
     }
 
     public MarketBook marketBook(MarketId marketId, PriceProjection priceProjection) throws ApiException, NotFoundException {
