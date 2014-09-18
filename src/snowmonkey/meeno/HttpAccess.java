@@ -465,10 +465,6 @@ public class HttpAccess {
             map.put("granularity", timeGranularity);
         }
 
-        public void addBetIds(Iterable<BetId> value) {
-            map.put("betIds", newHashSet(value));
-        }
-
         public void addMarketProjections(Iterable<MarketProjection> marketProjection) {
             map.put("marketProjection", newHashSet(marketProjection));
         }
@@ -481,9 +477,6 @@ public class HttpAccess {
             map.put("maxResults", maxResults);
         }
 
-        public void addMarketIds(Iterable<MarketId> marketIds) {
-            map.put("marketIds", newHashSet(marketIds));
-        }
 
     }
 
