@@ -103,7 +103,7 @@ public class HttpExchangeOperations implements ExchangeOperations {
             httpAccess.placeOrders(processor, request);
             return parse(processor.json, PlaceExecutionReport.class);
         } catch (IOException e) {
-            throw new RuntimeEnvironmentException("cancel bets call failed", e);
+            throw new RuntimeEnvironmentException("place orders call failed", e);
         }
     }
 
@@ -113,7 +113,7 @@ public class HttpExchangeOperations implements ExchangeOperations {
             httpAccess.cancelOrders(marketId, instructions, processor);
             return parse(processor.json, CancelExecutionReport.class);
         } catch (IOException e) {
-            throw new RuntimeEnvironmentException("cancel bets call failed", e);
+            throw new RuntimeEnvironmentException("cancel orders call failed", e);
         }
     }
 
