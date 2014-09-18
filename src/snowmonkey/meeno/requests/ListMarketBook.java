@@ -2,9 +2,9 @@ package snowmonkey.meeno.requests;
 
 import snowmonkey.meeno.types.ImmutbleType;
 import snowmonkey.meeno.types.MarketId;
-import snowmonkey.meeno.types.raw.MatchProjection;
-import snowmonkey.meeno.types.raw.OrderProjection;
-import snowmonkey.meeno.types.raw.PriceProjection;
+import snowmonkey.meeno.types.MatchProjection;
+import snowmonkey.meeno.types.OrderProjection;
+import snowmonkey.meeno.types.PriceProjection;
 
 import static com.google.common.collect.Sets.*;
 

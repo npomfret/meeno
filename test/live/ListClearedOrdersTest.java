@@ -2,14 +2,14 @@ package live;
 
 import org.junit.Test;
 import snowmonkey.meeno.JsonSerialization;
-import snowmonkey.meeno.types.raw.BetStatus;
-import snowmonkey.meeno.types.raw.ClearedOrderSummary;
-import snowmonkey.meeno.types.raw.ClearedOrderSummaryReport;
+import snowmonkey.meeno.types.BetStatus;
+import snowmonkey.meeno.types.ClearedOrderSummary;
+import snowmonkey.meeno.types.ClearedOrderSummaryReport;
 
 import static java.time.ZonedDateTime.*;
 import static live.GenerateTestData.ListCleanedOrders.*;
 import static live.GenerateTestData.*;
-import static snowmonkey.meeno.types.raw.TimeRange.*;
+import static snowmonkey.meeno.types.TimeRange.*;
 
 public class ListClearedOrdersTest extends AbstractLiveTestCase {
     @Test

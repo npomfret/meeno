@@ -10,10 +10,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
-import static snowmonkey.meeno.types.EventTypeName.SOCCER;
-import static snowmonkey.meeno.types.raw.TimeRange.between;
+import static org.hamcrest.core.IsEqual.*;
+import static org.junit.Assert.*;
+import static snowmonkey.meeno.types.EventTypeName.*;
+import static snowmonkey.meeno.types.TimeRange.*;
 
 public class NavigationTest {
     @Test

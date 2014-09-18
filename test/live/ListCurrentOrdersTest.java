@@ -2,8 +2,8 @@ package live;
 
 import org.junit.Test;
 import snowmonkey.meeno.requests.ListCurrentOrders;
-import snowmonkey.meeno.types.raw.CurrentOrderSummary;
-import snowmonkey.meeno.types.raw.CurrentOrderSummaryReport;
+import snowmonkey.meeno.types.CurrentOrderSummary;
+import snowmonkey.meeno.types.CurrentOrderSummaryReport;
 
 import static live.GenerateTestData.ListCurrentOrders.*;
 import static live.GenerateTestData.*;

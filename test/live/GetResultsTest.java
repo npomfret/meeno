@@ -3,17 +3,17 @@ package live;
 import org.junit.Test;
 import snowmonkey.meeno.HttpAccess;
 import snowmonkey.meeno.HttpExchangeOperations;
+import snowmonkey.meeno.types.MarketBooks;
 import snowmonkey.meeno.types.Navigation;
-import snowmonkey.meeno.types.raw.MarketBooks;
-import snowmonkey.meeno.types.raw.PriceProjection;
-import snowmonkey.meeno.types.raw.TimeRange;
+import snowmonkey.meeno.types.PriceProjection;
+import snowmonkey.meeno.types.TimeRange;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static java.time.ZonedDateTime.*;
 import static snowmonkey.meeno.types.EventTypeName.*;
-import static snowmonkey.meeno.types.raw.TimeRange.*;
+import static snowmonkey.meeno.types.TimeRange.*;
 
 public class GetResultsTest extends AbstractLiveTestCase {
     @Test

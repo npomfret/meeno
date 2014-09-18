@@ -3,10 +3,10 @@ package snowmonkey.meeno.requests;
 import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.ImmutbleType;
 import snowmonkey.meeno.types.MarketId;
-import snowmonkey.meeno.types.raw.OrderBy;
-import snowmonkey.meeno.types.raw.OrderProjection;
-import snowmonkey.meeno.types.raw.SortDir;
-import snowmonkey.meeno.types.raw.TimeRange;
+import snowmonkey.meeno.types.OrderBy;
+import snowmonkey.meeno.types.OrderProjection;
+import snowmonkey.meeno.types.SortDir;
+import snowmonkey.meeno.types.TimeRange;
 
 import java.util.HashSet;
 import java.util.Set;

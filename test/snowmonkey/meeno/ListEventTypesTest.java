@@ -2,11 +2,11 @@ package snowmonkey.meeno;
 
 import live.GenerateTestData;
 import org.junit.Test;
+import snowmonkey.meeno.types.EventType;
 import snowmonkey.meeno.types.EventTypes;
-import snowmonkey.meeno.types.raw.EventType;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 
 public class ListEventTypesTest {
     @Test

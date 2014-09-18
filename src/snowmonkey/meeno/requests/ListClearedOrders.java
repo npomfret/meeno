@@ -1,15 +1,15 @@
 package snowmonkey.meeno.requests;
 
 import snowmonkey.meeno.types.BetId;
+import snowmonkey.meeno.types.BetStatus;
 import snowmonkey.meeno.types.EventId;
 import snowmonkey.meeno.types.EventTypeId;
 import snowmonkey.meeno.types.GroupBy;
 import snowmonkey.meeno.types.ImmutbleType;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.RunnerId;
-import snowmonkey.meeno.types.raw.BetStatus;
-import snowmonkey.meeno.types.raw.Side;
-import snowmonkey.meeno.types.raw.TimeRange;
+import snowmonkey.meeno.types.Side;
+import snowmonkey.meeno.types.TimeRange;
 
 import java.util.Set;
 

@@ -3,22 +3,22 @@ package live;
 import org.junit.Test;
 import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.MarketFilterBuilder;
+import snowmonkey.meeno.requests.CancelInstruction;
 import snowmonkey.meeno.requests.ListCurrentOrders;
 import snowmonkey.meeno.types.BetId;
+import snowmonkey.meeno.types.CurrentOrderSummary;
+import snowmonkey.meeno.types.CurrentOrderSummaryReport;
 import snowmonkey.meeno.types.CustomerRef;
 import snowmonkey.meeno.types.EventTypeName;
+import snowmonkey.meeno.types.LimitOrder;
+import snowmonkey.meeno.types.MarketCatalogue;
 import snowmonkey.meeno.types.MarketId;
+import snowmonkey.meeno.types.MarketSort;
 import snowmonkey.meeno.types.Navigation;
-import snowmonkey.meeno.types.raw.CancelInstruction;
-import snowmonkey.meeno.types.raw.CurrentOrderSummary;
-import snowmonkey.meeno.types.raw.CurrentOrderSummaryReport;
-import snowmonkey.meeno.types.raw.LimitOrder;
-import snowmonkey.meeno.types.raw.MarketCatalogue;
-import snowmonkey.meeno.types.raw.MarketSort;
-import snowmonkey.meeno.types.raw.PersistenceType;
-import snowmonkey.meeno.types.raw.PlaceExecutionReport;
-import snowmonkey.meeno.types.raw.PlaceInstruction;
-import snowmonkey.meeno.types.raw.Side;
+import snowmonkey.meeno.types.PersistenceType;
+import snowmonkey.meeno.types.PlaceExecutionReport;
+import snowmonkey.meeno.types.PlaceInstruction;
+import snowmonkey.meeno.types.Side;
 
 import java.util.List;
 
@@ -31,9 +31,9 @@ import static live.GenerateTestData.ListMarketCatalogue.*;
 import static live.GenerateTestData.PlaceOrders.*;
 import static live.GenerateTestData.*;
 import static snowmonkey.meeno.JsonSerialization.parse;
-import static snowmonkey.meeno.types.raw.MarketProjection.*;
-import static snowmonkey.meeno.types.raw.PlaceInstruction.*;
-import static snowmonkey.meeno.types.raw.TimeRange.*;
+import static snowmonkey.meeno.types.MarketProjection.*;
+import static snowmonkey.meeno.types.PlaceInstruction.*;
+import static snowmonkey.meeno.types.TimeRange.*;
 
 public class PlaceOrdersTest extends AbstractLiveTestCase {
     @Test

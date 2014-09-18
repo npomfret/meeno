@@ -3,7 +3,7 @@ package snowmonkey.meeno.requests;
 import snowmonkey.meeno.types.CustomerRef;
 import snowmonkey.meeno.types.ImmutbleType;
 import snowmonkey.meeno.types.MarketId;
-import snowmonkey.meeno.types.raw.PlaceInstruction;
+import snowmonkey.meeno.types.PlaceInstruction;
 
 import java.util.List;
 

@@ -8,12 +8,12 @@ import snowmonkey.meeno.types.Navigation;
 
 import java.time.ZonedDateTime;
 
-import static live.GenerateTestData.TimeRanges.listTimeRangesFile;
-import static live.GenerateTestData.fileWriter;
-import static snowmonkey.meeno.CountryLookup.UnitedKingdom;
-import static snowmonkey.meeno.types.EventTypeName.SOCCER;
-import static snowmonkey.meeno.types.TimeGranularity.MINUTES;
-import static snowmonkey.meeno.types.raw.TimeRange.between;
+import static live.GenerateTestData.TimeRanges.*;
+import static live.GenerateTestData.*;
+import static snowmonkey.meeno.CountryLookup.*;
+import static snowmonkey.meeno.types.EventTypeName.*;
+import static snowmonkey.meeno.types.TimeGranularity.*;
+import static snowmonkey.meeno.types.TimeRange.*;
 
 public class ListTimeRangesTest extends AbstractLiveTestCase {
     @Test

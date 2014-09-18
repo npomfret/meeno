@@ -4,7 +4,6 @@ package snowmonkey.meeno.requests;
 import snowmonkey.meeno.types.CustomerRef;
 import snowmonkey.meeno.types.ImmutbleType;
 import snowmonkey.meeno.types.MarketId;
-import snowmonkey.meeno.types.raw.CancelInstruction;
 
 import java.util.Collection;
 

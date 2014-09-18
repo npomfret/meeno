@@ -2,15 +2,14 @@ package snowmonkey.meeno.types;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
-import snowmonkey.meeno.types.raw.*;
 
 import java.time.ZonedDateTime;
 
-import static live.GenerateTestData.ListMarketCatalogue.listMarketCatalogueJson;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static snowmonkey.meeno.JsonSerialization.parse;
-import static snowmonkey.meeno.types.MarketCatalogues.createMarketCatalogues;
+import static live.GenerateTestData.ListMarketCatalogue.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
+import static snowmonkey.meeno.JsonSerialization.*;
+import static snowmonkey.meeno.types.MarketCatalogues.*;
 
 public class ListMarketCatalogueTest {
     @Test

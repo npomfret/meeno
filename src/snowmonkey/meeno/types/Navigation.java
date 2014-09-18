@@ -12,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 import snowmonkey.meeno.Exchange;
 import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.NotFoundException;
-import snowmonkey.meeno.types.raw.TimeRange;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Lists.*;
 
 public class Navigation {
     public final Navigation parent;

@@ -4,22 +4,26 @@ import com.google.common.collect.Iterables;
 import org.junit.Test;
 import snowmonkey.meeno.MarketFilterBuilder;
 import snowmonkey.meeno.NotFoundException;
-import snowmonkey.meeno.types.*;
-import snowmonkey.meeno.types.raw.MarketCatalogue;
-import snowmonkey.meeno.types.raw.MarketSort;
+import snowmonkey.meeno.types.EventTypeId;
+import snowmonkey.meeno.types.EventTypeName;
+import snowmonkey.meeno.types.EventTypes;
+import snowmonkey.meeno.types.MarketCatalogue;
+import snowmonkey.meeno.types.MarketCatalogues;
+import snowmonkey.meeno.types.MarketId;
+import snowmonkey.meeno.types.MarketSort;
+import snowmonkey.meeno.types.Navigation;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import static com.google.common.collect.Sets.newHashSet;
-import static java.time.ZonedDateTime.now;
-import static live.GenerateTestData.ListEventTypes.listEventTypesJson;
-import static live.GenerateTestData.ListMarketCatalogue.listMarketCatalogueFile;
-import static live.GenerateTestData.ListMarketCatalogue.listMarketCatalogueJson;
-import static live.GenerateTestData.fileWriter;
+import static com.google.common.collect.Sets.*;
+import static java.time.ZonedDateTime.*;
+import static live.GenerateTestData.ListEventTypes.*;
+import static live.GenerateTestData.ListMarketCatalogue.*;
+import static live.GenerateTestData.*;
 import static snowmonkey.meeno.JsonSerialization.parse;
-import static snowmonkey.meeno.types.raw.MarketProjection.*;
-import static snowmonkey.meeno.types.raw.TimeRange.between;
+import static snowmonkey.meeno.types.MarketProjection.*;
+import static snowmonkey.meeno.types.TimeRange.*;
 
 public class ListMarketCatalogueTest extends AbstractLiveTestCase {
 

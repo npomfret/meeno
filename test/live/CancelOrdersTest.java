@@ -8,11 +8,11 @@ import snowmonkey.meeno.ApiException;
 import snowmonkey.meeno.DefaultProcessor;
 import snowmonkey.meeno.HttpAccess;
 import snowmonkey.meeno.HttpExchangeOperations;
+import snowmonkey.meeno.requests.CancelInstruction;
+import snowmonkey.meeno.types.CancelExecutionReport;
+import snowmonkey.meeno.types.CurrentOrderSummary;
+import snowmonkey.meeno.types.CurrentOrderSummaryReport;
 import snowmonkey.meeno.types.MarketId;
-import snowmonkey.meeno.types.raw.CancelExecutionReport;
-import snowmonkey.meeno.types.raw.CancelInstruction;
-import snowmonkey.meeno.types.raw.CurrentOrderSummary;
-import snowmonkey.meeno.types.raw.CurrentOrderSummaryReport;
 
 import java.io.IOException;
 import java.io.InputStream;

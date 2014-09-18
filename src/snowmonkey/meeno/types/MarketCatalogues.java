@@ -1,7 +1,6 @@
 package snowmonkey.meeno.types;
 
 import com.google.common.collect.ImmutableMap;
-import snowmonkey.meeno.types.raw.MarketCatalogue;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;

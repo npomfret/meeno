@@ -6,13 +6,13 @@ import snowmonkey.meeno.HttpExchangeOperations;
 import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.requests.ListMarketBook;
 import snowmonkey.meeno.types.EventTypeName;
+import snowmonkey.meeno.types.ExBestOfferOverRides;
+import snowmonkey.meeno.types.MarketBook;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.Navigation;
-import snowmonkey.meeno.types.raw.ExBestOfferOverRides;
-import snowmonkey.meeno.types.raw.MarketBook;
-import snowmonkey.meeno.types.raw.PriceData;
-import snowmonkey.meeno.types.raw.PriceProjection;
-import snowmonkey.meeno.types.raw.RollupModel;
+import snowmonkey.meeno.types.PriceData;
+import snowmonkey.meeno.types.PriceProjection;
+import snowmonkey.meeno.types.RollupModel;
 
 import java.time.LocalDate;
 
@@ -21,7 +21,7 @@ import static com.google.common.collect.Sets.*;
 import static java.time.ZonedDateTime.*;
 import static live.GenerateTestData.ListMarketBook.*;
 import static live.GenerateTestData.*;
-import static snowmonkey.meeno.types.raw.TimeRange.*;
+import static snowmonkey.meeno.types.TimeRange.*;
 
 public class ListMarketBookTest extends AbstractLiveTestCase {
     @Test

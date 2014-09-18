@@ -1,7 +1,5 @@
 package snowmonkey.meeno.types;
 
-import snowmonkey.meeno.types.raw.Handicap;
-
 public class RunnerId extends ImmutbleType {
     public final MarketId marketId;
     public final SelectionId selectionId;

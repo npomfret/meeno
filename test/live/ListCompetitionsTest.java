@@ -2,15 +2,15 @@ package live;
 
 import org.junit.Test;
 import snowmonkey.meeno.MarketFilterBuilder;
+import snowmonkey.meeno.types.EventType;
 import snowmonkey.meeno.types.EventTypes;
-import snowmonkey.meeno.types.raw.EventType;
 
-import static java.time.ZonedDateTime.now;
-import static live.GenerateTestData.ListCompetitions.listCompetitionsFile;
-import static live.GenerateTestData.ListEventTypes.listEventTypesJson;
-import static live.GenerateTestData.fileWriter;
-import static snowmonkey.meeno.CountryLookup.Argentina;
-import static snowmonkey.meeno.types.raw.TimeRange.between;
+import static java.time.ZonedDateTime.*;
+import static live.GenerateTestData.ListCompetitions.*;
+import static live.GenerateTestData.ListEventTypes.*;
+import static live.GenerateTestData.*;
+import static snowmonkey.meeno.CountryLookup.*;
+import static snowmonkey.meeno.types.TimeRange.*;
 
 public class ListCompetitionsTest extends AbstractLiveTestCase {
     @Test

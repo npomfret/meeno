@@ -5,8 +5,8 @@ import org.junit.Test;
 
 import java.time.ZonedDateTime;
 
-import static snowmonkey.meeno.types.EventTypeName.SOCCER;
-import static snowmonkey.meeno.types.raw.TimeRange.between;
+import static snowmonkey.meeno.types.EventTypeName.*;
+import static snowmonkey.meeno.types.TimeRange.*;
 
 public class FootballMarketTest {
     @Test

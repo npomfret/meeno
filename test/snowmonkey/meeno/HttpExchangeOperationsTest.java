@@ -1,12 +1,18 @@
 package snowmonkey.meeno;
 
 import org.junit.Test;
-import snowmonkey.meeno.types.*;
-import snowmonkey.meeno.types.raw.MarketCatalogue;
+import snowmonkey.meeno.types.EventTypeId;
+import snowmonkey.meeno.types.EventTypeName;
+import snowmonkey.meeno.types.FootballMarket;
+import snowmonkey.meeno.types.MarketCatalogue;
+import snowmonkey.meeno.types.MarketCatalogues;
+import snowmonkey.meeno.types.MarketId;
+import snowmonkey.meeno.types.Navigation;
+import snowmonkey.meeno.types.SessionToken;
 
-import static java.time.ZonedDateTime.now;
-import static snowmonkey.meeno.MarketFilterBuilder.marketFilter;
-import static snowmonkey.meeno.types.raw.TimeRange.between;
+import static java.time.ZonedDateTime.*;
+import static snowmonkey.meeno.MarketFilterBuilder.*;
+import static snowmonkey.meeno.types.TimeRange.*;
 
 public class HttpExchangeOperationsTest {
 

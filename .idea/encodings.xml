@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/Competition.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/Event.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/EventType.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/EventTypeResult.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/ExBestOfferOverRides.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/ExchangePrices.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/ExecutionReportErrorCode.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/ExecutionReportStatus.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/InstructionReportErrorCode.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/InstructionReportStatus.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/LimitOnCloseOrder.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/LimitOrder.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/MarketBettingType.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/MarketBook.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/MarketBooks.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/MarketCatalogue.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/MarketDescription.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/MarketFilter.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/MarketOnCloseOrder.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/MarketProjection.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/MarketSort.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/Match.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/MatchProjection.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/Order.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/OrderProjection.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/OrderStatus.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/OrderType.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/PersistenceType.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/PlaceExecutionReport.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/PlaceInstruction.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/PlaceInstructionReport.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/PriceData.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/PriceProjection.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/PriceSize.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/RollupModel.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/Runner.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/RunnerCatalog.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/Side.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/StartingPrices.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/Competition.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/Event.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/EventType.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/EventTypeResult.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/ExBestOfferOverRides.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/ExchangePrices.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/ExecutionReportErrorCode.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/ExecutionReportStatus.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/InstructionReportErrorCode.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/InstructionReportStatus.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/LimitOnCloseOrder.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/LimitOrder.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/MarketBettingType.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/MarketBook.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/MarketBooks.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/MarketCatalogue.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/MarketDescription.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/MarketFilter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/MarketOnCloseOrder.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/MarketProjection.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/MarketSort.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/Match.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/MatchProjection.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/Order.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/OrderProjection.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/OrderStatus.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/OrderType.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/PersistenceType.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/PlaceExecutionReport.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/PlaceInstruction.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/PlaceInstructionReport.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/PriceData.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/PriceProjection.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/PriceSize.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/RollupModel.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/Runner.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/RunnerCatalog.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/Side.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/StartingPrices.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/TimeRange.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/TimeGranularity.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/TimeRange.java" charset="UTF-8" />
   </component>
 </project>
 

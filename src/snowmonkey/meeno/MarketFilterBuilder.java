@@ -2,18 +2,22 @@ package snowmonkey.meeno;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableSet;
-import snowmonkey.meeno.types.*;
-import snowmonkey.meeno.types.raw.OrderStatus;
-import snowmonkey.meeno.types.raw.TimeRange;
+import snowmonkey.meeno.types.CompetitionId;
+import snowmonkey.meeno.types.CountryCode;
+import snowmonkey.meeno.types.EventId;
+import snowmonkey.meeno.types.EventTypeId;
+import snowmonkey.meeno.types.MarketId;
+import snowmonkey.meeno.types.OrderStatus;
+import snowmonkey.meeno.types.TimeRange;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.google.common.collect.Iterables.transform;
-import static com.google.common.collect.Sets.newHashSet;
-import static java.util.Arrays.asList;
+import static com.google.common.collect.Iterables.*;
+import static com.google.common.collect.Sets.*;
+import static java.util.Arrays.*;
 
 @SuppressWarnings("ALL")//fields are accessed via reflection
 public class MarketFilterBuilder implements MarketFilter {

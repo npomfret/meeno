@@ -6,19 +6,32 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 import snowmonkey.meeno.requests.ListMarketBook;
 import snowmonkey.meeno.types.BetId;
+import snowmonkey.meeno.types.ClearedOrderSummaryReport;
+import snowmonkey.meeno.types.CurrentOrderSummary;
+import snowmonkey.meeno.types.CurrentOrderSummaryReport;
 import snowmonkey.meeno.types.EventId;
+import snowmonkey.meeno.types.ExBestOfferOverRides;
 import snowmonkey.meeno.types.MarketId;
+import snowmonkey.meeno.types.MatchProjection;
+import snowmonkey.meeno.types.OrderProjection;
+import snowmonkey.meeno.types.OrderStatus;
+import snowmonkey.meeno.types.OrderType;
+import snowmonkey.meeno.types.PersistenceType;
+import snowmonkey.meeno.types.Price;
+import snowmonkey.meeno.types.PriceProjection;
+import snowmonkey.meeno.types.RollupModel;
 import snowmonkey.meeno.types.SelectionId;
-import snowmonkey.meeno.types.raw.*;
+import snowmonkey.meeno.types.Side;
+import snowmonkey.meeno.types.Size;
 
 import java.lang.reflect.Type;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static live.GenerateTestData.ListCleanedOrders.listClearedOrdersJson;
-import static live.GenerateTestData.ListCurrentOrders.listCurrentOrdersJson;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
-import static snowmonkey.meeno.JsonSerialization.gson;
+import static com.google.common.collect.Lists.*;
+import static live.GenerateTestData.ListCleanedOrders.*;
+import static live.GenerateTestData.ListCurrentOrders.*;
+import static org.hamcrest.core.IsEqual.*;
+import static org.junit.Assert.*;
+import static snowmonkey.meeno.JsonSerialization.*;
 
 public class JsonSerializationTest {
 
