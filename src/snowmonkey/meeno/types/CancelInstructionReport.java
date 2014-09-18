@@ -12,11 +12,12 @@ public class CancelInstructionReport extends ImmutbleType {
     public final InstructionReportErrorCode errorCode;
     @Nullable
     public final CancelInstruction instruction;
-    public final double sizeCancelled;
+    @Nullable
+    public final Double sizeCancelled;
     @Nullable
     public final ZonedDateTime cancelledDate;
 
-    public CancelInstructionReport(InstructionReportStatus status, InstructionReportErrorCode errorCode, CancelInstruction instruction, double sizeCancelled, ZonedDateTime cancelledDate) {
+    public CancelInstructionReport(InstructionReportStatus status, InstructionReportErrorCode errorCode, CancelInstruction instruction, Double sizeCancelled, ZonedDateTime cancelledDate) {
         this.status = status;
         this.errorCode = errorCode;
         this.instruction = instruction;
