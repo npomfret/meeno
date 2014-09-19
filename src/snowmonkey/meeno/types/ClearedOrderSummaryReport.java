@@ -19,10 +19,15 @@ public class ClearedOrderSummaryReport extends ImmutbleType {
     public final ItemDescription itemDescription;
     public final Price priceRequested;
     public final ZonedDateTime settledDate;
+    @Nullable
     public final Integer betCount;
+    @Nullable
     public final Size commission;
+    @Nullable
     public final Price priceMatched;
+    @Nullable
     public final Boolean priceReduced;
+    @Nullable
     public final Size sizeSettled;
     @Nullable
     public final Size profit;
