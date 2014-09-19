@@ -1,6 +1,7 @@
 package live;
 
 import org.junit.Test;
+import snowmonkey.meeno.HttpExchangeOperations;
 import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.types.BetStatus;
 import snowmonkey.meeno.types.ClearedOrderSummary;
@@ -21,6 +22,27 @@ public class ListClearedOrdersTest extends AbstractLiveTestCase {
         );
 
         ClearedOrderSummary clearedOrderSummaryReport = JsonSerialization.parse(listClearedOrdersJson(), ClearedOrderSummary.class);
+        for (ClearedOrderSummaryReport orderSummaryReport : clearedOrderSummaryReport.clearedOrders) {
+            System.out.println("clearedOrderSummaryReport = " + orderSummaryReport);
+        }
+    }
+
+    @Test
+    public void canGetSettledOrders2() throws Exception {
+
+        httpAccess.listClearedOrders(fileWriter(listClearedOrdersFile()),
+                BetStatus.SETTLED,
+                between(now().minusMonths(3), now()),
+                0
+        );
+
+        HttpExchangeOperations httpExchangeOperations = new HttpExchangeOperations(httpAccess);
+        ClearedOrderSummary clearedOrderSummaryReport = httpExchangeOperations.listClearedOrders(
+                BetStatus.SETTLED,
+                between(now().minusMonths(3), now()),
+                0
+        );
+
         for (ClearedOrderSummaryReport orderSummaryReport : clearedOrderSummaryReport.clearedOrders) {
             System.out.println("clearedOrderSummaryReport = " + orderSummaryReport);
         }

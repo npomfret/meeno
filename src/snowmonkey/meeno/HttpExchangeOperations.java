@@ -4,9 +4,12 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import org.apache.http.StatusLine;
 import snowmonkey.meeno.requests.CancelInstruction;
+import snowmonkey.meeno.requests.ListClearedOrders;
 import snowmonkey.meeno.requests.ListCurrentOrders;
 import snowmonkey.meeno.requests.PlaceOrders;
+import snowmonkey.meeno.types.BetStatus;
 import snowmonkey.meeno.types.CancelExecutionReport;
+import snowmonkey.meeno.types.ClearedOrderSummary;
 import snowmonkey.meeno.types.CurrentOrderSummary;
 import snowmonkey.meeno.types.CurrentOrderSummaryReport;
 import snowmonkey.meeno.types.CustomerRef;
@@ -21,6 +24,7 @@ import snowmonkey.meeno.types.Navigation;
 import snowmonkey.meeno.types.PlaceExecutionReport;
 import snowmonkey.meeno.types.PlaceInstruction;
 import snowmonkey.meeno.types.PriceProjection;
+import snowmonkey.meeno.types.TimeRange;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -143,6 +147,23 @@ public class HttpExchangeOperations implements ExchangeOperations {
         } catch (IOException e) {
             throw new RuntimeEnvironmentException("listMarketBook call failed", e);
         }
+    }
+
+    public ClearedOrderSummary listClearedOrders(BetStatus betStatus, TimeRange settledDateRange, int fromRecord) throws IOException, ApiException {
+        ListClearedOrders listClearedOrders = new ListClearedOrders.Builder()
+                .withBetStatus(betStatus)
+                .withSettledDateRange(settledDateRange)
+                .withFromRecord(fromRecord)
+                .build();
+        return listClearedOrders(listClearedOrders);
+    }
+
+    public ClearedOrderSummary listClearedOrders(ListClearedOrders listClearedOrders) throws IOException, ApiException {
+        JsonProcessor processor = new JsonProcessor();
+
+        httpAccess.listClearedOrders(processor, listClearedOrders);
+
+        return parse(processor.json, ClearedOrderSummary.class);
     }
 
     public static class RuntimeEnvironmentException extends RuntimeException {
