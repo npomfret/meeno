@@ -15,6 +15,7 @@ public class ClearedOrderSummaryReport extends ImmutbleType {
     public final PersistenceType persistenceType;
     public final OrderType orderType;
     public final Side side;
+    @Nullable
     public final ItemDescription itemDescription;
     public final Price priceRequested;
     public final ZonedDateTime settledDate;
@@ -23,7 +24,9 @@ public class ClearedOrderSummaryReport extends ImmutbleType {
     public final Price priceMatched;
     public final Boolean priceReduced;
     public final Size sizeSettled;
+    @Nullable
     public final Size profit;
+    @Nullable
     public final Size sizeCancelled;
 
     public ClearedOrderSummaryReport(EventTypeId eventTypeId, EventId eventId, MarketId marketId, SelectionId selectionId,
