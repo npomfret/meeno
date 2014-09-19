@@ -11,6 +11,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
 import org.joda.time.DateTime;
 import snowmonkey.meeno.requests.CancelInstruction;
+import snowmonkey.meeno.types.AccountStatementReport;
 import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.CancelExecutionReport;
 import snowmonkey.meeno.types.CancelInstructionReport;
@@ -39,6 +40,8 @@ import snowmonkey.meeno.types.Runner;
 import snowmonkey.meeno.types.RunnerCatalog;
 import snowmonkey.meeno.types.SelectionId;
 import snowmonkey.meeno.types.Size;
+import snowmonkey.meeno.types.StatementItem;
+import snowmonkey.meeno.types.StatementLegacyData;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Parameter;
@@ -64,25 +67,19 @@ public class JsonSerialization {
                 .registerTypeAdapter(ZonedDateTime.class, (JsonDeserializer<ZonedDateTime>) (json, typeOfT, context) -> json == null ? null : ZonedDateTime.parse(json.getAsString(), BETFAIR_DATE_TIME_FORMAT))
 
                 .registerTypeAdapter(MarketId.class, (JsonSerializer<MarketId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
-
                 .registerTypeAdapter(BetId.class, (JsonSerializer<BetId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
-
                 .registerTypeAdapter(MatchId.class, (JsonSerializer<MatchId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
-
                 .registerTypeAdapter(EventId.class, (JsonSerializer<EventId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
-
                 .registerTypeAdapter(EventTypeId.class, (JsonSerializer<EventTypeId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
-
                 .registerTypeAdapter(SelectionId.class, (JsonSerializer<SelectionId>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asLong()))
-
                 .registerTypeAdapter(Handicap.class, (JsonSerializer<Handicap>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asDouble()))
-
                 .registerTypeAdapter(Price.class, (JsonSerializer<Price>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asDouble()))
-
                 .registerTypeAdapter(Size.class, (JsonSerializer<Size>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asDouble()))
-
                 .registerTypeAdapter(CustomerRef.class, (JsonSerializer<CustomerRef>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
 
+                .registerTypeAdapter(AccountStatementReport.class, complexObjectDeserializer(AccountStatementReport.class))
+                .registerTypeAdapter(StatementItem.class, complexObjectDeserializer(StatementItem.class))
+                .registerTypeAdapter(StatementLegacyData.class, complexObjectDeserializer(StatementLegacyData.class))
                 .registerTypeAdapter(PlaceInstruction.class, complexObjectDeserializer(PlaceInstruction.class))
                 .registerTypeAdapter(CancelInstruction.class, complexObjectDeserializer(CancelInstruction.class))
                 .registerTypeAdapter(CancelInstructionReport.class, complexObjectDeserializer(CancelInstructionReport.class))

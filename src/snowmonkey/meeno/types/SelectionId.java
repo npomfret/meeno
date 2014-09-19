@@ -6,10 +6,6 @@ public class SelectionId extends MicroType<Long> {
         super(value);
     }
 
-    public Long asNumber() {
-        return value;
-    }
-
     public long asLong() {
         return value;
     }
