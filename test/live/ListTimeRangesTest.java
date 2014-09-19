@@ -8,7 +8,6 @@ import snowmonkey.meeno.types.Navigation;
 
 import java.time.ZonedDateTime;
 
-import static live.GenerateTestData.TimeRanges.*;
 import static live.GenerateTestData.*;
 import static snowmonkey.meeno.CountryLookup.*;
 import static snowmonkey.meeno.types.EventTypeName.*;
@@ -23,7 +22,7 @@ public class ListTimeRangesTest extends AbstractLiveTestCase {
         EventId eventId = navigation.eventId();
         EventTypeId eventTypeId = navigation.parent().eventTypeId();
 
-        httpAccess.listTimeRanges(fileWriter(listTimeRangesFile()), MINUTES, new MarketFilterBuilder()
+        httpAccess.listTimeRanges(fileWriter(LIST_TIME_RANGES_FILE), MINUTES, new MarketFilterBuilder()
                 .withEventTypeIds(eventTypeId)
                 .withEventIds(eventId)
                 .withMarketCountries(UnitedKingdom)

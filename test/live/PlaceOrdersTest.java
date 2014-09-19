@@ -27,11 +27,8 @@ import java.util.List;
 import static com.google.common.collect.Lists.*;
 import static com.google.common.collect.Sets.*;
 import static java.time.ZonedDateTime.*;
-import static live.GenerateTestData.CancelOrders.*;
-import static live.GenerateTestData.ListCurrentOrders.*;
-import static live.GenerateTestData.ListMarketCatalogue.*;
-import static live.GenerateTestData.PlaceOrders.*;
 import static live.GenerateTestData.*;
+import static org.apache.commons.io.FileUtils.*;
 import static snowmonkey.meeno.JsonSerialization.parse;
 import static snowmonkey.meeno.types.MarketProjection.*;
 import static snowmonkey.meeno.types.PlaceInstruction.*;
@@ -43,28 +40,28 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
         Navigation.Markets markets = navigation().findMarkets(EventTypeName.SOCCER, between(now().plusDays(6), now().plusDays(7)), "Match Odds");
         Navigation.Market market = markets.iterator().next();
 
-        httpAccess.listMarketCatalogue(fileWriter(listMarketCatalogueFile()),
+        httpAccess.listMarketCatalogue(fileWriter(LIST_MARKET_CATALOGUE_FILE),
                 newHashSet(RUNNER_METADATA),
                 MarketSort.FIRST_TO_START,
                 new MarketFilterBuilder().withMarketIds(market.id)
         );
 
-        MarketCatalogue marketCatalogue = JsonSerialization.parse(listMarketCatalogueJson(), MarketCatalogue[].class)[0];
+        MarketCatalogue marketCatalogue = JsonSerialization.parse(readFileToString(LIST_MARKET_CATALOGUE_FILE.toFile()), MarketCatalogue[].class)[0];
 
         LimitOrder limitOrder = new LimitOrder(2.00D, 1000, PersistenceType.LAPSE);
         PlaceInstruction placeLimitOrder = createPlaceLimitOrder(marketCatalogue.runners.get(0).selectionId, Side.BACK, limitOrder);
-        httpAccess.placeOrders(fileWriter(placeOrdersFile()), marketCatalogue.marketId, newArrayList(placeLimitOrder), CustomerRef.unique());
+        httpAccess.placeOrders(fileWriter(PLACE_ORDERS_FILE), marketCatalogue.marketId, newArrayList(placeLimitOrder), CustomerRef.unique());
 
-        PlaceExecutionReport placeInstructionReport = parse(placeOrdersJson(), PlaceExecutionReport.class);
+        PlaceExecutionReport placeInstructionReport = parse(readFileToString(PLACE_ORDERS_FILE.toFile()), PlaceExecutionReport.class);
 
         System.out.println("placeInstructionReport = " + placeInstructionReport);
 
         ImmutableList<PlaceInstructionReport> instructionReports = placeInstructionReport.instructionReports;
         BetId betId = instructionReports.get(0).betId;
 
-        httpAccess.listCurrentOrders(fileWriter(listCurrentOrdersFile()), new ListCurrentOrders.Builder().build());
+        httpAccess.listCurrentOrders(fileWriter(LIST_CURRENT_ORDERS_FILE), new ListCurrentOrders.Builder().build());
 
-        CurrentOrderSummaryReport currentOrders = parse(listCurrentOrdersJson(), CurrentOrderSummaryReport.class);
+        CurrentOrderSummaryReport currentOrders = parse(readFileToString(LIST_CURRENT_ORDERS_FILE.toFile()), CurrentOrderSummaryReport.class);
 
         for (CurrentOrderSummary currentOrder : currentOrders.currentOrders) {
             if (instructionReports.get(0).betId.equals(betId)) {
@@ -72,7 +69,7 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
 
                 List<CancelInstruction> cancelInstructions = newArrayList(CancelInstruction.cancel(betId));
 
-                httpAccess.cancelOrders(marketId, cancelInstructions, fileWriter(cancelOrdersFile()), null);
+                httpAccess.cancelOrders(marketId, cancelInstructions, fileWriter(TEST_DATA_DIR.resolve(CANCEL_ORDERS_FILE)), null);
             }
         }
     }

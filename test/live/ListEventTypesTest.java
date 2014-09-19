@@ -2,12 +2,12 @@ package live;
 
 import org.junit.Test;
 
-import static live.GenerateTestData.fileWriter;
+import static live.GenerateTestData.*;
 
 public class ListEventTypesTest extends AbstractLiveTestCase {
     @Test
     public void test() throws Exception {
-        httpAccess.listEventTypes(fileWriter(GenerateTestData.ListEventTypes.listEventTypesFile()));
+        httpAccess.listEventTypes(fileWriter(GenerateTestData.LIST_EVENT_TYPES_FILE));
     }
 
 }

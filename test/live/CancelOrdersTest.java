@@ -19,8 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static java.time.ZonedDateTime.*;
-import static live.GenerateTestData.ListCurrentOrders.*;
 import static live.GenerateTestData.*;
+import static org.apache.commons.io.FileUtils.*;
 import static snowmonkey.meeno.JsonSerialization.parse;
 import static snowmonkey.meeno.requests.ListCurrentOrders.*;
 import static snowmonkey.meeno.types.TimeRange.*;
@@ -45,9 +45,9 @@ public class CancelOrdersTest extends AbstractLiveTestCase {
     @Test
     public void cancelAllOrders() throws Exception {
 
-        httpAccess.listCurrentOrders(fileWriter(listCurrentOrdersFile()), new Builder().build());
+        httpAccess.listCurrentOrders(fileWriter(LIST_CURRENT_ORDERS_FILE), new Builder().build());
 
-        CurrentOrderSummaryReport currentOrders = parse(listCurrentOrdersJson(), CurrentOrderSummaryReport.class);
+        CurrentOrderSummaryReport currentOrders = parse(readFileToString(LIST_CURRENT_ORDERS_FILE.toFile()), CurrentOrderSummaryReport.class);
 
         Multimap<MarketId, CancelInstruction> cancelInstructions = ArrayListMultimap.create();
         for (CurrentOrderSummary currentOrder : currentOrders.currentOrders) {

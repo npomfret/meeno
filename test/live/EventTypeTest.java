@@ -3,16 +3,15 @@ package live;
 import org.junit.Test;
 import snowmonkey.meeno.types.EventTypes;
 
-import static live.GenerateTestData.ListEventTypes.listEventTypesFile;
-import static live.GenerateTestData.ListEventTypes.listEventTypesJson;
-import static live.GenerateTestData.fileWriter;
+import static live.GenerateTestData.*;
+import static org.apache.commons.io.FileUtils.*;
 
 public class EventTypeTest extends AbstractLiveTestCase {
     @Test
     public void testRequestForPrices() throws Exception {
-        httpAccess.listEventTypes(fileWriter(listEventTypesFile()));
+        httpAccess.listEventTypes(fileWriter(GenerateTestData.LIST_EVENT_TYPES_FILE));
 
-        EventTypes eventTypes = EventTypes.parse(listEventTypesJson());
+        EventTypes eventTypes = EventTypes.parse(readFileToString(GenerateTestData.LIST_EVENT_TYPES_FILE.toFile()));
 
         System.out.println(eventTypes.lookup("Soccer").prettyPrint());
     }

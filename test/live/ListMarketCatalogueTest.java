@@ -18,9 +18,8 @@ import java.util.List;
 
 import static com.google.common.collect.Sets.*;
 import static java.time.ZonedDateTime.*;
-import static live.GenerateTestData.ListEventTypes.*;
-import static live.GenerateTestData.ListMarketCatalogue.*;
 import static live.GenerateTestData.*;
+import static org.apache.commons.io.FileUtils.*;
 import static snowmonkey.meeno.JsonSerialization.parse;
 import static snowmonkey.meeno.types.MarketProjection.*;
 import static snowmonkey.meeno.types.TimeRange.*;
@@ -29,11 +28,11 @@ public class ListMarketCatalogueTest extends AbstractLiveTestCase {
 
     @Test(expected = NotFoundException.class)
     public void willBlowUpIfMarketHasExpired() throws Exception {
-        EventTypes eventTypes = EventTypes.parse(listEventTypesJson());
+        EventTypes eventTypes = EventTypes.parse(readFileToString(LIST_EVENT_TYPES_FILE.toFile()));
 
         EventTypeId soccer = eventTypes.lookup("Soccer").id;
 
-        httpAccess.listMarketCatalogue(fileWriter(listMarketCatalogueFile()),
+        httpAccess.listMarketCatalogue(fileWriter(LIST_MARKET_CATALOGUE_FILE),
                 newHashSet(MARKET_START_TIME, RUNNER_METADATA, MARKET_DESCRIPTION),
                 MarketSort.FIRST_TO_START,
                 new MarketFilterBuilder()
@@ -48,7 +47,7 @@ public class ListMarketCatalogueTest extends AbstractLiveTestCase {
 
         int maxResults = 50;
 
-        EventTypes eventTypes = EventTypes.parse(listEventTypesJson());
+        EventTypes eventTypes = EventTypes.parse(readFileToString(LIST_EVENT_TYPES_FILE.toFile()));
 
         EventTypeId soccer = eventTypes.lookup("Soccer").id;
 
@@ -65,7 +64,7 @@ public class ListMarketCatalogueTest extends AbstractLiveTestCase {
 
         for (List<MarketId> marketIds : Iterables.partition(markets.marketsIds(), maxResults)) {
 
-            httpAccess.listMarketCatalogue(fileWriter(listMarketCatalogueFile()),
+            httpAccess.listMarketCatalogue(fileWriter(LIST_MARKET_CATALOGUE_FILE),
                     newHashSet(MARKET_START_TIME, RUNNER_METADATA, MARKET_DESCRIPTION),
                     MarketSort.FIRST_TO_START,
                     new MarketFilterBuilder()
@@ -73,7 +72,7 @@ public class ListMarketCatalogueTest extends AbstractLiveTestCase {
                             .withMarketIds(marketIds)
                             .build());
 
-            MarketCatalogues marketCatalogues = MarketCatalogues.createMarketCatalogues(parse(listMarketCatalogueJson(), MarketCatalogue[].class));
+            MarketCatalogues marketCatalogues = MarketCatalogues.createMarketCatalogues(parse(readFileToString(LIST_MARKET_CATALOGUE_FILE.toFile()), MarketCatalogue[].class));
 
             for (MarketId marketId : marketIds) {
                 if (marketCatalogues.has(marketId)) {

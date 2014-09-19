@@ -2,6 +2,7 @@ package snowmonkey.meeno;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import live.GenerateTestData;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import snowmonkey.meeno.requests.ListMarketBook;
@@ -27,8 +28,7 @@ import snowmonkey.meeno.types.Size;
 import java.lang.reflect.Type;
 
 import static com.google.common.collect.Lists.*;
-import static live.GenerateTestData.ListCleanedOrders.*;
-import static live.GenerateTestData.ListCurrentOrders.*;
+import static org.apache.commons.io.FileUtils.*;
 import static org.hamcrest.core.IsEqual.*;
 import static org.junit.Assert.*;
 import static snowmonkey.meeno.JsonSerialization.*;
@@ -71,7 +71,7 @@ public class JsonSerializationTest {
 
     @Test
     public void canDeserializeComplexObject() throws Exception {
-        JsonElement jsonElement = new JsonParser().parse(listClearedOrdersJson()).getAsJsonObject().get("clearedOrders");
+        JsonElement jsonElement = new JsonParser().parse(readFileToString(GenerateTestData.LIST_CLEARED_ORDERS_FILE.toFile())).getAsJsonObject().get("clearedOrders");
         ClearedOrderSummaryReport[] clearedOrderSummaryReport = gson().fromJson(jsonElement, (Type) ClearedOrderSummaryReport[].class);
 
         assertThat(clearedOrderSummaryReport.length, equalTo(1));
@@ -80,7 +80,7 @@ public class JsonSerializationTest {
 
     @Test
     public void canDeserializeStructuredComplexObjects() throws Exception {
-        CurrentOrderSummaryReport currentOrders = JsonSerialization.parse(listCurrentOrdersJson(), CurrentOrderSummaryReport.class);
+        CurrentOrderSummaryReport currentOrders = JsonSerialization.parse(readFileToString(GenerateTestData.LIST_CURRENT_ORDERS_FILE.toFile()), CurrentOrderSummaryReport.class);
         CurrentOrderSummary order = currentOrders.currentOrders.iterator().next();
 
         assertThat(order.betId, equalTo(new BetId("33903456243")));

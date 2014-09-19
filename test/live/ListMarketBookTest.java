@@ -19,8 +19,8 @@ import java.time.LocalDate;
 import static com.google.common.collect.Iterables.*;
 import static com.google.common.collect.Sets.*;
 import static java.time.ZonedDateTime.*;
-import static live.GenerateTestData.ListMarketBook.*;
 import static live.GenerateTestData.*;
+import static org.apache.commons.io.FileUtils.*;
 import static snowmonkey.meeno.types.TimeRange.*;
 
 public class ListMarketBookTest extends AbstractLiveTestCase {
@@ -51,7 +51,7 @@ public class ListMarketBookTest extends AbstractLiveTestCase {
         );
 
 
-        httpAccess.listMarketBook(fileWriter(listMarketBookFile()), new ListMarketBook(
+        httpAccess.listMarketBook(fileWriter(LIST_MARKET_BOOK_FILE), new ListMarketBook(
                 marketIds,
                 priceProjection,
                 null,
@@ -60,7 +60,7 @@ public class ListMarketBookTest extends AbstractLiveTestCase {
                 HttpAccess.EN_US
         ));
 
-        MarketBook[] marketBooks = JsonSerialization.parse(listMarketBookJson(), MarketBook[].class);
+        MarketBook[] marketBooks = JsonSerialization.parse(readFileToString(LIST_MARKET_BOOK_FILE.toFile()), MarketBook[].class);
 
         for (MarketBook marketBook : marketBooks) {
             System.out.println(marketBook);
@@ -107,7 +107,7 @@ public class ListMarketBookTest extends AbstractLiveTestCase {
 
         Iterable<MarketId> marketIds = limit(markets.marketsIds(), 5);
 
-        httpAccess.listMarketBook(fileWriter(listMarketBookFile()), new ListMarketBook(
+        httpAccess.listMarketBook(fileWriter(LIST_MARKET_BOOK_FILE), new ListMarketBook(
                 marketIds,
                 null,
                 null,
@@ -116,7 +116,7 @@ public class ListMarketBookTest extends AbstractLiveTestCase {
                 HttpAccess.EN_US
         ));
 
-        MarketBook[] marketBooks = JsonSerialization.parse(listMarketBookJson(), MarketBook[].class);
+        MarketBook[] marketBooks = JsonSerialization.parse(readFileToString(LIST_MARKET_BOOK_FILE.toFile()), MarketBook[].class);
         for (MarketBook marketBook : marketBooks) {
             System.out.println(marketBook.prettyPrint());
         }
