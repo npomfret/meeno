@@ -1,6 +1,5 @@
 package snowmonkey.meeno;
 
-import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -32,9 +31,14 @@ import org.joda.time.format.DateTimeFormatter;
 import snowmonkey.meeno.requests.CancelInstruction;
 import snowmonkey.meeno.requests.CancelOrders;
 import snowmonkey.meeno.requests.ListClearedOrders;
+import snowmonkey.meeno.requests.ListCompetitions;
+import snowmonkey.meeno.requests.ListCountries;
 import snowmonkey.meeno.requests.ListCurrentOrders;
+import snowmonkey.meeno.requests.ListEvents;
 import snowmonkey.meeno.requests.ListMarketBook;
 import snowmonkey.meeno.requests.ListMarketCatalogue;
+import snowmonkey.meeno.requests.ListMarketTypes;
+import snowmonkey.meeno.requests.ListTimeRanges;
 import snowmonkey.meeno.requests.PlaceOrders;
 import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.BetStatus;
@@ -65,11 +69,9 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
-import static com.google.common.collect.Sets.*;
 import static snowmonkey.meeno.JsonSerialization.*;
 import static snowmonkey.meeno.MarketFilter.Builder.*;
 
@@ -165,7 +167,12 @@ public class HttpAccess {
     }
 
     public void listCountries(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_COUNTRIES), marketFilter);
+        ListCountries listCountries = new ListCountries(marketFilter, EN_US);
+        listCountries(processor, listCountries);
+    }
+
+    public void listCountries(Processor processor, ListCountries listCountries) throws IOException, ApiException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_COUNTRIES), gson().toJson(listCountries));
     }
 
     public void listCurrentOrders(Processor processor, Set<BetId> betIds, Set<MarketId> marketIds, OrderProjection orderProjection, TimeRange dateRange, OrderBy orderBy, SortDir sortDir, int fromRecord) throws IOException, ApiException {
@@ -215,7 +222,12 @@ public class HttpAccess {
     }
 
     public void listCompetitions(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_COMPETITIONS), marketFilter);
+        ListCompetitions listCompetitions = new ListCompetitions(marketFilter, EN_US);
+        listCompetitions(processor, listCompetitions);
+    }
+
+    public void listCompetitions(Processor processor, ListCompetitions listCompetitions) throws IOException, ApiException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_COMPETITIONS), gson().toJson(listCompetitions));
     }
 
     public void listEventTypes(Processor processor) throws IOException, ApiException {
@@ -223,7 +235,7 @@ public class HttpAccess {
     }
 
     public void listEventTypes(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_EVENT_TYPES), marketFilter);
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_EVENT_TYPES), gson().toJson(marketFilter));
     }
 
     public void listMarketTypes(Processor processor) throws IOException, ApiException {
@@ -231,41 +243,42 @@ public class HttpAccess {
     }
 
     public void listMarketTypes(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_TYPES), marketFilter);
+        ListMarketTypes listMarketTypes = new ListMarketTypes(marketFilter, EN_US);
+        listMarketTypes(processor, listMarketTypes);
+    }
+
+    public void listMarketTypes(Processor processor, ListMarketTypes listMarketTypes) throws IOException, ApiException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_TYPES), gson().toJson(listMarketTypes));
     }
 
     public void listTimeRanges(Processor processor, TimeGranularity timeGranularity, MarketFilter marketFilter) throws IOException, ApiException {
-        PayloadBuilder payloadBuilder = new PayloadBuilder();
-        payloadBuilder.add(marketFilter);
-        payloadBuilder.add(timeGranularity);
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_TIME_RANGES), payloadBuilder.buildJsonPayload());
+        ListTimeRanges listTimeRanges = new ListTimeRanges(marketFilter, timeGranularity);
+        listTimeRanges(processor, listTimeRanges);
+    }
+
+    public void listTimeRanges(Processor processor, ListTimeRanges listTimeRanges) throws IOException, ApiException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_TIME_RANGES), gson().toJson(listTimeRanges));
     }
 
     public void listEvents(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_EVENTS), marketFilter);
+        ListEvents listEvents = new ListEvents(marketFilter, EN_US);
+        listEvents(processor, listEvents);
+    }
+
+    public void listEvents(Processor processor, ListEvents listEvents) throws IOException, ApiException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_EVENTS), gson().toJson(listEvents));
     }
 
     public void getAccountDetails(Processor processor) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.accountUris.jsonRestUri(Exchange.MethodName.GET_ACCOUNT_DETAILS));
+        sendPostRequest(processor, exchange.accountUris.jsonRestUri(Exchange.MethodName.GET_ACCOUNT_DETAILS), gson().toJson(noFilter()));
     }
 
     public void getAccountFunds(Processor processor) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.accountUris.jsonRestUri(Exchange.MethodName.GET_ACCOUNT_FUNDS));
-    }
-
-    private void sendPostRequest(Processor processor, URI uri) throws IOException, ApiException {
-        sendPostRequest(processor, uri, noFilter());
+        sendPostRequest(processor, exchange.accountUris.jsonRestUri(Exchange.MethodName.GET_ACCOUNT_FUNDS), gson().toJson(noFilter()));
     }
 
     public void nav(Processor processor) throws IOException, ApiException {
         performHttpRequest(processor, Exchange.NAVIGATION, httpGet(Exchange.NAVIGATION));
-    }
-
-    @Deprecated
-    private void sendPostRequest(Processor processor, URI uri, MarketFilter marketFilter) throws IOException, ApiException {
-        PayloadBuilder payloadBuilder = new PayloadBuilder();
-        payloadBuilder.add(marketFilter);
-        sendPostRequest(processor, uri, payloadBuilder.buildJsonPayload());
     }
 
     private void sendPostRequest(Processor processor, URI uri, String body) throws IOException, ApiException {
@@ -339,7 +352,7 @@ public class HttpAccess {
 //                System.out.println("response = " + response);
                 return response;
             }
-        }, Exchange.LOGOUT_URI);
+        }, Exchange.LOGOUT_URI, gson().toJson(noFilter()));
     }
 
     public static SessionToken login(MeenoConfig config) {
@@ -415,41 +428,6 @@ public class HttpAccess {
             long time = (System.currentTimeMillis() - start);
             throw new IOException("Connection timed out after " + time + "ms", e);
         }
-    }
-
-    @Deprecated
-    class PayloadBuilder {
-        private final LinkedHashMap<String, Object> map = new LinkedHashMap<>();
-
-        public final String buildJsonPayload() {
-            Gson gson = gson();
-
-            map.put("locale", EN_US);
-
-            return gson.toJson(map);
-        }
-
-        public void add(MarketFilter marketFilter) {
-            map.put("filter", marketFilter);
-        }
-
-        public void add(TimeGranularity timeGranularity) {
-            map.put("granularity", timeGranularity);
-        }
-
-        public void addMarketProjections(Iterable<MarketProjection> marketProjection) {
-            map.put("marketProjection", newHashSet(marketProjection));
-        }
-
-        public void addMarketSort(MarketSort marketSort) {
-            map.put("sort", marketSort);
-        }
-
-        public void addMaxResults(int maxResults) {
-            map.put("maxResults", maxResults);
-        }
-
-
     }
 
 }
