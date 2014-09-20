@@ -1,12 +1,12 @@
 package live;
 
 import org.junit.Test;
-import snowmonkey.meeno.HttpAccess;
 import snowmonkey.meeno.HttpExchangeOperations;
 import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.requests.ListMarketBook;
 import snowmonkey.meeno.types.EventTypeName;
 import snowmonkey.meeno.types.ExBestOfferOverRides;
+import snowmonkey.meeno.types.Locale;
 import snowmonkey.meeno.types.MarketBook;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.Navigation;
@@ -57,7 +57,7 @@ public class ListMarketBookTest extends AbstractLiveTestCase {
                 null,
                 null,
                 null,
-                HttpAccess.EN_US
+                Locale.EN_US
         ));
 
         MarketBook[] marketBooks = JsonSerialization.parse(readFileToString(LIST_MARKET_BOOK_FILE.toFile()), MarketBook[].class);
@@ -113,7 +113,7 @@ public class ListMarketBookTest extends AbstractLiveTestCase {
                 null,
                 null,
                 null,
-                HttpAccess.EN_US
+                Locale.EN_US
         ));
 
         MarketBook[] marketBooks = JsonSerialization.parse(readFileToString(LIST_MARKET_BOOK_FILE.toFile()), MarketBook[].class);

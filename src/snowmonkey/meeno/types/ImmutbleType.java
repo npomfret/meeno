@@ -11,7 +11,7 @@ import snowmonkey.meeno.JsonSerialization;
 
 import java.time.ZonedDateTime;
 
-import static java.time.format.DateTimeFormatter.ISO_INSTANT;
+import static java.time.format.DateTimeFormatter.*;
 
 public abstract class ImmutbleType {
     @Override

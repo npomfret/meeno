@@ -27,6 +27,7 @@ import snowmonkey.meeno.types.EventTypeId;
 import snowmonkey.meeno.types.ExchangeId;
 import snowmonkey.meeno.types.ExchangePrices;
 import snowmonkey.meeno.types.Handicap;
+import snowmonkey.meeno.types.Locale;
 import snowmonkey.meeno.types.MarketBook;
 import snowmonkey.meeno.types.MarketCatalogue;
 import snowmonkey.meeno.types.MarketId;
@@ -80,6 +81,7 @@ public class JsonSerialization {
                 .registerTypeAdapter(Price.class, (JsonSerializer<Price>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asDouble()))
                 .registerTypeAdapter(Size.class, (JsonSerializer<Size>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asDouble()))
                 .registerTypeAdapter(CustomerRef.class, (JsonSerializer<CustomerRef>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
+                .registerTypeAdapter(Locale.class, (JsonSerializer<Locale>) (src, typeOfSrc, context) -> src == null ? null : new JsonPrimitive(src.asString()))
 
                 .registerTypeAdapter(Competition.class, complexObjectDeserializer(Competition.class))
                 .registerTypeAdapter(EventType.class, complexObjectDeserializer(EventType.class))

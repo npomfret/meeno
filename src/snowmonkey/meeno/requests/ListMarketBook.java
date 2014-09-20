@@ -2,6 +2,7 @@ package snowmonkey.meeno.requests;
 
 import com.google.common.collect.ImmutableList;
 import snowmonkey.meeno.types.ImmutbleType;
+import snowmonkey.meeno.types.Locale;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.MatchProjection;
 import snowmonkey.meeno.types.OrderProjection;
@@ -16,9 +17,9 @@ public class ListMarketBook extends ImmutbleType {
     public final OrderProjection orderProjection;
     public final MatchProjection matchProjection;
     public final String currencyCode;
-    public final String locale;
+    public final Locale locale;
 
-    public ListMarketBook(Iterable<MarketId> marketIds, PriceProjection priceProjection, OrderProjection orderProjection, MatchProjection matchProjection, String currencyCode, String locale) {
+    public ListMarketBook(Iterable<MarketId> marketIds, PriceProjection priceProjection, OrderProjection orderProjection, MatchProjection matchProjection, String currencyCode, Locale locale) {
         this.marketIds = ImmutableList.copyOf(marketIds);
         this.priceProjection = priceProjection;
         this.orderProjection = orderProjection;

@@ -12,6 +12,7 @@ import snowmonkey.meeno.types.CurrentOrderSummary;
 import snowmonkey.meeno.types.CurrentOrderSummaryReport;
 import snowmonkey.meeno.types.EventId;
 import snowmonkey.meeno.types.ExBestOfferOverRides;
+import snowmonkey.meeno.types.Locale;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.MatchProjection;
 import snowmonkey.meeno.types.OrderProjection;
@@ -62,7 +63,7 @@ public class JsonSerializationTest {
                 OrderProjection.EXECUTION_COMPLETE,
                 MatchProjection.ROLLED_UP_BY_PRICE,
                 null,
-                HttpAccess.EN_US
+                Locale.EN_US
         );
 
         String json = gson().toJson(request);

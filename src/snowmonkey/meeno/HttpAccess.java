@@ -74,6 +74,7 @@ import java.util.List;
 import java.util.Set;
 
 import static snowmonkey.meeno.JsonSerialization.*;
+import static snowmonkey.meeno.types.Locale.*;
 import static snowmonkey.meeno.types.MarketFilter.Builder.*;
 
 public class HttpAccess {
@@ -94,7 +95,6 @@ public class HttpAccess {
     public static final String UTF_8 = "UTF-8";
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.forPattern(JsonSerialization.DATE_FORMAT);
     public static final String X_APPLICATION = "X-Application";
-    public static final String EN_US = "en_US";
 
     public interface Processor {
         String process(StatusLine statusLine, InputStream in) throws IOException, ApiException;

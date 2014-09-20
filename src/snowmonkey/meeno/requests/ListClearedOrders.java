@@ -1,19 +1,21 @@
 package snowmonkey.meeno.requests;
 
 import com.google.common.collect.ImmutableList;
-import snowmonkey.meeno.HttpAccess;
 import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.BetStatus;
 import snowmonkey.meeno.types.EventId;
 import snowmonkey.meeno.types.EventTypeId;
 import snowmonkey.meeno.types.GroupBy;
 import snowmonkey.meeno.types.ImmutbleType;
+import snowmonkey.meeno.types.Locale;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.RunnerId;
 import snowmonkey.meeno.types.Side;
 import snowmonkey.meeno.types.TimeRange;
 
 import java.util.Collection;
+
+import static snowmonkey.meeno.types.Locale.*;
 
 public class ListClearedOrders extends ImmutbleType {
     public final BetStatus betStatus;
@@ -26,13 +28,13 @@ public class ListClearedOrders extends ImmutbleType {
     public final TimeRange settledDateRange;
     public final GroupBy groupBy;
     public final Boolean includeItemDescription;
-    public final String locale;
+    public final Locale locale;
     public final int fromRecord;
     public final int recordCount;
 
     public ListClearedOrders(BetStatus betStatus, Collection<EventTypeId> eventTypeIds, Collection<EventId> eventIds, Collection<MarketId> marketIds,
                              Collection<RunnerId> runnerIds, Collection<BetId> betIds, Side side, TimeRange settledDateRange,
-                             GroupBy groupBy, Boolean includeItemDescription, String locale, int fromRecord, int recordCount) {
+                             GroupBy groupBy, Boolean includeItemDescription, Locale locale, int fromRecord, int recordCount) {
         this.betStatus = betStatus;
         this.eventTypeIds = eventTypeIds == null ? ImmutableList.of() : ImmutableList.copyOf(eventTypeIds);
         this.eventIds = eventIds == null ? ImmutableList.of() : ImmutableList.copyOf(eventIds);
@@ -59,7 +61,7 @@ public class ListClearedOrders extends ImmutbleType {
         private TimeRange settledDateRange = null;
         private GroupBy groupBy = null;
         private Boolean includeItemDescription = false;
-        private String locale = HttpAccess.EN_US;
+        private Locale locale = EN_US;
         private int fromRecord = 0;
         private int recordCount = 0;
 
@@ -113,7 +115,7 @@ public class ListClearedOrders extends ImmutbleType {
             return this;
         }
 
-        public Builder withLocale(String locale) {
+        public Builder withLocale(Locale locale) {
             this.locale = locale;
             return this;
         }
