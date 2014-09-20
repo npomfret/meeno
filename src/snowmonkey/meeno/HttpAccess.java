@@ -34,6 +34,7 @@ import snowmonkey.meeno.requests.CancelOrders;
 import snowmonkey.meeno.requests.ListClearedOrders;
 import snowmonkey.meeno.requests.ListCurrentOrders;
 import snowmonkey.meeno.requests.ListMarketBook;
+import snowmonkey.meeno.requests.ListMarketCatalogue;
 import snowmonkey.meeno.requests.PlaceOrders;
 import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.BetStatus;
@@ -150,13 +151,13 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_BOOK), gson().toJson(request));
     }
 
-    public void listMarketCatalogue(Processor processor, Iterable<MarketProjection> marketProjection, MarketSort sort, MarketFilter marketFilter) throws IOException, ApiException {
-        PayloadBuilder payloadBuilder = new PayloadBuilder();
-        payloadBuilder.add(marketFilter);
-        payloadBuilder.addMarketProjections(marketProjection);
-        payloadBuilder.addMarketSort(sort);
-        payloadBuilder.addMaxResults(1000);
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_CATALOGUE), payloadBuilder.buildJsonPayload());
+    public void listMarketCatalogue(Processor processor, Collection<MarketProjection> marketProjection, MarketSort sort, MarketFilter marketFilter) throws IOException, ApiException {
+        ListMarketCatalogue listMarketCatalogue = new ListMarketCatalogue(marketFilter, marketProjection, sort, 1000, EN_US);
+        listMarketCatalogue(processor, listMarketCatalogue);
+    }
+
+    public void listMarketCatalogue(Processor processor, ListMarketCatalogue listMarketCatalogue) throws IOException, ApiException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_CATALOGUE), gson().toJson(listMarketCatalogue));
     }
 
     public void listCountries(Processor processor) throws IOException, ApiException {
@@ -257,8 +258,7 @@ public class HttpAccess {
     }
 
     public void nav(Processor processor) throws IOException, ApiException {
-        HttpGet httpGet = httpGet(Exchange.NAVIGATION);
-        performHttpRequest(processor, Exchange.NAVIGATION, httpGet);
+        performHttpRequest(processor, Exchange.NAVIGATION, httpGet(Exchange.NAVIGATION));
     }
 
     @Deprecated

@@ -1,6 +1,7 @@
 package snowmonkey.meeno.types;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public enum MarketProjection {
@@ -14,7 +15,7 @@ public enum MarketProjection {
 
     private static final List<MarketProjection> ALL = Arrays.asList(MarketProjection.values());
 
-    public static Iterable<MarketProjection> allMarketProjections() {
+    public static Collection<MarketProjection> allMarketProjections() {
         return ALL;
     }
 }

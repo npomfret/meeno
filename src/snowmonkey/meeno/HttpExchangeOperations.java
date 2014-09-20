@@ -36,7 +36,7 @@ import static com.google.common.collect.Lists.*;
 import static snowmonkey.meeno.JsonSerialization.*;
 import static snowmonkey.meeno.types.MarketProjection.*;
 
-public class HttpExchangeOperations implements ExchangeOperations {
+public class HttpExchangeOperations {
 
     private final HttpAccess httpAccess;
 
@@ -49,7 +49,7 @@ public class HttpExchangeOperations implements ExchangeOperations {
         return marketCatalogue(allMarketProjections(), marketSort, marketFilter);
     }
 
-    public MarketCatalogues marketCatalogue(Iterable<MarketProjection> marketProjections, MarketSort marketSort, MarketFilter marketFilter) throws ApiException {
+    public MarketCatalogues marketCatalogue(Collection<MarketProjection> marketProjections, MarketSort marketSort, MarketFilter marketFilter) throws ApiException {
         try {
             JsonProcessor processor = new JsonProcessor();
             httpAccess.listMarketCatalogue(processor, marketProjections, marketSort, marketFilter);
