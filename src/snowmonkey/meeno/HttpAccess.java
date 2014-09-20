@@ -1,6 +1,5 @@
 package snowmonkey.meeno;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -73,7 +72,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import static snowmonkey.meeno.JsonSerialization.*;
+import static snowmonkey.meeno.DefaultProcessor.*;
 import static snowmonkey.meeno.types.Locale.*;
 import static snowmonkey.meeno.types.MarketFilter.Builder.*;
 
@@ -121,7 +120,7 @@ public class HttpAccess {
     }
 
     public void cancelOrders(Processor processor, final CancelOrders request) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.CANCEL_ORDERS), gson().toJson(request));
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.CANCEL_ORDERS), JsonSerialization.gson().toJson(request));
     }
 
     public void placeOrders(Processor processor, MarketId marketId, List<PlaceInstruction> instructions, CustomerRef customerRef) throws IOException, ApiException {
@@ -130,7 +129,7 @@ public class HttpAccess {
     }
 
     public void placeOrders(Processor processor, final PlaceOrders request) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.PLACE_ORDERS), gson().toJson(request));
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.PLACE_ORDERS), JsonSerialization.gson().toJson(request));
     }
 
     public void listMarketBook(Processor processor, PriceProjection priceProjection, MarketId... marketId) throws IOException, ApiException {
@@ -151,7 +150,7 @@ public class HttpAccess {
     }
 
     public void listMarketBook(Processor processor, final ListMarketBook request) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_BOOK), gson().toJson(request));
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_BOOK), JsonSerialization.gson().toJson(request));
     }
 
     public void listMarketCatalogue(Processor processor, Collection<MarketProjection> marketProjection, MarketSort sort, MarketFilter marketFilter) throws IOException, ApiException {
@@ -160,7 +159,7 @@ public class HttpAccess {
     }
 
     public void listMarketCatalogue(Processor processor, ListMarketCatalogue listMarketCatalogue) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_CATALOGUE), gson().toJson(listMarketCatalogue));
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_CATALOGUE), JsonSerialization.gson().toJson(listMarketCatalogue));
     }
 
     public void listCountries(Processor processor) throws IOException, ApiException {
@@ -173,7 +172,7 @@ public class HttpAccess {
     }
 
     public void listCountries(Processor processor, ListCountries listCountries) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_COUNTRIES), gson().toJson(listCountries));
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_COUNTRIES), JsonSerialization.gson().toJson(listCountries));
     }
 
     public void listCurrentOrders(Processor processor, Set<BetId> betIds, Set<MarketId> marketIds, OrderProjection orderProjection, TimeRange dateRange, OrderBy orderBy, SortDir sortDir, int fromRecord) throws IOException, ApiException {
@@ -195,7 +194,7 @@ public class HttpAccess {
     }
 
     public void listCurrentOrders(Processor processor, final ListCurrentOrders request) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_CURRENT_ORDERS), gson().toJson(request));
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_CURRENT_ORDERS), JsonSerialization.gson().toJson(request));
     }
 
     public void listClearedOrders(Processor processor, BetStatus betStatus, TimeRange between, int fromRecord) throws IOException, ApiException {
@@ -219,7 +218,7 @@ public class HttpAccess {
     }
 
     public void listClearedOrders(Processor processor, final ListClearedOrders request) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_CLEARED_ORDERS), gson().toJson(request));
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_CLEARED_ORDERS), JsonSerialization.gson().toJson(request));
     }
 
     public void listCompetitions(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
@@ -228,7 +227,7 @@ public class HttpAccess {
     }
 
     public void listCompetitions(Processor processor, ListCompetitions listCompetitions) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_COMPETITIONS), gson().toJson(listCompetitions));
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_COMPETITIONS), JsonSerialization.gson().toJson(listCompetitions));
     }
 
     public void listEventTypes(Processor processor) throws IOException, ApiException {
@@ -236,7 +235,7 @@ public class HttpAccess {
     }
 
     public void listEventTypes(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_EVENT_TYPES), gson().toJson(marketFilter));
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_EVENT_TYPES), JsonSerialization.gson().toJson(marketFilter));
     }
 
     public void listMarketTypes(Processor processor) throws IOException, ApiException {
@@ -249,7 +248,7 @@ public class HttpAccess {
     }
 
     public void listMarketTypes(Processor processor, ListMarketTypes listMarketTypes) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_TYPES), gson().toJson(listMarketTypes));
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_TYPES), JsonSerialization.gson().toJson(listMarketTypes));
     }
 
     public void listTimeRanges(Processor processor, TimeGranularity timeGranularity, MarketFilter marketFilter) throws IOException, ApiException {
@@ -258,7 +257,7 @@ public class HttpAccess {
     }
 
     public void listTimeRanges(Processor processor, ListTimeRanges listTimeRanges) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_TIME_RANGES), gson().toJson(listTimeRanges));
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_TIME_RANGES), JsonSerialization.gson().toJson(listTimeRanges));
     }
 
     public void listEvents(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
@@ -267,15 +266,15 @@ public class HttpAccess {
     }
 
     public void listEvents(Processor processor, ListEvents listEvents) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_EVENTS), gson().toJson(listEvents));
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_EVENTS), JsonSerialization.gson().toJson(listEvents));
     }
 
     public void getAccountDetails(Processor processor) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.accountUris.jsonRestUri(Exchange.MethodName.GET_ACCOUNT_DETAILS), gson().toJson(noFilter()));
+        sendPostRequest(processor, exchange.accountUris.jsonRestUri(Exchange.MethodName.GET_ACCOUNT_DETAILS), JsonSerialization.gson().toJson(noFilter()));
     }
 
     public void getAccountFunds(Processor processor) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.accountUris.jsonRestUri(Exchange.MethodName.GET_ACCOUNT_FUNDS), gson().toJson(noFilter()));
+        sendPostRequest(processor, exchange.accountUris.jsonRestUri(Exchange.MethodName.GET_ACCOUNT_FUNDS), JsonSerialization.gson().toJson(noFilter()));
     }
 
     public void nav(Processor processor) throws IOException, ApiException {
@@ -346,14 +345,7 @@ public class HttpAccess {
     }
 
     public void logout() throws IOException, ApiException {
-        sendPostRequest(new Processor() {
-            @Override
-            public String process(StatusLine statusLine, InputStream in) throws IOException {
-                String response = IOUtils.toString(in);
-//                System.out.println("response = " + response);
-                return response;
-            }
-        }, Exchange.LOGOUT_URI, gson().toJson(noFilter()));
+        sendPostRequest(defaultProcessor(), Exchange.LOGOUT_URI, JsonSerialization.gson().toJson(noFilter()));
     }
 
     public static SessionToken login(MeenoConfig config) {

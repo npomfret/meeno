@@ -17,6 +17,10 @@ public class DefaultProcessor {
     private DefaultProcessor() {
     }
 
+    public static HttpAccess.Processor defaultProcessor() {
+        return DefaultProcessor::processResponse;
+    }
+
     public static String processResponse(StatusLine statusLine, InputStream in) throws IOException, ApiException {
         try (Reader reader = new InputStreamReader(in, HttpAccess.UTF_8)) {
             JsonElement parsed = new JsonParser().parse(reader);
