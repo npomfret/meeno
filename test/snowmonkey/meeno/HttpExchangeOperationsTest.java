@@ -11,7 +11,7 @@ import snowmonkey.meeno.types.Navigation;
 import snowmonkey.meeno.types.SessionToken;
 
 import static java.time.ZonedDateTime.*;
-import static snowmonkey.meeno.MarketFilterBuilder.*;
+import static snowmonkey.meeno.MarketFilter.Builder.*;
 import static snowmonkey.meeno.types.TimeRange.*;
 
 public class HttpExchangeOperationsTest {

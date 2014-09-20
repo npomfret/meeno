@@ -1,7 +1,7 @@
 package live;
 
 import org.junit.Test;
-import snowmonkey.meeno.MarketFilterBuilder;
+import snowmonkey.meeno.MarketFilter;
 import snowmonkey.meeno.types.EventId;
 import snowmonkey.meeno.types.EventTypeId;
 import snowmonkey.meeno.types.Navigation;
@@ -22,11 +22,12 @@ public class ListTimeRangesTest extends AbstractLiveTestCase {
         EventId eventId = navigation.eventId();
         EventTypeId eventTypeId = navigation.parent().eventTypeId();
 
-        httpAccess.listTimeRanges(fileWriter(LIST_TIME_RANGES_FILE), MINUTES, new MarketFilterBuilder()
-                .withEventTypeIds(eventTypeId)
-                .withEventIds(eventId)
-                .withMarketCountries(UnitedKingdom)
-                .withMarketStartTime(between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(1)))
-                .build());
+        httpAccess.listTimeRanges(fileWriter(LIST_TIME_RANGES_FILE), MINUTES,
+                new MarketFilter.Builder()
+                        .withEventTypeIds(eventTypeId)
+                        .withEventIds(eventId)
+                        .withMarketCountries(UnitedKingdom)
+                        .withMarketStartTime(between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(1)))
+                        .build());
     }
 }

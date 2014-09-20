@@ -1,7 +1,7 @@
 package live;
 
 import org.junit.Test;
-import snowmonkey.meeno.MarketFilterBuilder;
+import snowmonkey.meeno.MarketFilter;
 import snowmonkey.meeno.types.EventType;
 import snowmonkey.meeno.types.EventTypes;
 
@@ -18,7 +18,7 @@ public class ListCompetitionsTest extends AbstractLiveTestCase {
         EventType soccer = eventTypes.lookup("Soccer");
 
         httpAccess.listCompetitions(fileWriter(LIST_COMPETITIONS_FILE),
-                new MarketFilterBuilder()
+                new MarketFilter.Builder()
                         .withEventTypeIds(soccer.id)
                         .withMarketCountries(Argentina)
                         .withMarketStartTime(between(now(), now().plusDays(1)))

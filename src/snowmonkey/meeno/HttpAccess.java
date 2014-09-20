@@ -70,7 +70,7 @@ import java.util.Set;
 
 import static com.google.common.collect.Sets.*;
 import static snowmonkey.meeno.JsonSerialization.*;
-import static snowmonkey.meeno.MarketFilterBuilder.*;
+import static snowmonkey.meeno.MarketFilter.Builder.*;
 
 public class HttpAccess {
 
@@ -117,12 +117,7 @@ public class HttpAccess {
     }
 
     public void cancelOrders(Processor processor, final CancelOrders request) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.CANCEL_ORDERS), new PayloadBuilder() {
-            @Override
-            public String buildJsonPayload() {
-                return gson().toJson(request);
-            }
-        });
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.CANCEL_ORDERS), gson().toJson(request));
     }
 
     public void placeOrders(Processor processor, MarketId marketId, List<PlaceInstruction> instructions, CustomerRef customerRef) throws IOException, ApiException {
@@ -131,12 +126,7 @@ public class HttpAccess {
     }
 
     public void placeOrders(Processor processor, final PlaceOrders request) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.PLACE_ORDERS), new PayloadBuilder() {
-            @Override
-            public String buildJsonPayload() {
-                return gson().toJson(request);
-            }
-        });
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.PLACE_ORDERS), gson().toJson(request));
     }
 
     public void listMarketBook(Processor processor, PriceProjection priceProjection, MarketId... marketId) throws IOException, ApiException {
@@ -157,12 +147,7 @@ public class HttpAccess {
     }
 
     public void listMarketBook(Processor processor, final ListMarketBook request) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_BOOK), new PayloadBuilder() {
-            @Override
-            public String buildJsonPayload() {
-                return gson().toJson(request);
-            }
-        });
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_BOOK), gson().toJson(request));
     }
 
     public void listMarketCatalogue(Processor processor, Iterable<MarketProjection> marketProjection, MarketSort sort, MarketFilter marketFilter) throws IOException, ApiException {
@@ -171,7 +156,7 @@ public class HttpAccess {
         payloadBuilder.addMarketProjections(marketProjection);
         payloadBuilder.addMarketSort(sort);
         payloadBuilder.addMaxResults(1000);
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_CATALOGUE), payloadBuilder);
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_MARKET_CATALOGUE), payloadBuilder.buildJsonPayload());
     }
 
     public void listCountries(Processor processor) throws IOException, ApiException {
@@ -201,12 +186,7 @@ public class HttpAccess {
     }
 
     public void listCurrentOrders(Processor processor, final ListCurrentOrders request) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_CURRENT_ORDERS), new PayloadBuilder() {
-            @Override
-            public String buildJsonPayload() {
-                return gson().toJson(request);
-            }
-        });
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_CURRENT_ORDERS), gson().toJson(request));
     }
 
     public void listClearedOrders(Processor processor, BetStatus betStatus, TimeRange between, int fromRecord) throws IOException, ApiException {
@@ -230,12 +210,7 @@ public class HttpAccess {
     }
 
     public void listClearedOrders(Processor processor, final ListClearedOrders request) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_CLEARED_ORDERS), new PayloadBuilder() {
-            @Override
-            public String buildJsonPayload() {
-                return gson().toJson(request);
-            }
-        });
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_CLEARED_ORDERS), gson().toJson(request));
     }
 
     public void listCompetitions(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
@@ -262,7 +237,7 @@ public class HttpAccess {
         PayloadBuilder payloadBuilder = new PayloadBuilder();
         payloadBuilder.add(marketFilter);
         payloadBuilder.add(timeGranularity);
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_TIME_RANGES), payloadBuilder);
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_TIME_RANGES), payloadBuilder.buildJsonPayload());
     }
 
     public void listEvents(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
@@ -286,30 +261,26 @@ public class HttpAccess {
         performHttpRequest(processor, Exchange.NAVIGATION, httpGet);
     }
 
+    @Deprecated
     private void sendPostRequest(Processor processor, URI uri, MarketFilter marketFilter) throws IOException, ApiException {
         PayloadBuilder payloadBuilder = new PayloadBuilder();
         payloadBuilder.add(marketFilter);
-        sendPostRequest(processor, uri, payloadBuilder);
+        sendPostRequest(processor, uri, payloadBuilder.buildJsonPayload());
     }
 
-    private void sendPostRequest(Processor processor, URI uri, PayloadBuilder payloadBuilder) throws IOException, ApiException {
+    private void sendPostRequest(Processor processor, URI uri, String body) throws IOException, ApiException {
         HttpPost httpPost = httpPost(uri);
-        performHttpRequest(processor, uri, payloadBuilder, httpPost);
-    }
 
-    private void performHttpRequest(Processor processor, URI uri, PayloadBuilder payloadBuilder, HttpPost httpPost) throws IOException, ApiException {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
 
             applyHeaders(httpPost);
 
-            String json = payloadBuilder.buildJsonPayload();
-
-            httpPost.setEntity(new StringEntity(json, UTF_8));
+            httpPost.setEntity(new StringEntity(body, UTF_8));
 
             String responseBody = processResponse(processor, httpClient, httpPost);
 
             for (Auditor auditor : auditors) {
-                auditor.auditPost(uri, json, responseBody);
+                auditor.auditPost(uri, body, responseBody);
             }
         }
     }
@@ -446,10 +417,11 @@ public class HttpAccess {
         }
     }
 
+    @Deprecated
     class PayloadBuilder {
         private final LinkedHashMap<String, Object> map = new LinkedHashMap<>();
 
-        public String buildJsonPayload() {
+        public final String buildJsonPayload() {
             Gson gson = gson();
 
             map.put("locale", EN_US);

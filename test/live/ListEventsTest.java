@@ -1,7 +1,7 @@
 package live;
 
 import org.junit.Test;
-import snowmonkey.meeno.MarketFilterBuilder;
+import snowmonkey.meeno.MarketFilter;
 import snowmonkey.meeno.types.EventType;
 import snowmonkey.meeno.types.EventTypes;
 
@@ -16,7 +16,7 @@ public class ListEventsTest extends AbstractLiveTestCase {
 
         httpAccess.listEvents(
                 fileWriter(LIST_EVENTS_FILE),
-                new MarketFilterBuilder()
+                new MarketFilter.Builder()
                         .withEventTypeIds(soccer.id)
                         .build()
         );

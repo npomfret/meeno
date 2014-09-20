@@ -2,7 +2,7 @@ package live;
 
 import com.google.common.collect.Iterables;
 import org.junit.Test;
-import snowmonkey.meeno.MarketFilterBuilder;
+import snowmonkey.meeno.MarketFilter;
 import snowmonkey.meeno.NotFoundException;
 import snowmonkey.meeno.types.EventTypeId;
 import snowmonkey.meeno.types.EventTypeName;
@@ -35,7 +35,7 @@ public class ListMarketCatalogueTest extends AbstractLiveTestCase {
         httpAccess.listMarketCatalogue(fileWriter(LIST_MARKET_CATALOGUE_FILE),
                 newHashSet(MARKET_START_TIME, RUNNER_METADATA, MARKET_DESCRIPTION),
                 MarketSort.FIRST_TO_START,
-                new MarketFilterBuilder()
+                new MarketFilter.Builder()
                         .withEventTypeIds(soccer)
                         .withMarketIds(new MarketId("1.115377642"))
                         .build());
@@ -67,7 +67,7 @@ public class ListMarketCatalogueTest extends AbstractLiveTestCase {
             httpAccess.listMarketCatalogue(fileWriter(LIST_MARKET_CATALOGUE_FILE),
                     newHashSet(MARKET_START_TIME, RUNNER_METADATA, MARKET_DESCRIPTION),
                     MarketSort.FIRST_TO_START,
-                    new MarketFilterBuilder()
+                    new MarketFilter.Builder()
                             .withEventTypeIds(soccer)
                             .withMarketIds(marketIds)
                             .build());

@@ -3,7 +3,7 @@ package live;
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import snowmonkey.meeno.JsonSerialization;
-import snowmonkey.meeno.MarketFilterBuilder;
+import snowmonkey.meeno.MarketFilter;
 import snowmonkey.meeno.requests.CancelInstruction;
 import snowmonkey.meeno.requests.ListCurrentOrders;
 import snowmonkey.meeno.types.BetId;
@@ -43,7 +43,7 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
         httpAccess.listMarketCatalogue(fileWriter(LIST_MARKET_CATALOGUE_FILE),
                 newHashSet(RUNNER_METADATA),
                 MarketSort.FIRST_TO_START,
-                new MarketFilterBuilder().withMarketIds(market.id)
+                new MarketFilter.Builder().withMarketIds(market.id).build()
         );
 
         MarketCatalogue marketCatalogue = JsonSerialization.parse(readFileToString(LIST_MARKET_CATALOGUE_FILE.toFile()), MarketCatalogue[].class)[0];
