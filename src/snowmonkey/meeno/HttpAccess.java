@@ -33,6 +33,7 @@ import snowmonkey.meeno.requests.ListClearedOrders;
 import snowmonkey.meeno.requests.ListCompetitions;
 import snowmonkey.meeno.requests.ListCountries;
 import snowmonkey.meeno.requests.ListCurrentOrders;
+import snowmonkey.meeno.requests.ListEvents;
 import snowmonkey.meeno.requests.ListMarketBook;
 import snowmonkey.meeno.requests.ListMarketCatalogue;
 import snowmonkey.meeno.requests.ListMarketTypes;
