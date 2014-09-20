@@ -332,7 +332,7 @@ public class Navigation {
         }
 
         public String printHierarchy() {
-            return name + " / " + parent.printHierarchy();
+            return parent.printHierarchy() + " / " + name;
         }
 
         public Markets findSiblingMarkets(String namePattern) {
