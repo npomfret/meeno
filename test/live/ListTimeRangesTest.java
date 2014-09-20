@@ -1,9 +1,9 @@
 package live;
 
 import org.junit.Test;
-import snowmonkey.meeno.MarketFilter;
 import snowmonkey.meeno.types.EventId;
 import snowmonkey.meeno.types.EventTypeId;
+import snowmonkey.meeno.types.MarketFilter;
 import snowmonkey.meeno.types.Navigation;
 
 import java.time.ZonedDateTime;

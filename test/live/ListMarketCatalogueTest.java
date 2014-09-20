@@ -2,13 +2,13 @@ package live;
 
 import com.google.common.collect.Iterables;
 import org.junit.Test;
-import snowmonkey.meeno.MarketFilter;
 import snowmonkey.meeno.NotFoundException;
 import snowmonkey.meeno.types.EventTypeId;
 import snowmonkey.meeno.types.EventTypeName;
 import snowmonkey.meeno.types.EventTypes;
 import snowmonkey.meeno.types.MarketCatalogue;
 import snowmonkey.meeno.types.MarketCatalogues;
+import snowmonkey.meeno.types.MarketFilter;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.MarketSort;
 import snowmonkey.meeno.types.Navigation;

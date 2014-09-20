@@ -1,17 +1,8 @@
-package snowmonkey.meeno;
+package snowmonkey.meeno.types;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import snowmonkey.meeno.types.CompetitionId;
-import snowmonkey.meeno.types.CountryCode;
-import snowmonkey.meeno.types.EventId;
-import snowmonkey.meeno.types.EventTypeId;
-import snowmonkey.meeno.types.ExchangeId;
-import snowmonkey.meeno.types.ImmutbleType;
-import snowmonkey.meeno.types.MarketId;
-import snowmonkey.meeno.types.OrderStatus;
-import snowmonkey.meeno.types.TimeRange;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -75,7 +66,7 @@ public class MarketFilter extends ImmutbleType {
         private TimeRange marketStartTime;
         private Set<OrderStatus> withOrders;
 
-        static MarketFilter noFilter() {
+        public static MarketFilter noFilter() {
             return new Builder().build();
         }
 

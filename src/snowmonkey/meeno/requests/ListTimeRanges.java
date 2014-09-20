@@ -1,7 +1,7 @@
 package snowmonkey.meeno.requests;
 
-import snowmonkey.meeno.MarketFilter;
 import snowmonkey.meeno.types.ImmutbleType;
+import snowmonkey.meeno.types.MarketFilter;
 import snowmonkey.meeno.types.TimeGranularity;
 
 public class ListTimeRanges extends ImmutbleType {

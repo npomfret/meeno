@@ -1,7 +1,7 @@
 package snowmonkey.meeno.requests;
 
-import snowmonkey.meeno.MarketFilter;
 import snowmonkey.meeno.types.ImmutbleType;
+import snowmonkey.meeno.types.MarketFilter;
 
 public class ListCountries extends ImmutbleType {
     public final MarketFilter marketFilter;

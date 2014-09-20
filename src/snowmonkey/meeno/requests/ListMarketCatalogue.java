@@ -1,8 +1,8 @@
 package snowmonkey.meeno.requests;
 
 import com.google.common.collect.ImmutableList;
-import snowmonkey.meeno.MarketFilter;
 import snowmonkey.meeno.types.ImmutbleType;
+import snowmonkey.meeno.types.MarketFilter;
 import snowmonkey.meeno.types.MarketProjection;
 import snowmonkey.meeno.types.MarketSort;
 

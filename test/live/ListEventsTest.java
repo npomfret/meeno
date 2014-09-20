@@ -1,9 +1,9 @@
 package live;
 
 import org.junit.Test;
-import snowmonkey.meeno.MarketFilter;
 import snowmonkey.meeno.types.EventType;
 import snowmonkey.meeno.types.EventTypes;
+import snowmonkey.meeno.types.MarketFilter;
 
 import static live.GenerateTestData.*;
 import static org.apache.commons.io.FileUtils.*;

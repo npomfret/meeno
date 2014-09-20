@@ -43,6 +43,7 @@ import snowmonkey.meeno.requests.PlaceOrders;
 import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.BetStatus;
 import snowmonkey.meeno.types.CustomerRef;
+import snowmonkey.meeno.types.MarketFilter;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.MarketProjection;
 import snowmonkey.meeno.types.MarketSort;
@@ -73,7 +74,7 @@ import java.util.List;
 import java.util.Set;
 
 import static snowmonkey.meeno.JsonSerialization.*;
-import static snowmonkey.meeno.MarketFilter.Builder.*;
+import static snowmonkey.meeno.types.MarketFilter.Builder.*;
 
 public class HttpAccess {
 

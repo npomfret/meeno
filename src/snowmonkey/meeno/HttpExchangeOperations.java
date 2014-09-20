@@ -17,6 +17,7 @@ import snowmonkey.meeno.types.MarketBook;
 import snowmonkey.meeno.types.MarketBooks;
 import snowmonkey.meeno.types.MarketCatalogue;
 import snowmonkey.meeno.types.MarketCatalogues;
+import snowmonkey.meeno.types.MarketFilter;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.MarketProjection;
 import snowmonkey.meeno.types.MarketSort;
