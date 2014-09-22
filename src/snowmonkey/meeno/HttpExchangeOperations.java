@@ -7,6 +7,8 @@ import snowmonkey.meeno.requests.CancelInstruction;
 import snowmonkey.meeno.requests.ListClearedOrders;
 import snowmonkey.meeno.requests.ListCurrentOrders;
 import snowmonkey.meeno.requests.PlaceOrders;
+import snowmonkey.meeno.types.AccountDetailsResponse;
+import snowmonkey.meeno.types.AccountFundsResponse;
 import snowmonkey.meeno.types.BetStatus;
 import snowmonkey.meeno.types.CancelExecutionReport;
 import snowmonkey.meeno.types.ClearedOrderSummary;
@@ -147,6 +149,30 @@ public class HttpExchangeOperations {
             return MarketBooks.parseMarketBooks(parse(processor.json, MarketBook[].class));
         } catch (IOException e) {
             throw new RuntimeEnvironmentException("listMarketBook call failed", e);
+        }
+    }
+
+    public AccountFundsResponse accountFunds() throws ApiException {
+        try {
+            JsonProcessor processor = new JsonProcessor();
+
+            httpAccess.getAccountFunds(processor);
+
+            return parse(processor.json, AccountFundsResponse.class);
+        } catch (IOException e) {
+            throw new RuntimeEnvironmentException("getAccountFunds call failed", e);
+        }
+    }
+
+    public AccountDetailsResponse accountDetails() throws ApiException {
+        try {
+            JsonProcessor processor = new JsonProcessor();
+
+            httpAccess.getAccountDetails(processor);
+
+            return parse(processor.json, AccountDetailsResponse.class);
+        } catch (IOException e) {
+            throw new RuntimeEnvironmentException("getAccountDetails call failed", e);
         }
     }
 

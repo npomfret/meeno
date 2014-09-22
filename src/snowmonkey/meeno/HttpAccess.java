@@ -270,11 +270,11 @@ public class HttpAccess {
     }
 
     public void getAccountDetails(Processor processor) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.accountUris.jsonRestUri(Exchange.MethodName.GET_ACCOUNT_DETAILS), JsonSerialization.gson().toJson(noFilter()));
+        sendPostRequest(processor, exchange.accountUris.jsonRestUri(Exchange.MethodName.GET_ACCOUNT_DETAILS), "");
     }
 
     public void getAccountFunds(Processor processor) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.accountUris.jsonRestUri(Exchange.MethodName.GET_ACCOUNT_FUNDS), JsonSerialization.gson().toJson(noFilter()));
+        sendPostRequest(processor, exchange.accountUris.jsonRestUri(Exchange.MethodName.GET_ACCOUNT_FUNDS), "");
     }
 
     public void nav(Processor processor) throws IOException, ApiException {
