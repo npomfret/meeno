@@ -1,7 +1,7 @@
 package snowmonkey.meeno.types;
 
-import org.joda.time.LocalDate;
-
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 public final class TimeRange extends ImmutbleType {
@@ -15,8 +15,8 @@ public final class TimeRange extends ImmutbleType {
     }
 
     public static TimeRange between(LocalDate from, LocalDate to) {
-        ZonedDateTime fromDateTime = ZonedDateTime.from(from.toDate().toInstant());
-        ZonedDateTime toDateTime = ZonedDateTime.from(to.toDate().toInstant());
+        ZonedDateTime fromDateTime = from.atStartOfDay(ZoneId.systemDefault());
+        ZonedDateTime toDateTime = to.atStartOfDay(ZoneId.systemDefault());
         return between(fromDateTime, toDateTime);
     }
 

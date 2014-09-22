@@ -25,8 +25,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.AbstractHttpMessage;
 import org.apache.http.message.BasicNameValuePair;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import snowmonkey.meeno.requests.CancelInstruction;
 import snowmonkey.meeno.requests.CancelOrders;
 import snowmonkey.meeno.requests.ListClearedOrders;
@@ -92,7 +90,6 @@ public class HttpAccess {
     }
 
     public static final String UTF_8 = "UTF-8";
-    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.forPattern(JsonSerialization.DATE_FORMAT);
     public static final String X_APPLICATION = "X-Application";
 
     public interface Processor {

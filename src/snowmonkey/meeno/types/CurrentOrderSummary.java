@@ -1,7 +1,8 @@
 package snowmonkey.meeno.types;
 
 import org.jetbrains.annotations.Nullable;
-import org.joda.time.DateTime;
+
+import java.time.ZonedDateTime;
 
 public class CurrentOrderSummary extends ImmutbleType {
     public final BetId betId;
@@ -14,8 +15,8 @@ public class CurrentOrderSummary extends ImmutbleType {
     public final OrderStatus status;
     public final PersistenceType persistenceType;
     public final OrderType orderType;
-    public final DateTime placedDate;
-    public final DateTime matchedDate;
+    public final ZonedDateTime placedDate;
+    public final ZonedDateTime matchedDate;
     public final double averagePriceMatched;
     public final double sizeMatched;
     public final double sizeRemaining;
@@ -29,7 +30,7 @@ public class CurrentOrderSummary extends ImmutbleType {
 
     public CurrentOrderSummary(BetId betId, MarketId marketId, SelectionId selectionId, double handicap, PriceSize priceSize,
                                double bspLiability, Side side, OrderStatus status, PersistenceType persistenceType, OrderType orderType,
-                               DateTime placedDate, DateTime matchedDate, double averagePriceMatched, double sizeMatched,
+                               ZonedDateTime placedDate, ZonedDateTime matchedDate, double averagePriceMatched, double sizeMatched,
                                double sizeRemaining, double sizeLapsed, double sizeCancelled, double sizeVoided,
                                @Nullable String regulatorAuthCode, @Nullable String regulatorCode) {
         this.betId = betId;

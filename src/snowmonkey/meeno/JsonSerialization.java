@@ -9,7 +9,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
-import org.joda.time.DateTime;
 import snowmonkey.meeno.requests.CancelInstruction;
 import snowmonkey.meeno.types.AccountStatementReport;
 import snowmonkey.meeno.types.BetId;
@@ -63,7 +62,6 @@ public class JsonSerialization {
 
     public static Gson gson() {
         return new GsonBuilder()
-                .registerTypeAdapter(DateTime.class, new JodaDateTimeTypeConverter())
                 .setDateFormat(DATE_FORMAT)
                 .setPrettyPrinting()
 

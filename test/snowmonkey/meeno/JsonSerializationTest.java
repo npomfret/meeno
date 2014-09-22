@@ -3,7 +3,6 @@ package snowmonkey.meeno;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import live.GenerateTestData;
-import org.joda.time.DateTime;
 import org.junit.Test;
 import snowmonkey.meeno.requests.ListMarketBook;
 import snowmonkey.meeno.types.BetId;
@@ -27,6 +26,7 @@ import snowmonkey.meeno.types.Side;
 import snowmonkey.meeno.types.Size;
 
 import java.lang.reflect.Type;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 
 import static com.google.common.collect.Lists.*;
@@ -94,7 +94,7 @@ public class JsonSerializationTest {
         assertThat(order.status, equalTo(OrderStatus.EXECUTABLE));
         assertThat(order.persistenceType, equalTo(PersistenceType.LAPSE));
         assertThat(order.orderType, equalTo(OrderType.LIMIT));
-        assertThat(order.placedDate, equalTo(new DateTime("2014-02-03T18:11:21.000Z")));
+        assertThat(order.placedDate, equalTo(ZonedDateTime.parse("2014-02-03T18:11:21.000Z")));
         assertThat(order.averagePriceMatched, equalTo(1d));
         assertThat(order.sizeMatched, equalTo(2d));
         assertThat(order.sizeRemaining, equalTo(3d));
