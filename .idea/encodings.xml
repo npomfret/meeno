@@ -41,7 +41,6 @@
     <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/Side.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/StartingPrices.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/TimeRange.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/raw/TimeGranularity.java" charset="UTF-8" />
   </component>
 </project>
 

@@ -1,8 +1,8 @@
 {
-  "availableToBetBalance": 439.3802,
-  "exposure": -26.2098,
+  "availableToBetBalance": 2.04,
+  "exposure": 0.0,
   "retainedCommission": 0.0,
   "exposureLimit": -5000.0,
-  "discountRate": 2.0,
-  "pointsBalance": 1726
+  "discountRate": 0.0,
+  "pointsBalance": 0
 }
