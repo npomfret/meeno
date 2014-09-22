@@ -1,6 +1,8 @@
 package live;
 
 import org.junit.Test;
+import snowmonkey.meeno.JsonSerialization;
+import snowmonkey.meeno.types.EventResult;
 import snowmonkey.meeno.types.EventType;
 import snowmonkey.meeno.types.EventTypes;
 import snowmonkey.meeno.types.MarketFilter;
@@ -20,6 +22,11 @@ public class ListEventsTest extends AbstractLiveTestCase {
                         .withEventTypeIds(soccer.id)
                         .build()
         );
+
+        EventResult[] eventResults = JsonSerialization.parse(readFileToString(LIST_EVENTS_FILE.toFile()), EventResult[].class);
+        for (EventResult eventResult : eventResults) {
+            System.out.println("eventResult = " + eventResult);
+        }
     }
 
 }

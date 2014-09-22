@@ -2,11 +2,11 @@ package live;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
+import snowmonkey.meeno.ApiException;
 import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.requests.CancelInstruction;
 import snowmonkey.meeno.requests.ListCurrentOrders;
 import snowmonkey.meeno.types.BetId;
-import snowmonkey.meeno.types.CurrentOrderSummary;
 import snowmonkey.meeno.types.CurrentOrderSummaryReport;
 import snowmonkey.meeno.types.CustomerRef;
 import snowmonkey.meeno.types.EventTypeName;
@@ -22,6 +22,7 @@ import snowmonkey.meeno.types.PlaceInstruction;
 import snowmonkey.meeno.types.PlaceInstructionReport;
 import snowmonkey.meeno.types.Side;
 
+import java.io.IOException;
 import java.util.List;
 
 import static com.google.common.collect.Lists.*;
@@ -63,15 +64,17 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
 
         CurrentOrderSummaryReport currentOrders = parse(readFileToString(LIST_CURRENT_ORDERS_FILE.toFile()), CurrentOrderSummaryReport.class);
 
-        for (CurrentOrderSummary currentOrder : currentOrders.currentOrders) {
-            if (instructionReports.get(0).betId.equals(betId)) {
-                MarketId marketId = currentOrder.marketId;
+        currentOrders.currentOrders.stream().filter(currentOrder -> betId.equals(betId)).forEach(currentOrder -> {
+            MarketId marketId = currentOrder.marketId;
 
-                List<CancelInstruction> cancelInstructions = newArrayList(CancelInstruction.cancel(betId));
+            List<CancelInstruction> cancelInstructions = newArrayList(CancelInstruction.cancel(betId));
 
+            try {
                 httpAccess.cancelOrders(marketId, cancelInstructions, fileWriter(TEST_DATA_DIR.resolve(CANCEL_ORDERS_FILE)), null);
+            } catch (IOException | ApiException e) {
+                e.printStackTrace();
             }
-        }
+        });
     }
 
 }

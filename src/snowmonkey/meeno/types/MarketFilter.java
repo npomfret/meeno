@@ -1,6 +1,5 @@
 package snowmonkey.meeno.types;
 
-import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 
@@ -99,7 +98,7 @@ public class MarketFilter extends ImmutbleType {
         }
 
         public Builder withEventTypeIds(Collection<String> eventTypeIds) {
-            return withEventTypeIds(eventTypeIds.stream().map(id -> new EventTypeId(id)).collect(Collectors.toList()));
+            return withEventTypeIds(eventTypeIds.stream().map(EventTypeId::new).collect(Collectors.toList()));
         }
 
         public Builder withEventTypeIds(EventTypeId... eventTypeIds) {
@@ -127,7 +126,7 @@ public class MarketFilter extends ImmutbleType {
         public Builder withMarketIds(Collection<String> marketIds) {
             return this.withMarketIds(
                     marketIds.stream()
-                            .map(id -> new MarketId(id))
+                            .map(MarketId::new)
                             .collect(Collectors.toList()));
         }
 
@@ -145,7 +144,7 @@ public class MarketFilter extends ImmutbleType {
         }
 
         public Builder withEventIds(Collection<String> eventIds) {
-            return withEventIds(eventIds.stream().map(e -> new EventId(e)).collect(Collectors.toList()));
+            return withEventIds(eventIds.stream().map(EventId::new).collect(Collectors.toList()));
         }
 
         public Builder withEventIds(Iterable<EventId> eventIds) {
@@ -165,7 +164,7 @@ public class MarketFilter extends ImmutbleType {
         public Builder withCompetitionIds(Set<String> competitionIds) {
             return withCompetitionIds(competitionIds
                     .stream()
-                    .map(id -> new CompetitionId(id))
+                    .map(CompetitionId::new)
                     .collect(Collectors.toList()));
         }
 
@@ -190,12 +189,7 @@ public class MarketFilter extends ImmutbleType {
         }
 
         public Builder withMarketCountries(CountryCode... marketCountries) {
-            return withMarketCountries(newHashSet(transform(asList(marketCountries), new Function<CountryCode, String>() {
-                @Override
-                public String apply(CountryCode countryCode) {
-                    return countryCode.code;
-                }
-            })));
+            return withMarketCountries(newHashSet(transform(asList(marketCountries), countryCode -> countryCode.code)));
         }
 
         public Builder withMarketCountries(String... marketCountries) {

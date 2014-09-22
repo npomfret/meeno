@@ -7,11 +7,10 @@ import snowmonkey.meeno.types.ImmutbleType;
 import snowmonkey.meeno.types.MarketId;
 
 import java.util.Collection;
-import java.util.List;
 
 public class CancelOrders extends ImmutbleType {
     public final MarketId marketId;
-    public final List<CancelInstruction> instructions;
+    public final Collection<CancelInstruction> instructions;
     public final CustomerRef customerRef;
 
     public CancelOrders(MarketId marketId, Collection<CancelInstruction> instructions, CustomerRef customerRef) {

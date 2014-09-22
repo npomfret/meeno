@@ -9,7 +9,7 @@ public class CancelInstruction extends ImmutbleType {
     @Nullable
     public final Double sizeReduction;
 
-    public CancelInstruction(BetId betId, Double sizeReduction) {
+    public CancelInstruction(BetId betId, @Nullable Double sizeReduction) {
         this.betId = betId;
         this.sizeReduction = sizeReduction;
     }

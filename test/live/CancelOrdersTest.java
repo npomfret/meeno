@@ -2,11 +2,8 @@ package live;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import org.apache.http.StatusLine;
 import org.junit.Test;
-import snowmonkey.meeno.ApiException;
 import snowmonkey.meeno.DefaultProcessor;
-import snowmonkey.meeno.HttpAccess;
 import snowmonkey.meeno.HttpExchangeOperations;
 import snowmonkey.meeno.requests.CancelInstruction;
 import snowmonkey.meeno.types.CancelExecutionReport;
@@ -14,9 +11,6 @@ import snowmonkey.meeno.types.CurrentOrderSummary;
 import snowmonkey.meeno.types.CurrentOrderSummaryReport;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.OrderProjection;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import static java.time.ZonedDateTime.*;
 import static live.GenerateTestData.*;
@@ -57,13 +51,10 @@ public class CancelOrdersTest extends AbstractLiveTestCase {
         }
 
         for (MarketId marketId : cancelInstructions.keySet()) {
-            httpAccess.cancelOrders(marketId, cancelInstructions.get(marketId), new HttpAccess.Processor() {
-                @Override
-                public String process(StatusLine statusLine, InputStream in) throws IOException, ApiException {
-                    String s = DefaultProcessor.processResponse(statusLine, in);
-                    System.out.println(s);
-                    return s;
-                }
+            httpAccess.cancelOrders(marketId, cancelInstructions.get(marketId), (statusLine, in) -> {
+                String s = DefaultProcessor.processResponse(statusLine, in);
+                System.out.println(s);
+                return s;
             }, null);
         }
     }

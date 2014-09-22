@@ -1,6 +1,7 @@
 package snowmonkey.meeno.requests;
 
 import com.google.common.collect.ImmutableList;
+import org.jetbrains.annotations.Nullable;
 import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.ImmutbleType;
 import snowmonkey.meeno.types.MarketId;
@@ -16,6 +17,7 @@ public class ListCurrentOrders extends ImmutbleType {
     public final Collection<BetId> betIds;
     public final Collection<MarketId> marketIds;
     public final OrderProjection orderProjection;
+    @Nullable
     public final TimeRange placedDateRange;
     public final TimeRange dateRange;
     public final OrderBy orderBy;
@@ -23,7 +25,8 @@ public class ListCurrentOrders extends ImmutbleType {
     public final int fromRecord;
     public final int recordCount;
 
-    public ListCurrentOrders(Set<BetId> betIds, Set<MarketId> marketIds, OrderProjection orderProjection, TimeRange placedDateRange, TimeRange dateRange, OrderBy orderBy, SortDir sortDir, int fromRecord, int recordCount) {
+    public ListCurrentOrders(Set<BetId> betIds, Set<MarketId> marketIds, OrderProjection orderProjection,
+                             @Nullable TimeRange placedDateRange, TimeRange dateRange, OrderBy orderBy, SortDir sortDir, int fromRecord, int recordCount) {
         this.betIds = betIds == null ? ImmutableList.of() : ImmutableList.copyOf(betIds);
         this.marketIds = marketIds == null ? ImmutableList.of() : ImmutableList.copyOf(marketIds);
         this.orderProjection = orderProjection;

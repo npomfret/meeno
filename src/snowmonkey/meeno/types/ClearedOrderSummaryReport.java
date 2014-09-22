@@ -36,7 +36,7 @@ public class ClearedOrderSummaryReport extends ImmutbleType {
 
     public ClearedOrderSummaryReport(EventTypeId eventTypeId, EventId eventId, MarketId marketId, SelectionId selectionId,
                                      Handicap handicap, BetId betId, ZonedDateTime placedDate, PersistenceType persistenceType,
-                                     OrderType orderType, Side side, ItemDescription itemDescription, Price priceRequested,
+                                     OrderType orderType, Side side, @Nullable ItemDescription itemDescription, Price priceRequested,
                                      ZonedDateTime settledDate, @Nullable Integer betCount, @Nullable Size commission, @Nullable Price priceMatched,
                                      @Nullable Boolean priceReduced, @Nullable Size sizeSettled, @Nullable Size profit, @Nullable Size sizeCancelled) {
         this.eventTypeId = eventTypeId;

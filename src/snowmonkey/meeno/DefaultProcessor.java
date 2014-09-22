@@ -55,7 +55,7 @@ public class DefaultProcessor {
 
                     switch (faultString) {
                         case "DSC-0018": {
-                            throw new HttpException("A parameter marked as mandatory was not provided");
+                            throw new HttpException("Http " + statusLine.getStatusCode() + " error. A parameter marked as mandatory was not provided. " + faultString);
                         }
                         default:
                             throw new HttpException("Bad status code " + statusLine.getStatusCode() + ":\n" + IOUtils.toString(in));

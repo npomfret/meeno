@@ -27,6 +27,7 @@ import snowmonkey.meeno.types.Side;
 import snowmonkey.meeno.types.Size;
 
 import java.lang.reflect.Type;
+import java.util.Arrays;
 
 import static com.google.common.collect.Lists.*;
 import static org.apache.commons.io.FileUtils.*;
@@ -44,7 +45,7 @@ public class JsonSerializationTest {
 
         JsonElement parse = new JsonParser().parse(json);
         MarketId[] marketIds1 = gson().fromJson(parse, MarketId[].class);
-        System.out.println("marketIds1 = " + marketIds1);
+        System.out.println("marketIds1 = " + Arrays.asList(marketIds1));
     }
 
     @Test

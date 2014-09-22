@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 public class MeenoConfig {
-    private Properties properties;
+    private final Properties properties;
 
     public MeenoConfig(Properties properties) {
         this.properties = properties;

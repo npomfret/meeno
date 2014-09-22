@@ -36,7 +36,7 @@ public class EventTypes {
 
     public EventType lookup(String eventName) {
         EventType eventType = eventTypesByName.get(eventName);
-        if (eventName == null)
+        if (eventType == null)
             throw new IllegalStateException("There is no event named '" + eventName + "'");
         return eventType;
     }

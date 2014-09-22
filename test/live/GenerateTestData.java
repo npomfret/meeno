@@ -1,7 +1,6 @@
 package live;
 
 import org.apache.commons.io.FileUtils;
-import snowmonkey.meeno.ApiException;
 import snowmonkey.meeno.DefaultProcessor;
 import snowmonkey.meeno.HttpAccess;
 
@@ -45,11 +44,11 @@ public class GenerateTestData {
             return TEST_DATA_DIR.resolve("navigation" + localDate.toString() + ".json");
         }
 
-        public static String getNavigationJson() throws IOException, ApiException {
+        public static String getNavigationJson() throws IOException {
             return readFileToString(navigationFile(LocalDate.now()).toFile());
         }
 
-        public static String getNavigationJson(LocalDate localDate) throws IOException, ApiException {
+        public static String getNavigationJson(LocalDate localDate) throws IOException {
             return readFileToString(navigationFile(localDate).toFile());
         }
     }

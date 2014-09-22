@@ -264,7 +264,7 @@ public class Navigation {
         }
 
         public Iterable<FootballMarket> asFootballMarkets() {
-            return markets.values().stream().map(m -> new FootballMarket(m)).collect(Collectors.toList());
+            return markets.values().stream().map(FootballMarket::new).collect(Collectors.toList());
         }
 
         public Market get(MarketId marketId) {

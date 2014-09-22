@@ -84,7 +84,7 @@ public enum Exchange {
         PLACE_ORDERS("placeOrders"),
         NAVIGATION("navigation/menu.json");
 
-        private static Map<String, MethodName> lookup = new HashMap<String, MethodName>() {{
+        private static final Map<String, MethodName> lookup = new HashMap<String, MethodName>() {{
             for (MethodName methodName : MethodName.values()) {
                 put(methodName.pathPart, methodName);
             }

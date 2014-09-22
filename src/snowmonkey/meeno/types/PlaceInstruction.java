@@ -8,7 +8,7 @@ public final class PlaceInstruction extends ImmutbleType {
     public final OrderType orderType;
     public final SelectionId selectionId;
     @Nullable
-    public Double handicap;
+    public final Double handicap;
     public final Side side;
     @Nullable
     public final LimitOrder limitOrder;
