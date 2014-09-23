@@ -11,7 +11,7 @@ import static org.apache.commons.io.FileUtils.*;
 public class AccountOperationsTest extends AbstractLiveTestCase {
     @Test
     public void testGetAccountFunds() throws Exception {
-        httpAccess.getAccountFunds(fileWriter(GenerateTestData.GET_ACCOUNT_FUNDS));
+        ukHttpAccess.getAccountFunds(fileWriter(GenerateTestData.GET_ACCOUNT_FUNDS));
 
         AccountFundsResponse response = JsonSerialization.parse(readFileToString(GenerateTestData.GET_ACCOUNT_FUNDS.toFile()), AccountFundsResponse.class);
 
@@ -20,7 +20,7 @@ public class AccountOperationsTest extends AbstractLiveTestCase {
 
     @Test
     public void testGetAccountDetails() throws Exception {
-        httpAccess.getAccountDetails(fileWriter(GenerateTestData.GET_ACCOUNT_DETAILS_FILE));
+        ukHttpAccess.getAccountDetails(fileWriter(GenerateTestData.GET_ACCOUNT_DETAILS_FILE));
 
         AccountDetailsResponse accountDetailsResponse = JsonSerialization.parse(readFileToString(GenerateTestData.GET_ACCOUNT_DETAILS_FILE.toFile()), AccountDetailsResponse.class);
 

@@ -1,14 +1,12 @@
 {
-  "customerRef": "1302de1479f842838352665cde234596",
-  "status": "FAILURE",
-  "errorCode": "INSUFFICIENT_FUNDS",
-  "marketId": "1.115511765",
+  "customerRef": "acaf4743654f48d6be4b91fc4797822c",
+  "status": "SUCCESS",
+  "marketId": "1.115568466",
   "instructionReports": [
     {
-      "status": "FAILURE",
-      "errorCode": "ERROR_IN_ORDER",
+      "status": "SUCCESS",
       "instruction": {
-        "selectionId": 512619,
+        "selectionId": 505717,
         "handicap": 0.0,
         "limitOrder": {
           "size": 2.0,
@@ -17,7 +15,11 @@
         },
         "orderType": "LIMIT",
         "side": "BACK"
-      }
+      },
+      "betId": "41475324467",
+      "placedDate": "2014-09-22T15:15:46.000Z",
+      "averagePriceMatched": 0.0,
+      "sizeMatched": 0.0
     }
   ]
 }

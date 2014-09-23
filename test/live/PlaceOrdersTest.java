@@ -41,7 +41,7 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
         Navigation.Markets markets = navigation().findMarkets(EventTypeName.SOCCER, between(now().plusDays(6), now().plusDays(7)), "Match Odds");
         Navigation.Market market = markets.iterator().next();
 
-        httpAccess.listMarketCatalogue(fileWriter(LIST_MARKET_CATALOGUE_FILE),
+        ukHttpAccess.listMarketCatalogue(fileWriter(LIST_MARKET_CATALOGUE_FILE),
                 newHashSet(RUNNER_METADATA),
                 MarketSort.FIRST_TO_START,
                 new MarketFilter.Builder().withMarketIds(market.id).build()
@@ -51,7 +51,7 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
 
         LimitOrder limitOrder = new LimitOrder(2.00D, 1000, PersistenceType.LAPSE);
         PlaceInstruction placeLimitOrder = createPlaceLimitOrder(marketCatalogue.runners.get(0).selectionId, Side.BACK, limitOrder);
-        httpAccess.placeOrders(fileWriter(PLACE_ORDERS_FILE), marketCatalogue.marketId, newArrayList(placeLimitOrder), CustomerRef.unique());
+        ukHttpAccess.placeOrders(fileWriter(PLACE_ORDERS_FILE), marketCatalogue.marketId, newArrayList(placeLimitOrder), CustomerRef.unique());
 
         PlaceExecutionReport placeInstructionReport = parse(readFileToString(PLACE_ORDERS_FILE.toFile()), PlaceExecutionReport.class);
 
@@ -60,7 +60,7 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
         ImmutableList<PlaceInstructionReport> instructionReports = placeInstructionReport.instructionReports;
         BetId betId = instructionReports.get(0).betId;
 
-        httpAccess.listCurrentOrders(fileWriter(LIST_CURRENT_ORDERS_FILE), new ListCurrentOrders.Builder().build());
+        ukHttpAccess.listCurrentOrders(fileWriter(LIST_CURRENT_ORDERS_FILE), new ListCurrentOrders.Builder().build());
 
         CurrentOrderSummaryReport currentOrders = parse(readFileToString(LIST_CURRENT_ORDERS_FILE.toFile()), CurrentOrderSummaryReport.class);
 
@@ -70,7 +70,7 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
             List<CancelInstruction> cancelInstructions = newArrayList(CancelInstruction.cancel(betId));
 
             try {
-                httpAccess.cancelOrders(marketId, cancelInstructions, fileWriter(TEST_DATA_DIR.resolve(CANCEL_ORDERS_FILE)), null);
+                ukHttpAccess.cancelOrders(marketId, cancelInstructions, fileWriter(TEST_DATA_DIR.resolve(CANCEL_ORDERS_FILE)), null);
             } catch (IOException | ApiException e) {
                 e.printStackTrace();
             }

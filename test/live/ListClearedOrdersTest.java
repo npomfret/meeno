@@ -16,7 +16,7 @@ public class ListClearedOrdersTest extends AbstractLiveTestCase {
     @Test
     public void canGetSettledOrders() throws Exception {
 
-        httpAccess.listClearedOrders(fileWriter(LIST_CLEARED_ORDERS_FILE),
+        ukHttpAccess.listClearedOrders(fileWriter(LIST_CLEARED_ORDERS_FILE),
                 BetStatus.SETTLED,
                 between(now().minusMonths(3), now()), 0
         );
@@ -30,13 +30,13 @@ public class ListClearedOrdersTest extends AbstractLiveTestCase {
     @Test
     public void canGetSettledOrders2() throws Exception {
 
-        httpAccess.listClearedOrders(fileWriter(LIST_CLEARED_ORDERS_FILE),
+        ukHttpAccess.listClearedOrders(fileWriter(LIST_CLEARED_ORDERS_FILE),
                 BetStatus.SETTLED,
                 between(now().minusMonths(3), now()),
                 0
         );
 
-        HttpExchangeOperations httpExchangeOperations = new HttpExchangeOperations(httpAccess);
+        HttpExchangeOperations httpExchangeOperations = new HttpExchangeOperations(ukHttpAccess);
         ClearedOrderSummary clearedOrderSummaryReport = httpExchangeOperations.listClearedOrders(
                 BetStatus.SETTLED,
                 between(now().minusMonths(3), now()),
@@ -51,7 +51,7 @@ public class ListClearedOrdersTest extends AbstractLiveTestCase {
     @Test
     public void canGetCancelledOrders() throws Exception {
 
-        httpAccess.listClearedOrders(fileWriter(LIST_CLEARED_ORDERS_FILE),
+        ukHttpAccess.listClearedOrders(fileWriter(LIST_CLEARED_ORDERS_FILE),
                 BetStatus.LAPSED,
                 between(now().minusMonths(3), now()), 0
         );

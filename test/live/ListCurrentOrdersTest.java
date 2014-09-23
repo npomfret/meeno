@@ -11,7 +11,7 @@ import static snowmonkey.meeno.JsonSerialization.*;
 public class ListCurrentOrdersTest extends AbstractLiveTestCase {
     @Test
     public void test() throws Exception {
-        httpAccess.listCurrentOrders(fileWriter(LIST_CURRENT_ORDERS_FILE), new ListCurrentOrders.Builder().build());
+        ukHttpAccess.listCurrentOrders(fileWriter(LIST_CURRENT_ORDERS_FILE), new ListCurrentOrders.Builder().build());
 
         CurrentOrderSummaryReport currentOrders = parse(readFileToString(LIST_CURRENT_ORDERS_FILE.toFile()), CurrentOrderSummaryReport.class);
 

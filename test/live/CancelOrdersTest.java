@@ -23,7 +23,7 @@ public class CancelOrdersTest extends AbstractLiveTestCase {
 
     @Test
     public void test() throws Exception {
-        HttpExchangeOperations httpExchangeOperations = new HttpExchangeOperations(httpAccess);
+        HttpExchangeOperations httpExchangeOperations = new HttpExchangeOperations(ukHttpAccess);
 
         CurrentOrderSummaryReport currentOrders = httpExchangeOperations.listCurrentOrders(new Builder()
                 .withOrderProjection(OrderProjection.ALL)
@@ -39,7 +39,7 @@ public class CancelOrdersTest extends AbstractLiveTestCase {
     @Test
     public void cancelAllOrders() throws Exception {
 
-        httpAccess.listCurrentOrders(fileWriter(LIST_CURRENT_ORDERS_FILE), new Builder().build());
+        ukHttpAccess.listCurrentOrders(fileWriter(LIST_CURRENT_ORDERS_FILE), new Builder().build());
 
         CurrentOrderSummaryReport currentOrders = parse(readFileToString(LIST_CURRENT_ORDERS_FILE.toFile()), CurrentOrderSummaryReport.class);
 
@@ -51,7 +51,7 @@ public class CancelOrdersTest extends AbstractLiveTestCase {
         }
 
         for (MarketId marketId : cancelInstructions.keySet()) {
-            httpAccess.cancelOrders(marketId, cancelInstructions.get(marketId), (statusLine, in) -> {
+            ukHttpAccess.cancelOrders(marketId, cancelInstructions.get(marketId), (statusLine, in) -> {
                 String s = DefaultProcessor.processResponse(statusLine, in);
                 System.out.println(s);
                 return s;

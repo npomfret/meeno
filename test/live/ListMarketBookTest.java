@@ -51,7 +51,7 @@ public class ListMarketBookTest extends AbstractLiveTestCase {
         );
 
 
-        httpAccess.listMarketBook(fileWriter(LIST_MARKET_BOOK_FILE), new ListMarketBook(
+        ukHttpAccess.listMarketBook(fileWriter(LIST_MARKET_BOOK_FILE), new ListMarketBook(
                 marketIds,
                 priceProjection,
                 null,
@@ -90,7 +90,7 @@ public class ListMarketBookTest extends AbstractLiveTestCase {
                 false
         );
 
-        MarketBook marketBook = new HttpExchangeOperations(httpAccess).marketBook(markets.marketsIds().iterator().next(), priceProjection);
+        MarketBook marketBook = new HttpExchangeOperations(ukHttpAccess).marketBook(markets.marketsIds().iterator().next(), priceProjection);
         System.out.println("marketBook = " + marketBook);
     }
 
@@ -107,7 +107,7 @@ public class ListMarketBookTest extends AbstractLiveTestCase {
 
         Iterable<MarketId> marketIds = limit(markets.marketsIds(), 5);
 
-        httpAccess.listMarketBook(fileWriter(LIST_MARKET_BOOK_FILE), new ListMarketBook(
+        ukHttpAccess.listMarketBook(fileWriter(LIST_MARKET_BOOK_FILE), new ListMarketBook(
                 marketIds,
                 null,
                 null,

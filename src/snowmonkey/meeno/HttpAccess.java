@@ -37,6 +37,7 @@ import snowmonkey.meeno.requests.ListMarketCatalogue;
 import snowmonkey.meeno.requests.ListMarketTypes;
 import snowmonkey.meeno.requests.ListTimeRanges;
 import snowmonkey.meeno.requests.PlaceOrders;
+import snowmonkey.meeno.requests.TransferFunds;
 import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.BetStatus;
 import snowmonkey.meeno.types.CustomerRef;
@@ -109,6 +110,12 @@ public class HttpAccess {
 
     public void addAuditor(Auditor auditor) {
         this.auditors.add(auditor);
+    }
+
+    public void transferFunds(Processor processor, TransferFunds request) throws IOException, ApiException {
+        String body = JsonSerialization.gson().toJson(request);
+        System.out.println("body = " + body);
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.TRANSFER_FUNDS), body);
     }
 
     public void cancelOrders(MarketId marketId, Collection<CancelInstruction> cancelInstructions, Processor processor, CustomerRef customerRef) throws IOException, ApiException {

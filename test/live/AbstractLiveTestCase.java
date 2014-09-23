@@ -14,11 +14,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 
-import static live.GenerateTestData.GetNavigation.navigationFile;
-import static live.GenerateTestData.fileWriter;
+import static live.GenerateTestData.GetNavigation.*;
+import static live.GenerateTestData.*;
 
 public abstract class AbstractLiveTestCase {
-    protected static HttpAccess httpAccess;
+    protected static HttpAccess ukHttpAccess;
+    protected static HttpAccess ausHttpAccess;
 
     @BeforeClass
     public static void setup() throws Exception {
@@ -26,12 +27,14 @@ public abstract class AbstractLiveTestCase {
 
         SessionToken sessionToken = HttpAccess.login(config);
 
-        httpAccess = new HttpAccess(sessionToken, config.appKey(), Exchange.UK);
+        ukHttpAccess = new HttpAccess(sessionToken, config.appKey(), Exchange.UK);
+        ausHttpAccess = new HttpAccess(sessionToken, config.appKey(), Exchange.AUSTRALIA);
     }
 
     @AfterClass
     public static void tearDown() throws Exception {
-        httpAccess.logout();
+        ukHttpAccess.logout();
+        ausHttpAccess.logout();
     }
 
     protected Navigation navigation() throws IOException, ApiException {
@@ -40,7 +43,7 @@ public abstract class AbstractLiveTestCase {
         Path path = navigationFile(now);
 
         if (!Files.exists(path)) {
-            httpAccess.nav(fileWriter(navigationFile(now)));
+            ukHttpAccess.nav(fileWriter(navigationFile(now)));
         }
 
         return Navigation.parse(GenerateTestData.GetNavigation.getNavigationJson(now));

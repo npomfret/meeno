@@ -17,7 +17,7 @@ public class ListCompetitionsTest extends AbstractLiveTestCase {
         EventTypes eventTypes = EventTypes.parse(readFileToString(LIST_EVENT_TYPES_FILE.toFile()));
         EventType soccer = eventTypes.lookup("Soccer");
 
-        httpAccess.listCompetitions(fileWriter(LIST_COMPETITIONS_FILE),
+        ukHttpAccess.listCompetitions(fileWriter(LIST_COMPETITIONS_FILE),
                 new MarketFilter.Builder()
                         .withEventTypeIds(soccer.id)
                         .withMarketCountries(Argentina)

@@ -17,6 +17,7 @@ public class GenerateTestData {
     public static final Path LIST_COUNTRIES_FILE = TEST_DATA_DIR.resolve("listCountries.json");
     public static final Path GET_ACCOUNT_DETAILS_FILE = TEST_DATA_DIR.resolve("getAccountDetails.json");
     public static final Path GET_ACCOUNT_FUNDS = TEST_DATA_DIR.resolve("getAccountFunds.json");
+    public static final Path TRANSFER_FUNDS = TEST_DATA_DIR.resolve("transferFunds.json");
     public static final Path LIST_MARKET_BOOK_FILE = TEST_DATA_DIR.resolve("listMarketBook.json");
     public static final Path LIST_TIME_RANGES_FILE = TEST_DATA_DIR.resolve("listTimeRanges.json");
     public static final Path LIST_MARKET_TYPES_FILE = TEST_DATA_DIR.resolve("listMarketTypes.json");

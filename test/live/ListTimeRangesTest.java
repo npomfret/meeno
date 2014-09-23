@@ -22,7 +22,7 @@ public class ListTimeRangesTest extends AbstractLiveTestCase {
         EventId eventId = navigation.eventId();
         EventTypeId eventTypeId = navigation.parent().eventTypeId();
 
-        httpAccess.listTimeRanges(fileWriter(LIST_TIME_RANGES_FILE), MINUTES,
+        ukHttpAccess.listTimeRanges(fileWriter(LIST_TIME_RANGES_FILE), MINUTES,
                 new MarketFilter.Builder()
                         .withEventTypeIds(eventTypeId)
                         .withEventIds(eventId)

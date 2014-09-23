@@ -32,7 +32,7 @@ public class ListMarketCatalogueTest extends AbstractLiveTestCase {
 
         EventTypeId soccer = eventTypes.lookup("Soccer").id;
 
-        httpAccess.listMarketCatalogue(fileWriter(LIST_MARKET_CATALOGUE_FILE),
+        ukHttpAccess.listMarketCatalogue(fileWriter(LIST_MARKET_CATALOGUE_FILE),
                 newHashSet(MARKET_START_TIME, RUNNER_METADATA, MARKET_DESCRIPTION),
                 MarketSort.FIRST_TO_START,
                 new MarketFilter.Builder()
@@ -64,7 +64,7 @@ public class ListMarketCatalogueTest extends AbstractLiveTestCase {
 
         for (List<MarketId> marketIds : Iterables.partition(markets.marketsIds(), maxResults)) {
 
-            httpAccess.listMarketCatalogue(fileWriter(LIST_MARKET_CATALOGUE_FILE),
+            ukHttpAccess.listMarketCatalogue(fileWriter(LIST_MARKET_CATALOGUE_FILE),
                     newHashSet(MARKET_START_TIME, RUNNER_METADATA, MARKET_DESCRIPTION),
                     MarketSort.FIRST_TO_START,
                     new MarketFilter.Builder()

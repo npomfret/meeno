@@ -7,6 +7,7 @@ import snowmonkey.meeno.requests.CancelInstruction;
 import snowmonkey.meeno.requests.ListClearedOrders;
 import snowmonkey.meeno.requests.ListCurrentOrders;
 import snowmonkey.meeno.requests.PlaceOrders;
+import snowmonkey.meeno.requests.TransferFunds;
 import snowmonkey.meeno.types.AccountDetailsResponse;
 import snowmonkey.meeno.types.AccountFundsResponse;
 import snowmonkey.meeno.types.BetStatus;
@@ -28,6 +29,7 @@ import snowmonkey.meeno.types.PlaceExecutionReport;
 import snowmonkey.meeno.types.PlaceInstruction;
 import snowmonkey.meeno.types.PriceProjection;
 import snowmonkey.meeno.types.TimeRange;
+import snowmonkey.meeno.types.TransferResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -176,7 +178,7 @@ public class HttpExchangeOperations {
         }
     }
 
-    public ClearedOrderSummary listClearedOrders(BetStatus betStatus, TimeRange settledDateRange, int fromRecord) throws IOException, ApiException {
+    public ClearedOrderSummary listClearedOrders(BetStatus betStatus, TimeRange settledDateRange, int fromRecord) throws ApiException {
         ListClearedOrders listClearedOrders = new ListClearedOrders.Builder()
                 .withBetStatus(betStatus)
                 .withSettledDateRange(settledDateRange)
@@ -185,12 +187,28 @@ public class HttpExchangeOperations {
         return listClearedOrders(listClearedOrders);
     }
 
-    public ClearedOrderSummary listClearedOrders(ListClearedOrders listClearedOrders) throws IOException, ApiException {
-        JsonProcessor processor = new JsonProcessor();
+    public ClearedOrderSummary listClearedOrders(ListClearedOrders listClearedOrders) throws ApiException {
+        try {
+            JsonProcessor processor = new JsonProcessor();
 
-        httpAccess.listClearedOrders(processor, listClearedOrders);
+            httpAccess.listClearedOrders(processor, listClearedOrders);
 
-        return parse(processor.json, ClearedOrderSummary.class);
+            return parse(processor.json, ClearedOrderSummary.class);
+        } catch (IOException e) {
+            throw new RuntimeEnvironmentException("listClearedOrders call failed", e);
+        }
+    }
+
+    public TransferResponse transferFunds(TransferFunds transferFunds) throws ApiException {
+        try {
+            JsonProcessor processor = new JsonProcessor();
+
+            httpAccess.transferFunds(processor, transferFunds);
+
+            return parse(processor.json, TransferResponse.class);
+        } catch (IOException e) {
+            throw new RuntimeEnvironmentException("transferFunds call failed", e);
+        }
     }
 
     public static class RuntimeEnvironmentException extends RuntimeException {

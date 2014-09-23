@@ -68,6 +68,7 @@ public enum Exchange {
     }
 
     public static enum MethodName {
+        TRANSFER_FUNDS("transferFunds"),
         CANCEL_ORDERS("cancelOrders"),
         GET_ACCOUNT_DETAILS("getAccountDetails"),
         GET_ACCOUNT_FUNDS("getAccountFunds"),

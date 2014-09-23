@@ -18,9 +18,9 @@ import static snowmonkey.meeno.types.TimeRange.*;
 public class GetResultsTest extends AbstractLiveTestCase {
     @Test
     public void test() throws Exception {
-        httpAccess.addAuditor(new HttpAccess.Auditor() {
+        ukHttpAccess.addAuditor(new HttpAccess.Auditor() {
         });
-        HttpExchangeOperations httpExchangeOperations = new HttpExchangeOperations(httpAccess);
+        HttpExchangeOperations httpExchangeOperations = new HttpExchangeOperations(ukHttpAccess);
 
         Navigation navigation = Navigation.parse(GenerateTestData.GetNavigation.getNavigationJson(LocalDate.parse("2014-09-14")));
 
