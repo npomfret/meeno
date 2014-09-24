@@ -4,7 +4,6 @@
     <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/Competition.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/Event.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/EventType.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/EventTypeResult.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/ExBestOfferOverRides.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/ExchangePrices.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/snowmonkey/meeno/types/ExecutionReportErrorCode.java" charset="UTF-8" />

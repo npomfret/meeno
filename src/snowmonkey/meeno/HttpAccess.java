@@ -62,6 +62,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.security.KeyStore;
 import java.security.SecureRandom;
@@ -423,8 +424,16 @@ public class HttpAccess {
             }
         } catch (ConnectTimeoutException e) {
             long time = (System.currentTimeMillis() - start);
-            throw new IOException("Connection timed out after " + time + "ms", e);
+            throw new TimeoutException("Connection timed out after " + time + "ms", e);
+        } catch (SocketTimeoutException e) {
+            long time = (System.currentTimeMillis() - start);
+            throw new TimeoutException("Socket timed out after " + time + "ms", e);
         }
     }
 
+    private static class TimeoutException extends RuntimeEnvironmentException {
+        public TimeoutException(String message, IOException cause) {
+            super(message, cause);
+        }
+    }
 }

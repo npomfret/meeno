@@ -211,12 +211,6 @@ public class HttpExchangeOperations {
         }
     }
 
-    public static class RuntimeEnvironmentException extends RuntimeException {
-        public RuntimeEnvironmentException(String message, Exception cause) {
-            super(message, cause);
-        }
-    }
-
     private static class JsonProcessor implements HttpAccess.Processor {
         public String json;
 
