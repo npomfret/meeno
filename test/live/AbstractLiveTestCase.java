@@ -5,6 +5,7 @@ import org.junit.BeforeClass;
 import snowmonkey.meeno.ApiException;
 import snowmonkey.meeno.Exchange;
 import snowmonkey.meeno.HttpAccess;
+import snowmonkey.meeno.HttpExchangeOperations;
 import snowmonkey.meeno.MeenoConfig;
 import snowmonkey.meeno.types.Navigation;
 import snowmonkey.meeno.types.SessionToken;
@@ -35,6 +36,10 @@ public abstract class AbstractLiveTestCase {
     public static void tearDown() throws Exception {
         ukHttpAccess.logout();
         ausHttpAccess.logout();
+    }
+
+    protected HttpExchangeOperations ukExchange() {
+        return new HttpExchangeOperations(ukHttpAccess);
     }
 
     protected Navigation navigation() throws IOException, ApiException {

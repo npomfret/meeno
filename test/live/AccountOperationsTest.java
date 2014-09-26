@@ -1,28 +1,24 @@
 package live;
 
 import org.junit.Test;
-import snowmonkey.meeno.JsonSerialization;
+import snowmonkey.meeno.HttpExchangeOperations;
 import snowmonkey.meeno.types.AccountDetailsResponse;
 import snowmonkey.meeno.types.AccountFundsResponse;
 
-import static live.GenerateTestData.*;
-import static org.apache.commons.io.FileUtils.*;
-
 public class AccountOperationsTest extends AbstractLiveTestCase {
     @Test
-    public void testGetAccountFunds() throws Exception {
-        ukHttpAccess.getAccountFunds(fileWriter(GenerateTestData.GET_ACCOUNT_FUNDS));
+    public void accountFunds() throws Exception {
+        HttpExchangeOperations exchangeOperations = ukExchange();
+        AccountFundsResponse accountFundsResponse = exchangeOperations.accountFunds();
 
-        AccountFundsResponse response = JsonSerialization.parse(readFileToString(GenerateTestData.GET_ACCOUNT_FUNDS.toFile()), AccountFundsResponse.class);
-
-        System.out.println("response = " + response);
+        System.out.println("accountFundsResponse = " + accountFundsResponse);
     }
 
     @Test
-    public void testGetAccountDetails() throws Exception {
-        ukHttpAccess.getAccountDetails(fileWriter(GenerateTestData.GET_ACCOUNT_DETAILS_FILE));
+    public void test() throws Exception {
+        HttpExchangeOperations exchangeOperations = ukExchange();
 
-        AccountDetailsResponse accountDetailsResponse = JsonSerialization.parse(readFileToString(GenerateTestData.GET_ACCOUNT_DETAILS_FILE.toFile()), AccountDetailsResponse.class);
+        AccountDetailsResponse accountDetailsResponse = exchangeOperations.accountDetails();
 
         System.out.println("accountDetailsResponse = " + accountDetailsResponse);
     }
