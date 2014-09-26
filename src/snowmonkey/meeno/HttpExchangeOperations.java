@@ -6,6 +6,7 @@ import org.apache.http.StatusLine;
 import snowmonkey.meeno.requests.CancelInstruction;
 import snowmonkey.meeno.requests.CancelOrders;
 import snowmonkey.meeno.requests.ListClearedOrders;
+import snowmonkey.meeno.requests.ListCompetitions;
 import snowmonkey.meeno.requests.ListCurrentOrders;
 import snowmonkey.meeno.requests.ListEventTypes;
 import snowmonkey.meeno.requests.PlaceOrders;
@@ -15,6 +16,7 @@ import snowmonkey.meeno.types.AccountFundsResponse;
 import snowmonkey.meeno.types.BetStatus;
 import snowmonkey.meeno.types.CancelExecutionReport;
 import snowmonkey.meeno.types.ClearedOrderSummary;
+import snowmonkey.meeno.types.CompetitionResult;
 import snowmonkey.meeno.types.CurrentOrderSummary;
 import snowmonkey.meeno.types.CurrentOrderSummaryReport;
 import snowmonkey.meeno.types.CustomerRef;
@@ -38,7 +40,6 @@ import snowmonkey.meeno.types.TransferResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -224,7 +225,7 @@ public class HttpExchangeOperations {
         }
     }
 
-    public List<EventTypeResult> eventTypes() throws ApiException {
+    public EventTypeResult[] eventTypes() throws ApiException {
         ListEventTypes listEventTypes = new ListEventTypes(MarketFilter.Builder.noFilter(), Locale.EN_US);
 
         try {
@@ -232,9 +233,19 @@ public class HttpExchangeOperations {
 
             httpAccess.listEventTypes(processor, listEventTypes);
 
-            EventTypeResult[] result = parse(processor.json, EventTypeResult[].class);
+            return parse(processor.json, EventTypeResult[].class);
+        } catch (IOException e) {
+            throw new RuntimeEnvironmentException("eventTypes call failed", e);
+        }
+    }
 
-            return Arrays.asList(result);
+    public CompetitionResult[] competitions(ListCompetitions request) throws ApiException {
+        try {
+            JsonProcessor processor = new JsonProcessor();
+
+            httpAccess.listCompetitions(processor, request);
+
+            return parse(processor.json, CompetitionResult[].class);
         } catch (IOException e) {
             throw new RuntimeEnvironmentException("transferFunds call failed", e);
         }

@@ -2,24 +2,28 @@ package snowmonkey.meeno.types;
 
 import snowmonkey.meeno.JsonSerialization;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class EventTypes {
+public class EventTypes implements Iterable<EventType> {
     private final Map<String, EventType> eventTypesByName = new LinkedHashMap<>();
 
     public static EventTypes parse(String json) {
-        EventType[] parse = JsonSerialization.parse(json, EventType[].class);
-        return create(parse);
+        return eventTypes(JsonSerialization.parse(json, EventTypeResult[].class));
     }
 
-    public static EventTypes create(EventType[] parse) {
+    public static EventTypes eventTypes(EventTypeResult[] result) {
         EventTypes eventTypes = new EventTypes();
-
-        for (EventType eventType : parse) {
-            eventTypes.add(eventType);
+        for (EventTypeResult eventTypeResult : result) {
+            eventTypes.add(eventTypeResult.eventType);
         }
         return eventTypes;
+    }
+
+    @Override
+    public Iterator<EventType> iterator() {
+        return eventTypesByName.values().iterator();
     }
 
     private void add(EventType eventType) {

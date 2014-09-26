@@ -1,27 +1,37 @@
 package live;
 
 import org.junit.Test;
+import snowmonkey.meeno.HttpExchangeOperations;
+import snowmonkey.meeno.requests.ListCompetitions;
+import snowmonkey.meeno.types.CompetitionResult;
 import snowmonkey.meeno.types.EventType;
-import snowmonkey.meeno.types.EventTypes;
+import snowmonkey.meeno.types.Locale;
 import snowmonkey.meeno.types.MarketFilter;
 
 import static java.time.ZonedDateTime.*;
-import static live.raw.GenerateTestData.*;
-import static org.apache.commons.io.FileUtils.*;
 import static snowmonkey.meeno.CountryLookup.*;
+import static snowmonkey.meeno.types.EventTypes.*;
 import static snowmonkey.meeno.types.TimeRange.*;
 
 public class ListCompetitionsTest extends AbstractLiveTestCase {
     @Test
-    public void test() throws Exception {
-        EventTypes eventTypes = EventTypes.parse(readFileToString(LIST_EVENT_TYPES_FILE.toFile()));
-        EventType soccer = eventTypes.lookup("Soccer");
+    public void listCompetitions() throws Exception {
+        HttpExchangeOperations httpExchangeOperations = ukExchange();
 
-        ukHttpAccess.listCompetitions(fileWriter(LIST_COMPETITIONS_FILE),
+        EventType soccer = eventTypes(httpExchangeOperations.eventTypes()).lookup("Soccer");
+
+        CompetitionResult[] competitions = httpExchangeOperations.competitions(new ListCompetitions(
                 new MarketFilter.Builder()
                         .withEventTypeIds(soccer.id)
                         .withMarketCountries(Argentina)
-                        .withMarketStartTime(between(now(), now().plusDays(1)))
-                        .build());
+                        .withMarketStartTime(between(now(), now().plusMonths(1)))
+                        .build(),
+                        Locale.EN_US)
+        );
+
+        for (CompetitionResult competition : competitions) {
+            System.out.println("competition = " + competition);
+        }
     }
+
 }
