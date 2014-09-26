@@ -1,5 +1,6 @@
 package live;
 
+import live.raw.GenerateTestData;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import snowmonkey.meeno.ApiException;
@@ -15,8 +16,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 
-import static live.GenerateTestData.GetNavigation.*;
-import static live.GenerateTestData.*;
+import static live.raw.GenerateTestData.GetNavigation.*;
+import static live.raw.GenerateTestData.*;
 
 public abstract class AbstractLiveTestCase {
     protected static HttpAccess ukHttpAccess;

@@ -1,6 +1,6 @@
 package snowmonkey.meeno.types;
 
-import live.GenerateTestData;
+import live.raw.GenerateTestData;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 

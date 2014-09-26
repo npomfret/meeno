@@ -2,7 +2,7 @@ package snowmonkey.meeno;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import live.GenerateTestData;
+import live.raw.GenerateTestData;
 import org.junit.Test;
 import snowmonkey.meeno.requests.ListMarketBook;
 import snowmonkey.meeno.types.BetId;

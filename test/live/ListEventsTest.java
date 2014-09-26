@@ -7,7 +7,7 @@ import snowmonkey.meeno.types.EventType;
 import snowmonkey.meeno.types.EventTypes;
 import snowmonkey.meeno.types.MarketFilter;
 
-import static live.GenerateTestData.*;
+import static live.raw.GenerateTestData.*;
 import static org.apache.commons.io.FileUtils.*;
 
 public class ListEventsTest extends AbstractLiveTestCase {

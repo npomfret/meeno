@@ -1,6 +1,6 @@
 package snowmonkey.meeno.types;
 
-import live.GenerateTestData;
+import live.raw.GenerateTestData;
 import org.junit.Test;
 
 import java.time.ZonedDateTime;

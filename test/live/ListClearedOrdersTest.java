@@ -8,7 +8,7 @@ import snowmonkey.meeno.types.ClearedOrderSummary;
 import snowmonkey.meeno.types.ClearedOrderSummaryReport;
 
 import static java.time.ZonedDateTime.*;
-import static live.GenerateTestData.*;
+import static live.raw.GenerateTestData.*;
 import static org.apache.commons.io.FileUtils.*;
 import static snowmonkey.meeno.types.TimeRange.*;
 

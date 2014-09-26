@@ -1,13 +1,12 @@
 package live.raw;
 
 import live.AbstractLiveTestCase;
-import live.GenerateTestData;
 import org.junit.Test;
 import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.types.AccountDetailsResponse;
 import snowmonkey.meeno.types.AccountFundsResponse;
 
-import static live.GenerateTestData.*;
+import static live.raw.GenerateTestData.*;
 import static org.apache.commons.io.FileUtils.*;
 
 public class AccountOperationsTest extends AbstractLiveTestCase {

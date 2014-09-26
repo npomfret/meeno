@@ -1,8 +1,9 @@
 package live;
 
+import live.raw.GenerateTestData;
 import org.junit.Test;
 
-import static live.GenerateTestData.*;
+import static live.raw.GenerateTestData.*;
 import static org.apache.commons.io.FileUtils.*;
 
 public class ListCountriesTest extends AbstractLiveTestCase {

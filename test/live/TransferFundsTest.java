@@ -7,7 +7,7 @@ import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.requests.TransferFunds;
 import snowmonkey.meeno.types.TransferResponse;
 
-import static live.GenerateTestData.*;
+import static live.raw.GenerateTestData.*;
 import static org.apache.commons.io.FileUtils.*;
 import static snowmonkey.meeno.types.Wallet.*;
 

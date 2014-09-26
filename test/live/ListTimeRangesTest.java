@@ -8,7 +8,7 @@ import snowmonkey.meeno.types.Navigation;
 
 import java.time.ZonedDateTime;
 
-import static live.GenerateTestData.*;
+import static live.raw.GenerateTestData.*;
 import static snowmonkey.meeno.CountryLookup.*;
 import static snowmonkey.meeno.types.EventTypeName.*;
 import static snowmonkey.meeno.types.TimeGranularity.*;
