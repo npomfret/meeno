@@ -115,8 +115,7 @@ public class HttpAccess {
 
     public void transferFunds(Processor processor, TransferFunds request) throws IOException, ApiException {
         String body = JsonSerialization.gson().toJson(request);
-        System.out.println("body = " + body);
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.TRANSFER_FUNDS), body);
+        sendPostRequest(processor, exchange.accountUris.jsonRestUri(Exchange.MethodName.TRANSFER_FUNDS), body);
     }
 
     public void cancelOrders(MarketId marketId, Collection<CancelInstruction> cancelInstructions, Processor processor, CustomerRef customerRef) throws IOException, ApiException {
@@ -295,10 +294,17 @@ public class HttpAccess {
 
             httpPost.setEntity(new StringEntity(body, UTF_8));
 
-            String responseBody = processResponse(processor, httpClient, httpPost);
+            try {
+                String responseBody = processResponse(processor, httpClient, httpPost);
 
-            for (Auditor auditor : auditors) {
-                auditor.auditPost(uri, body, responseBody);
+                for (Auditor auditor : auditors) {
+                    auditor.auditPost(uri, body, responseBody);
+                }
+            } catch (DefaultProcessor.HttpException | IOException | ApiException e) {
+                for (Auditor auditor : auditors) {
+                    auditor.auditPost(uri, body, "");
+                }
+                throw e;
             }
         }
     }
