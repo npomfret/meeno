@@ -1,14 +1,18 @@
 package live;
 
-import live.raw.GenerateTestData;
 import org.junit.Test;
+import snowmonkey.meeno.types.EventTypeResult;
 
-import static live.raw.GenerateTestData.*;
+import java.util.List;
 
 public class ListEventTypesTest extends AbstractLiveTestCase {
     @Test
-    public void test() throws Exception {
-        ukHttpAccess.listEventTypes(fileWriter(GenerateTestData.LIST_EVENT_TYPES_FILE));
+    public void listEventTypes() throws Exception {
+        List<EventTypeResult> events = ukExchange().eventTypes();
+
+        for (EventTypeResult event : events) {
+            System.out.println("event = " + event);
+        }
     }
 
 }

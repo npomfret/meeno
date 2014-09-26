@@ -7,6 +7,7 @@ import snowmonkey.meeno.requests.CancelInstruction;
 import snowmonkey.meeno.requests.CancelOrders;
 import snowmonkey.meeno.requests.ListClearedOrders;
 import snowmonkey.meeno.requests.ListCurrentOrders;
+import snowmonkey.meeno.requests.ListEventTypes;
 import snowmonkey.meeno.requests.PlaceOrders;
 import snowmonkey.meeno.requests.TransferFunds;
 import snowmonkey.meeno.types.AccountDetailsResponse;
@@ -17,6 +18,8 @@ import snowmonkey.meeno.types.ClearedOrderSummary;
 import snowmonkey.meeno.types.CurrentOrderSummary;
 import snowmonkey.meeno.types.CurrentOrderSummaryReport;
 import snowmonkey.meeno.types.CustomerRef;
+import snowmonkey.meeno.types.EventTypeResult;
+import snowmonkey.meeno.types.Locale;
 import snowmonkey.meeno.types.MarketBook;
 import snowmonkey.meeno.types.MarketBooks;
 import snowmonkey.meeno.types.MarketCatalogue;
@@ -35,6 +38,7 @@ import snowmonkey.meeno.types.TransferResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -215,6 +219,22 @@ public class HttpExchangeOperations {
             httpAccess.transferFunds(processor, transferFunds);
 
             return parse(processor.json, TransferResponse.class);
+        } catch (IOException e) {
+            throw new RuntimeEnvironmentException("transferFunds call failed", e);
+        }
+    }
+
+    public List<EventTypeResult> eventTypes() throws ApiException {
+        ListEventTypes listEventTypes = new ListEventTypes(MarketFilter.Builder.noFilter(), Locale.EN_US);
+
+        try {
+            JsonProcessor processor = new JsonProcessor();
+
+            httpAccess.listEventTypes(processor, listEventTypes);
+
+            EventTypeResult[] result = parse(processor.json, EventTypeResult[].class);
+
+            return Arrays.asList(result);
         } catch (IOException e) {
             throw new RuntimeEnvironmentException("transferFunds call failed", e);
         }

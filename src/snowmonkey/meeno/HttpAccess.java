@@ -30,6 +30,7 @@ import snowmonkey.meeno.requests.ListClearedOrders;
 import snowmonkey.meeno.requests.ListCompetitions;
 import snowmonkey.meeno.requests.ListCountries;
 import snowmonkey.meeno.requests.ListCurrentOrders;
+import snowmonkey.meeno.requests.ListEventTypes;
 import snowmonkey.meeno.requests.ListEvents;
 import snowmonkey.meeno.requests.ListMarketBook;
 import snowmonkey.meeno.requests.ListMarketCatalogue;
@@ -228,12 +229,8 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_COMPETITIONS), JsonSerialization.gson().toJson(listCompetitions));
     }
 
-    public void listEventTypes(Processor processor) throws IOException, ApiException {
-        listEventTypes(processor, noFilter());
-    }
-
-    public void listEventTypes(Processor processor, MarketFilter marketFilter) throws IOException, ApiException {
-        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_EVENT_TYPES), JsonSerialization.gson().toJson(marketFilter));
+    public void listEventTypes(Processor processor, ListEventTypes request) throws IOException, ApiException {
+        sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.LIST_EVENT_TYPES), JsonSerialization.gson().toJson(request));
     }
 
     public void listMarketTypes(Processor processor) throws IOException, ApiException {
