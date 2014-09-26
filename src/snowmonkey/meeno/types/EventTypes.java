@@ -1,32 +1,24 @@
 package snowmonkey.meeno.types;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import snowmonkey.meeno.JsonSerialization;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-//todo change this to the new style parse
 public class EventTypes {
     private final Map<String, EventType> eventTypesByName = new LinkedHashMap<>();
 
     public static EventTypes parse(String json) {
-        JsonElement parsed = new JsonParser().parse(json);
+        EventType[] parse = JsonSerialization.parse(json, EventType[].class);
+        return create(parse);
+    }
 
+    public static EventTypes create(EventType[] parse) {
         EventTypes eventTypes = new EventTypes();
 
-        for (JsonElement jsonElement : parsed.getAsJsonArray()) {
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
-            JsonObject eventTypeObj = jsonObject.get("eventType").getAsJsonObject();
-            int marketCount = jsonObject.getAsJsonPrimitive("marketCount").getAsInt();
-            EventType eventType = new EventType(
-                    new EventTypeId(eventTypeObj.getAsJsonPrimitive("id").getAsString()),
-                    eventTypeObj.getAsJsonPrimitive("name").getAsString()
-            );
+        for (EventType eventType : parse) {
             eventTypes.add(eventType);
         }
-
         return eventTypes;
     }
 
