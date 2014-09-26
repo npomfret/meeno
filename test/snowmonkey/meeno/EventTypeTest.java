@@ -1,5 +1,7 @@
-package live;
+package snowmonkey.meeno;
 
+import live.AbstractLiveTestCase;
+import live.GenerateTestData;
 import org.junit.Test;
 import snowmonkey.meeno.types.EventTypes;
 
