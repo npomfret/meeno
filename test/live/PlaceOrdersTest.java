@@ -5,6 +5,7 @@ import org.junit.Test;
 import snowmonkey.meeno.ApiException;
 import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.requests.CancelInstruction;
+import snowmonkey.meeno.requests.CancelOrders;
 import snowmonkey.meeno.requests.ListCurrentOrders;
 import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.CurrentOrderSummaryReport;
@@ -70,7 +71,7 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
             List<CancelInstruction> cancelInstructions = newArrayList(CancelInstruction.cancel(betId));
 
             try {
-                ukHttpAccess.cancelOrders(marketId, cancelInstructions, fileWriter(TEST_DATA_DIR.resolve(CANCEL_ORDERS_FILE)), null);
+                ukHttpAccess.cancelOrders(fileWriter(TEST_DATA_DIR.resolve(CANCEL_ORDERS_FILE)), new CancelOrders(marketId, cancelInstructions, null));
             } catch (IOException | ApiException e) {
                 e.printStackTrace();
             }

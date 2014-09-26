@@ -25,7 +25,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.AbstractHttpMessage;
 import org.apache.http.message.BasicNameValuePair;
-import snowmonkey.meeno.requests.CancelInstruction;
 import snowmonkey.meeno.requests.CancelOrders;
 import snowmonkey.meeno.requests.ListClearedOrders;
 import snowmonkey.meeno.requests.ListCompetitions;
@@ -118,12 +117,7 @@ public class HttpAccess {
         sendPostRequest(processor, exchange.accountUris.jsonRestUri(Exchange.MethodName.TRANSFER_FUNDS), body);
     }
 
-    public void cancelOrders(MarketId marketId, Collection<CancelInstruction> cancelInstructions, Processor processor, CustomerRef customerRef) throws IOException, ApiException {
-        CancelOrders request = new CancelOrders(marketId, cancelInstructions, customerRef);
-        cancelOrders(processor, request);
-    }
-
-    public void cancelOrders(Processor processor, final CancelOrders request) throws IOException, ApiException {
+    public void cancelOrders(Processor processor, CancelOrders request) throws IOException, ApiException {
         sendPostRequest(processor, exchange.bettingUris.jsonRestUri(Exchange.MethodName.CANCEL_ORDERS), JsonSerialization.gson().toJson(request));
     }
 

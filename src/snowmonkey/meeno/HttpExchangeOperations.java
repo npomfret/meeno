@@ -4,6 +4,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import org.apache.http.StatusLine;
 import snowmonkey.meeno.requests.CancelInstruction;
+import snowmonkey.meeno.requests.CancelOrders;
 import snowmonkey.meeno.requests.ListClearedOrders;
 import snowmonkey.meeno.requests.ListCurrentOrders;
 import snowmonkey.meeno.requests.PlaceOrders;
@@ -118,9 +119,13 @@ public class HttpExchangeOperations {
     }
 
     public CancelExecutionReport cancelOrders(MarketId marketId, Collection<CancelInstruction> instructions, CustomerRef customerRef) throws ApiException {
+        return cancelOrders(new CancelOrders(marketId, instructions, customerRef));
+    }
+
+    public CancelExecutionReport cancelOrders(CancelOrders request) throws ApiException {
         try {
             JsonProcessor processor = new JsonProcessor();
-            httpAccess.cancelOrders(marketId, instructions, processor, customerRef);
+            httpAccess.cancelOrders(processor, request);
             return parse(processor.json, CancelExecutionReport.class);
         } catch (IOException e) {
             throw new RuntimeEnvironmentException("cancel orders call failed", e);
