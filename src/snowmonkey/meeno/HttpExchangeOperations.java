@@ -183,6 +183,10 @@ public class HttpExchangeOperations {
         }
     }
 
+    public ClearedOrderSummary listClearedOrders(BetStatus betStatus, TimeRange settledDateRange) throws ApiException {
+        return listClearedOrders(betStatus, settledDateRange, 0);
+    }
+
     public ClearedOrderSummary listClearedOrders(BetStatus betStatus, TimeRange settledDateRange, int fromRecord) throws ApiException {
         ListClearedOrders listClearedOrders = new ListClearedOrders.Builder()
                 .withBetStatus(betStatus)

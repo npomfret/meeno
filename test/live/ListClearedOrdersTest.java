@@ -2,46 +2,22 @@ package live;
 
 import org.junit.Test;
 import snowmonkey.meeno.HttpExchangeOperations;
-import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.types.BetStatus;
 import snowmonkey.meeno.types.ClearedOrderSummary;
 import snowmonkey.meeno.types.ClearedOrderSummaryReport;
 
 import static java.time.ZonedDateTime.*;
-import static live.raw.GenerateTestData.*;
-import static org.apache.commons.io.FileUtils.*;
 import static snowmonkey.meeno.types.TimeRange.*;
 
 public class ListClearedOrdersTest extends AbstractLiveTestCase {
-    @Test
-    public void canGetSettledOrders() throws Exception {
-
-        ukHttpAccess.listClearedOrders(fileWriter(LIST_CLEARED_ORDERS_FILE),
-                BetStatus.SETTLED,
-                between(now().minusMonths(3), now()), 0
-        );
-
-        ClearedOrderSummary clearedOrderSummaryReport = JsonSerialization.parse(readFileToString(LIST_CLEARED_ORDERS_FILE.toFile()), ClearedOrderSummary.class);
-        for (ClearedOrderSummaryReport orderSummaryReport : clearedOrderSummaryReport.clearedOrders) {
-            System.out.println("clearedOrderSummaryReport = " + orderSummaryReport);
-        }
-    }
 
     @Test
-    public void canGetSettledOrders2() throws Exception {
+    public void settledOrders() throws Exception {
+        HttpExchangeOperations httpExchangeOperations = ukExchange();
 
-        ukHttpAccess.listClearedOrders(fileWriter(LIST_CLEARED_ORDERS_FILE),
-                BetStatus.SETTLED,
-                between(now().minusMonths(3), now()),
-                0
-        );
+        httpExchangeOperations.listClearedOrders(BetStatus.SETTLED, between(now().minusMonths(3), now()));
 
-        HttpExchangeOperations httpExchangeOperations = new HttpExchangeOperations(ukHttpAccess);
-        ClearedOrderSummary clearedOrderSummaryReport = httpExchangeOperations.listClearedOrders(
-                BetStatus.SETTLED,
-                between(now().minusMonths(3), now()),
-                0
-        );
+        ClearedOrderSummary clearedOrderSummaryReport = httpExchangeOperations.listClearedOrders(BetStatus.SETTLED, between(now().minusMonths(3), now()));
 
         for (ClearedOrderSummaryReport orderSummaryReport : clearedOrderSummaryReport.clearedOrders) {
             System.out.println("clearedOrderSummaryReport = " + orderSummaryReport);
@@ -49,15 +25,12 @@ public class ListClearedOrdersTest extends AbstractLiveTestCase {
     }
 
     @Test
-    public void canGetCancelledOrders() throws Exception {
+    public void lapsedOrders() throws Exception {
+        HttpExchangeOperations httpExchangeOperations = ukExchange();
 
-        ukHttpAccess.listClearedOrders(fileWriter(LIST_CLEARED_ORDERS_FILE),
-                BetStatus.LAPSED,
-                between(now().minusMonths(3), now()), 0
-        );
+        ClearedOrderSummary clearedOrderSummary = httpExchangeOperations.listClearedOrders(BetStatus.LAPSED, between(now().minusMonths(3), now()));
 
-        ClearedOrderSummary clearedOrderSummaryReport = JsonSerialization.parse(readFileToString(LIST_CLEARED_ORDERS_FILE.toFile()), ClearedOrderSummary.class);
-        for (ClearedOrderSummaryReport orderSummaryReport : clearedOrderSummaryReport.clearedOrders) {
+        for (ClearedOrderSummaryReport orderSummaryReport : clearedOrderSummary.clearedOrders) {
             System.out.println("clearedOrderSummaryReport = " + orderSummaryReport);
         }
     }
