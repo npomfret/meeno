@@ -288,7 +288,7 @@ public class HttpAccess {
     private void sendPostRequest(Processor processor, URI uri, String body) throws IOException, ApiException {
         HttpPost httpPost = httpPost(uri, conf);
 
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+        try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
 
             applyHeaders(httpPost);
 
