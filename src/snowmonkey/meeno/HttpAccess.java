@@ -340,9 +340,9 @@ public class HttpAccess {
                 .build();
 
         return RequestConfig.copy(defaultRequestConfig)
-                .setSocketTimeout(5000)
+                .setSocketTimeout(6000)
                 .setConnectTimeout(5000)
-                .setConnectionRequestTimeout(5000)
+                .setConnectionRequestTimeout(4000)
                 .build();
     }
 
