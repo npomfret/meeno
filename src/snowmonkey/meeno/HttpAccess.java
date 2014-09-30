@@ -102,11 +102,17 @@ public class HttpAccess {
     private final SessionToken sessionToken;
     private final AppKey appKey;
     private final Exchange exchange;
+    private final RequestConfig conf;
 
     public HttpAccess(SessionToken sessionToken, AppKey appKey, Exchange exchange) {
+        this(sessionToken, appKey, exchange, conf());
+    }
+
+    public HttpAccess(SessionToken sessionToken, AppKey appKey, Exchange exchange, RequestConfig conf) {
         this.sessionToken = sessionToken;
         this.appKey = appKey;
         this.exchange = exchange;
+        this.conf = conf;
     }
 
     public void addAuditor(Auditor auditor) {
@@ -273,11 +279,11 @@ public class HttpAccess {
     }
 
     public void nav(Processor processor) throws IOException, ApiException {
-        performHttpRequest(processor, Exchange.NAVIGATION, httpGet(Exchange.NAVIGATION));
+        performHttpRequest(processor, Exchange.NAVIGATION, httpGet(Exchange.NAVIGATION, conf));
     }
 
     private void sendPostRequest(Processor processor, URI uri, String body) throws IOException, ApiException {
-        HttpPost httpPost = httpPost(uri);
+        HttpPost httpPost = httpPost(uri, conf);
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
 
@@ -321,15 +327,15 @@ public class HttpAccess {
         abstractHttpMessage.setHeader("X-Authentication", sessionToken.asString());
     }
 
-    private static HttpPost httpPost(URI uri) {
+    private static HttpPost httpPost(URI uri, RequestConfig requestConfig) {
         HttpPost httpPost = new HttpPost(uri);
-        httpPost.setConfig(conf());
+        httpPost.setConfig(requestConfig);
         return httpPost;
     }
 
-    private static HttpGet httpGet(URI uri) {
+    private static HttpGet httpGet(URI uri, RequestConfig requestConfig) {
         HttpGet httpGet = new HttpGet(uri);
-        httpGet.setConfig(conf());
+        httpGet.setConfig(requestConfig);
         return httpGet;
     }
 
