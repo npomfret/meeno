@@ -21,6 +21,7 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.StrictHostnameVerifier;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.AbstractHttpMessage;
@@ -103,16 +104,18 @@ public class HttpAccess {
     private final AppKey appKey;
     private final Exchange exchange;
     private final RequestConfig conf;
+    private final HttpClientBuilder httpClientBuilder;
 
     public HttpAccess(SessionToken sessionToken, AppKey appKey, Exchange exchange) {
-        this(sessionToken, appKey, exchange, conf());
+        this(sessionToken, appKey, exchange, conf(), HttpClientBuilder.create());
     }
 
-    public HttpAccess(SessionToken sessionToken, AppKey appKey, Exchange exchange, RequestConfig conf) {
+    public HttpAccess(SessionToken sessionToken, AppKey appKey, Exchange exchange, RequestConfig conf, HttpClientBuilder httpClientBuilder) {
         this.sessionToken = sessionToken;
         this.appKey = appKey;
         this.exchange = exchange;
         this.conf = conf;
+        this.httpClientBuilder = httpClientBuilder;
     }
 
     public void addAuditor(Auditor auditor) {
@@ -307,7 +310,7 @@ public class HttpAccess {
     }
 
     private void performHttpRequest(Processor processor, URI uri, HttpGet httpGet) throws IOException, ApiException {
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+        try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
 
             applyHeaders(httpGet);
 
