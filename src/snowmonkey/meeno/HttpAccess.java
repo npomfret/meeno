@@ -430,14 +430,14 @@ public class HttpAccess {
             }
         } catch (ConnectTimeoutException e) {
             long time = (System.currentTimeMillis() - start);
-            throw new TimeoutException("Connection timed out after " + time + "ms", e);
+            throw new TimeoutException("Connection timed out after ~" + time + "ms", e);
         } catch (SocketTimeoutException e) {
             long time = (System.currentTimeMillis() - start);
-            throw new TimeoutException("Socket timed out after " + time + "ms", e);
+            throw new TimeoutException("Socket timed out after ~" + time + "ms", e);
         }
     }
 
-    private static class TimeoutException extends RuntimeEnvironmentException {
+    private static class TimeoutException extends IOException {
         public TimeoutException(String message, IOException cause) {
             super(message, cause);
         }
