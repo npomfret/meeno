@@ -282,7 +282,7 @@ public class HttpAccess {
     }
 
     public void nav(Processor processor) throws IOException, ApiException {
-        performHttpRequest(processor, Exchange.NAVIGATION, httpGet(Exchange.NAVIGATION, conf));
+        sendGetRequest(processor, Exchange.NAVIGATION, httpGet(Exchange.NAVIGATION, conf));
     }
 
     private void sendPostRequest(Processor processor, URI uri, String body) throws IOException, ApiException {
@@ -297,6 +297,9 @@ public class HttpAccess {
             try {
                 String responseBody = processResponse(processor, httpClient, httpPost);
 
+                if (responseBody == null)
+                    throw new IllegalStateException("There was no response body from POST to " + uri);
+
                 for (Auditor auditor : auditors) {
                     auditor.auditPost(uri, body, responseBody);
                 }
@@ -309,7 +312,7 @@ public class HttpAccess {
         }
     }
 
-    private void performHttpRequest(Processor processor, URI uri, HttpGet httpGet) throws IOException, ApiException {
+    private void sendGetRequest(Processor processor, URI uri, HttpGet httpGet) throws IOException, ApiException {
         try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
 
             applyHeaders(httpGet);
