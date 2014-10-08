@@ -32,7 +32,7 @@ public class CancelOrdersTest extends AbstractLiveTestCase {
 
         List<CancelInstruction> instructions = newArrayList(new CancelInstruction(new BetId("1234"), 2.0));
 
-        CancelExecutionReport cancelExecutionReport = httpExchangeOperations.cancelOrders(new CancelOrders(aMarket.id, instructions, CustomerRef.unique()));
+        CancelExecutionReport cancelExecutionReport = httpExchangeOperations.cancelOrders(new CancelOrders(aMarket.id, instructions, CustomerRef.uniqueCustomerRef()));
 
         System.out.println("cancelExecutionReport = " + cancelExecutionReport);
     }

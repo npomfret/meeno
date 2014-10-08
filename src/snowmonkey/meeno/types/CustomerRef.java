@@ -13,7 +13,7 @@ public class CustomerRef extends MicroType<String> {
         super(value);
     }
 
-    public static CustomerRef unique() {
+    public static CustomerRef uniqueCustomerRef() {
         return safeCustomerRef(UUID.randomUUID().toString().replaceAll("-", ""));
     }
 

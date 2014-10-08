@@ -102,7 +102,7 @@ public class HttpExchangeOperations {
 
         for (MarketId marketId : cancelInstructions.keySet()) {
             Collection<CancelInstruction> instructions = cancelInstructions.get(marketId);
-            CancelExecutionReport cancelExecutionReport = cancelOrders(marketId, instructions, CustomerRef.unique());
+            CancelExecutionReport cancelExecutionReport = cancelOrders(marketId, instructions, CustomerRef.uniqueCustomerRef());
             results.add(cancelExecutionReport);
         }
 
