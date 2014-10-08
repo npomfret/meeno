@@ -20,5 +20,5 @@ public enum InstructionReportErrorCode {
     INVALID_BET_ID,
     CANCELLED_NOT_PLACED,
     RELATED_ACTION_FAILED,
-    NO_ACTION_REQUIREDL;
+    NO_ACTION_REQUIREDL
 }
