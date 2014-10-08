@@ -15,6 +15,7 @@ import snowmonkey.meeno.types.MarketFilter;
 import snowmonkey.meeno.types.Navigation;
 import snowmonkey.meeno.types.PlaceExecutionReport;
 import snowmonkey.meeno.types.PlaceInstruction;
+import snowmonkey.meeno.types.PlaceInstructionReport;
 import snowmonkey.meeno.types.SelectionId;
 import snowmonkey.meeno.types.Side;
 
@@ -23,9 +24,6 @@ import java.util.List;
 import static com.google.common.collect.Lists.*;
 import static com.google.common.collect.Sets.*;
 import static java.time.ZonedDateTime.*;
-import static live.raw.GenerateTestData.*;
-import static org.apache.commons.io.FileUtils.*;
-import static snowmonkey.meeno.JsonSerialization.parse;
 import static snowmonkey.meeno.types.CustomerRef.*;
 import static snowmonkey.meeno.types.EventTypeName.*;
 import static snowmonkey.meeno.types.PersistenceType.*;
@@ -68,10 +66,15 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
         );
 
         // place the order (don't worry it won't get matched)
-        ukExchange().placeOrders(marketCatalogue.marketId, newArrayList(placeLimitOrder), uniqueCustomerRef());
+        PlaceExecutionReport placeInstructionReport = ukExchange().placeOrders(
+                marketCatalogue.marketId,
+                newArrayList(placeLimitOrder),
+                uniqueCustomerRef()
+        );
 
-        PlaceExecutionReport placeInstructionReport = parse(readFileToString(PLACE_ORDERS_FILE.toFile()), PlaceExecutionReport.class);
-        System.out.println("placeInstructionReport = " + placeInstructionReport);
+        for (PlaceInstructionReport instructionReport : placeInstructionReport.instructionReports) {
+            System.out.println("instructionReport = " + instructionReport);
+        }
 
         BetId betId = placeInstructionReport.instructionReports.get(0).betId;
 
