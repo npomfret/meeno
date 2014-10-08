@@ -19,8 +19,6 @@ import snowmonkey.meeno.types.PlaceInstructionReport;
 import snowmonkey.meeno.types.SelectionId;
 import snowmonkey.meeno.types.Side;
 
-import java.util.List;
-
 import static com.google.common.collect.Lists.*;
 import static com.google.common.collect.Sets.*;
 import static java.time.ZonedDateTime.*;
@@ -89,8 +87,12 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
             throw new IllegalStateException("There are no orders!?");
 
         // now cancel it
-        List<CancelInstruction> cancelInstructions = newArrayList(CancelInstruction.cancel(betId));
-        CancelExecutionReport cancelExecutionReport = ukExchange().cancelOrders(new CancelOrders(market.id, cancelInstructions, uniqueCustomerRef()));
+        CancelExecutionReport cancelExecutionReport = ukExchange().cancelOrders(
+                new CancelOrders(
+                        market.id,
+                        newArrayList(CancelInstruction.cancel(betId)),
+                        uniqueCustomerRef()
+                ));
 
         for (CancelInstructionReport instructionReport : cancelExecutionReport.instructionReports) {
             System.out.println("instructionReport = " + instructionReport);
