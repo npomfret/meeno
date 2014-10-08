@@ -27,6 +27,7 @@ getlib com/google/code/gson/gson/2.3 gson-2.3.jar
 getlib com/google/guava/guava/18.0 guava-18.0.jar
 getlib org/apache/httpcomponents/httpclient/4.3.5 httpclient-4.3.5.jar
 getlib org/apache/httpcomponents/httpcore/4.3.2 httpcore-4.3.2.jar
+getlib commons-logging/commons-logging/1.2 commons-logging-1.2.jar
 
 rm -rf $TEST_LIB_DIR
 mkdir $TEST_LIB_DIR
