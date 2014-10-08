@@ -1,5 +1,6 @@
 package snowmonkey.meeno;
 
+import com.google.gson.JsonIOException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -303,7 +304,7 @@ public class HttpAccess {
                 for (Auditor auditor : auditors) {
                     auditor.auditPost(uri, body, responseBody);
                 }
-            } catch (DefaultProcessor.HttpException | IOException | ApiException e) {
+            } catch (DefaultProcessor.HttpException | IOException | JsonIOException | ApiException e) {
                 for (Auditor auditor : auditors) {
                     auditor.auditPost(uri, body, "");
                 }
@@ -437,11 +438,14 @@ public class HttpAccess {
         } catch (SocketTimeoutException e) {
             long time = (System.currentTimeMillis() - start);
             throw new TimeoutException("Socket timed out after ~" + time + "ms", e);
+        } catch (JsonIOException e) {
+            long time = (System.currentTimeMillis() - start);
+            throw new TimeoutException("Read timed out after ~" + time + "ms", e);
         }
     }
 
     private static class TimeoutException extends IOException {
-        public TimeoutException(String message, IOException cause) {
+        public TimeoutException(String message, Exception cause) {
             super(message, cause);
         }
     }
