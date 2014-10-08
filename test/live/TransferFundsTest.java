@@ -6,6 +6,9 @@ import snowmonkey.meeno.requests.TransferFunds;
 
 import static snowmonkey.meeno.types.Wallet.*;
 
+/**
+ * Not actually a test, just using junit as a way to demonstrate the code
+ */
 public class TransferFundsTest extends AbstractLiveTestCase {
 
     @Test

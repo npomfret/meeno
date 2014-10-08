@@ -14,7 +14,11 @@ import static snowmonkey.meeno.types.EventTypeName.*;
 import static snowmonkey.meeno.types.TimeGranularity.*;
 import static snowmonkey.meeno.types.TimeRange.*;
 
+/**
+ * Not actually a test, just using junit as a way to demonstrate the code
+ */
 public class ListTimeRangesTest extends AbstractLiveTestCase {
+
     @Test
     public void test() throws Exception {
         Navigation navigation = navigation().events(SOCCER).get(0);

@@ -6,6 +6,9 @@ import org.junit.Test;
 import static live.raw.GenerateTestData.*;
 import static org.apache.commons.io.FileUtils.*;
 
+/**
+ * Not actually a test, just using junit as a way to demonstrate the code
+ */
 public class ListCountriesTest extends AbstractLiveTestCase {
     @Test
     public void test() throws Exception {

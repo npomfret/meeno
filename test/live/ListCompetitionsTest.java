@@ -13,6 +13,9 @@ import static snowmonkey.meeno.CountryLookup.*;
 import static snowmonkey.meeno.types.EventTypes.*;
 import static snowmonkey.meeno.types.TimeRange.*;
 
+/**
+ * Not actually a test, just using junit as a way to demonstrate the code
+ */
 public class ListCompetitionsTest extends AbstractLiveTestCase {
     @Test
     public void listCompetitions() throws Exception {

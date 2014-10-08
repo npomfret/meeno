@@ -36,6 +36,9 @@ import static snowmonkey.meeno.types.MarketProjection.*;
 import static snowmonkey.meeno.types.PlaceInstruction.*;
 import static snowmonkey.meeno.types.TimeRange.*;
 
+/**
+ * Not actually a test, just using junit as a way to demonstrate the code
+ */
 public class PlaceOrdersTest extends AbstractLiveTestCase {
     @Test
     public void test() throws Exception {

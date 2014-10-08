@@ -24,7 +24,11 @@ import static live.raw.GenerateTestData.*;
 import static org.apache.commons.io.FileUtils.*;
 import static snowmonkey.meeno.types.TimeRange.*;
 
+/**
+ * Not actually a test, just using junit as a way to demonstrate the code
+ */
 public class ListMarketBookTest extends AbstractLiveTestCase {
+
     @Test
     public void testRequestForPrices() throws Exception {
 

@@ -8,6 +8,9 @@ import static live.raw.GenerateTestData.*;
 import static org.apache.commons.io.FileUtils.*;
 import static snowmonkey.meeno.JsonSerialization.*;
 
+/**
+ * Not actually a test, just using junit as a way to demonstrate the code
+ */
 public class ListCurrentOrdersTest extends AbstractLiveTestCase {
     @Test
     public void test() throws Exception {

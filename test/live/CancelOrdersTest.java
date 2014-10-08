@@ -20,6 +20,9 @@ import static com.google.common.collect.Lists.*;
 import static java.time.ZonedDateTime.*;
 import static snowmonkey.meeno.types.TimeRange.*;
 
+/**
+ * Not actually a test, just using junit as a way to demonstrate the code
+ */
 public class CancelOrdersTest extends AbstractLiveTestCase {
     @Test
     public void cancelAnOrder() throws Exception {

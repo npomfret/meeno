@@ -5,6 +5,9 @@ import snowmonkey.meeno.HttpExchangeOperations;
 import snowmonkey.meeno.types.AccountDetailsResponse;
 import snowmonkey.meeno.types.AccountFundsResponse;
 
+/**
+ * Not actually a test, just using junit as a way to demonstrate the code
+ */
 public class AccountOperationsTest extends AbstractLiveTestCase {
     @Test
     public void accountFunds() throws Exception {

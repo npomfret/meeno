@@ -24,6 +24,9 @@ import static snowmonkey.meeno.JsonSerialization.parse;
 import static snowmonkey.meeno.types.MarketProjection.*;
 import static snowmonkey.meeno.types.TimeRange.*;
 
+/**
+ * Not actually a test, just using junit as a way to demonstrate the code
+ */
 public class ListMarketCatalogueTest extends AbstractLiveTestCase {
 
     @Test(expected = NotFoundException.class)

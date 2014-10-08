@@ -17,6 +17,9 @@ import static java.time.ZonedDateTime.*;
 import static snowmonkey.meeno.types.EventTypeName.*;
 import static snowmonkey.meeno.types.TimeRange.*;
 
+/**
+ * Not actually a test, just using junit as a way to demonstrate the code
+ */
 public class NavigationTest extends AbstractLiveTestCase {
     @Test
     public void test() throws Exception {
