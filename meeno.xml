@@ -59,12 +59,6 @@
 
     <!-- Project Libraries -->
 
-    <path id="library.runtime-lib.classpath">
-        <fileset dir="${basedir}/lib">
-            <patternset refid="library.patterns"/>
-        </fileset>
-    </path>
-
     <path id="library.test-lib.classpath">
         <fileset dir="${basedir}/test-lib">
             <patternset refid="library.patterns"/>
@@ -90,26 +84,22 @@
 
     <path id="meeno.module.production.classpath">
         <path refid="library.test-lib.classpath"/>
-        <path refid="library.runtime-lib.classpath"/>
     </path>
 
     <path id="meeno.runtime.production.module.classpath">
         <pathelement location="${meeno.output.dir}"/>
         <path refid="library.test-lib.classpath"/>
-        <path refid="library.runtime-lib.classpath"/>
     </path>
 
     <path id="meeno.module.classpath">
         <pathelement location="${meeno.output.dir}"/>
         <path refid="library.test-lib.classpath"/>
-        <path refid="library.runtime-lib.classpath"/>
     </path>
 
     <path id="meeno.runtime.module.classpath">
         <pathelement location="${meeno.testoutput.dir}"/>
         <pathelement location="${meeno.output.dir}"/>
         <path refid="library.test-lib.classpath"/>
-        <path refid="library.runtime-lib.classpath"/>
     </path>
 
 
