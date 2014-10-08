@@ -15,6 +15,7 @@ import snowmonkey.meeno.types.MarketFilter;
 import snowmonkey.meeno.types.Navigation;
 import snowmonkey.meeno.types.PlaceExecutionReport;
 import snowmonkey.meeno.types.PlaceInstruction;
+import snowmonkey.meeno.types.SelectionId;
 import snowmonkey.meeno.types.Side;
 
 import java.util.List;
@@ -37,7 +38,11 @@ import static snowmonkey.meeno.types.TimeRange.*;
 public class PlaceOrdersTest extends AbstractLiveTestCase {
     @Test
     public void placeAndCancelOrder() throws Exception {
-        Navigation.Markets markets = navigation().findMarkets(SOCCER, between(now().plusDays(6), now().plusDays(7)), "Match Odds");
+        Navigation.Markets markets = navigation().findMarkets(
+                SOCCER,
+                between(now().plusDays(6), now().plusDays(7)),
+                "Match Odds"
+        );
 
         // just use any old market
         Navigation.Market market = markets.iterator().next();
@@ -51,9 +56,16 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
         MarketCatalogue marketCatalogue = marketCatalogues.get(market.id);
 
         double size = 2.00D;
-        int price = 1000;
+        int price = 1000;//v. high price so no chance of this order getting matched
         LimitOrder limitOrder = new LimitOrder(size, price, LAPSE);
-        PlaceInstruction placeLimitOrder = createPlaceLimitOrder(marketCatalogue.runners.get(0).selectionId, Side.BACK, limitOrder);
+        Side side = Side.BACK;
+        SelectionId selectionId = marketCatalogue.runners.get(0).selectionId;
+
+        PlaceInstruction placeLimitOrder = createPlaceLimitOrder(
+                selectionId,
+                side,
+                limitOrder
+        );
 
         // place the order (don't worry it won't get matched)
         ukExchange().placeOrders(marketCatalogue.marketId, newArrayList(placeLimitOrder), uniqueCustomerRef());
@@ -70,7 +82,7 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
         );
 
         if (currentOrders.currentOrders.isEmpty())
-            throw new IllegalStateException("There are no order to cancel!?");
+            throw new IllegalStateException("There are no orders to cancel!?");
 
         List<CancelInstruction> cancelInstructions = newArrayList(CancelInstruction.cancel(betId));
         CancelExecutionReport cancelExecutionReport = ukExchange().cancelOrders(new CancelOrders(market.id, cancelInstructions, uniqueCustomerRef()));
