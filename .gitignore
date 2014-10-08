@@ -21,7 +21,7 @@ test-data/generated/login.json
 *.dmg
 *.gz
 *.iso
-*.jar
+#*.jar
 *.rar
 *.tar
 *.zip
