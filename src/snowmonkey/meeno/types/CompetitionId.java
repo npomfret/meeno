@@ -8,8 +8,4 @@ public class CompetitionId extends MicroType<String> {
     public static CompetitionId competitionId(String value) {
         return new CompetitionId(value);
     }
-
-    public String asString() {
-        return value;
-    }
 }

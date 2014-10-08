@@ -8,13 +8,13 @@ import java.util.Map;
 
 public enum Exchange {
     UK(
-            new Uris("https://api.betfair.com/exchange/account/json-rpc/v1", "https://api.betfair.com/exchange/account/rest/v1.0"),
-            new Uris("https://api.betfair.com/exchange/betting/json-rpc/v1", "https://api.betfair.com/exchange/betting/rest/v1.0")
+            new Uris("https://api.betfair.com/exchange/account/rest/v1.0"),
+            new Uris("https://api.betfair.com/exchange/betting/rest/v1.0")
     ),
 
     AUSTRALIA(
-            new Uris("https://api-au.betfair.com/exchange/account/json-rpc/v1", "https://api-au.betfair.com/exchange/account/rest/v1.0"),
-            new Uris("https://api-au.betfair.com/exchange/betting/json-rpc/v1", "https://api-au.betfair.com/exchange/betting/rest/v1.0")
+            new Uris("https://api-au.betfair.com/exchange/account/rest/v1.0"),
+            new Uris("https://api-au.betfair.com/exchange/betting/rest/v1.0")
     );
 
     public static final URI NAVIGATION = URI.create("https://api.betfair.com/exchange/betting/rest/v1/en/navigation/menu.json");
@@ -43,16 +43,10 @@ public enum Exchange {
     }
 
     static class Uris {
-        private final String jsonRcpUrl;
         private final String jsonRestUrl;
 
-        Uris(String jsonRcpUrl, String jsonRestUrl) {
-            this.jsonRcpUrl = jsonRcpUrl;
+        Uris(String jsonRestUrl) {
             this.jsonRestUrl = jsonRestUrl;
-        }
-
-        public URI jsonRcpUri(MethodName method) {
-            return URI.create(jsonRcpUrl + "/" + method.pathPart + "/");
         }
 
         public URI jsonRestUri(MethodName method) {
