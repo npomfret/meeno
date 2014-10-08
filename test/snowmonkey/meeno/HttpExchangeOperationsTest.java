@@ -3,12 +3,12 @@ package snowmonkey.meeno;
 import org.junit.Test;
 import snowmonkey.meeno.types.EventTypeId;
 import snowmonkey.meeno.types.EventTypeName;
-import snowmonkey.meeno.types.FootballMarket;
 import snowmonkey.meeno.types.MarketCatalogue;
 import snowmonkey.meeno.types.MarketCatalogues;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.Navigation;
 import snowmonkey.meeno.types.SessionToken;
+import snowmonkey.meeno.types.experimental.FootballMarket;
 
 import static java.time.ZonedDateTime.*;
 import static snowmonkey.meeno.types.MarketFilter.Builder.*;

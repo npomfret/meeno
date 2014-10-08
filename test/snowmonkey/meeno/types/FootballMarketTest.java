@@ -2,6 +2,7 @@ package snowmonkey.meeno.types;
 
 import live.raw.GenerateTestData;
 import org.junit.Test;
+import snowmonkey.meeno.types.experimental.FootballMarket;
 
 import java.time.ZonedDateTime;
 

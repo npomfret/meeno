@@ -1,4 +1,8 @@
-package snowmonkey.meeno.types;
+package snowmonkey.meeno.types.experimental;
+
+import snowmonkey.meeno.types.ImmutbleType;
+import snowmonkey.meeno.types.MarketId;
+import snowmonkey.meeno.types.Navigation;
 
 public class FootballMarket extends ImmutbleType {
     private final Navigation.Market market;
