@@ -11,8 +11,8 @@ function gettestlib {
 }
 
 function get {
-    wget $BASE_URI/$1/$2
-    mv $2 $3/$2
+    wget --user-agent="agent" $BASE_URI/$1/$2
+    mv -f $2 $3/$2
 }
 
 getlib com/intellij/annotations/12.0 annotations-12.0.jar
