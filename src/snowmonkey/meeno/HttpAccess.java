@@ -60,10 +60,12 @@ import snowmonkey.meeno.types.TimeRange;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.security.KeyStore;
@@ -81,6 +83,15 @@ import static snowmonkey.meeno.types.MarketFilter.Builder.*;
 public class HttpAccess {
 
     public static interface Auditor {
+        default void auditPostFailure(URI uri, String body, Exception whatWentWrong) {
+            System.out.println("[post " + uri + "]");
+            System.out.println("--> " + body);
+
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            whatWentWrong.printStackTrace(new PrintStream(out));
+            System.out.println("<-- " + new String(out.toByteArray()));
+        }
+
         default void auditPost(URI uri, String body, String response) {
             System.out.println("[post " + uri + "]");
             System.out.println("--> " + body);
@@ -306,7 +317,7 @@ public class HttpAccess {
                 }
             } catch (DefaultProcessor.HttpException | IOException | JsonIOException | ApiException e) {
                 for (Auditor auditor : auditors) {
-                    auditor.auditPost(uri, body, "");
+                    auditor.auditPostFailure(uri, body, e);
                 }
                 throw e;
             }
