@@ -9,6 +9,7 @@ import snowmonkey.meeno.requests.ListCurrentOrders;
 import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.CancelExecutionReport;
 import snowmonkey.meeno.types.CancelInstructionReport;
+import snowmonkey.meeno.types.CurrentOrderSummary;
 import snowmonkey.meeno.types.CurrentOrderSummaryReport;
 import snowmonkey.meeno.types.CustomerRef;
 import snowmonkey.meeno.types.EventTypeName;
@@ -66,7 +67,10 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
                         .build()
         );
 
-        currentOrders.currentOrders.stream().filter(currentOrder -> betId.equals(betId)).forEach(currentOrder -> {
+        if (currentOrders.currentOrders.isEmpty())
+            throw new IllegalStateException("There are no order to cancel!?");
+
+        for (CurrentOrderSummary currentOrder : currentOrders.currentOrders) {
             try {
                 List<CancelInstruction> cancelInstructions = newArrayList(CancelInstruction.cancel(betId));
                 CancelExecutionReport cancelExecutionReport = ukExchange().cancelOrders(new CancelOrders(currentOrder.marketId, cancelInstructions, CustomerRef.unique()));
@@ -77,6 +81,6 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
             } catch (ApiException e) {
                 e.printStackTrace();
             }
-        });
+        }
     }
 }
