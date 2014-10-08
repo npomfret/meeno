@@ -78,6 +78,7 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
 
         BetId betId = placeInstructionReport.instructionReports.get(0).betId;
 
+        // check the order is out there
         CurrentOrderSummaryReport currentOrders = ukExchange().listCurrentOrders(
                 new ListCurrentOrders.Builder()
                         .withBetIds(newHashSet(betId))
@@ -85,8 +86,9 @@ public class PlaceOrdersTest extends AbstractLiveTestCase {
         );
 
         if (currentOrders.currentOrders.isEmpty())
-            throw new IllegalStateException("There are no orders to cancel!?");
+            throw new IllegalStateException("There are no orders!?");
 
+        // now cancel it
         List<CancelInstruction> cancelInstructions = newArrayList(CancelInstruction.cancel(betId));
         CancelExecutionReport cancelExecutionReport = ukExchange().cancelOrders(new CancelOrders(market.id, cancelInstructions, uniqueCustomerRef()));
 
