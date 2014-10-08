@@ -9,6 +9,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.Nullable;
 import snowmonkey.meeno.Exchange;
 import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.NotFoundException;
@@ -119,30 +120,27 @@ public class Navigation {
         List<Navigation> results = new ArrayList<>();
         for (JsonElement child : children) {
             JsonObject asJsonObject = child.getAsJsonObject();
-            Navigation childNode = makeChildNode(asJsonObject, this);
+            Navigation childNode = childNode(asJsonObject, this);
             if (childNode != null)
                 results.add(childNode);
         }
         return results;
     }
 
-    public String print(List<Navigation> eventTypes) {
-        return StringUtils.join(eventTypes.stream().map(nav -> nav.name).iterator(), ",");
-    }
-
     private static Navigation makeRootNode(JsonObject childObj) {
-        return makeChildNode(childObj, null);
+        return childNode(childObj, null);
     }
 
-    private static Navigation makeChildNode(JsonObject childObj, Navigation parent1) {
-        Type type = Type.valueOf(childObj.get("type").getAsString());
-        String id = childObj.get("id").getAsString();
-        String name = childObj.get("name").getAsString();
+    @Nullable
+    private static Navigation childNode(JsonObject childObj, Navigation parentNode) {
+        Type type = Type.valueOf(childObj.get("type").getAsString().trim());
+        String id = childObj.get("id").getAsString().trim();
+        String name = childObj.get("name").getAsString().trim();
 
         if (!type.equals(Type.MARKET)) {
             JsonArray children = childObj.get("children").getAsJsonArray();
 
-            return new Navigation(parent1, type, id, name, children);
+            return new Navigation(parentNode, type, id, name, children);
         }
 
         return null;
