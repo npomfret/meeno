@@ -36,7 +36,7 @@ import static snowmonkey.meeno.types.TimeRange.*;
  */
 public class PlaceOrdersTest extends AbstractLiveTestCase {
     @Test
-    public void test() throws Exception {
+    public void placeAndCancelOrder() throws Exception {
         Navigation.Markets markets = navigation().findMarkets(SOCCER, between(now().plusDays(6), now().plusDays(7)), "Match Odds");
 
         // just use any old market
