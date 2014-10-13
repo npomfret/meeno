@@ -1,6 +1,8 @@
 out
 .idea/workspace.xml
 .idea/misc.xml
+meeno.properties
+
 credentials.properties
 private
 test-data/generated/login.json
