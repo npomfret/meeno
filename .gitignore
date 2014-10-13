@@ -5,7 +5,6 @@ meeno.properties
 
 credentials.properties
 private
-test-data/generated/login.json
 
 # Compiled source #
 ###################
