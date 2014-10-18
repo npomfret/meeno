@@ -11,8 +11,15 @@ import org.apache.http.StatusLine;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DefaultProcessor {
+    private static final Set<String> TEXT_BETFAIR_USE_WHEN_THE_STIE_IS_FUCKED = new HashSet<String>() {{
+        add("http://content.betfair.com/content/splash/unplanned/index.asp");
+        add("Sorry, we are currently experiencing technical problems");
+    }};
+
     private DefaultProcessor() {
     }
 
@@ -66,11 +73,14 @@ public class DefaultProcessor {
             return prettyPrintJson(parsed);
         } catch (HttpException e) {
             throw e;
-        } catch (com.google.gson.JsonSyntaxException e) {
-            if (json.contains("Sorry, we are currently experiencing technical problems"))
-                throw new BetfairIsBrokenException(json, e);
-            else
-                throw new IllegalStateException("Failed to parse:\n " + json, e);
+        } catch (JsonSyntaxException e) {
+
+            for (String message : TEXT_BETFAIR_USE_WHEN_THE_STIE_IS_FUCKED) {
+                if (json.contains(message))
+                    throw new BetfairIsBrokenException(json, e);
+            }
+
+            throw new IllegalStateException("Failed to parse:\n " + json, e);
         } catch (RuntimeException e) {
             throw new IllegalStateException("Failed to process: " + statusLine, e);
         }
