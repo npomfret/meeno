@@ -82,6 +82,10 @@ import static snowmonkey.meeno.types.MarketFilter.Builder.*;
 
 public class HttpAccess {
 
+    public static HttpAccess defaultHttpAccess(SessionToken sessionToken, AppKey appKey, Exchange exchange) {
+        return new HttpAccess(sessionToken, appKey, exchange, defaultRequestConfig(), HttpClientBuilder.create());
+    }
+
     public static interface Auditor {
         default void auditPostFailure(URI uri, String body, Exception whatWentWrong) {
             System.out.println("[post " + uri + "]");
@@ -117,10 +121,6 @@ public class HttpAccess {
     private final Exchange exchange;
     private final RequestConfig conf;
     private final HttpClientBuilder httpClientBuilder;
-
-    public HttpAccess(SessionToken sessionToken, AppKey appKey, Exchange exchange) {
-        this(sessionToken, appKey, exchange, conf(), HttpClientBuilder.create());
-    }
 
     public HttpAccess(SessionToken sessionToken, AppKey appKey, Exchange exchange, RequestConfig conf, HttpClientBuilder httpClientBuilder) {
         this.sessionToken = sessionToken;
@@ -357,7 +357,7 @@ public class HttpAccess {
         return httpGet;
     }
 
-    private static RequestConfig conf() {
+    private static RequestConfig defaultRequestConfig() {
         RequestConfig defaultRequestConfig = RequestConfig.custom()
                 .setExpectContinueEnabled(true)
                 .setStaleConnectionCheckEnabled(true)

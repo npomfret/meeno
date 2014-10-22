@@ -29,8 +29,8 @@ public abstract class AbstractLiveTestCase {
 
         SessionToken sessionToken = HttpAccess.login(config);
 
-        ukHttpAccess = new HttpAccess(sessionToken, config.appKey(), Exchange.UK);
-        ausHttpAccess = new HttpAccess(sessionToken, config.appKey(), Exchange.AUSTRALIA);
+        ukHttpAccess = HttpAccess.defaultHttpAccess(sessionToken, config.appKey(), Exchange.UK);
+        ausHttpAccess = HttpAccess.defaultHttpAccess(sessionToken, config.appKey(), Exchange.AUSTRALIA);
     }
 
     @AfterClass

@@ -21,7 +21,7 @@ public class HttpExchangeOperationsTest {
         MeenoConfig config = MeenoConfig.loadMeenoConfig();
         SessionToken login = HttpAccess.login(config);
 
-        HttpAccess httpAccess = new HttpAccess(login, config.appKey(), Exchange.UK);
+        HttpAccess httpAccess = HttpAccess.defaultHttpAccess(login, config.appKey(), Exchange.UK);
 
         HttpExchangeOperations exchangeOperations = new HttpExchangeOperations(httpAccess);
 
