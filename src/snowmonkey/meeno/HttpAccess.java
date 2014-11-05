@@ -43,6 +43,7 @@ import snowmonkey.meeno.requests.TransferFunds;
 import snowmonkey.meeno.types.BetId;
 import snowmonkey.meeno.types.BetStatus;
 import snowmonkey.meeno.types.CustomerRef;
+import snowmonkey.meeno.types.LoginFailedException;
 import snowmonkey.meeno.types.MarketFilter;
 import snowmonkey.meeno.types.MarketId;
 import snowmonkey.meeno.types.MarketProjection;
@@ -68,8 +69,13 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.SocketTimeoutException;
 import java.net.URI;
+import java.security.KeyManagementException;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -374,7 +380,7 @@ public class HttpAccess {
         sendPostRequest(defaultProcessor(), Exchange.LOGOUT_URI, JsonSerialization.gson().toJson(noFilter()));
     }
 
-    public static SessionToken login(MeenoConfig config) {
+    public static SessionToken login(MeenoConfig config) throws LoginFailedException {
         return login(
                 config.certificateFile(),
                 config.certificatePassword(),
@@ -384,7 +390,7 @@ public class HttpAccess {
         );
     }
 
-    public static SessionToken login(File certFile, String certPassword, String betfairUsername, String betfairPassword, AppKey apiKey) {
+    public static SessionToken login(File certFile, String certPassword, String betfairUsername, String betfairPassword, AppKey apiKey) throws LoginFailedException {
 
         try {
             Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
@@ -419,20 +425,26 @@ public class HttpAccess {
             } finally {
                 connManager.close();
             }
-        } catch (Exception e) {
+        } catch (LoginFailedException e) {
+            throw e;
+        } catch (ApiException | IOException | RuntimeException e) {
             throw new IllegalStateException("Cannot log in", e);
         }
     }
 
-    private static SSLConnectionSocketFactory socketFactory(File certFile, String certPassword) throws Exception {
-        SSLContext ctx = SSLContext.getInstance("TLS");
-        KeyStore keyStore = KeyStore.getInstance("pkcs12");
-        keyStore.load(new FileInputStream(certFile), certPassword.toCharArray());
-        KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-        kmf.init(keyStore, certPassword.toCharArray());
-        KeyManager[] keyManagers = kmf.getKeyManagers();
-        ctx.init(keyManagers, null, new SecureRandom());
-        return new SSLConnectionSocketFactory(ctx, new StrictHostnameVerifier());
+    private static SSLConnectionSocketFactory socketFactory(File certFile, String certPassword) {
+        try {
+            SSLContext ctx = SSLContext.getInstance("TLS");
+            KeyStore keyStore = KeyStore.getInstance("pkcs12");
+            keyStore.load(new FileInputStream(certFile), certPassword.toCharArray());
+            KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            kmf.init(keyStore, certPassword.toCharArray());
+            KeyManager[] keyManagers = kmf.getKeyManagers();
+            ctx.init(keyManagers, null, new SecureRandom());
+            return new SSLConnectionSocketFactory(ctx, new StrictHostnameVerifier());
+        } catch (NoSuchAlgorithmException | KeyStoreException | IOException | CertificateException | UnrecoverableKeyException | KeyManagementException e) {
+            throw new IllegalStateException("Cannot create socket factory", e);
+        }
     }
 
     private String processResponse(Processor processor, CloseableHttpClient httpClient, HttpUriRequest httpPost) throws IOException, ApiException {
