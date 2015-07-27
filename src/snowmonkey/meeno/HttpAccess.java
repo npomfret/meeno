@@ -367,6 +367,7 @@ public class HttpAccess {
         RequestConfig defaultRequestConfig = RequestConfig.custom()
                 .setExpectContinueEnabled(true)
                 .setStaleConnectionCheckEnabled(true)
+                .setExpectContinueEnabled(false)
                 .build();
 
         return RequestConfig.copy(defaultRequestConfig)
