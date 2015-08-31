@@ -36,4 +36,4 @@ Getting started
     openssl x509 -req -days 365 -in client-2048.csr -signkey client-2048.key -out client-2048.crt -extfile openssl.cnf -extensions ssl_client
 ```
 * Upload the certificate to https://myaccount.betfair.com/account/authentication?showAPI=1
-* Enter the location of your certificate into the credentials.properties file 
+* Enter the location of your certificate into the *credentials.properties* file 
