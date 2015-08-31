@@ -15,8 +15,8 @@ There is no release as yet, but you can clone the project and run:
 Getting started
 ===============
 
-1. Get an app-key: https://api.developer.betfair.com/services/webapps/docs/display/1smk3cen4v3lu3yomq5qye0ni/API-NG+-+Visualiser
-1. Create a certificate: https://api.developer.betfair.com/services/webapps/docs/display/1smk3cen4v3lu3yomq5qye0ni/Non-Interactive+%28bot%29+login
+* Get an app-key: https://api.developer.betfair.com/services/webapps/docs/display/1smk3cen4v3lu3yomq5qye0ni/API-NG+-+Visualiser
+* Create a certificate: https://api.developer.betfair.com/services/webapps/docs/display/1smk3cen4v3lu3yomq5qye0ni/Non-Interactive+%28bot%29+login
 
 ```Shell
     cp /System/Library/OpenSSL/openssl.cnf .
@@ -35,5 +35,5 @@ Getting started
     
     openssl x509 -req -days 365 -in client-2048.csr -signkey client-2048.key -out client-2048.crt -extfile openssl.cnf -extensions ssl_client
 ```
-1. Upload the certificate to https://myaccount.betfair.com/account/authentication?showAPI=1
-1. Enter the location of your certificate into the credentials.properties file 
+* Upload the certificate to https://myaccount.betfair.com/account/authentication?showAPI=1
+* Enter the location of your certificate into the credentials.properties file 
