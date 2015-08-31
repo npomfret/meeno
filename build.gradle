@@ -40,3 +40,7 @@ task publish(type: Copy) {
     from(libsDir)
     into(publishDir)
 }
+
+jar {
+    from sourceSets.main.allSource
+}
