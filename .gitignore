@@ -1,7 +1,7 @@
 out
 .idea/workspace.xml
 .idea/misc.xml
-meeno.properties
+gradle.properties
 
 credentials.properties
 private

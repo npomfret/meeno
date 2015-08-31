@@ -1,0 +1,42 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+idea {
+    project {
+//        this does not work! need to set the language level manually in intellij
+        languageLevel = '1.8'
+    }
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+sourceCompatibility = 1.8
+
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.google.code.findbugs:jsr305:3.0.0'
+    compile 'org.apache.httpcomponents:httpcore:4.4.1'
+    compile 'commons-logging:commons-logging:1.2'
+    compile 'com.google.guava:guava:18.0'
+    compile 'org.apache.httpcomponents:httpclient:4.5'
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'commons-io:commons-io:1.4'
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'org.apache.httpcomponents:httpcore:4.4'
+    compile 'net.htmlparser.jericho:jericho-html:3.3'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.hamcrest:hamcrest-all:1.3'
+}
+
+task publish(type: Copy) {
+    from(libsDir)
+    into(publishDir)
+}
