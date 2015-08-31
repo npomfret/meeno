@@ -14,7 +14,7 @@ idea {
 
 sourceCompatibility = 1.8
 
-version = '1.0'
+version = dateText();
 
 repositories {
     mavenCentral()
@@ -43,4 +43,10 @@ task publish(type: Copy) {
 
 jar {
     from sourceSets.main.allSource
+}
+
+def dateText() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMddHHmmss')
+    return formattedDate
 }
