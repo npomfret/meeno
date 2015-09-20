@@ -22,6 +22,7 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.StrictHostnameVerifier;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
@@ -402,8 +403,10 @@ public class HttpAccess {
 
             connManager.setDefaultSocketConfig(SocketConfig.custom().build());
             connManager.setDefaultConnectionConfig(ConnectionConfig.custom().build());
+
             try (CloseableHttpClient client = HttpClients.custom()
                     .setConnectionManager(connManager)
+                    .setRetryHandler(new MeenoRetryHAndler())
                     .disableRedirectHandling()
                     .build()) {
 
@@ -472,4 +475,11 @@ public class HttpAccess {
             super(message, cause);
         }
     }
+
+    private static class MeenoRetryHAndler extends DefaultHttpRequestRetryHandler {
+        public MeenoRetryHAndler() {
+            super(10, true, new ArrayList<>());
+        }
+    }
+
 }
