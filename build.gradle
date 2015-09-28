@@ -1,6 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'idea'
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.7'
+}
+
 idea {
     project {
 //        this does not work! need to set the language level manually in intellij
@@ -16,8 +20,8 @@ sourceCompatibility = 1.8
 
 version = dateText();
 
-compileJava {
-    options.compilerArgs << '-parameters'
+[compileJava, compileTestJava]*.options.collect { options ->
+    options.compilerArgs.add '-parameters'
 }
 
 repositories {
