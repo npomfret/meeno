@@ -1,7 +1,11 @@
 package snowmonkey.meeno.types;
 
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import javax.annotation.Nullable;
+import java.lang.reflect.Field;
 import java.time.ZonedDateTime;
 
 public final class MarketDescription extends ImmutbleType {
@@ -45,4 +49,14 @@ public final class MarketDescription extends ImmutbleType {
         this.rulesHasDate = rulesHasDate;
         this.clarifications = clarifications;
     }
+
+    @Override
+    public String toString() {
+        return (new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE) {
+            protected boolean accept(Field f) {
+                return super.accept(f) && !f.getName().equals("rules");
+            }
+        }).toString();
+    }
+
 }
