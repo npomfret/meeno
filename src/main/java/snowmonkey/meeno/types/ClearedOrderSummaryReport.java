@@ -16,8 +16,10 @@ public class ClearedOrderSummaryReport extends ImmutbleType {
     public final Side side;
     @Nullable
     public final ItemDescription itemDescription;
+    public final String betOutcome;
     public final Price priceRequested;
     public final ZonedDateTime settledDate;
+    public final ZonedDateTime lastMatchedDate;
     @Nullable
     public final Integer betCount;
     @Nullable
@@ -35,8 +37,8 @@ public class ClearedOrderSummaryReport extends ImmutbleType {
 
     public ClearedOrderSummaryReport(EventTypeId eventTypeId, EventId eventId, MarketId marketId, SelectionId selectionId,
                                      Handicap handicap, BetId betId, ZonedDateTime placedDate, PersistenceType persistenceType,
-                                     OrderType orderType, Side side, @Nullable ItemDescription itemDescription, Price priceRequested,
-                                     ZonedDateTime settledDate, @Nullable Integer betCount, @Nullable Size commission, @Nullable Price priceMatched,
+                                     OrderType orderType, Side side, @Nullable ItemDescription itemDescription, String betOutcome, Price priceRequested,
+                                     ZonedDateTime settledDate, ZonedDateTime lastMatchedDate, @Nullable Integer betCount, @Nullable Size commission, @Nullable Price priceMatched,
                                      @Nullable Boolean priceReduced, @Nullable Size sizeSettled, @Nullable Size profit, @Nullable Size sizeCancelled) {
         this.eventTypeId = eventTypeId;
         this.eventId = eventId;
@@ -49,8 +51,10 @@ public class ClearedOrderSummaryReport extends ImmutbleType {
         this.orderType = orderType;
         this.side = side;
         this.itemDescription = itemDescription;
+        this.betOutcome = betOutcome;
         this.priceRequested = priceRequested;
         this.settledDate = settledDate;
+        this.lastMatchedDate = lastMatchedDate;
         this.betCount = betCount;
         this.commission = commission;
         this.priceMatched = priceMatched;
