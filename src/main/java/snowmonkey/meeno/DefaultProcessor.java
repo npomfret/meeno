@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
 
 import java.io.IOException;
@@ -27,12 +28,14 @@ public class DefaultProcessor {
         return DefaultProcessor::processResponse;
     }
 
-    public static String processResponse(StatusLine statusLine, InputStream in) throws IOException, ApiException {
-        String json = new String(IOUtils.toByteArray(in), HttpAccess.UTF_8);
+    public static String processResponse(StatusLine statusLine, InputStream in) throws IOException, ApiException, BetfairApiServiceException {
+        String body = new String(IOUtils.toByteArray(in), HttpAccess.UTF_8);
 
         try {
-            if (statusLine.getStatusCode() != 200) {
-                JsonElement parsed = new JsonParser().parse(json);
+            if (statusLine.getStatusCode() == HttpStatus.SC_SERVICE_UNAVAILABLE) {
+                throw new BetfairApiServiceException(statusLine, body);
+            } else if (statusLine.getStatusCode() != 200) {
+                JsonElement parsed = new JsonParser().parse(body);
                 JsonObject object = parsed.getAsJsonObject();
 
                 if (object.has("detail")) {
@@ -44,9 +47,10 @@ public class DefaultProcessor {
                         String requestUUID = exception.getAsJsonPrimitive("requestUUID").getAsString();
 
                         if (errorCode.equals("TOO_MUCH_DATA"))
-                            throw new TooMuchDataException(exception, errorCode, requestUUID);
+                            throw new TooMuchDataException(statusLine.toString(), exception, errorCode, requestUUID);
 
                         throw new ApiException(
+                                statusLine.toString(),
                                 exception.getAsJsonPrimitive("errorDetails").getAsString(),
                                 errorCode,
                                 requestUUID
@@ -69,18 +73,18 @@ public class DefaultProcessor {
                 }
             }
 
-            JsonElement parsed = new JsonParser().parse(json);
+            JsonElement parsed = new JsonParser().parse(body);
             return prettyPrintJson(parsed);
         } catch (HttpException e) {
             throw e;
         } catch (JsonSyntaxException e) {
 
             for (String message : TEXT_BETFAIR_USE_WHEN_THE_STIE_IS_FUCKED) {
-                if (json.contains(message))
-                    throw new BetfairIsBrokenException(json, e);
+                if (body.contains(message))
+                    throw new BetfairIsBrokenException(body, e);
             }
 
-            throw new IllegalStateException("Failed to parse:\n " + json, e);
+            throw new IllegalStateException("Failed to parse:\n " + body, e);
         } catch (RuntimeException e) {
             throw new IllegalStateException("Failed to process: " + statusLine, e);
         }
@@ -113,4 +117,5 @@ public class DefaultProcessor {
             super("Betfair is down:\n " + json, e);
         }
     }
+
 }
