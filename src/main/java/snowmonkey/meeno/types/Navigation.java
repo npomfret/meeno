@@ -154,19 +154,27 @@ public class Navigation {
             Type type = Type.valueOf(childObj.get("type").getAsString());
 
             if (type.equals(Type.MARKET)) {
-                String id = childObj.get("id").getAsString();
-                String name = childObj.get("name").getAsString();
-                String exchangeId = childObj.get("exchangeId").getAsString();
-                String marketStartTime = childObj.get("marketStartTime").getAsString();
-                ZonedDateTime zonedDateTime = ZonedDateTime.parse(marketStartTime, JsonSerialization.BETFAIR_DATE_TIME_FORMAT);
-                results.add(new Market(
-                        this,
-                        new ExchangeId(exchangeId),
-                        new MarketId(id),
-                        zonedDateTime,
-                        name,
-                        type
-                ));
+                try {
+                    String id = childObj.get("id").getAsString();
+                    String name = childObj.get("name").getAsString();
+                    String exchangeId = childObj.get("exchangeId").getAsString();
+                    String marketStartTime = childObj.get("marketStartTime").getAsString();
+                    ZonedDateTime zonedDateTime;
+                    zonedDateTime = ZonedDateTime.parse(marketStartTime, JsonSerialization.BETFAIR_DATE_TIME_FORMAT);
+                    results.add(new Market(
+                            this,
+                            new ExchangeId(exchangeId),
+                            new MarketId(id),
+                            zonedDateTime,
+                            name,
+                            type
+                    ));
+                } catch (Exception e) {
+                    //todo: handle this more gracefully
+                    System.err.println("Failed to parse market " + childObj);
+                    e.printStackTrace();
+                    continue;
+                }
             }
         }
 
