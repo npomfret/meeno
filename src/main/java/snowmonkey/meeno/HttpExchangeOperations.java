@@ -3,39 +3,8 @@ package snowmonkey.meeno;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import org.apache.http.StatusLine;
-import snowmonkey.meeno.requests.CancelInstruction;
-import snowmonkey.meeno.requests.CancelOrders;
-import snowmonkey.meeno.requests.ListClearedOrders;
-import snowmonkey.meeno.requests.ListCompetitions;
-import snowmonkey.meeno.requests.ListCurrentOrders;
-import snowmonkey.meeno.requests.ListEventTypes;
-import snowmonkey.meeno.requests.PlaceOrders;
-import snowmonkey.meeno.requests.TransferFunds;
-import snowmonkey.meeno.types.AccountDetailsResponse;
-import snowmonkey.meeno.types.AccountFundsResponse;
-import snowmonkey.meeno.types.BetStatus;
-import snowmonkey.meeno.types.CancelExecutionReport;
-import snowmonkey.meeno.types.ClearedOrderSummary;
-import snowmonkey.meeno.types.CompetitionResult;
-import snowmonkey.meeno.types.CurrentOrderSummary;
-import snowmonkey.meeno.types.CurrentOrderSummaryReport;
-import snowmonkey.meeno.types.CustomerRef;
-import snowmonkey.meeno.types.EventTypeResult;
-import snowmonkey.meeno.types.Locale;
-import snowmonkey.meeno.types.MarketBook;
-import snowmonkey.meeno.types.MarketBooks;
-import snowmonkey.meeno.types.MarketCatalogue;
-import snowmonkey.meeno.types.MarketCatalogues;
-import snowmonkey.meeno.types.MarketFilter;
-import snowmonkey.meeno.types.MarketId;
-import snowmonkey.meeno.types.MarketProjection;
-import snowmonkey.meeno.types.MarketSort;
-import snowmonkey.meeno.types.Navigation;
-import snowmonkey.meeno.types.PlaceExecutionReport;
-import snowmonkey.meeno.types.PlaceInstruction;
-import snowmonkey.meeno.types.PriceProjection;
-import snowmonkey.meeno.types.TimeRange;
-import snowmonkey.meeno.types.TransferResponse;
+import snowmonkey.meeno.requests.*;
+import snowmonkey.meeno.types.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,9 +12,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.google.common.collect.Lists.*;
-import static snowmonkey.meeno.JsonSerialization.*;
-import static snowmonkey.meeno.types.MarketProjection.*;
+import static com.google.common.collect.Lists.newArrayList;
+import static snowmonkey.meeno.JsonSerialization.parse;
+import static snowmonkey.meeno.types.MarketProjection.allMarketProjections;
 
 public class HttpExchangeOperations {
 
@@ -210,18 +179,6 @@ public class HttpExchangeOperations {
             return parse(processor.json, ClearedOrderSummary.class);
         } catch (IOException e) {
             throw new RuntimeEnvironmentException("listClearedOrders call failed", e);
-        }
-    }
-
-    public TransferResponse transferFunds(TransferFunds transferFunds) throws ApiException {
-        try {
-            JsonProcessor processor = new JsonProcessor();
-
-            httpAccess.transferFunds(processor, transferFunds);
-
-            return parse(processor.json, TransferResponse.class);
-        } catch (IOException e) {
-            throw new RuntimeEnvironmentException("transferFunds call failed", e);
         }
     }
 

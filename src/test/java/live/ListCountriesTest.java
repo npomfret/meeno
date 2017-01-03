@@ -3,8 +3,8 @@ package live;
 import live.raw.GenerateTestData;
 import org.junit.Test;
 
-import static live.raw.GenerateTestData.*;
-import static org.apache.commons.io.FileUtils.*;
+import static live.raw.GenerateTestData.fileWriter;
+import static org.apache.commons.io.FileUtils.readFileToString;
 
 /**
  * Not actually a test, just using junit as a way to demonstrate the code
@@ -12,7 +12,7 @@ import static org.apache.commons.io.FileUtils.*;
 public class ListCountriesTest extends AbstractLiveTestCase {
     @Test
     public void test() throws Exception {
-        ukHttpAccess.listCountries(fileWriter(GenerateTestData.LIST_COUNTRIES_FILE));
+        httpAccess.listCountries(fileWriter(GenerateTestData.LIST_COUNTRIES_FILE));
 
         String s = readFileToString(GenerateTestData.LIST_COUNTRIES_FILE.toFile());
 

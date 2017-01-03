@@ -8,23 +8,20 @@ import snowmonkey.meeno.DefaultProcessor;
 import snowmonkey.meeno.HttpExchangeOperations;
 import snowmonkey.meeno.requests.CancelInstruction;
 import snowmonkey.meeno.requests.CancelOrders;
-import snowmonkey.meeno.types.CancelExecutionReport;
-import snowmonkey.meeno.types.CurrentOrderSummary;
-import snowmonkey.meeno.types.CurrentOrderSummaryReport;
-import snowmonkey.meeno.types.MarketId;
-import snowmonkey.meeno.types.OrderProjection;
+import snowmonkey.meeno.types.*;
 
-import static java.time.ZonedDateTime.*;
-import static live.raw.GenerateTestData.*;
-import static org.apache.commons.io.FileUtils.*;
+import static java.time.ZonedDateTime.now;
+import static live.raw.GenerateTestData.LIST_CURRENT_ORDERS_FILE;
+import static live.raw.GenerateTestData.fileWriter;
+import static org.apache.commons.io.FileUtils.readFileToString;
 import static snowmonkey.meeno.JsonSerialization.parse;
-import static snowmonkey.meeno.requests.ListCurrentOrders.*;
-import static snowmonkey.meeno.types.TimeRange.*;
+import static snowmonkey.meeno.requests.ListCurrentOrders.Builder;
+import static snowmonkey.meeno.types.TimeRange.between;
 
 public class CancelOrdersTest extends AbstractLiveTestCase {
     @Test
     public void cancelOrders() throws Exception {
-        HttpExchangeOperations httpExchangeOperations = new HttpExchangeOperations(ukHttpAccess);
+        HttpExchangeOperations httpExchangeOperations = new HttpExchangeOperations(httpAccess);
 
         CurrentOrderSummaryReport currentOrders = httpExchangeOperations.listCurrentOrders(new Builder()
                 .withOrderProjection(OrderProjection.ALL)
@@ -40,7 +37,7 @@ public class CancelOrdersTest extends AbstractLiveTestCase {
     @Test
     public void cancelAllOrders() throws Exception {
 
-        ukHttpAccess.listCurrentOrders(fileWriter(LIST_CURRENT_ORDERS_FILE), new Builder().build());
+        httpAccess.listCurrentOrders(fileWriter(LIST_CURRENT_ORDERS_FILE), new Builder().build());
 
         CurrentOrderSummaryReport currentOrders = parse(readFileToString(LIST_CURRENT_ORDERS_FILE.toFile()), CurrentOrderSummaryReport.class);
 
@@ -52,7 +49,7 @@ public class CancelOrdersTest extends AbstractLiveTestCase {
         }
 
         for (MarketId marketId : cancelInstructions.keySet()) {
-            ukHttpAccess.cancelOrders((statusLine, in) -> {
+            httpAccess.cancelOrders((statusLine, in) -> {
                 String s = DefaultProcessor.processResponse(statusLine, in);
                 System.out.println(s);
                 return s;

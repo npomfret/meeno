@@ -5,24 +5,17 @@ import org.junit.Test;
 import snowmonkey.meeno.HttpExchangeOperations;
 import snowmonkey.meeno.JsonSerialization;
 import snowmonkey.meeno.requests.ListMarketBook;
-import snowmonkey.meeno.types.EventTypeName;
-import snowmonkey.meeno.types.ExBestOfferOverRides;
-import snowmonkey.meeno.types.Locale;
-import snowmonkey.meeno.types.MarketBook;
-import snowmonkey.meeno.types.MarketId;
-import snowmonkey.meeno.types.Navigation;
-import snowmonkey.meeno.types.PriceData;
-import snowmonkey.meeno.types.PriceProjection;
-import snowmonkey.meeno.types.RollupModel;
+import snowmonkey.meeno.types.*;
 
 import java.time.LocalDate;
 
-import static com.google.common.collect.Iterables.*;
-import static com.google.common.collect.Sets.*;
-import static java.time.ZonedDateTime.*;
-import static live.raw.GenerateTestData.*;
-import static org.apache.commons.io.FileUtils.*;
-import static snowmonkey.meeno.types.TimeRange.*;
+import static com.google.common.collect.Iterables.limit;
+import static com.google.common.collect.Sets.newHashSet;
+import static java.time.ZonedDateTime.now;
+import static live.raw.GenerateTestData.LIST_MARKET_BOOK_FILE;
+import static live.raw.GenerateTestData.fileWriter;
+import static org.apache.commons.io.FileUtils.readFileToString;
+import static snowmonkey.meeno.types.TimeRange.between;
 
 /**
  * Not actually a test, just using junit as a way to demonstrate the code
@@ -56,7 +49,7 @@ public class ListMarketBookTest extends AbstractLiveTestCase {
         );
 
 
-        ukHttpAccess.listMarketBook(fileWriter(LIST_MARKET_BOOK_FILE), new ListMarketBook(
+        httpAccess.listMarketBook(fileWriter(LIST_MARKET_BOOK_FILE), new ListMarketBook(
                 marketIds,
                 priceProjection,
                 null,
@@ -95,7 +88,7 @@ public class ListMarketBookTest extends AbstractLiveTestCase {
                 false
         );
 
-        MarketBook marketBook = new HttpExchangeOperations(ukHttpAccess).marketBook(markets.marketsIds().iterator().next(), priceProjection);
+        MarketBook marketBook = new HttpExchangeOperations(httpAccess).marketBook(markets.marketsIds().iterator().next(), priceProjection);
         System.out.println("marketBook = " + marketBook);
     }
 
@@ -112,7 +105,7 @@ public class ListMarketBookTest extends AbstractLiveTestCase {
 
         Iterable<MarketId> marketIds = limit(markets.marketsIds(), 5);
 
-        ukHttpAccess.listMarketBook(fileWriter(LIST_MARKET_BOOK_FILE), new ListMarketBook(
+        httpAccess.listMarketBook(fileWriter(LIST_MARKET_BOOK_FILE), new ListMarketBook(
                 marketIds,
                 null,
                 null,

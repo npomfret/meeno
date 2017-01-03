@@ -3,11 +3,7 @@ package live;
 import live.raw.GenerateTestData;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import snowmonkey.meeno.ApiException;
-import snowmonkey.meeno.Exchange;
-import snowmonkey.meeno.HttpAccess;
-import snowmonkey.meeno.HttpExchangeOperations;
-import snowmonkey.meeno.MeenoConfig;
+import snowmonkey.meeno.*;
 import snowmonkey.meeno.types.Navigation;
 import snowmonkey.meeno.types.SessionToken;
 
@@ -16,12 +12,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 
-import static live.raw.GenerateTestData.GetNavigation.*;
-import static live.raw.GenerateTestData.*;
+import static live.raw.GenerateTestData.GetNavigation.navigationFile;
+import static live.raw.GenerateTestData.fileWriter;
 
 public abstract class AbstractLiveTestCase {
-    protected static HttpAccess ukHttpAccess;
-    protected static HttpAccess ausHttpAccess;
+    protected static HttpAccess httpAccess;
 
     @BeforeClass
     public static void setup() throws Exception {
@@ -29,18 +24,16 @@ public abstract class AbstractLiveTestCase {
 
         SessionToken sessionToken = HttpAccess.login(config);
 
-        ukHttpAccess = HttpAccess.defaultHttpAccess(sessionToken, config.appKey(), Exchange.UK);
-        ausHttpAccess = HttpAccess.defaultHttpAccess(sessionToken, config.appKey(), Exchange.AUSTRALIA);
+        httpAccess = HttpAccess.defaultHttpAccess(sessionToken, config.appKey(), Exchange.UK);
     }
 
     @AfterClass
     public static void tearDown() throws Exception {
-        ukHttpAccess.logout();
-        ausHttpAccess.logout();
+        httpAccess.logout();
     }
 
     protected HttpExchangeOperations ukExchange() {
-        return new HttpExchangeOperations(ukHttpAccess);
+        return new HttpExchangeOperations(httpAccess);
     }
 
     protected Navigation navigation() throws IOException, ApiException {
@@ -49,7 +42,7 @@ public abstract class AbstractLiveTestCase {
         Path path = navigationFile(now);
 
         if (!Files.exists(path)) {
-            ukHttpAccess.nav(fileWriter(navigationFile(now)));
+            httpAccess.nav(fileWriter(navigationFile(now)));
         }
 
         return Navigation.parse(GenerateTestData.GetNavigation.getNavigationJson(now));

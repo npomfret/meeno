@@ -10,11 +10,6 @@ public enum Exchange {
     UK(
             new Uris("https://api.betfair.com/exchange/account/rest/v1.0"),
             new Uris("https://api.betfair.com/exchange/betting/rest/v1.0")
-    ),
-
-    AUSTRALIA(
-            new Uris("https://api-au.betfair.com/exchange/account/rest/v1.0"),
-            new Uris("https://api-au.betfair.com/exchange/betting/rest/v1.0")
     );
 
     public static final URI NAVIGATION = URI.create("https://api.betfair.com/exchange/betting/rest/v1/en/navigation/menu.json");
@@ -23,13 +18,10 @@ public enum Exchange {
     public static final URI LOGOUT_URI = URI.create("https://identitysso.betfair.com/api/logout");
 
     public static final ExchangeId DEFAULT_EXCHANGE_ID = new ExchangeId("1");
-    public static final ExchangeId AUSTRALIAN_EXCHANGE_ID = new ExchangeId("2");
 
     public static Exchange lookupByExchangeId(ExchangeId exchangeId) {
         if (exchangeId.equals(DEFAULT_EXCHANGE_ID))
             return UK;
-        else if (exchangeId.equals(AUSTRALIAN_EXCHANGE_ID))
-            return AUSTRALIA;
         else
             throw new IllegalStateException("Don't know about exchange id " + exchangeId);
     }

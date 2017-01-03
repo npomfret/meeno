@@ -28,64 +28,22 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.AbstractHttpMessage;
 import org.apache.http.message.BasicNameValuePair;
-import snowmonkey.meeno.requests.CancelOrders;
-import snowmonkey.meeno.requests.ListClearedOrders;
-import snowmonkey.meeno.requests.ListCompetitions;
-import snowmonkey.meeno.requests.ListCountries;
-import snowmonkey.meeno.requests.ListCurrentOrders;
-import snowmonkey.meeno.requests.ListEventTypes;
-import snowmonkey.meeno.requests.ListEvents;
-import snowmonkey.meeno.requests.ListMarketBook;
-import snowmonkey.meeno.requests.ListMarketCatalogue;
-import snowmonkey.meeno.requests.ListMarketTypes;
-import snowmonkey.meeno.requests.ListTimeRanges;
-import snowmonkey.meeno.requests.PlaceOrders;
-import snowmonkey.meeno.requests.TransferFunds;
-import snowmonkey.meeno.types.BetId;
-import snowmonkey.meeno.types.BetStatus;
-import snowmonkey.meeno.types.CustomerRef;
-import snowmonkey.meeno.types.LoginFailedException;
-import snowmonkey.meeno.types.MarketFilter;
-import snowmonkey.meeno.types.MarketId;
-import snowmonkey.meeno.types.MarketProjection;
-import snowmonkey.meeno.types.MarketSort;
-import snowmonkey.meeno.types.MatchProjection;
-import snowmonkey.meeno.types.OrderBy;
-import snowmonkey.meeno.types.OrderProjection;
-import snowmonkey.meeno.types.PlaceInstruction;
-import snowmonkey.meeno.types.PriceProjection;
-import snowmonkey.meeno.types.SessionToken;
-import snowmonkey.meeno.types.SortDir;
-import snowmonkey.meeno.types.TimeGranularity;
-import snowmonkey.meeno.types.TimeRange;
+import snowmonkey.meeno.requests.*;
+import snowmonkey.meeno.types.*;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.SocketTimeoutException;
 import java.net.URI;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.UnrecoverableKeyException;
+import java.security.*;
 import java.security.cert.CertificateException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import static snowmonkey.meeno.DefaultProcessor.*;
-import static snowmonkey.meeno.types.Locale.*;
-import static snowmonkey.meeno.types.MarketFilter.Builder.*;
+import static snowmonkey.meeno.DefaultProcessor.defaultProcessor;
+import static snowmonkey.meeno.types.Locale.EN_US;
+import static snowmonkey.meeno.types.MarketFilter.Builder.noFilter;
 
 public class HttpAccess {
 
@@ -139,11 +97,6 @@ public class HttpAccess {
 
     public void addAuditor(Auditor auditor) {
         this.auditors.add(auditor);
-    }
-
-    public void transferFunds(Processor processor, TransferFunds request) throws IOException, ApiException {
-        String body = JsonSerialization.gson().toJson(request);
-        sendPostRequest(processor, exchange.accountUris.jsonRestUri(Exchange.MethodName.TRANSFER_FUNDS), body);
     }
 
     public void cancelOrders(Processor processor, CancelOrders request) throws IOException, ApiException {

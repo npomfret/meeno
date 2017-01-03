@@ -6,11 +6,11 @@ import snowmonkey.meeno.types.EventType;
 import snowmonkey.meeno.types.EventTypes;
 import snowmonkey.meeno.types.MarketFilter;
 
-import static java.time.ZonedDateTime.*;
+import static java.time.ZonedDateTime.now;
 import static live.raw.GenerateTestData.*;
-import static org.apache.commons.io.FileUtils.*;
-import static snowmonkey.meeno.CountryLookup.*;
-import static snowmonkey.meeno.types.TimeRange.*;
+import static org.apache.commons.io.FileUtils.readFileToString;
+import static snowmonkey.meeno.CountryLookup.Argentina;
+import static snowmonkey.meeno.types.TimeRange.between;
 
 public class ListCompetitionsTest extends AbstractLiveTestCase {
 
@@ -19,7 +19,7 @@ public class ListCompetitionsTest extends AbstractLiveTestCase {
         EventTypes eventTypes = EventTypes.parse(readFileToString(LIST_EVENT_TYPES_FILE.toFile()));
         EventType soccer = eventTypes.lookup("Soccer");
 
-        ukHttpAccess.listCompetitions(fileWriter(LIST_COMPETITIONS_FILE),
+        httpAccess.listCompetitions(fileWriter(LIST_COMPETITIONS_FILE),
                 new MarketFilter.Builder()
                         .withEventTypeIds(soccer.id)
                         .withMarketCountries(Argentina)

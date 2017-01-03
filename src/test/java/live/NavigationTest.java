@@ -4,18 +4,14 @@ import com.google.common.collect.Iterables;
 import live.raw.GenerateTestData;
 import org.junit.Test;
 import snowmonkey.meeno.HttpExchangeOperations;
-import snowmonkey.meeno.types.EventTypeName;
-import snowmonkey.meeno.types.MarketBooks;
-import snowmonkey.meeno.types.Navigation;
-import snowmonkey.meeno.types.PriceProjection;
-import snowmonkey.meeno.types.TimeRange;
+import snowmonkey.meeno.types.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static java.time.ZonedDateTime.*;
-import static snowmonkey.meeno.types.EventTypeName.*;
-import static snowmonkey.meeno.types.TimeRange.*;
+import static java.time.ZonedDateTime.now;
+import static snowmonkey.meeno.types.EventTypeName.SOCCER;
+import static snowmonkey.meeno.types.TimeRange.between;
 
 /**
  * Not actually a test, just using junit as a way to demonstrate the code
@@ -39,7 +35,7 @@ public class NavigationTest extends AbstractLiveTestCase {
 
     @Test
     public void findSiblingMarkets() throws Exception {
-        HttpExchangeOperations httpExchangeOperations = new HttpExchangeOperations(ukHttpAccess);
+        HttpExchangeOperations httpExchangeOperations = new HttpExchangeOperations(httpAccess);
 
         Navigation navigation = Navigation.parse(GenerateTestData.GetNavigation.getNavigationJson(LocalDate.parse("2014-09-14")));
 
