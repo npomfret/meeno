@@ -14,7 +14,7 @@ public enum Exchange {
 
     public static final URI NAVIGATION = URI.create("https://api.betfair.com/exchange/betting/rest/v1/en/navigation/menu.json");
 
-    public static final URI LOGIN_URI = URI.create("https://identitysso.betfair.com/api/certlogin");
+    public static final URI LOGIN_URI = URI.create("https://identitysso-cert.betfair.com/api/certlogin");
     public static final URI LOGOUT_URI = URI.create("https://identitysso.betfair.com/api/logout");
 
     public static final ExchangeId DEFAULT_EXCHANGE_ID = new ExchangeId("1");
