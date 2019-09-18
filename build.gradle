@@ -41,8 +41,8 @@ dependencies {
 }
 
 task publish(type: Copy) {
-    from(libsDir)
-    into(publishDir)
+    from "$buildDir/libs"
+    into "$publishDir"
 }
 
 jar {
