@@ -1,10 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'idea'
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.7'
-}
-
 idea {
     project {
 //        this does not work! need to set the language level manually in intellij

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/meeno.iml" filepath="$PROJECT_DIR$/.idea/modules/meeno.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/meeno.iml" filepath="$PROJECT_DIR$/.idea/modules/meeno.iml" group="meeno" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/meeno_main.iml" filepath="$PROJECT_DIR$/.idea/modules/meeno_main.iml" group="meeno" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/meeno_test.iml" filepath="$PROJECT_DIR$/.idea/modules/meeno_test.iml" group="meeno" />
     </modules>

@@ -29,7 +29,8 @@ public abstract class AbstractLiveTestCase {
 
     @AfterClass
     public static void tearDown() throws Exception {
-        httpAccess.logout();
+        if(httpAccess != null)
+            httpAccess.logout();
     }
 
     protected HttpExchangeOperations ukExchange() {
