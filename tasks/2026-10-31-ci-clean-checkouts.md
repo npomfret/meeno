@@ -4,7 +4,7 @@ Project: `meeno`. Requested by Nick on 31 October 2026. Status: open.
 
 Ensure every CI build starts from an empty source directory before checking out
 the exact requested revision, unless a specific, justified exception is recorded.
-Follow the [shared acceptance criteria](../../snowmonkey-proxy-common/tasks/2026-10-31-ci-clean-checkouts.md#shared-acceptance-criteria).
+Follow the [shared acceptance criteria](../../snowmonkey-proxy-common/docs/CI-CHECKOUTS.md#shared-acceptance-criteria).
 
 No standard root CI configuration was found during the initial inventory. Check server-managed CI and project scripts before concluding that CI is absent. If the project has no CI, record that evidence and close as not applicable; this task does not require introducing CI.
 
