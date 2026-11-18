@@ -1,0 +1,16 @@
+{
+  "generator": "agent-standards linked guidance",
+  "topics": {
+    "git": {
+      "path": ".agents/agent-standards/guidance/git.md",
+      "label": "Git",
+      "trigger": "always"
+    }
+  },
+  "files": {
+    ".agents/agent-standards/guidance/git.md": {
+      "sha256": "9d06bcd163d35bc0b77945104299545ccb92370adbc4048b61329e4af46a4f9d",
+      "link": false
+    }
+  }
+}
