@@ -1,7 +1,7 @@
 {
   "name": "testing",
   "description": "Designing, running and diagnosing automated tests: test types, polling drivers, builders, timeouts and failure evidence",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "author": {
     "name": "npomfret"
   }

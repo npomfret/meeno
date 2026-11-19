@@ -40,7 +40,7 @@ Every project must have a `tmp/` directory at its root, excluded from Git by its
 ### Landing
 
 1. Commit the worktree's changes.
-2. Confirm the shared checkout is on the default branch; otherwise stop and report it. Update it with `git pull --rebase`.
+2. Confirm the shared checkout is on the default branch; otherwise leave it alone and land from the worktree with `git push <remote> HEAD:<default>`. Update it with `git pull --rebase`.
 3. Rebase the worktree onto the updated default branch. Get its new commit ID with `git rev-parse HEAD`, then land that ID from the shared checkout with `git merge --ff-only <commit-id>`. Rebase again if the default branch moved.
 4. Push the default branch and confirm the remote contains the landed commits. If the push is rejected, reconcile with the remote using rebase and retry; do not report completion while delivery is blocked.
 5. Leave and remove the worktree once its commits have landed and been pushed, or have been deliberately dropped. Remove only worktrees you created; report other apparently stale worktrees without removing them.

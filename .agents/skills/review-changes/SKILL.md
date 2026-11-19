@@ -13,7 +13,7 @@ Have significant work independently reviewed by an agent before committing. This
 - Ask for substantive problems with evidence: bugs, broken contracts, missed requirements, rule violations and ineffective tests. Skip style preferences and nits.
 - Resolve each finding or explain why it is incorrect before committing. Report the review result and how findings were handled.
 
-Passing tests do not replace review, and agent review does not replace any required user approval.
+Passing tests do not replace review.
 
 ## Rule sources by change type
 

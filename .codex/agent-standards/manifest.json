@@ -3,7 +3,7 @@
   "files": {
     ".codex/agent-standards/plugins/auditing/.claude-plugin/plugin.json": {
       "source": "plugin:auditing@npomfret/.claude-plugin/plugin.json",
-      "sha256": "ba1fb6d9f969e3e7a6aa1553fe113d82688b5895e368f607af8d9cdef5a5a7b0",
+      "sha256": "d9adaee0c619c30abc529575ba1fd2d05c4a6751d2f1789a61a295d86059a315",
       "link": false,
       "executable": false
     },
@@ -21,13 +21,13 @@
     },
     ".codex/agent-standards/plugins/auditing/skills/auditing/SKILL.md": {
       "source": "plugin:auditing@npomfret/skills/auditing/SKILL.md",
-      "sha256": "4ca807a102d9de6127f307ba6aacc360d978e5c9a53c4ae5d418f7505d7acd6d",
+      "sha256": "23b1d1f73151e1f0a09f93bc751f884ee9f6930e8a95f47b79478b1663ad5632",
       "link": false,
       "executable": false
     },
     ".codex/agent-standards/plugins/coding/.claude-plugin/plugin.json": {
       "source": "plugin:coding@npomfret/.claude-plugin/plugin.json",
-      "sha256": "d6335a4b9f61238f66a8926bb448dfdd3b35ba9bcb9408d07f2fd5a42ba19542",
+      "sha256": "926e2b682849c93edf0842dcce357996c2c5481410bf549c3db1ee6e89c46a13",
       "link": false,
       "executable": false
     },
@@ -39,7 +39,7 @@
     },
     ".codex/agent-standards/plugins/coding/skills/application-design/SKILL.md": {
       "source": "plugin:coding@npomfret/skills/application-design/SKILL.md",
-      "sha256": "b54cc998f1efeacbdc6669c2f5e971112aa10866bf7e67f70e0ca890f5bc1e2e",
+      "sha256": "d63e81dd29062c99953fe9b869b79087b82df43f7456fb0df583e82a1109fded",
       "link": false,
       "executable": false
     },
@@ -105,13 +105,13 @@
     },
     ".codex/agent-standards/plugins/testing/.claude-plugin/plugin.json": {
       "source": "plugin:testing@npomfret/.claude-plugin/plugin.json",
-      "sha256": "f5e3575f9f134a82ee5bdb3ebafddf48e3e371dff43b8d29bfbc9b836e90fc56",
+      "sha256": "a9f73579dd04b9129bd35107725dee97c6a471c462ac81b3678ea128a0017868",
       "link": false,
       "executable": false
     },
     ".codex/agent-standards/plugins/testing/skills/test-design/SKILL.md": {
       "source": "plugin:testing@npomfret/skills/test-design/SKILL.md",
-      "sha256": "14deb09d18dc33d8a2f3361266616213522ac0d03059ad870a819d078b683280",
+      "sha256": "214e219468366bf1405fab85cf18f26ce0493a45ba90c8961fbc6e90303d839c",
       "link": false,
       "executable": false
     },
@@ -135,7 +135,7 @@
     },
     ".codex/agent-standards/plugins/workflow/.claude-plugin/plugin.json": {
       "source": "plugin:workflow@npomfret/.claude-plugin/plugin.json",
-      "sha256": "ce4524704a139e68a27b7aa955663bec96f8f7c8d4e13e0df75e5455bbbbf6cd",
+      "sha256": "d2ffea53be1886c0ae4a9ef92fecb39ef2179a5763f1dcd0bd9b896345a4d17d",
       "link": false,
       "executable": false
     },
@@ -147,13 +147,13 @@
     },
     ".codex/agent-standards/plugins/workflow/skills/git-delivery/SKILL.md": {
       "source": "plugin:workflow@npomfret/skills/git-delivery/SKILL.md",
-      "sha256": "4d0be736df9915f709336d7656e92705d719e4d00e85b6f5d0d070298b2d47b4",
+      "sha256": "bc99ce906c1e8dcae57415b372b46d77525b03dd0cb2eec9cbf82f1e39e063fa",
       "link": false,
       "executable": false
     },
     ".codex/agent-standards/plugins/workflow/skills/review-changes/SKILL.md": {
       "source": "plugin:workflow@npomfret/skills/review-changes/SKILL.md",
-      "sha256": "2df79ee2722f7fb3d575824c2f83fe625df6c43e2cbd2656b29c4a2a254e9a01",
+      "sha256": "a52237ef3bda84c03645be6a36636b38af2eaf1ab0bd9d76845fc639cc5a7b57",
       "link": false,
       "executable": false
     },
@@ -171,25 +171,25 @@
     },
     ".codex/agents/change-reviewer.toml": {
       "source": "plugin:workflow@npomfret/agents/change-reviewer.md",
-      "sha256": "cfa43053fb80ddb8dedb1046f86474956446748e831581ae62bd1ebbd1954683",
+      "sha256": "dc241903cacdf1b58c9638a724694bf3c1df047b7c05d684280f030515080b25",
       "link": false,
       "executable": false
     },
     ".codex/agents/failure-investigator.toml": {
       "source": "plugin:coding@npomfret/agents/failure-investigator.md",
-      "sha256": "c12e9af4b6971ecd7a7f52d1f1ab892844c1f6a1ae9032ca96cd442e7924e801",
+      "sha256": "2c11dc6e1b0a43947536da69decf02df08880cde28cbe116b237c96fdaee9c9f",
       "link": false,
       "executable": false
     },
     ".codex/hooks.json": {
       "source": "templates/codex-hooks.py",
-      "sha256": "55a2cd0e40de98441a9dfe9fa7bb02073b875b9a8a1931e163737f48a73bad50",
+      "sha256": "5a6b7bc7b959010eabddd0bd22d249cdd72eef31b6e57e26d9cab54edc5d7f84",
       "link": false,
       "executable": false
     },
     ".codex/hooks/agent_standards.py": {
       "source": "templates/codex-hooks.py",
-      "sha256": "f22799ef7fe198899a656c83c33a0c99fe2efb0be91426f09b170ed7e8b2456e",
+      "sha256": "8e68033b340cf77ed5d105e610a0b8d5afbfb30752a04a67222f6f5abb74c8f3",
       "link": false,
       "executable": false
     },

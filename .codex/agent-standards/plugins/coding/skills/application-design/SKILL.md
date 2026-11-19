@@ -43,6 +43,7 @@ In type-safe languages, use the type system to express domain meaning and enforc
 - Internal application operations receive and return domain types. Keep raw strings, numbers and booleans used as transport or storage representations at their owning boundaries. Primitive calculations and representation details belong inside the types and operations that own their meaning.
 - Translate domain values into transport or storage representations when crossing an outgoing boundary. At the receiving boundary, validate and reconstruct domain values before invoking application behaviour. A typed sender does not establish the validity of received data.
 - Construct valid domain objects from database results before passing them into application behaviour. Apply the same discipline to UI input and external API payloads.
+- In TypeScript use the strictest compiler settings and never use `any`: type unknown values as `unknown` and narrow them at the boundary, and do not silence the compiler with assertions or suppression comments.
 - Preserve domain types across collaborators and call chains. Do not discard their guarantees through loose shapes, unchecked casts or broad primitive parameters. Runtime validation establishes trust in external data, and the type system carries that guarantee inward.
 ### Separate construction from behaviour
 

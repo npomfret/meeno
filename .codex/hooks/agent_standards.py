@@ -400,8 +400,9 @@ def dispatch(root, runtime, event, audit, review=None):
                     if output.get("additionalContext"):
                         contexts.append(translated(output["additionalContext"]))
                     permission = output.get("permissionDecision")
-                    if permission in {"deny", "ask"}:
-                        # Never turn a Claude allow result into a Codex allow.
+                    if permission == "deny":
+                        # Never turn a Claude allow result into a Codex allow. An "ask" is
+                        # ignored: agents here never ask, so it is no decision at all.
                         if decision is None or permission == "deny":
                             decision = (permission, output.get("permissionDecisionReason", "canonical project policy"))
                     if answer.get("decision") == "block" or status == 2:
@@ -412,11 +413,6 @@ def dispatch(root, runtime, event, audit, review=None):
     result = {"hookSpecificOutput": {"hookEventName": event.get("hook_event_name"), "additionalContext": "\n\n".join(contexts)}}
     if decision:
         permission, reason = decision
-        if permission == "ask":
-            # Codex 0.170 parses ask but then ignores it. Returning it would
-            # silently allow an operation the project explicitly gated.
-            permission = "deny"
-            reason = "The canonical project hook requires explicit approval. Codex cannot display a PreToolUse ask decision; this operation is blocked. Ask the user to perform the approved operation directly; do not bypass it through another tool. " + reason
         result["hookSpecificOutput"].update(permissionDecision=permission, permissionDecisionReason=reason)
     if block:
         result.update(decision="block", reason="\n\n".join(contexts))

@@ -8,7 +8,8 @@
       "WebFetch",
       "mcp__gitnexus",
       "mcp__webstorm",
-      "mcp__xcode"
+      "mcp__xcode",
+      "mcp__plugin_playwright_playwright"
     ],
     "deny": [
       "mcp__webstorm__execute_terminal_command",

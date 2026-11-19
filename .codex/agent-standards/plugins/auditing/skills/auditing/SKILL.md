@@ -29,6 +29,13 @@ Choose severity according to how the application handles the outcome. An excepti
 - Preserve these diagnostics through asynchronous boundaries, browser logs, process reporting and CI artifacts. Redaction must retain useful stack frames and cause relationships while removing sensitive values.
 
 The TypeScript ES2022 support for Error causes is documented in the [TypeScript 4.6 release notes](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-6.html#--target-es2022).
+### Application and browser evidence
+
+Audit meaningful user actions, API calls and state transitions so failures can be reconstructed. Browser application logs follow the same contract as server logs, with timestamp, severity, fixed event label and structured JSON data on one line. Preserve errors and diagnostic context.
+
+Shared test infrastructure collects application/server logs, browser console logs, test errors and wait timing records into downloadable CI artifacts when tests fail. UI failures include screenshots, and multi-participant tests include logs and screenshots for each user, browser, context or device with clear participant identity. Publish available evidence even when the test step fails and capture it before cleanup. Preserve the original test failure if artifact collection also fails.
+
+Retain timing records from successful and failed waits across builds. Routine screenshots and extensive diagnostic artifacts are unnecessary for successful tests. Apply the redaction rules to all published evidence.
 ### Redaction
 
 Keep secrets, credentials, cookies, signed URLs, environment values and whole raw request/response bodies out of logs. Include only necessary personal data, usually an ID rather than an email. Redact fields in the logger and scrub known secret values from strings, including URLs.
