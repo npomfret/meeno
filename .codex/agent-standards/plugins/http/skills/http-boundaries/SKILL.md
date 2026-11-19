@@ -1,6 +1,6 @@
 ---
 name: http-boundaries
-description: HTTP clients and servers. Use when adding or changing an endpoint, API call, fetch, axios or URLSession client, request or response contract, compression, content negotiation, or boundary timeouts and retries, including "call this API" and "speed up responses". Not for UI components, database access or queue workers.
+description: HTTP clients and servers. Use when adding or changing an endpoint, an API call from an app or script, fetch, axios or URLSession client, request or response contract, compression, content negotiation, or boundary timeouts and retries, including "call this API" and "speed up responses". Not for UI components, database access or queue workers.
 ---
 
 # HTTP boundaries

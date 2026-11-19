@@ -54,7 +54,8 @@
     "http@npomfret": true,
     "testing@npomfret": true,
     "ui@npomfret": false,
-    "workflow@npomfret": true
+    "workflow@npomfret": true,
+    "localization@npomfret": false
   },
   "enabledMcpjsonServers": ["gitnexus", "webstorm"],
   "extraKnownMarketplaces": {

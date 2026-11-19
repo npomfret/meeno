@@ -1,6 +1,6 @@
 ---
 name: test-design
-description: Writing, changing or running automated tests. Use for adding coverage, unit, integration or end-to-end tests, test data and builders, fakes and controlled clocks, drivers and page objects, async waits and polling, test timeouts and budgets, flaky or slow tests, and CI failure artifacts, including "cover this", "tests time out" and "increase the timeout". Browser and iOS UI tests also use their own skill. Not for UI driver specifics, which those skills add.
+description: Writing, changing or running automated tests. Use for adding coverage, unit, integration or end-to-end tests, test data and builders, fakes and controlled clocks, drivers and page objects, async waits and polling, test timeouts and budgets, flaky or slow tests, and CI failure artifacts, including "cover this", "tests time out" and "increase the timeout". Load it for browser and iOS UI tests too, together with their platform skill. Not for UI driver specifics, which those skills add.
 ---
 
 # Test design
