@@ -1,9 +1,7 @@
 ---
 name: scripting
-description: Project conventions for scripts, command targets and CI steps. Read before writing, changing or reviewing shell, Python, Node or other command-line tooling.
+description: Writing or changing scripts and command-line tooling, kept or ad hoc. Use for shell, Python or Node scripts, npm or make targets, release and maintenance scripts, flags, --help, dry-run, exit codes, audit-log output, locks and selftests, including "automate this" and "write a script to". Not for running an existing command or for application code.
 ---
-
-## Scripting
 
 Keep command-line tooling predictable for people, agents and CI.
 
@@ -41,3 +39,5 @@ Keep command-line tooling predictable for people, agents and CI.
 - Bound network calls with timeouts. Any retry policy has a limit/backoff, and logs each retry.
 - Read configuration and secrets from explicitly supplied files selected through command-line path arguments. Do not depend on environment variables, dotenv files or a machine's active login or cloud project. Pass secret contents to external tools through their supported file or stdin interface, never environment variables or command arguments. Keep secret contents out of source, console and audit logs.
 - Test meaningful script logic with unit tests or `--selftest`. Verify a relied-on check against a case it must reject. Simple command glue does not need tests that merely repeat its implementation.
+
+*Generated from `npomfret/agent-standards`. Edit the standard there, not this copy.*

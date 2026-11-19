@@ -1,9 +1,7 @@
 ---
 name: task-files
-description: Track planned work, and unplanned work that needs more than a commit message, in tasks/. Read when starting, updating or completing that work.
+description: Plan, track and record substantial work in a committed tasks/ file. Use when starting a multi-step feature, migration or investigation, when asked to plan, write up an approach, track something or record decisions and evidence, when updating a task, and when finished work needs its task completed or deleted. Not for small edits a commit message can explain.
 ---
-
-## Task files
 
 Use one committed task file for planned work, and for unplanned work whose problem, solution and evidence need more than a reasonable commit message. Update an existing task when it already owns the work.
 
@@ -17,3 +15,5 @@ Substantial work must have an accompanying, updated task file. An appropriate co
 - When the last work lands, record the result and verification in the accompanying task file. Preserve any durable product/architecture conclusion in `docs/`, then delete the completed task in a separate follow-up commit. Move genuine remaining work to a narrower task first.
 
 An established project tracker, folder or template may serve the same purpose. Record that convention once rather than adding another tracking system.
+
+*Generated from `npomfret/agent-standards`. Edit the standard there, not this copy.*

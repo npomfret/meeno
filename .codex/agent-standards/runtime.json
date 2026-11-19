@@ -1,9 +1,13 @@
 {
   "plugins": {
     "auditing@npomfret": ".codex/agent-standards/plugins/auditing",
+    "coding@npomfret": ".codex/agent-standards/plugins/coding",
+    "http@npomfret": ".codex/agent-standards/plugins/http",
     "scripting@npomfret": ".codex/agent-standards/plugins/scripting",
     "task-files@npomfret": ".codex/agent-standards/plugins/task-files",
-    "webstorm@npomfret": ".codex/agent-standards/plugins/webstorm"
+    "testing@npomfret": ".codex/agent-standards/plugins/testing",
+    "webstorm@npomfret": ".codex/agent-standards/plugins/webstorm",
+    "workflow@npomfret": ".codex/agent-standards/plugins/workflow"
   },
   "hooks": {
     "auditing@npomfret": {
@@ -27,20 +31,6 @@
               "type": "command",
               "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/nudge.py\" --forget",
               "timeout": 10
-            }
-          ]
-        }
-      ]
-    },
-    "scripting@npomfret": {
-      "PostToolUse": [
-        {
-          "matcher": "Edit|Write|MultiEdit",
-          "hooks": [
-            {
-              "type": "command",
-              "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/lint_shell.py\" --hook",
-              "timeout": 30
             }
           ]
         }

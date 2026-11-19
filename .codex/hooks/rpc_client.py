@@ -155,7 +155,7 @@ def inspect(server: AppServer, project: pathlib.Path, trust: bool, dry_run: bool
         raise ValueError(f"{project}: native skill discovery errors {errors}")
     discovered = [skill for entry in skills["data"] for skill in entry["skills"]]
     native = {pathlib.Path(skill["path"]).resolve() for skill in discovered if skill.get("enabled") is True}
-    missing = [str(path.relative_to(project)) for path in (project / ".codex/skills").glob("*/SKILL.md") if path.resolve() not in native]
+    missing = [str(path.relative_to(project)) for path in (project / ".agents/skills").glob("*/SKILL.md") if path.resolve() not in native]
     if missing:
         raise ValueError(f"{project}: native skills were not discovered: {missing}")
     return {"project": str(project), "hooks": hooks, "skills": skills, "approvals": approvals}

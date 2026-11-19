@@ -49,7 +49,12 @@
     "scripting@npomfret": true,
     "webstorm@npomfret": true,
     "teamcity@npomfret": false,
-    "browser@npomfret": false
+    "browser@npomfret": false,
+    "coding@npomfret": true,
+    "http@npomfret": true,
+    "testing@npomfret": true,
+    "ui@npomfret": false,
+    "workflow@npomfret": true
   },
   "enabledMcpjsonServers": ["gitnexus", "webstorm"],
   "extraKnownMarketplaces": {

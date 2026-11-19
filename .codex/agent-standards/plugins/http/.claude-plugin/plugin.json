@@ -1,0 +1,8 @@
+{
+  "name": "http",
+  "description": "HTTP client and server boundaries: negotiated compression and application-owned contracts",
+  "version": "1.0.0",
+  "author": {
+    "name": "npomfret"
+  }
+}

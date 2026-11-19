@@ -27,7 +27,7 @@ import uuid
 def translated(text):
     """Keep guidance meaningful without referring to Claude-only tool calls."""
     text = re.sub(r"(?:with|using) the Skill tool\s*\(`([^`]+)`\)",
-                  lambda match: "by reading .codex/skills/" + match[1].split(":")[-1] + "/SKILL.md", text)
+                  lambda match: "by reading .agents/skills/" + match[1].split(":")[-1] + "/SKILL.md", text)
     return text.replace("ToolSearch", "native MCP tool discovery")
 
 

@@ -3,7 +3,7 @@
   "files": {
     ".codex/agent-standards/plugins/auditing/.claude-plugin/plugin.json": {
       "source": "plugin:auditing@npomfret/.claude-plugin/plugin.json",
-      "sha256": "7d99082120211b4a14b4b77e82fce6da2c7e215b1fe5af1b3e9148e3d5d516ba",
+      "sha256": "ba1fb6d9f969e3e7a6aa1553fe113d82688b5895e368f607af8d9cdef5a5a7b0",
       "link": false,
       "executable": false
     },
@@ -21,19 +21,61 @@
     },
     ".codex/agent-standards/plugins/auditing/skills/auditing/SKILL.md": {
       "source": "plugin:auditing@npomfret/skills/auditing/SKILL.md",
-      "sha256": "e6279ab47d42e0b3e9521f77ce336d7ab0d38dcc3626a5119bcbfad8cf6305c4",
+      "sha256": "4ca807a102d9de6127f307ba6aacc360d978e5c9a53c4ae5d418f7505d7acd6d",
+      "link": false,
+      "executable": false
+    },
+    ".codex/agent-standards/plugins/coding/.claude-plugin/plugin.json": {
+      "source": "plugin:coding@npomfret/.claude-plugin/plugin.json",
+      "sha256": "d6335a4b9f61238f66a8926bb448dfdd3b35ba9bcb9408d07f2fd5a42ba19542",
+      "link": false,
+      "executable": false
+    },
+    ".codex/agent-standards/plugins/coding/agents/failure-investigator.md": {
+      "source": "plugin:coding@npomfret/agents/failure-investigator.md",
+      "sha256": "0beec3783319a20daa4c6cbfce4aa72a19dfbd8e02f08b05e288d8953c988883",
+      "link": false,
+      "executable": false
+    },
+    ".codex/agent-standards/plugins/coding/skills/application-design/SKILL.md": {
+      "source": "plugin:coding@npomfret/skills/application-design/SKILL.md",
+      "sha256": "b54cc998f1efeacbdc6669c2f5e971112aa10866bf7e67f70e0ca890f5bc1e2e",
+      "link": false,
+      "executable": false
+    },
+    ".codex/agent-standards/plugins/coding/skills/investigate-failure/SKILL.md": {
+      "source": "plugin:coding@npomfret/skills/investigate-failure/SKILL.md",
+      "sha256": "16c8c945952a94325a464b9ea450f1c7694dd5fa5c06e24c2e00d18d7b331af0",
+      "link": false,
+      "executable": false
+    },
+    ".codex/agent-standards/plugins/coding/skills/runtime-configuration/SKILL.md": {
+      "source": "plugin:coding@npomfret/skills/runtime-configuration/SKILL.md",
+      "sha256": "a42b1ee56411238e27de5d738272da8548fdd752185a6969d682bc1fa7133750",
+      "link": false,
+      "executable": false
+    },
+    ".codex/agent-standards/plugins/coding/skills/stateful-workflows/SKILL.md": {
+      "source": "plugin:coding@npomfret/skills/stateful-workflows/SKILL.md",
+      "sha256": "52923518d2fc5828e404891731c2ea45ae416a252575a16768e31aad033f38d5",
+      "link": false,
+      "executable": false
+    },
+    ".codex/agent-standards/plugins/http/.claude-plugin/plugin.json": {
+      "source": "plugin:http@npomfret/.claude-plugin/plugin.json",
+      "sha256": "22bef6d772e9582385faf9bf1c0dab1c8eae6c8d9b612583fb62f1ad97f55aee",
+      "link": false,
+      "executable": false
+    },
+    ".codex/agent-standards/plugins/http/skills/http-boundaries/SKILL.md": {
+      "source": "plugin:http@npomfret/skills/http-boundaries/SKILL.md",
+      "sha256": "96bd406535a87aef1e76e9548480053dd0fcbb92f35e9997684fb7641a37b522",
       "link": false,
       "executable": false
     },
     ".codex/agent-standards/plugins/scripting/.claude-plugin/plugin.json": {
       "source": "plugin:scripting@npomfret/.claude-plugin/plugin.json",
-      "sha256": "1a34c4acc68a0861ce2faffcee3c9bd20e2e130898276fbc928f3fa636b12798",
-      "link": false,
-      "executable": false
-    },
-    ".codex/agent-standards/plugins/scripting/hooks/hooks.json": {
-      "source": "plugin:scripting@npomfret/hooks/hooks.json",
-      "sha256": "9e74f31583439eaa86db5a9582bcedc16e50df1318521ac4437abfd7e9b29af4",
+      "sha256": "2a320f25278a272a29a70ac2ab5e7160c4f384eedb4acb77292cbb95415c9e05",
       "link": false,
       "executable": false
     },
@@ -45,19 +87,31 @@
     },
     ".codex/agent-standards/plugins/scripting/skills/scripting/SKILL.md": {
       "source": "plugin:scripting@npomfret/skills/scripting/SKILL.md",
-      "sha256": "1040711ac7dbdb59fd4041d3bedff54211e898072f76fc115ca658e5e2cf835d",
+      "sha256": "f10182ff52bc47e5712e6e8ee0da1e9731179b3fc66d36ccb65a9cb9c9591745",
       "link": false,
       "executable": false
     },
     ".codex/agent-standards/plugins/task-files/.claude-plugin/plugin.json": {
       "source": "plugin:task-files@npomfret/.claude-plugin/plugin.json",
-      "sha256": "3e41acab78d6876a5a1d8ecc847863855f0402e7e0b2d5f043bce594dd1a0073",
+      "sha256": "3e38660f2ee7f2a2726592731d81f9532bc98564206fd9d26e1d5249429e748f",
       "link": false,
       "executable": false
     },
     ".codex/agent-standards/plugins/task-files/skills/task-files/SKILL.md": {
       "source": "plugin:task-files@npomfret/skills/task-files/SKILL.md",
-      "sha256": "50d00f2a933a736929d6e459210dc50681a386a760ff16d9fb684e2f5618e1b2",
+      "sha256": "7d102b6dc2093fc2699234583973ef01060940eb8fb14873be830cb2b16b1580",
+      "link": false,
+      "executable": false
+    },
+    ".codex/agent-standards/plugins/testing/.claude-plugin/plugin.json": {
+      "source": "plugin:testing@npomfret/.claude-plugin/plugin.json",
+      "sha256": "6806b7cd2088b8a2963c8d341da8df75ed38f16a0febf0295afaf4103002948d",
+      "link": false,
+      "executable": false
+    },
+    ".codex/agent-standards/plugins/testing/skills/test-design/SKILL.md": {
+      "source": "plugin:testing@npomfret/skills/test-design/SKILL.md",
+      "sha256": "55d82544517143c7e165ba4d2fc20ba9de50ffebea26156dcf6cd2dcdf006a2f",
       "link": false,
       "executable": false
     },
@@ -79,27 +133,69 @@
       "link": false,
       "executable": false
     },
+    ".codex/agent-standards/plugins/workflow/.claude-plugin/plugin.json": {
+      "source": "plugin:workflow@npomfret/.claude-plugin/plugin.json",
+      "sha256": "ce4524704a139e68a27b7aa955663bec96f8f7c8d4e13e0df75e5455bbbbf6cd",
+      "link": false,
+      "executable": false
+    },
+    ".codex/agent-standards/plugins/workflow/agents/change-reviewer.md": {
+      "source": "plugin:workflow@npomfret/agents/change-reviewer.md",
+      "sha256": "28e9cd578b01407e5726a29f530790bc539ae323b4eb54c7b59e864f607744b5",
+      "link": false,
+      "executable": false
+    },
+    ".codex/agent-standards/plugins/workflow/skills/git-delivery/SKILL.md": {
+      "source": "plugin:workflow@npomfret/skills/git-delivery/SKILL.md",
+      "sha256": "4d0be736df9915f709336d7656e92705d719e4d00e85b6f5d0d070298b2d47b4",
+      "link": false,
+      "executable": false
+    },
+    ".codex/agent-standards/plugins/workflow/skills/review-changes/SKILL.md": {
+      "source": "plugin:workflow@npomfret/skills/review-changes/SKILL.md",
+      "sha256": "2df79ee2722f7fb3d575824c2f83fe625df6c43e2cbd2656b29c4a2a254e9a01",
+      "link": false,
+      "executable": false
+    },
+    ".codex/agent-standards/plugins/workflow/skills/verification-gates/SKILL.md": {
+      "source": "plugin:workflow@npomfret/skills/verification-gates/SKILL.md",
+      "sha256": "63efb4ffd3b45f7945fa5aa2e4814b5e047279833af9ff8857b45d07ce0a4858",
+      "link": false,
+      "executable": false
+    },
     ".codex/agent-standards/runtime.json": {
       "source": "project and enabled-plugin configuration",
-      "sha256": "d71fb7e4d626e955db8881a1cf4c9638ae2e30e4635de4493a7d78ab923e8750",
+      "sha256": "5e85665da1006a89c2a590431df965e841fabf09a3b00e821a81a2a3aa59208f",
+      "link": false,
+      "executable": false
+    },
+    ".codex/agents/change-reviewer.toml": {
+      "source": "plugin:workflow@npomfret/agents/change-reviewer.md",
+      "sha256": "cfa43053fb80ddb8dedb1046f86474956446748e831581ae62bd1ebbd1954683",
+      "link": false,
+      "executable": false
+    },
+    ".codex/agents/failure-investigator.toml": {
+      "source": "plugin:coding@npomfret/agents/failure-investigator.md",
+      "sha256": "c12e9af4b6971ecd7a7f52d1f1ab892844c1f6a1ae9032ca96cd442e7924e801",
       "link": false,
       "executable": false
     },
     ".codex/hooks.json": {
       "source": "templates/codex-hooks.py",
-      "sha256": "ac67c192dbef997a314599d361166b00e5abd585bc0689cad6e17f483490d77a",
+      "sha256": "a8dca03200146609bd27177f2acef58122b2a55263e35ae7e90849d858475417",
       "link": false,
       "executable": false
     },
     ".codex/hooks/agent_standards.py": {
       "source": "templates/codex-hooks.py",
-      "sha256": "e688549ab9f7d26434b3bc36d572a9df0a5e71f235b344a7b0a3708050057df2",
+      "sha256": "f22799ef7fe198899a656c83c33a0c99fe2efb0be91426f09b170ed7e8b2456e",
       "link": false,
       "executable": false
     },
     ".codex/hooks/rpc_client.py": {
       "source": "scripts/codex_runtime.py",
-      "sha256": "6909f65d7b0b05124ecb199a80db720f26932e083a8564f1180655e4f5bf87ba",
+      "sha256": "6680aa74737f04e072785790a95660b15b2c437cece0e027e8d62200692af0c0",
       "link": false,
       "executable": false
     }
