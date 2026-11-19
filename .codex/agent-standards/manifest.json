@@ -27,7 +27,7 @@
     },
     ".codex/agent-standards/plugins/coding/.claude-plugin/plugin.json": {
       "source": "plugin:coding@npomfret/.claude-plugin/plugin.json",
-      "sha256": "8f480858b725358a8a10cbd4d898296e71255b3a9d9242b0ec8d19a3b5f42e3a",
+      "sha256": "ae8622c67451372d87da4880ce97d162cd4fe0d1d2a18c616649583604c7623a",
       "link": false,
       "executable": false
     },
@@ -45,7 +45,7 @@
     },
     ".codex/agent-standards/plugins/coding/skills/investigate-failure/SKILL.md": {
       "source": "plugin:coding@npomfret/skills/investigate-failure/SKILL.md",
-      "sha256": "537165ac77f904a2fe90e54aa0d33925a9cb72e0cc53d6178066d7ef315c85b1",
+      "sha256": "8ccd0185a7e2d8e06a556200e2cea7e5ece66d2a288a23907469cee16268c7b2",
       "link": false,
       "executable": false
     },
@@ -135,7 +135,7 @@
     },
     ".codex/agent-standards/plugins/workflow/.claude-plugin/plugin.json": {
       "source": "plugin:workflow@npomfret/.claude-plugin/plugin.json",
-      "sha256": "e4681fa752b960b2b9ebfd439c4dd7c14d70c2995c17d9155a1d06c3817b6c8f",
+      "sha256": "e70696d4286a9cff4fe778d7e9a79ba09a1b7d91a7a6bbdb1b9bd8a482676dd6",
       "link": false,
       "executable": false
     },
@@ -153,7 +153,7 @@
     },
     ".codex/agent-standards/plugins/workflow/skills/review-changes/SKILL.md": {
       "source": "plugin:workflow@npomfret/skills/review-changes/SKILL.md",
-      "sha256": "21e1e8ca947a49c8d81051d23a23b278a3510ca5372442cd9fa70651c06fd012",
+      "sha256": "b2a479714eb677a25b82394c479924662924df365ef10d13cc53fc7d39bf8457",
       "link": false,
       "executable": false
     },
@@ -171,19 +171,19 @@
     },
     ".codex/agents/change-reviewer.toml": {
       "source": "plugin:workflow@npomfret/agents/change-reviewer.md",
-      "sha256": "6827a6742a4c1c792ce5309880001f68bd40499ca5082fa122c0cef84a46c53a",
+      "sha256": "c2ac10a51bc9717d9e9cf924f2b357f6cfa1f0d21284ee3ae38f63bb9bfe4cd4",
       "link": false,
       "executable": false
     },
     ".codex/agents/failure-investigator.toml": {
       "source": "plugin:coding@npomfret/agents/failure-investigator.md",
-      "sha256": "ee80e9e3078c03d42b9308c8829d4745d06602c529ba39d576e801269feeed96",
+      "sha256": "29519b4394f20000fe0466ffd142db932f9c8ed5ffabe066e281f619957d0853",
       "link": false,
       "executable": false
     },
     ".codex/hooks.json": {
       "source": "templates/codex-hooks.py",
-      "sha256": "a06f701e8356595d94d1eefa08d4c6b81a14acb45ad07c2e0a9ec9068e3d3531",
+      "sha256": "65ef26177197f49ef6c750f12ef2670f1f9ad1ccc79306beee0e7ab144d47ed9",
       "link": false,
       "executable": false
     },

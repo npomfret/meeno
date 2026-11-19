@@ -5,7 +5,7 @@ description: Finding why something fails. Use for bugs, crashes, errors, wrong o
 
 # Investigate failure
 
-For evidence collection or reproduction that can run apart from the parent task, delegate to `failure-investigator`; the parent still applies the standards to the fix.
+For evidence collection or reproduction that can run apart from the parent task, spawn a `failure-investigator` subagent (Codex: `spawn_agent`; Claude Code: the Agent tool) and wait for its report; the parent still applies the standards to the fix.
 
 ### Troubleshooting and audit-log collection
 

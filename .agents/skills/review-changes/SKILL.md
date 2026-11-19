@@ -5,7 +5,7 @@ description: Independent review of finished work before it is committed. Use for
 
 # Review changes
 
-Delegate the review to a project reviewer agent or to `change-reviewer`; the implementing agent stays responsible for resolving findings. Where the harness only delegates on instruction (Codex), instruct the delegation explicitly.
+Do not review your own diff. Spawn a reviewer subagent now (Codex: `spawn_agent`; Claude Code: the Agent tool) and give it the success criteria, file list or revision range and the diff. Use a project reviewer if one fits; otherwise `change-reviewer`, or `database-change-reviewer` for SQL, schema and migration diffs and `ui-change-reviewer` for screens, components and copy. Wait for its verdict. The implementing agent stays responsible for resolving every finding before committing.
 
 Have significant work independently reviewed by an agent before committing. This includes behavior, refactors, tests, configuration and tooling; trivial wording, formatting and task-file edits need no review.
 
