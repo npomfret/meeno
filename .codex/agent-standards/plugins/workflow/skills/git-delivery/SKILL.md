@@ -5,7 +5,7 @@ description: Delivering work through Git. Use when asked to commit, ship, land, 
 
 # Git delivery
 
-Applies to every owned project. The operating contract already states the rules that matter before any commit; this skill carries the full worktree, temporary-file and landing procedure.
+Applies to every owned project. Before committing significant work, confirm a spawned reviewer has reviewed it (see review-changes); if not, spawn `change-reviewer` first (Codex: `spawn_agent`; Claude Code: the Agent tool). Reviewing your own diff does not count. The operating contract already states the rules that matter before any commit; this skill carries the full worktree, temporary-file and landing procedure.
 
 This workflow applies to every owned project. It supersedes older instructions requiring feature branches or reserving
 ordinary fast-forward landing and pushing for a human. Here `main` means the

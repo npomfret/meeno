@@ -5,7 +5,7 @@ description: Independent review of finished work before it is committed. Use for
 
 # Review changes
 
-Do not review your own diff. Spawn a reviewer subagent now (Codex: `spawn_agent`; Claude Code: the Agent tool) and give it the success criteria, file list or revision range and the diff. Use a project reviewer if one fits; otherwise `change-reviewer`, or `database-change-reviewer` for SQL, schema and migration diffs and `ui-change-reviewer` for screens, components and copy. Wait for its verdict. The implementing agent stays responsible for resolving every finding before committing.
+Required step: do not review your own diff. Call the spawn tool now to start a reviewer subagent (Codex: `spawn_agent`; Claude Code: the Agent tool) and give it the success criteria, file list or revision range and the diff. Use a project reviewer if one fits; otherwise `change-reviewer`, or `database-change-reviewer` for SQL, schema and migration diffs and `ui-change-reviewer` for screens, components and copy. Wait for its verdict. The implementing agent stays responsible for resolving every finding before committing.
 
 Have significant work independently reviewed by an agent before committing. This includes behavior, refactors, tests, configuration and tooling; trivial wording, formatting and task-file edits need no review.
 
