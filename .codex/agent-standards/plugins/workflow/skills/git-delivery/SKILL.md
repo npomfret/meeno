@@ -29,7 +29,7 @@ Protect other agents' work. The shared checkout stays on its default branch; iso
 
 Use a worktree when the checkout contains others' changes or the work needs more than one commit. Otherwise work directly on the default branch and stage only your files.
 
-Create detached worktrees with `git worktree add --detach tmp/worktrees/<name> main`. Use the shared checkout's root `tmp/` directory for worktree isolation. Do not create feature branches or switch branches in the shared checkout unless explicitly instructed.
+Create detached worktrees with `git worktree add --detach tmp/worktrees/<name> <default-branch>`, where `<default-branch>` is the repository's actual default (`main`, or a legacy name such as `master`). Use the shared checkout's root `tmp/` directory for worktree isolation. Do not create feature branches or switch branches in the shared checkout unless explicitly instructed.
 
 Build, test and commit inside the worktree. A subagent commits there and returns the commit ID; its parent remains responsible for landing and pushing it.
 
