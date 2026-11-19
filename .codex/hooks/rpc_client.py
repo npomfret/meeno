@@ -108,7 +108,7 @@ def inspect(server: AppServer, project: pathlib.Path, trust: bool, dry_run: bool
             raise ValueError(f"{project}: no reviewed generated delivery manifest")
         for relative, item in json.loads(manifest.read_text())["files"].items():
             parsed = pathlib.PurePosixPath(relative)
-            if parsed.is_absolute() or ".." in parsed.parts or not (relative.startswith(".codex/") or relative == "AGENTS.override.md"):
+            if parsed.is_absolute() or ".." in parsed.parts or not (relative.startswith((".codex/", ".agents/skills/")) or relative == "AGENTS.override.md"):
                 raise ValueError(f"{project}: unsafe generated manifest path")
             path = project / relative
             if not path.resolve().is_relative_to(project.resolve()):
