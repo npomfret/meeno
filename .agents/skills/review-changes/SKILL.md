@@ -1,6 +1,6 @@
 ---
 name: review-changes
-description: Independent review of finished work before it is committed. Use for "review this", "look over my changes", "is this ready", a second opinion on a diff, branch or PR, and before committing any behaviour, refactor, test, configuration or tooling change. Not for typo, formatting or task-file edits, and not a substitute for running tests.
+description: Independent review of finished work before it is committed. Use for "review this", "look over this branch for bugs or missed requirements", "check my changes", "is this ready", a second opinion on a diff, branch or PR, and before committing any behaviour, refactor, test, configuration or tooling change. Not for typo, formatting or task-file edits, and not a substitute for running tests.
 ---
 
 # Review changes

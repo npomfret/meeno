@@ -1,6 +1,6 @@
 ---
 name: git-delivery
-description: Delivering work through Git. Use when asked to commit, ship, land, push, merge, finish up or wrap up, when work is done and must reach the default branch, or for worktrees, rebasing, conflicts, commit messages, branch questions, stale worktrees or other agents' changes in the checkout. Not for reading history or explaining Git.
+description: Delivering work through Git. Use when asked to commit, ship, land, push, merge, finish up or wrap up, including as the last step of a larger request ("...then commit it"), when work is done and must reach the default branch, or for worktrees, rebasing, conflicts, commit messages, branch questions, stale worktrees or other agents' changes in the checkout. Not for reading history or explaining Git.
 ---
 
 # Git delivery

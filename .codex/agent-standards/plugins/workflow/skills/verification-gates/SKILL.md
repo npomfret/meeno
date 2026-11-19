@@ -1,6 +1,6 @@
 ---
 name: verification-gates
-description: Automated quality gates. Use when adding or changing lint rules, type checks, static analysis, architecture or dependency-boundary checks, formatters or CI checks, or deciding what blocks a commit or build, including "add a lint rule", "make CI fail when" and "lint is blocking me". Substantive failures block; cosmetic style never does. Not for diagnosing why a check fails.
+description: Automated quality gates. Use when adding or changing lint rules, type checks, static analysis, architecture or dependency-boundary checks, formatters or CI checks, or deciding what blocks a commit or build, including "add a lint rule", "make CI fail when", "turn on strict mode" and "run the formatter only on changed files". Substantive failures block; cosmetic style never does. Not for diagnosing why a check fails.
 ---
 
 ### Verification and formatting

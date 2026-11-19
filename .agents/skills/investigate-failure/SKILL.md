@@ -1,6 +1,6 @@
 ---
 name: investigate-failure
-description: Finding why something fails. Use for bugs, crashes, errors, wrong output, regressions, flaky tests or builds, "why does this happen" and "it stopped working", before changing code to fix it. Also for collecting audit logs from apps, servers, devices or CI, and for writing or updating a troubleshooting guide. Not for planned feature work.
+description: Finding why something fails. Use for bugs, crashes, errors, wrong output, regressions, flaky tests or builds, "why does this happen", "it stopped working" and failures that happen only sometimes, before changing code to fix it. Also for collecting audit logs from apps, servers, devices or CI, and for writing or updating a troubleshooting guide. Not for planned feature work.
 ---
 
 # Investigate failure

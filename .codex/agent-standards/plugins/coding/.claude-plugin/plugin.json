@@ -1,7 +1,7 @@
 {
   "name": "coding",
   "description": "Structure and behaviour of application code: dependency injection and immutability, stateful and asynchronous workflows, explicit configuration, and failure investigation",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "npomfret"
   }

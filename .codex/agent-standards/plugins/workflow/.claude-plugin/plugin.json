@@ -1,7 +1,7 @@
 {
   "name": "workflow",
   "description": "Delivering and reviewing work: Git landing and worktrees, independent change review, and what quality gates may block",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": {
     "name": "npomfret"
   }
