@@ -1,7 +1,6 @@
 ## Git
 
-This workflow applies to every owned project, independently of the active tooling
-roster. It supersedes older instructions requiring feature branches or reserving
+This workflow applies to every owned project. It supersedes older instructions requiring feature branches or reserving
 ordinary fast-forward landing and pushing for a human. Here `main` means the
 repository's actual default branch when it has a legacy name such as `master`;
 never create a branch merely to satisfy the name.

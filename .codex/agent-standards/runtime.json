@@ -1,0 +1,65 @@
+{
+  "plugins": {
+    "auditing@npomfret": ".codex/agent-standards/plugins/auditing",
+    "scripting@npomfret": ".codex/agent-standards/plugins/scripting",
+    "task-files@npomfret": ".codex/agent-standards/plugins/task-files",
+    "webstorm@npomfret": ".codex/agent-standards/plugins/webstorm"
+  },
+  "hooks": {
+    "auditing@npomfret": {
+      "PostToolUse": [
+        {
+          "matcher": "Read|Edit|Write|MultiEdit",
+          "hooks": [
+            {
+              "type": "command",
+              "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/nudge.py\"",
+              "timeout": 10
+            }
+          ]
+        }
+      ],
+      "SessionStart": [
+        {
+          "matcher": "compact",
+          "hooks": [
+            {
+              "type": "command",
+              "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/nudge.py\" --forget",
+              "timeout": 10
+            }
+          ]
+        }
+      ]
+    },
+    "scripting@npomfret": {
+      "PostToolUse": [
+        {
+          "matcher": "Edit|Write|MultiEdit",
+          "hooks": [
+            {
+              "type": "command",
+              "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/lint_shell.py\" --hook",
+              "timeout": 30
+            }
+          ]
+        }
+      ]
+    },
+    "webstorm@npomfret": {
+      "SessionStart": [
+        {
+          "hooks": [
+            {
+              "type": "command",
+              "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/session_context.py\"",
+              "timeout": 10
+            }
+          ]
+        }
+      ]
+    },
+    "project": {}
+  },
+  "rules": []
+}

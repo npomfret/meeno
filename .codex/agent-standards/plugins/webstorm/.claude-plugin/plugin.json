@@ -1,0 +1,8 @@
+{
+  "name": "webstorm",
+  "description": "Points a session at WebStorm's MCP server when the IDE has the project open: symbol search, call hierarchy, inspections and rename",
+  "version": "1.1.1",
+  "author": {
+    "name": "npomfret"
+  }
+}

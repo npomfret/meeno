@@ -1,0 +1,8 @@
+{
+  "name": "auditing",
+  "description": "Auditing is strict logging: one logger and log file, each line a fixed label plus a JSON blob, never a templated or concatenated string, normal levels, stack traces never hidden, events, actions and state changes recorded as data",
+  "version": "1.0.13",
+  "author": {
+    "name": "npomfret"
+  }
+}

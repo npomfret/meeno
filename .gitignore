@@ -45,3 +45,5 @@ private
 .Trashes
 ehthumbs.db
 Thumbs.db
+.gitnexus/
+tmp/

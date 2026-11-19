@@ -1,0 +1,16 @@
+{
+  "description": "At session start, tell the agent WebStorm's code-insight tools are live for this project - only when they are.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/session_context.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

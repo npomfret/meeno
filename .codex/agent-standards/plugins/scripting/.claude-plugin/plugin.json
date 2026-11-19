@@ -1,0 +1,8 @@
+{
+  "name": "scripting",
+  "description": "Reusable scripts with a common CLI interface, ad hoc scripts under tmp/ad-hoc-scripts, operational stdout limited to the audit-log path, structured audit logs under tmp/logs, explicit configuration files and strict portable Bash",
+  "version": "1.0.6",
+  "author": {
+    "name": "npomfret"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "description": "The first time a session reads or writes code that handles errors or logs, tell it to load the auditing skill - unless it already has.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Read|Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/nudge.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/nudge.py\" --forget",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

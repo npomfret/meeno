@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Bash(*)",
+      "WebSearch",
+      "WebFetch",
+      "mcp__gitnexus",
+      "mcp__webstorm",
+      "mcp__xcode"
+    ],
+    "deny": [
+      "mcp__webstorm__execute_terminal_command",
+      "mcp__webstorm__execute_run_configuration",
+      "mcp__webstorm__execute_tool",
+      "mcp__webstorm__run_inspection_kts",
+      "mcp__webstorm__build_project",
+      "mcp__webstorm__apply_patch",
+      "mcp__webstorm__create_new_file",
+      "mcp__webstorm__reformat_file",
+      "mcp__xcode__RunCodeSnippet",
+      "mcp__xcode__InvokeDebuggerCommand"
+    ]
+  },
+  "sandbox": {
+    "enabled": false
+  },
+  "env": {
+    "NODE_USE_ENV_PROXY": "1"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
+  "enabledPlugins": {
+    "web-factoring@npomfret": false,
+    "frontend-design@claude-plugins-official": false,
+    "browser-testing@npomfret": false,
+    "ios-ui-testing@npomfret": false,
+    "database@npomfret": false,
+    "apple-hig@npomfret": false,
+    "typesafe@typesafe-ai": false,
+    "typescript-lsp@claude-plugins-official": false,
+    "playwright@claude-plugins-official": false,
+    "task-files@npomfret": true,
+    "auditing@npomfret": true,
+    "scripting@npomfret": true,
+    "webstorm@npomfret": true,
+    "teamcity@npomfret": false,
+    "browser@npomfret": false
+  },
+  "enabledMcpjsonServers": ["gitnexus", "webstorm"],
+  "extraKnownMarketplaces": {
+    "npomfret": {
+      "source": {
+        "source": "github",
+        "repo": "npomfret/agent-standards"
+      },
+      "autoUpdate": true
+    }
+  }
+}

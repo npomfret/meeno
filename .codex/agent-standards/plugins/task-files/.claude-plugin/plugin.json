@@ -1,0 +1,8 @@
+{
+  "name": "task-files",
+  "description": "The canonical tasks/ workflow: when a task file is required, where it lives, what it accumulates as the work grows, and when it is deleted",
+  "version": "1.0.7",
+  "author": {
+    "name": "npomfret"
+  }
+}
