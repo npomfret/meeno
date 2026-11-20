@@ -14,6 +14,7 @@
 - Run commands yourself unless they need the user's login, password, sudo, device or install. Reuse the project's scripts and `tmp/ad-hoc-scripts/`; put multi-step or quoted shell in a named script there. Hand the user one short command, else a script run as `! tmp/ad-hoc-scripts/<purpose>.sh`. Send long output to `tmp/logs/`; read it with `rg` and bounded excerpts; never paste whole logs.
 - Secrets never go in source, arguments, output or logs, or the repo; they live in iCloud Drive, reached through gitignored `secrets/` links. Configuration comes only from explicitly supplied files, never environment, dotenv or ambient login.
 - Code: construct dependencies at the entry point and inject them; no globals, singletons or hidden construction; immutable by default; structured logs with fixed labels that preserve error causes and stacks; no sleeps in tests. Raise a test timeout or limit only on measured evidence, recorded beside the operation.
+- GitNexus: index with `npx gitnexus analyze --index-only`; never run `gitnexus setup` or a plain `analyze`, which rewrite AGENTS.md and CLAUDE.md.
 
 - Be concise: lead with the outcome; give only the detail needed to act or decide.
 - Do the work properly and verify it; never trade correctness for speed or cost.
