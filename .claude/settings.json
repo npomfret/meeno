@@ -6,7 +6,6 @@
       "Bash(*)",
       "WebSearch",
       "WebFetch",
-      "mcp__gitnexus",
       "mcp__webstorm",
       "mcp__xcode",
       "mcp__plugin_playwright_playwright"
@@ -58,7 +57,7 @@
     "workflow@npomfret": true,
     "localization@npomfret": false
   },
-  "enabledMcpjsonServers": ["gitnexus", "webstorm"],
+  "enabledMcpjsonServers": ["webstorm"],
   "extraKnownMarketplaces": {
     "npomfret": {
       "source": {

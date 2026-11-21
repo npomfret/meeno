@@ -4,10 +4,6 @@ approval_policy = "never"
 sandbox_mode = "danger-full-access"
 project_doc_max_bytes = 32768
 
-[mcp_servers."gitnexus"]
-command = "npx"
-args = ["gitnexus", "mcp"]
-
 [mcp_servers."webstorm"]
 url = "http://127.0.0.1:64542/stream"
 env_http_headers = { "IJ_MCP_SERVER_PROJECT_PATH" = "PWD" }
