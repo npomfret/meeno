@@ -183,13 +183,13 @@
     },
     ".codex/hooks.json": {
       "source": "templates/codex-hooks.py",
-      "sha256": "c9f7ddfa32bf0f3ddd9a577ebaad70358f956a3fd95054b0421cb4c168a9bd7b",
+      "sha256": "c7dc509a8b79e47e0ac1d0ee537f070e69dce0c459cceb736609e4c9fa88b2fa",
       "link": false,
       "executable": false
     },
     ".codex/hooks/agent_standards.py": {
       "source": "templates/codex-hooks.py",
-      "sha256": "8e68033b340cf77ed5d105e610a0b8d5afbfb30752a04a67222f6f5abb74c8f3",
+      "sha256": "b5a9d53b58deb3ee7268151ef2ec8bca2c4c691385e42ae6a1e0c7f8d112c3d7",
       "link": false,
       "executable": false
     },

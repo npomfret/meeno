@@ -107,13 +107,41 @@ def rule_matches(path, patterns):
     return (not positive or any(glob_matches(path, pattern) for pattern in positive)) and not any(glob_matches(path, pattern) for pattern in excluded)
 
 
+# What Codex accepts from a command hook, per event, from the output schemas in
+# codex 0.170 (each `additionalProperties: false`; read 2026-11-21). "context" is
+# hookSpecificOutput.additionalContext, "permission" its permissionDecision, and
+# "block" a top-level decision "block" with reason. Anything else fails with
+# "hook returned invalid <event> hook JSON output" (seen on PostCompact in
+# personal-accounts). codex_delivery registers only these events.
+CODEX_OUTPUT = {
+    "PreToolUse": ("context", "permission", "block"),
+    "PostToolUse": ("context", "block"),
+    "UserPromptSubmit": ("context", "block"),
+    "SessionStart": ("context",),
+    "SubagentStart": ("context",),
+    "Stop": ("block",),
+    "SubagentStop": ("block",),
+    "PreCompact": (),
+    "PostCompact": (),
+}
+
+
+def guidance_markers(root, event):
+    """Per-session folder recording which rules and nudges were already injected."""
+    key = hashlib.sha256((str(event.get("session_id", "unknown")) + str(event.get("agent_id", ""))).encode()).hexdigest()
+    return root / "tmp/codex-guidance" / key
+
+
+def forget_injected_guidance(root, event):
+    for marker in guidance_markers(root, event).glob("*"):
+        marker.unlink()
+
+
 def reminders(root, runtime, event, events):
     contexts = []
-    key = hashlib.sha256((str(event.get("session_id", "unknown")) + str(event.get("agent_id", ""))).encode()).hexdigest()
-    folder = root / "tmp/codex-guidance" / key
-    if event.get("hook_event_name") in {"PostCompact", "SessionStart"} and event.get("source") == "compact":
-        for marker in folder.glob("*"):
-            marker.unlink()
+    folder = guidance_markers(root, event)
+    if event.get("hook_event_name") == "SessionStart" and event.get("source") == "compact":
+        forget_injected_guidance(root, event)
     folder.mkdir(parents=True, exist_ok=True)
     paths = tuple(dict.fromkeys(path for item in events for path in file_paths(item, root)))
     for rule in runtime["rules"]:
@@ -354,9 +382,14 @@ def repository_snapshot(root):
 def dispatch(root, runtime, event, audit, review=None):
     event = dict(event)
     event_name = event.get("hook_event_name", "")
+    accepts = CODEX_OUTPUT[event_name]  # an unknown event fails before any hook runs
     if event_name == "PostCompact":
-        event.update(hook_event_name="SessionStart", source="compact")
-        event_name = "SessionStart"
+        # Compaction dropped the injected rules, and Codex re-runs SessionStart
+        # after only some compactions (2 of 5 in the personal-accounts log,
+        # 2026-11-21). PostCompact takes no context, so forget what was injected
+        # and let the next matching tool call inject it again.
+        forget_injected_guidance(root, event)
+        return {}
     events = tool_events(event, root)
     contexts = reminders(root, runtime, event, events) if event_name in {"PreToolUse", "PostToolUse", "SessionStart"} else []
     decision = None
@@ -410,12 +443,20 @@ def dispatch(root, runtime, event, audit, review=None):
                         contexts.append(translated(answer.get("reason", stderr or "Canonical hook blocked this operation.")))
                     elif status:
                         contexts.append(f"Canonical hook {origin} failed ({status}): " + translated(stderr or stdout))
-    result = {"hookSpecificOutput": {"hookEventName": event.get("hook_event_name"), "additionalContext": "\n\n".join(contexts)}}
-    if decision:
-        permission, reason = decision
-        result["hookSpecificOutput"].update(permissionDecision=permission, permissionDecisionReason=reason)
-    if block:
+    # Send only what the event accepts. As in Claude Code, a Stop hook's output
+    # reaches the model only as a block reason, a SessionStart cannot block, and
+    # a permission decision means something only before a tool runs. Text the
+    # event cannot carry, hook failures included, is shown to the user instead.
+    result = {}
+    if "context" in accepts:
+        result["hookSpecificOutput"] = {"hookEventName": event_name, "additionalContext": "\n\n".join(contexts)}
+        if decision and "permission" in accepts:
+            permission, reason = decision
+            result["hookSpecificOutput"].update(permissionDecision=permission, permissionDecisionReason=reason)
+    if block and "block" in accepts:
         result.update(decision="block", reason="\n\n".join(contexts))
+    elif contexts and "context" not in accepts:
+        result["systemMessage"] = "\n\n".join(contexts)
     return result
 
 
